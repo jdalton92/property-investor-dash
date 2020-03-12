@@ -1,0 +1,19 @@
+.save-dashboard-footer {
+  display: flex;
+}
+
+.save-dashboard-button {
+  min-width: 150px;
+}
+
+@media screen and (max-width: 768px) {
+  .save-dashboard-footer {
+    flex-direction: column;
+  }
+
+  .save-dashboard-button {
+    flex: 1;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+}

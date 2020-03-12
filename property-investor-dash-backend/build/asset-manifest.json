@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/static/css/main.50c66854.chunk.css",
+    "main.js": "/static/js/main.a1d97fbd.chunk.js",
+    "main.js.map": "/static/js/main.a1d97fbd.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.3f3fd3dd.js",
+    "runtime-main.js.map": "/static/js/runtime-main.3f3fd3dd.js.map",
+    "static/js/2.9475e994.chunk.js": "/static/js/2.9475e994.chunk.js",
+    "static/js/2.9475e994.chunk.js.map": "/static/js/2.9475e994.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.3a1c9797d4dfc385dee5a8ba29919c76.js": "/precache-manifest.3a1c9797d4dfc385dee5a8ba29919c76.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.50c66854.chunk.css.map": "/static/css/main.50c66854.chunk.css.map",
+    "static/js/2.9475e994.chunk.js.LICENSE": "/static/js/2.9475e994.chunk.js.LICENSE",
+    "static/media/desktop-dashboard.png": "/static/media/desktop-dashboard.fcd8afef.png",
+    "static/media/developer.jfif": "/static/media/developer.d5a8f59f.jfif",
+    "static/media/Footer.css": "/static/media/github.617870e4.svg",
+    "static/media/investor.jfif": "/static/media/investor.58dd510e.jfif",
+    "static/media/owner-occupier.jfif": "/static/media/owner-occupier.1f22d108.jfif",
+    "static/media/tick-list.png": "/static/media/tick-list.9eede5bb.png",
+    "static/media/NavigationBar.css": "/static/media/user-icon.30845892.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.3f3fd3dd.js",
+    "static/js/2.9475e994.chunk.js",
+    "static/css/main.50c66854.chunk.css",
+    "static/js/main.a1d97fbd.chunk.js"
+  ]
+}

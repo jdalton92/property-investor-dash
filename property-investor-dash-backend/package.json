@@ -1,0 +1,27 @@
+{
+  "name": "resi-development-dash-backend",
+  "version": "1.0.0",
+  "description": "server side property investor dash",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "watch": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "james dalton",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.8.11",
+    "mongoose-unique-validator": "^2.0.3",
+    "nodemailer": "^6.4.2",
+    "nodemailer-mailgun-transport": "^2.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}

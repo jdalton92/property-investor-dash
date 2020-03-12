@@ -1,0 +1,133 @@
+#contact-form-section {
+  min-height: 80vh;
+}
+
+#login-form-section {
+  min-height: 80vh;
+}
+
+#create-form-section {
+  min-height: 80vh;
+}
+
+#existing-email {
+  pointer-events: none;
+}
+
+.form-section {
+  padding-left: 20%;
+  padding-right: 20%;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(250, 250, 255);
+}
+
+.form-outer-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.form-card-container {
+  background-color: white;
+  color: rgb(20, 27, 77) !important;
+  width: 100%;
+  margin-bottom: 35px;
+  margin-top: 35px;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.form-header {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+}
+
+.form-message {
+  text-align: start;
+  padding-left: 15px;
+}
+
+.form-inner-container {
+  flex: 4;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-element {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-button-container,
+.form-item {
+  width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+  display: flex;
+}
+
+.form-item {
+  flex-direction: column;
+  margin-top: 15px;
+}
+
+.form-control {
+  flex: 1;
+  padding: 5px;
+}
+
+.form-error {
+  color: rgb(207, 30, 30);
+  font-size: 12px;
+}
+
+#form-message {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.form-button-container {
+  justify-content: flex-start;
+  margin-top: 15px;
+}
+
+.form-button {
+  margin-right: 15px;
+  padding-left: 30px;
+  padding-right: 30px;
+  width: 150px;
+}
+
+@media screen and (max-width: 768px) {
+  .form-inner-container {
+    flex: 6;
+  }
+
+  .form-button-container,
+  .form-item {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .form-section {
+    padding: 1%;
+  }
+
+  .form-button-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .form-button {
+    width: 100%;
+    margin: 0px;
+  }
+}

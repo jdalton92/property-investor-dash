@@ -1,0 +1,257 @@
+.home-section {
+  background-color: rgb(250, 250, 255);
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 750px;
+  justify-content: center;
+  align-items: center;
+  color: rgb(20, 27, 77);
+}
+
+.home-row-top {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-column {
+  flex: 1;
+}
+
+.home-left {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.home-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-text {
+  letter-spacing: 0.05rem;
+  text-align: center;
+}
+
+.home-text h1 {
+  font-weight: bolder;
+}
+
+.home-subtext {
+  font-size: 18px;
+  padding-top: 35px;
+  line-height: 1.5;
+}
+
+.home-button-container {
+  padding-top: 35px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.home-signup-link {
+  padding-top: 15px;
+}
+
+.desktop-image {
+  padding-left: 20px;
+  height: auto;
+  width: 100%;
+  object-fit: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: drop 1s ease;
+}
+
+@keyframes drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+.who-container,
+.general-info-container {
+  width: 100%;
+  padding-left: 5%;
+  padding-right: 5%;
+  color: rgb(20, 27, 77);
+}
+
+.general-info-container {
+  width: 100%;
+  min-height: 600px;
+  background-color: rgb(20, 27, 77);
+  display: flex;
+  justify-content: center;
+}
+
+.general-info-row {
+  color: rgb(250, 250, 255);
+  font-size: 16px;
+  text-align: center;
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.general-info-step-container {
+  padding-top: 35px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.general-info-header {
+  padding-bottom: 35px;
+}
+
+.home-toast-container {
+  background-color: white;
+  color: rgb(20, 27, 77) !important;
+  width: 100%;
+  margin-bottom: 35px;
+  margin-top: 35px;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transition: all 350ms;
+}
+
+.home-toast-container:hover {
+  transform: translate(0px, -10px);
+}
+
+.who-row,
+.calculate-now-row {
+  flex: 1;
+  min-height: 300px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.who-heading {
+  text-align: center;
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
+
+.who-card-row {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  justify-content: center;
+}
+
+.who-card {
+  min-height: 350px;
+  background-color: white;
+  width: 325px;
+  padding-top: 15px;
+  margin: 0px 20px 35px 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.who-card p {
+  padding: 15px;
+}
+
+.who-card:hover {
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.tick-image {
+  height: 150px;
+  object-fit: cover;
+}
+
+.calculate-now-container {
+  background-color: rgb(60, 174, 163);
+  text-align: center;
+  min-height: 250px;
+}
+
+.calculate-now-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: rgb(250, 250, 255);
+}
+
+.calculate-now-header,
+.calculate-now-button,
+.calculate-now-link {
+  margin-bottom: 25px;
+}
+
+button > h4.home-sign-up {
+  margin: 0px !important;
+}
+
+.calculate-now-button {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.calculate-now-link {
+  color: rgb(250, 250, 255);
+}
+
+.try-now-link:hover {
+  color: lightgrey;
+}
+
+@media screen and (max-width: 950px) {
+  .home-row-top {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .home-column {
+    padding-top: 50px;
+  }
+
+  .home-left {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .home-right {
+    padding-top: 0px;
+  }
+
+  .home-text {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .who-container,
+  .general-info-container {
+    padding: 0%;
+  }
+
+  .general-info-row {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .home-subheading {
+    font-size: 48px;
+  }
+}
