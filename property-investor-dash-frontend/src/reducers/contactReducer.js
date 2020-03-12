@@ -1,11 +1,13 @@
 import contactService from "../services/contact";
 
-const initialState = {};
+const initialState = { isFetching: false };
 
 const contactReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "SET_MESSAGE":
-      return action.data;
+    case "CONTACT_REQUEST":
+      return { isFetching: true };
+    case "MESSAGE_SENT":
+      return { isFetching: false };
     default:
       return state;
   }
@@ -13,8 +15,14 @@ const contactReducer = (state = initialState, action) => {
 
 export const setMessage = values => {
   return async dispatch => {
+    dispatch({
+      type: "CONTACT_REQUEST"
+    });
     try {
       const response = await contactService.sendEmail(values);
+      dispatch({
+        type: "MESSAGE_SENT"
+      });
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
@@ -26,7 +34,7 @@ export const setMessage = values => {
         dispatch({
           type: "CLEAR_NOTIFICATION"
         });
-      }, 10000);
+      }, 7500);
     } catch (e) {
       dispatch({
         type: "SET_NOTIFICATION",
@@ -39,7 +47,7 @@ export const setMessage = values => {
         dispatch({
           type: "CLEAR_NOTIFICATION"
         });
-      }, 10000);
+      }, 7500);
     }
   };
 };
