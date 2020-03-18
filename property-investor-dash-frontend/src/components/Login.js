@@ -33,7 +33,7 @@ const Login = props => {
               variant="primary"
             />
           ) : props.user.data.username ? (
-            <i className="form-element">User already logged in</i>
+            <i className="form-element logged-in">User already logged in</i>
           ) : (
             <FinalForm
               onSubmit={onSubmit}

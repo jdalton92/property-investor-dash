@@ -213,6 +213,7 @@ button > h4.home-sign-up {
 
 .try-now-link:hover {
   color: lightgrey;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 950px) {

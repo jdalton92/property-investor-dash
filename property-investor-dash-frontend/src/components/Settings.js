@@ -13,7 +13,6 @@ import { Button, Spinner } from "react-bootstrap";
 import "./styles/Form.css";
 
 const Settings = props => {
-  // const history = useHistory();
   const userDetails = {
     username: props.user.data.username,
     oldEmail: props.user.data.email,

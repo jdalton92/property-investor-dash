@@ -65,8 +65,8 @@ const Home = props => {
               strategy. ProperyInvestorDASH has been built so no prior
               experience is required, and any stakeholder can find useful
               outputs to estimate key cost, revenue, and timing outputs for all
-              your property investments. PropertyInvestorDASH provides ab easy
-              to use tool for all users, from individual investors to top tier
+              your property investments. PropertyInvestorDASH provides an easy
+              tool for all users, from individual home owners to large
               developers
             </div>
             <div className="general-info-step-container">
