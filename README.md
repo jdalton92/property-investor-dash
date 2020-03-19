@@ -4,7 +4,7 @@ Simple open source tool for calculating your return for property investments
 
 ## Prototype
 
-> [https://propertyinvestordash.herokuapp.com/](https://propertyinvestordash.herokuapp.com/)
+> [https://propertyinvestordash.com/](https://propertyinvestordash.com/)
 
 ## Authors
 
