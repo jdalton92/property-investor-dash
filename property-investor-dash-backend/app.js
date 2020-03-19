@@ -16,9 +16,7 @@ const usersRouter = require("./controllers/users");
 const emailRouter = require("./controllers/email");
 
 app.use(cors());
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("build"));
-}
+app.use(express.static("build"));
 app.use(bodyParser.json());
 
 const databaseConnection = async () => {
@@ -45,7 +43,7 @@ app.use("/api/dashboards", dashboardsRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/email", emailRouter);
 app.get("*", (req, res) => {
-  response.sendFile(path.resolve(__dirname, "build", "index.html"));
+  res.sendFile(path.resolve(__dirname, "build", "index.html"));
 });
 
 module.exports = app;
