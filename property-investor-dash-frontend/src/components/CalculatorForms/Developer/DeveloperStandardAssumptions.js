@@ -79,11 +79,11 @@ const DeveloperStandardAssumptions = () => {
             prependEnd={"no."}
           />
           <FinalFormField
-            title={"Construction Cost per Dwelling"}
+            title={"Construction Cost / Dwelling"}
             fieldName={"constructionCostPerDwelling"}
             type={"developer"}
             validators={[required, minValue(0)]}
-            placeholder={"Construction Cost / Dwelling"}
+            placeholder={"Construction Cost per Dwelling"}
             fieldType={"number"}
             step={1}
             prependStart={"$"}
@@ -129,7 +129,7 @@ const DeveloperStandardAssumptions = () => {
         </div>
         <div className="input-item-group">
           <FinalFormField
-            title={"Revenue per Dwelling"}
+            title={"Revenue / Dwelling"}
             fieldName={"revenuePerDwelling"}
             type={"developer"}
             validators={[required, minValue(0)]}
