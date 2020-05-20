@@ -20,6 +20,13 @@
   color: rgb(20, 27, 77);
 }
 
+.saved-dashboards-loader-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .saved-dashboard-table-container {
   flex: 4;
   padding: 10px !important;

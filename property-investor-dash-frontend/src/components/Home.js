@@ -5,15 +5,19 @@ import { setModal } from "../reducers/navigationReducer";
 import { Button } from "react-bootstrap";
 import "./styles/Home.css";
 import desktopDashboard from "./styles/images/desktop-dashboard.png";
-import tick from "./styles/images/tick-list.png";
+import developer from "./styles/images/card-developer.png";
+import financiers from "./styles/images/card-financiers.png";
+import firstHomeBuyer from "./styles/images/card-first-home-buyer.png";
+import investor from "./styles/images/card-investor.png";
+import owner from "./styles/images/card-owner.png";
 
-const Home = props => {
+const Home = (props) => {
   const history = useHistory();
-  const handleClick = e => {
+  const handleClick = (e) => {
     e.preventDefault();
     history.push("/create-user");
   };
-  const handleModal = e => {
+  const handleModal = (e) => {
     e.preventDefault();
     props.setModal("userType");
   };
@@ -37,9 +41,13 @@ const Home = props => {
                 <Button className="calculate-now-button" onClick={handleClick}>
                   <h4 className="home-sign-up">Sign Up</h4>
                 </Button>
-                <u onClick={handleModal} className="try-now-link">
-                  Or try it free now
-                </u>
+                <Button
+                  variant="outline-primary"
+                  className="try-now-button"
+                  onClick={handleModal}
+                >
+                  <h4 className="home-try-now">Or try it free now</h4>
+                </Button>
               </div>
             </div>
             <div className="home-column home-right">
@@ -114,7 +122,7 @@ const Home = props => {
             <div className="who-card-row">
               <div className="who-card">
                 <div className="who-tick">
-                  <img className="tick-image" src={tick} alt="tick"></img>
+                  <img className="tick-image" src={owner} alt="tick"></img>
                 </div>
                 <div className="who-name">
                   <h2>Owners</h2>
@@ -127,7 +135,7 @@ const Home = props => {
               </div>
               <div className="who-card">
                 <div className="who-tick">
-                  <img className="tick-image" src={tick} alt="tick"></img>
+                  <img className="tick-image" src={investor} alt="tick"></img>
                 </div>
                 <div className="who-name">
                   <h2>Investors</h2>
@@ -140,7 +148,7 @@ const Home = props => {
               </div>
               <div className="who-card">
                 <div className="who-tick">
-                  <img className="tick-image" src={tick} alt="tick"></img>
+                  <img className="tick-image" src={developer} alt="tick"></img>
                 </div>
                 <div className="who-name">
                   <h2>Developers</h2>
@@ -153,7 +161,11 @@ const Home = props => {
               </div>
               <div className="who-card">
                 <div className="who-tick">
-                  <img className="tick-image" src={tick} alt="tick"></img>
+                  <img
+                    className="tick-image"
+                    src={firstHomeBuyer}
+                    alt="tick"
+                  ></img>
                 </div>
                 <div className="who-name">
                   <h2>First Home Buyers</h2>
@@ -167,7 +179,7 @@ const Home = props => {
               </div>
               <div className="who-card">
                 <div className="who-tick">
-                  <img className="tick-image" src={tick} alt="tick"></img>
+                  <img className="tick-image" src={financiers} alt="tick"></img>
                 </div>
                 <div className="who-name">
                   <h2>Financiers</h2>
@@ -184,13 +196,21 @@ const Home = props => {
         </div>
         <div className="calculate-now-container">
           <div className="calculate-now-row">
-            <h2 className="calculate-now-header">Create your account</h2>
-            <Button className="calculate-now-button" onClick={handleClick}>
-              <h4 className="home-sign-up">Sign Up</h4>
-            </Button>
-            <u onClick={handleModal} className="try-now-link">
-              Or try it free now
-            </u>
+            <h2 className="calculate-now-header home-subheading">
+              Create your account
+            </h2>
+            <div className="calculate-now-button-container">
+              <Button className="calculate-now-button" onClick={handleClick}>
+                <h4 className="home-sign-up">Sign Up</h4>
+              </Button>
+              <Button
+                variant="outline-light"
+                className="try-now-button"
+                onClick={handleModal}
+              >
+                <h4 className="home-try-now">Or try it free now</h4>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
@@ -199,7 +219,7 @@ const Home = props => {
 };
 
 const mapDispatchToProps = {
-  setModal
+  setModal,
 };
 
 export default connect(null, mapDispatchToProps)(Home);

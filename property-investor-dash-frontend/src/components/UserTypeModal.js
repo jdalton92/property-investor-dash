@@ -8,19 +8,19 @@ import ownerOccupierImage from "./styles/images/owner-occupier.jfif";
 import investorImage from "./styles/images/investor.jfif";
 import developerImage from "./styles/images/developer.jfif";
 
-const UserTypeModal = props => {
+const UserTypeModal = (props) => {
   const history = useHistory();
-  const handleOwnerClick = e => {
+  const handleOwnerClick = (e) => {
     e.preventDefault();
     props.setModal("userType");
     history.push("/owner-occupier");
   };
-  const handleInvestorClick = e => {
+  const handleInvestorClick = (e) => {
     e.preventDefault();
     props.setModal("userType");
     history.push("/investor");
   };
-  const handleDeveloperClick = e => {
+  const handleDeveloperClick = (e) => {
     e.preventDefault();
     props.setModal("userType");
     history.push("/developer");
@@ -86,14 +86,14 @@ const UserTypeModal = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    userModalShow: state.navigation.modal.userType
+    userModalShow: state.navigation.modal.userType,
   };
 };
 
 const mapDispatchToProps = {
-  setModal
+  setModal,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserTypeModal);

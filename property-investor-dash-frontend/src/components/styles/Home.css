@@ -32,15 +32,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 375px;
 }
 
 .home-text {
   letter-spacing: 0.05rem;
-  text-align: center;
 }
 
 .home-text h1 {
+  margin-left: auto;
+  margin-right: auto;
   font-weight: bolder;
+  font-size: 48px;
+  text-shadow: -2px 2px 2px rgba(0, 0, 0, 0.3);
 }
 
 .home-subtext {
@@ -50,11 +54,12 @@
 }
 
 .home-button-container {
+  width: 100%;
   padding-top: 35px;
   flex: 1;
   display: flex;
   align-items: center;
-  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .home-signup-link {
@@ -62,7 +67,7 @@
 }
 
 .desktop-image {
-  padding-left: 20px;
+  max-width: 700px;
   height: auto;
   width: 100%;
   object-fit: cover;
@@ -96,6 +101,11 @@
   background-color: rgb(20, 27, 77);
   display: flex;
   justify-content: center;
+}
+
+.home-subheading {
+  font-size: 40px;
+  text-shadow: -2px 2px 2px rgba(0, 0, 0, 0.3);
 }
 
 .general-info-row {
@@ -133,8 +143,7 @@
   transform: translate(0px, -10px);
 }
 
-.who-row,
-.calculate-now-row {
+.who-row {
   flex: 1;
   min-height: 300px;
   padding-top: 50px;
@@ -162,6 +171,7 @@
   margin: 0px 20px 35px 20px;
   border-radius: 5px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
 }
 
 .who-card p {
@@ -184,27 +194,39 @@
 }
 
 .calculate-now-row {
+  flex: 1;
+  min-height: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
   color: rgb(250, 250, 255);
+  padding: 75px 0;
+}
+
+.calculate-now-header {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .calculate-now-header,
-.calculate-now-button,
 .calculate-now-link {
   margin-bottom: 25px;
 }
 
-button > h4.home-sign-up {
-  margin: 0px !important;
+.try-now-button,
+.calculate-now-button {
+  width: 250px;
+  height: 50px;
+  border-radius: 25px;
 }
 
-.calculate-now-button {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 100px;
-  padding-right: 100px;
+.try-now-button h4,
+.calculate-now-button h4 {
+  margin-bottom: 0px;
+}
+
+.try-now-button {
+  margin-left: 15px;
 }
 
 .calculate-now-link {
@@ -216,7 +238,13 @@ button > h4.home-sign-up {
   cursor: pointer;
 }
 
-@media screen and (max-width: 950px) {
+@media screen and (max-width: 1700px) {
+  .desktop-image {
+    padding: 50px;
+  }
+}
+
+@media screen and (max-width: 1100px) {
   .home-row-top {
     flex-direction: column;
     width: 100%;
@@ -227,8 +255,11 @@ button > h4.home-sign-up {
   }
 
   .home-left {
-    padding-left: 10px;
-    padding-right: 10px;
+    margin: 0 25px;
+  }
+
+  .home-button-container {
+    justify-content: center;
   }
 
   .home-right {
@@ -251,8 +282,31 @@ button > h4.home-sign-up {
   }
 }
 
+@media screen and (max-width: 650px) {
+  .home-left {
+    margin: 0 10px;
+  }
+
+  .home-subtext {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .calculate-now-button-container,
+  .home-button-container {
+    padding-top: 35px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .try-now-button {
+    margin: 15px 0 0 0;
+  }
+}
+
 @media screen and (max-width: 550px) {
-  .home-subheading {
-    font-size: 48px;
+  .desktop-image {
+    margin-top: 30px;
+    padding: 15px;
   }
 }

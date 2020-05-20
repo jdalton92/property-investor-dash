@@ -1,29 +1,33 @@
 {
   "files": {
-    "main.css": "/static/css/main.b13f9e9b.chunk.css",
-    "main.js": "/static/js/main.71a4c4e3.chunk.js",
-    "main.js.map": "/static/js/main.71a4c4e3.chunk.js.map",
+    "main.css": "/static/css/main.710b4891.chunk.css",
+    "main.js": "/static/js/main.03b12f26.chunk.js",
+    "main.js.map": "/static/js/main.03b12f26.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.3f3fd3dd.js",
     "runtime-main.js.map": "/static/js/runtime-main.3f3fd3dd.js.map",
-    "static/js/2.9475e994.chunk.js": "/static/js/2.9475e994.chunk.js",
-    "static/js/2.9475e994.chunk.js.map": "/static/js/2.9475e994.chunk.js.map",
+    "static/js/2.a69f7c34.chunk.js": "/static/js/2.a69f7c34.chunk.js",
+    "static/js/2.a69f7c34.chunk.js.map": "/static/js/2.a69f7c34.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.eb8560b5e04e0929726097d2091d0c84.js": "/precache-manifest.eb8560b5e04e0929726097d2091d0c84.js",
+    "precache-manifest.a78f06b430a35dfd6895f13306781f0d.js": "/precache-manifest.a78f06b430a35dfd6895f13306781f0d.js",
     "service-worker.js": "/service-worker.js",
-    "static/css/main.b13f9e9b.chunk.css.map": "/static/css/main.b13f9e9b.chunk.css.map",
-    "static/js/2.9475e994.chunk.js.LICENSE": "/static/js/2.9475e994.chunk.js.LICENSE",
-    "static/media/desktop-dashboard.png": "/static/media/desktop-dashboard.fcd8afef.png",
+    "static/css/main.710b4891.chunk.css.map": "/static/css/main.710b4891.chunk.css.map",
+    "static/js/2.a69f7c34.chunk.js.LICENSE": "/static/js/2.a69f7c34.chunk.js.LICENSE",
+    "static/media/card-developer.png": "/static/media/card-developer.f30c2060.png",
+    "static/media/card-financiers.png": "/static/media/card-financiers.764e17b2.png",
+    "static/media/card-first-home-buyer.png": "/static/media/card-first-home-buyer.14bf6ec9.png",
+    "static/media/card-investor.png": "/static/media/card-investor.588fff2e.png",
+    "static/media/card-owner.png": "/static/media/card-owner.07c89bad.png",
+    "static/media/desktop-dashboard.png": "/static/media/desktop-dashboard.49012974.png",
     "static/media/developer.jfif": "/static/media/developer.d5a8f59f.jfif",
     "static/media/Footer.css": "/static/media/github.617870e4.svg",
     "static/media/investor.jfif": "/static/media/investor.58dd510e.jfif",
     "static/media/owner-occupier.jfif": "/static/media/owner-occupier.1f22d108.jfif",
-    "static/media/tick-list.png": "/static/media/tick-list.9eede5bb.png",
     "static/media/NavigationBar.css": "/static/media/user-icon.30845892.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.3f3fd3dd.js",
-    "static/js/2.9475e994.chunk.js",
-    "static/css/main.b13f9e9b.chunk.css",
-    "static/js/main.71a4c4e3.chunk.js"
+    "static/js/2.a69f7c34.chunk.js",
+    "static/css/main.710b4891.chunk.css",
+    "static/js/main.03b12f26.chunk.js"
   ]
 }

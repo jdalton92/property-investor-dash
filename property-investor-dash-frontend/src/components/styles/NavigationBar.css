@@ -1,16 +1,21 @@
 .navbar-upper-container {
   width: 100%;
-  min-height: 35px;
+  min-height: 40px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   text-align: center;
   background-color: rgb(20, 27, 77);
+  text-shadow: -5px 5px 2px rgba(0, 0, 0, 1);
 }
 
 .house-icon {
-  height: 30px;
-  padding-right: 5px;
+  height: 70px;
+  width: 70px;
+  margin-top: 5px;
+  background-color: white;
+  -webkit-mask: url(./images/property-investor-dash-icon.svg) no-repeat center;
+  mask: url(./images/property-investor-dash-icon.svg) no-repeat center;
 }
 
 .logo {
@@ -19,12 +24,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 20px;
+  font-size: 48px;
   color: rgb(255, 255, 255);
 }
 
 .logo:hover {
   cursor: pointer;
+}
+
+.navbar-upper-container b {
+  padding-left: 5px;
 }
 
 .navbar-lower-container {
@@ -33,7 +42,7 @@
   z-index: 9;
   display: flex;
   position: sticky;
-  height: 35px;
+  height: 45px;
   background-color: rgb(20, 27, 77);
 }
 
@@ -146,6 +155,15 @@
 }
 
 @media screen and (max-width: 768px) {
+  .navbar-upper-container {
+    justify-content: center;
+  }
+
+  .house-icon {
+    width: 50px !important;
+    height: 50px !important;
+  }
+
   .user-icon {
     margin-right: 0px;
   }
@@ -162,5 +180,17 @@
     float: none;
     display: flex;
     text-align: left;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .logo {
+    font-size: 30px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .logo {
+    font-size: 22px;
   }
 }

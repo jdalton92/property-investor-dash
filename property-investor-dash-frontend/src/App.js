@@ -22,15 +22,17 @@ import UserTypeModal from "./components/UserTypeModal";
 import SaveDashboardModal from "./components/Dashboards/SaveDashboardModal";
 import Footer from "./components/Footer";
 
-const App = props => {
+const App = (props) => {
   useEffect(() => {
     props.initUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Init Google Analytics
-  ReactGA.initialize("UA-158975814-1");
-  ReactGA.pageview(window.location.pathname + window.location.search);
+  if (process.env.NODE_ENV === "production") {
+    ReactGA.initialize("UA-158975814-1");
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }
 
   return (
     <>
@@ -95,14 +97,14 @@ const App = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
   };
 };
 
 const mapDispatchToProps = {
-  initUser
+  initUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

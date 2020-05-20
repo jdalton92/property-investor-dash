@@ -8,15 +8,15 @@ import developerImage from "./styles/images/developer.jfif";
 
 const About = () => {
   const history = useHistory();
-  const handleOwnerClick = e => {
+  const handleOwnerClick = (e) => {
     e.preventDefault();
     history.push("/owner-occupier");
   };
-  const handleInvestorClick = e => {
+  const handleInvestorClick = (e) => {
     e.preventDefault();
     history.push("/investor");
   };
-  const handleDeveloperClick = e => {
+  const handleDeveloperClick = (e) => {
     e.preventDefault();
     history.push("/developer");
   };

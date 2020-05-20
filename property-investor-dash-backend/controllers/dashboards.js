@@ -14,10 +14,10 @@ dashboardRouter.get(
       const user = await User.findById(decodedToken.id);
 
       const dashboards = await Dashboard.find({
-        user: user._id
+        user: user._id,
       }).populate("user", { username: 1, email: 1 });
 
-      response.json(dashboards);
+      response.status(200).json(dashboards);
     } catch (e) {
       next(e);
     }
@@ -33,7 +33,7 @@ dashboardRouter.get(
         request.params.id
       ).populate("user", { username: 1, email: 1 });
 
-      response.json(dashboard);
+      response.status(200).json(dashboard);
     } catch (e) {
       next(e);
     }
@@ -52,7 +52,7 @@ dashboardRouter.post(
         description,
         address,
         date: Date.now(),
-        values: { type, ...values }
+        values: { type, ...values },
       });
 
       const decodedToken = jwt.verify(request.token, process.env.SECRET);
@@ -69,7 +69,7 @@ dashboardRouter.post(
 
       const result = await Dashboard.findById(dashboard._id).populate("user", {
         username: 1,
-        name: 1
+        name: 1,
       });
 
       response.status(201).json(result);
@@ -91,14 +91,14 @@ dashboardRouter.put(
         address,
         description,
         date: Date.now(),
-        values: { type, ...values }
+        values: { type, ...values },
       };
 
       const result = await Dashboard.findByIdAndUpdate(
         request.params.id,
         updatedDashboard,
         {
-          new: true
+          new: true,
         }
       );
 

@@ -8,7 +8,7 @@ import { setNotification } from "../reducers/notificationReducer";
 import { Table, Button, Spinner } from "react-bootstrap";
 import "./styles/SavedDashboards.css";
 
-const SavedDashboards = props => {
+const SavedDashboards = (props) => {
   useEffect(() => {
     props.getDashboards();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -16,7 +16,7 @@ const SavedDashboards = props => {
 
   const history = useHistory();
 
-  const handleView = async dashboard => {
+  const handleView = async (dashboard) => {
     await props.setDashboard(dashboard);
     if (dashboard.values.type === "developer") {
       history.push("/developer/dashboard");
@@ -33,7 +33,7 @@ const SavedDashboards = props => {
     }
   };
 
-  const handleDelete = async dashboard => {
+  const handleDelete = async (dashboard) => {
     if (window.confirm(`Delete dashboard ${dashboard.description}?`)) {
       await props.deleteDashboard(dashboard._id);
       props.setNotification(`${dashboard.description} deleted`, "success");
@@ -50,11 +50,13 @@ const SavedDashboards = props => {
         </div>
         <div className="saved-dashboard-table-container">
           {props.dashboards.isFetching ? (
-            <Spinner
-              className="loading-spinner"
-              animation="border"
-              variant="primary"
-            />
+            <div className="saved-dashboards-loader-wrapper">
+              <Spinner
+                className="loading-spinner"
+                animation="border"
+                variant="primary"
+              />
+            </div>
           ) : props.dashboards.data.length === 0 ? (
             <h2 className="saved-dashboard-subheader">No saved Dashboards</h2>
           ) : (
@@ -120,11 +122,11 @@ const SavedDashboards = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     dashboards: state.dashboards,
     values: state.values,
-    user: state.user
+    user: state.user,
   };
 };
 
@@ -132,7 +134,7 @@ const mapDispatchToProps = {
   getDashboards,
   deleteDashboard,
   setDashboard,
-  setNotification
+  setNotification,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SavedDashboards);

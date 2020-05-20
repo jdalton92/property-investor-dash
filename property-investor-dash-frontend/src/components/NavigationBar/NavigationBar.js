@@ -6,39 +6,38 @@ import { logoutUser } from "../../reducers/userReducer";
 import {
   setModal,
   setSidebar,
-  setDropdown
+  setDropdown,
 } from "../../reducers/navigationReducer";
 import Burger from "./Burger";
 import Menu from "./Menu";
 import Notification from "./Notification.js";
 import { Button } from "react-bootstrap";
-import houseIcon from "../styles/images/home-icon(white).png";
 import "../styles/NavigationBar.css";
 
-const NavigationBar = props => {
+const NavigationBar = (props) => {
   let history = useHistory();
 
-  const handleLogoClick = e => {
+  const handleLogoClick = (e) => {
     e.preventDefault();
     history.push("/");
   };
 
-  const handleCalculatorClick = e => {
+  const handleCalculatorClick = (e) => {
     e.preventDefault();
     props.setModal("userType");
   };
 
-  const handleDropdownClick = e => {
+  const handleDropdownClick = (e) => {
     e.preventDefault();
     props.setDropdown("username");
   };
 
-  const handleLoginClick = e => {
+  const handleLoginClick = (e) => {
     e.preventDefault();
     history.push("/login");
   };
 
-  const handleLogout = e => {
+  const handleLogout = (e) => {
     e.preventDefault();
     props.logoutUser();
     history.push("/");
@@ -46,9 +45,9 @@ const NavigationBar = props => {
 
   return (
     <>
-      <div className={`navbar-upper-container`}>
+      <div className="navbar-upper-container">
         <div className="logo" onClick={handleLogoClick}>
-          <img alt="home" title="home" src={houseIcon} className="house-icon" />
+          <div className="house-icon" />
           <b>PropertyInvestor</b>DASH
         </div>
       </div>
@@ -128,10 +127,10 @@ const NavigationBar = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: state.user,
-    navigation: state.navigation
+    navigation: state.navigation,
   };
 };
 
@@ -139,7 +138,7 @@ const mapDispatchToProps = {
   logoutUser,
   setSidebar,
   setModal,
-  setDropdown
+  setDropdown,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavigationBar);
