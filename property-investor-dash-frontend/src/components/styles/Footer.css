@@ -24,7 +24,7 @@
 }
 
 .footer-links {
-  padding-top: 25px;
+  padding-top: 15px;
 }
 
 .footer-links li {
@@ -68,5 +68,8 @@
 @media screen and (max-width: 768px) {
   .footer-row {
     flex-direction: column;
+  }
+  .footer-container {
+    margin-top: 35px;
   }
 }
