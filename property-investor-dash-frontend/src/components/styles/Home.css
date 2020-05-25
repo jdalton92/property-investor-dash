@@ -22,9 +22,14 @@
   flex: 1;
 }
 
+.home-left,
+.home-right {
+  max-width: 1000px;
+}
+
 .home-left {
   display: flex;
-  align-items: center;
+  justify-content: center;
   flex-direction: column;
 }
 

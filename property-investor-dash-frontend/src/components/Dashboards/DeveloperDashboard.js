@@ -10,18 +10,18 @@ import {
   tableParse,
   developerCalculation,
   developerMOCCalculation,
-  fundingChartParse
+  fundingChartParse,
 } from "../../helpers/developerDashboardHelper";
 import {
   currencyFormatter,
   percentageFormatter,
-  IRRCalculation
+  IRRCalculation,
 } from "../../helpers/dashboardHelper";
 import { Line, Bar } from "react-chartjs-2";
 import { Table, Card, ListGroup, Button } from "react-bootstrap";
 import "../styles/Dashboard.css";
 
-const DeveloperDashboard = props => {
+const DeveloperDashboard = (props) => {
   const history = useHistory();
   const rawData = developerCalculation(props.values);
   const annualChart = annualChartParse(rawData);
@@ -29,12 +29,12 @@ const DeveloperDashboard = props => {
   const tableData = tableParse(rawData);
   const fundingChart = fundingChartParse(rawData);
 
-  const handleSave = e => {
+  const handleSave = (e) => {
     e.preventDefault();
     props.setModal("saveDashboard");
   };
 
-  const handleEdit = e => {
+  const handleEdit = (e) => {
     e.preventDefault();
     props.editDashboard();
     history.push("/developer");
@@ -346,7 +346,7 @@ const DeveloperDashboard = props => {
               </tr>
             </thead>
             <tbody>
-              {tableData.annualCashflow.map(c => (
+              {tableData.annualCashflow.map((c) => (
                 <tr key={c.year}>
                   <td>{c.year}</td>
                   <td className="dashboard-table-desktop">
@@ -467,7 +467,7 @@ const DeveloperDashboard = props => {
               </tr>
             </thead>
             <tbody>
-              {tableData.annualCashflow.map(c => (
+              {tableData.annualCashflow.map((c) => (
                 <tr key={c.year}>
                   <td>{c.year}</td>
                   <td className="dashboard-table-desktop">
@@ -551,17 +551,17 @@ const DeveloperDashboard = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     values: state.values.values,
-    cashflowTable: state.navigation.cashflowTable
+    cashflowTable: state.navigation.cashflowTable,
   };
 };
 
 const mapDispatchToProps = {
   setCashflow,
   setModal,
-  editDashboard
+  editDashboard,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeveloperDashboard);

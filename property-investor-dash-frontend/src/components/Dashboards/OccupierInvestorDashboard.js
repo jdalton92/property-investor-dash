@@ -9,30 +9,30 @@ import {
   tableParse,
   occupierInvestorCalculation,
   cardParse,
-  occupierInvestorMOCCalculation
+  occupierInvestorMOCCalculation,
 } from "../../helpers/occupierInvestorDashboardHelper";
 import {
   currencyFormatter,
   percentageFormatter,
-  IRRCalculation
+  IRRCalculation,
 } from "../../helpers/dashboardHelper";
 import { Line } from "react-chartjs-2";
 import { Table, Card, ListGroup, Button } from "react-bootstrap";
 import "../styles/Dashboard.css";
 
-const OccupierInvestorDashboard = props => {
+const OccupierInvestorDashboard = (props) => {
   const history = useHistory();
   const rawData = occupierInvestorCalculation(props.values.values);
   const chartData = cumulativeChartParse(rawData);
   const tableData = tableParse(rawData);
   const cardData = cardParse(rawData);
 
-  const handleSave = e => {
+  const handleSave = (e) => {
     e.preventDefault();
     props.setModal("saveDashboard");
   };
 
-  const handleEdit = e => {
+  const handleEdit = (e) => {
     e.preventDefault();
     props.editDashboard();
     if (props.values.values.investor) {
@@ -197,7 +197,7 @@ const OccupierInvestorDashboard = props => {
               </tr>
             </thead>
             <tbody>
-              {tableData.annualCashflow.map(c => (
+              {tableData.annualCashflow.map((c) => (
                 <tr key={c.year}>
                   <td>{c.year}</td>
                   <td className="dashboard-table-desktop">
@@ -275,17 +275,17 @@ const OccupierInvestorDashboard = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     values: state.values,
-    cashflowTable: state.navigation.cashflowTable
+    cashflowTable: state.navigation.cashflowTable,
   };
 };
 
 const mapDispatchToProps = {
   setCashflow,
   setModal,
-  editDashboard
+  editDashboard,
 };
 
 export default connect(

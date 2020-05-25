@@ -25,7 +25,7 @@ export const developerCalculation = ({
   overPayments,
 
   capitalGrowth,
-  constructionCostGrowth
+  constructionCostGrowth,
 }) => {
   // If value undefined then default to zero
   // All other inputs are required
@@ -60,6 +60,7 @@ export const developerCalculation = ({
   const deliveryPhase = planningAndDesign + constructionDuration;
   const investmentEnd =
     planningAndDesign + constructionDuration + investmentPeriod * 12;
+  const loanEnd = planningAndDesign + constructionDuration + loanTerm * 12;
   const sCurveRef = constructionDuration - 1;
   const totalConstructionCost =
     dwellings *
@@ -176,25 +177,28 @@ export const developerCalculation = ({
     const openingBalanceInterest = openingBalance * (1 + r / 12);
 
     const n = deliveryPhase + loanTerm * 12 - i;
-    const loanPayment =
-      i > deliveryPhase - 1
-        ? loanType === "interestOnly"
+    let loanPayment = 0;
+    if (i > deliveryPhase - 1 && i < loanEnd) {
+      loanPayment =
+        loanType === "interestOnly"
           ? (openingBalance * r) / 12
           : Math.min(
               ((r / 12) * openingBalance * Math.pow(1 + r / 12, n)) /
                 (Math.pow(1 + r / 12, n) - 1),
               openingBalanceInterest
-            )
-        : null;
+            );
+    }
 
     const annualOverPayment = overPayments
-      .filter(p => parseInt(p.year) * 12 === i + 1)
+      .filter((p) => parseInt(p.year) * 12 === i + 1)
       .reduce((a, b) => a + b.payment, 0);
 
     const loanInstallment = loanPayment + annualOverPayment;
 
     const principalRepayment =
-      i === investmentEnd - 1 ? openingBalanceInterest - loanInstallment : null;
+      i === loanEnd - 1 || i === investmentEnd - 1
+        ? openingBalanceInterest - loanInstallment
+        : null;
 
     closingBalance =
       openingBalanceInterest +
@@ -241,14 +245,14 @@ export const developerCalculation = ({
       equitySource,
       equityWithdraw,
       debtSource,
-      postFinanceCashflow
+      postFinanceCashflow,
     });
   }
   return monthSummary;
 };
 
-export const cumulativeChartParse = data => {
-  const labels = data.map(c => c.month);
+export const cumulativeChartParse = (data) => {
+  const labels = data.map((c) => c.month);
 
   const cumulativePreFinanceCashflow = data.reduce((acc, c) => {
     acc.push(c.preFinanceCashflow + (acc.length > 0 ? acc[acc.length - 1] : 0));
@@ -272,10 +276,10 @@ export const cumulativeChartParse = data => {
             pointBackgroundColor: "#3282bf",
             borderColor: "#3282bf",
             pointHighlightStroke: "#3282bf",
-            borderCapStyle: "butt"
-          }
+            borderCapStyle: "butt",
+          },
         ],
-        labels: [...labels]
+        labels: [...labels],
       },
       preFinance: {
         datasets: [
@@ -286,11 +290,11 @@ export const cumulativeChartParse = data => {
             pointBackgroundColor: "#3282bf",
             borderColor: "#3282bf",
             pointHighlightStroke: "#3282bf",
-            borderCapStyle: "butt"
-          }
+            borderCapStyle: "butt",
+          },
         ],
-        labels: [...labels]
-      }
+        labels: [...labels],
+      },
     },
     options: {
       maintainAspectRatio: false,
@@ -299,20 +303,20 @@ export const cumulativeChartParse = data => {
           {
             ticks: {
               // Include a dollar sign in the ticks
-              callback: value => {
+              callback: (value) => {
                 return currencyFormatter.format(value);
-              }
-            }
-          }
+              },
+            },
+          },
         ],
         xAxes: [
           {
             scaleLabel: {
               display: true,
-              labelString: "Month"
-            }
-          }
-        ]
+              labelString: "Month",
+            },
+          },
+        ],
       },
       tooltips: {
         callbacks: {
@@ -321,18 +325,18 @@ export const cumulativeChartParse = data => {
           },
           label: (tooltipItem, data) => {
             return currencyFormatter.format(tooltipItem.yLabel);
-          }
-        }
+          },
+        },
       },
       legend: {
-        display: false
-      }
-    }
+        display: false,
+      },
+    },
   };
   return dataObject;
 };
 
-export const annualChartParse = data => {
+export const annualChartParse = (data) => {
   //Get annual cashflow
   const { annualCashflow } = tableParse(data);
 
@@ -343,10 +347,10 @@ export const annualChartParse = data => {
     acquisitionCosts: [],
     TDC: [],
     NOI: [],
-    netSale: []
+    netSale: [],
   };
 
-  annualCashflow.forEach(cf => {
+  annualCashflow.forEach((cf) => {
     for (let [key, value] of Object.entries(cf)) {
       if (!annualData[key]) continue;
       annualData[key].push(value);
@@ -359,32 +363,32 @@ export const annualChartParse = data => {
     "Acquisition Costs",
     "Total Development Costs",
     "Net Rental Income",
-    "Net Sale Proceeds"
+    "Net Sale Proceeds",
   ];
   const dataColors = [
     "rgba(8, 65, 92, 0.6)",
     "rgba(107, 129, 140, 0.6)",
     "rgba(241, 192, 152, 0.6)",
-    "rgba(238, 229, 233, 0.6)"
+    "rgba(238, 229, 233, 0.6)",
   ];
   let i = 0;
   for (let value of Object.values(annualData)) {
     datasets.push({
       label: dataLabels[i],
       data: value,
-      backgroundColor: dataColors[i]
+      backgroundColor: dataColors[i],
     });
     i++;
   }
 
   //x-axis labels
-  const labels = annualCashflow.map(c => c.year);
+  const labels = annualCashflow.map((c) => c.year);
 
   //ChartJS data object for config of stacked bar chart
   const dataObject = {
     data: {
       labels: [...labels],
-      datasets: [...datasets]
+      datasets: [...datasets],
     },
     options: {
       maintainAspectRatio: false,
@@ -394,21 +398,21 @@ export const annualChartParse = data => {
             stacked: true,
             ticks: {
               // Include a dollar sign in the ticks
-              callback: value => {
+              callback: (value) => {
                 return currencyFormatter.format(value);
-              }
-            }
-          }
+              },
+            },
+          },
         ],
         xAxes: [
           {
             stacked: true,
             scaleLabel: {
               display: true,
-              labelString: "Year"
-            }
-          }
-        ]
+              labelString: "Year",
+            },
+          },
+        ],
       },
       tooltips: {
         callbacks: {
@@ -419,15 +423,15 @@ export const annualChartParse = data => {
           },
           beforeTitle: (tooltipItem, object) => {
             return "Year";
-          }
-        }
-      }
-    }
+          },
+        },
+      },
+    },
   };
   return dataObject;
 };
 
-export const pieChartParse = data => {
+export const pieChartParse = (data) => {
   const totalData = reducerHelper(data);
 
   const preFinanceDataset = [
@@ -438,7 +442,7 @@ export const pieChartParse = data => {
     Math.round(totalData.statutoryCosts),
     Math.round(totalData.contingency),
     Math.round(totalData.sellingCost),
-    Math.round(totalData.opex)
+    Math.round(totalData.opex),
   ];
 
   const postFinanceDataset = preFinanceDataset.concat(
@@ -453,7 +457,7 @@ export const pieChartParse = data => {
     "Development Levy",
     "Contingency",
     "Selling Costs",
-    "Operating Costs"
+    "Operating Costs",
   ];
 
   const postFinanceLabels = preFinanceLabels.concat("Interest on Debt");
@@ -463,38 +467,38 @@ export const pieChartParse = data => {
       postFinance: {
         datasets: [
           {
-            data: [...postFinanceDataset]
-          }
+            data: [...postFinanceDataset],
+          },
         ],
-        labels: [...postFinanceLabels]
+        labels: [...postFinanceLabels],
       },
       preFinance: {
         datasets: [
           {
-            data: [...preFinanceDataset]
-          }
+            data: [...preFinanceDataset],
+          },
         ],
-        labels: [...preFinanceLabels]
-      }
+        labels: [...preFinanceLabels],
+      },
     },
     options: {
       maintainAspectRatio: false,
       legend: {
-        position: "right"
-      }
-    }
+        position: "right",
+      },
+    },
   };
   return dataObject;
 };
 
-export const tableParse = data => {
+export const tableParse = (data) => {
   let tableData = {
     summaryCashflow: [],
-    annualCashflow: []
+    annualCashflow: [],
   };
 
   for (let i = 1; i <= Math.ceil(data.length / 12); i++) {
-    const annualData = reducerHelper(data.filter(d => d.year === i));
+    const annualData = reducerHelper(data.filter((d) => d.year === i));
     tableData.annualCashflow.push({
       year: i,
       acquisitionCosts: -annualData.acquisition - annualData.initialCosts,
@@ -529,7 +533,7 @@ export const tableParse = data => {
         annualData.opex -
         annualData.sellingCost -
         annualData.loanInstallment -
-        annualData.principalRepayment
+        annualData.principalRepayment,
     });
   }
 
@@ -589,12 +593,12 @@ export const tableParse = data => {
       summaryData.opex -
       summaryData.sellingCost -
       summaryData.loanInstallment -
-      summaryData.principalRepayment
+      summaryData.principalRepayment,
   });
   return tableData;
 };
 
-export const developerMOCCalculation = data => {
+export const developerMOCCalculation = (data) => {
   const summaryData = reducerHelper(data);
 
   const preProfit = summaryData.preFinanceCashflow;
@@ -611,12 +615,12 @@ export const developerMOCCalculation = data => {
 
   return {
     preFinance: preProfit / preCost,
-    postFinance: postProfit / postCost
+    postFinance: postProfit / postCost,
   };
 };
 
-export const fundingChartParse = data => {
-  const labels = data.map(c => c.month);
+export const fundingChartParse = (data) => {
+  const labels = data.map((c) => c.month);
   const cumulativeEquity = data.reduce((acc, c) => {
     acc.push(
       Math.round(c.equitySource - c.equityWithdraw) +
@@ -644,7 +648,7 @@ export const fundingChartParse = data => {
           pointBackgroundColor: "#75539e",
           borderColor: "#75539e",
           pointHighlightStroke: "#75539e",
-          borderCapStyle: "butt"
+          borderCapStyle: "butt",
         },
         {
           data: [...cumulativeDebt],
@@ -654,10 +658,10 @@ export const fundingChartParse = data => {
           pointBackgroundColor: "#3282bf",
           borderColor: "#3282bf",
           pointHighlightStroke: "#3282bf",
-          borderCapStyle: "butt"
-        }
+          borderCapStyle: "butt",
+        },
       ],
-      labels: [...labels]
+      labels: [...labels],
     },
     options: {
       maintainAspectRatio: false,
@@ -666,21 +670,21 @@ export const fundingChartParse = data => {
           {
             ticks: {
               // Include a dollar sign in the ticks
-              callback: value => {
+              callback: (value) => {
                 return currencyFormatter.format(value);
-              }
+              },
             },
-            stacked: true
-          }
+            stacked: true,
+          },
         ],
         xAxes: [
           {
             scaleLabel: {
               display: true,
-              labelString: "Month"
-            }
-          }
-        ]
+              labelString: "Month",
+            },
+          },
+        ],
       },
       tooltips: {
         callbacks: {
@@ -689,10 +693,10 @@ export const fundingChartParse = data => {
           },
           label: (tooltipItem, data) => {
             return currencyFormatter.format(tooltipItem.yLabel);
-          }
-        }
-      }
-    }
+          },
+        },
+      },
+    },
   };
   return dataObject;
 };

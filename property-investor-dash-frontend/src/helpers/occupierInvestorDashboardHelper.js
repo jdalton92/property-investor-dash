@@ -14,7 +14,7 @@ export const occupierInvestorCalculation = ({
   recurringCosts,
   rentalYield,
   investor,
-  inflation
+  inflation,
 }) => {
   // If value undefined then default to zero
   // All other inputs are required
@@ -71,16 +71,19 @@ export const occupierInvestorCalculation = ({
           (Math.pow(1 + r / 12, n) - 1);
 
     const annualOverPayment = overPayments
-      .filter(p => parseInt(p.year) * 12 === i + 1)
+      .filter((p) => parseInt(p.year) * 12 === i + 1)
       .reduce((a, b) => a + b.payment, 0);
 
-    const loanInstallment =
-      monthlyRepayment + annualOverPayment > openingBalanceInterest
-        ? openingBalanceInterest
-        : monthlyRepayment + annualOverPayment;
+    let loanInstallment = 0;
+    if (i <= homeloanTerm * 12 - 1) {
+      loanInstallment =
+        monthlyRepayment + annualOverPayment > openingBalanceInterest
+          ? openingBalanceInterest
+          : monthlyRepayment + annualOverPayment;
+    }
 
     const principalRepayment =
-      i === homeloanTerm * 12 - 1
+      i === homeloanTerm * 12 - 1 || i === t - 1
         ? openingBalanceInterest - loanInstallment
         : null;
 
@@ -125,14 +128,14 @@ export const occupierInvestorCalculation = ({
       loanInstallment,
       principalRepayment,
       closingBalance,
-      postFinanceCashflow
+      postFinanceCashflow,
     });
   }
   return monthSummary;
 };
 
-export const cumulativeChartParse = data => {
-  const labels = data.map(c => c.month);
+export const cumulativeChartParse = (data) => {
+  const labels = data.map((c) => c.month);
   const cumulativeCashflow = data.reduce((acc, c) => {
     acc.push(
       c.postFinanceCashflow + (acc.length > 0 ? acc[acc.length - 1] : 0)
@@ -150,10 +153,10 @@ export const cumulativeChartParse = data => {
           pointBackgroundColor: "#3282bf",
           borderColor: "#3282bf",
           pointHighlightStroke: "#3282bf",
-          borderCapStyle: "butt"
-        }
+          borderCapStyle: "butt",
+        },
       ],
-      labels: [...labels]
+      labels: [...labels],
     },
     options: {
       maintainAspectRatio: false,
@@ -162,20 +165,20 @@ export const cumulativeChartParse = data => {
           {
             ticks: {
               // Include a dollar sign in the ticks
-              callback: value => {
+              callback: (value) => {
                 return currencyFormatter.format(value);
-              }
-            }
-          }
+              },
+            },
+          },
         ],
         xAxes: [
           {
             scaleLabel: {
               display: true,
-              labelString: "Month"
-            }
-          }
-        ]
+              labelString: "Month",
+            },
+          },
+        ],
       },
       tooltips: {
         callbacks: {
@@ -184,18 +187,18 @@ export const cumulativeChartParse = data => {
           },
           beforeTitle: (tooltipItem, object) => {
             return "Month";
-          }
-        }
+          },
+        },
       },
       legend: {
-        display: false
-      }
-    }
+        display: false,
+      },
+    },
   };
   return dataObject;
 };
 
-export const cardParse = data => {
+export const cardParse = (data) => {
   const summaryData = reducerHelper(data);
 
   const dataObject = {
@@ -204,20 +207,20 @@ export const cardParse = data => {
     opex: summaryData.opex,
     mortgageInterest: summaryData.interest,
     mortgagePayment: summaryData.loanInstallment,
-    profit: summaryData.postFinanceCashflow
+    profit: summaryData.postFinanceCashflow,
   };
 
   return dataObject;
 };
 
-export const tableParse = data => {
+export const tableParse = (data) => {
   let tableData = {
     summaryCashflow: [],
-    annualCashflow: []
+    annualCashflow: [],
   };
 
   for (let i = 1; i <= Math.ceil(data.length / 12); i++) {
-    const annualData = reducerHelper(data.filter(d => d.year === i));
+    const annualData = reducerHelper(data.filter((d) => d.year === i));
 
     tableData.annualCashflow.push({
       year: i,
@@ -237,7 +240,7 @@ export const tableParse = data => {
         annualData.opex -
         annualData.sellingCost -
         annualData.loanInstallment -
-        annualData.principalRepayment
+        annualData.principalRepayment,
     });
   }
 
@@ -261,14 +264,14 @@ export const tableParse = data => {
       summaryData.opex -
       summaryData.sellingCost -
       summaryData.loanInstallment -
-      summaryData.principalRepayment
+      summaryData.principalRepayment,
   });
   return tableData;
 };
 
-export const occupierInvestorMOCCalculation = data => {
+export const occupierInvestorMOCCalculation = (data) => {
   const summaryData = data.reduce((accumulator, item) => {
-    Object.keys(item).forEach(key => {
+    Object.keys(item).forEach((key) => {
       accumulator[key] = (accumulator[key] || 0) + item[key];
     });
     return accumulator;
