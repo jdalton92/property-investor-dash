@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { initUser } from "./reducers/userReducer";
-import ReactGA from "react-ga";
 import "./components/styles/App.css";
 
 import ScrollToTopControlller from "./components/ScrollToTopControlller";
@@ -27,12 +26,6 @@ const App = (props) => {
     props.initUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // Init Google Analytics
-  if (process.env.NODE_ENV === "production") {
-    ReactGA.initialize("UA-158975814-1");
-    ReactGA.pageview(window.location.pathname + window.location.search);
-  }
 
   return (
     <>
