@@ -1,4 +1,5 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 
 //Reducers
@@ -15,9 +16,9 @@ const reducer = combineReducers({
   values: formReducer,
   dashboards: dashboardReducer,
   navigation: navigationReducer,
-  contact: contactReducer
+  contact: contactReducer,
 });
 
-const store = createStore(reducer, applyMiddleware(thunk));
+const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
 
 export default store;

@@ -5,6 +5,7 @@ import { initUser } from "./reducers/userReducer";
 import "./components/styles/App.css";
 
 import ScrollToTopControlller from "./components/ScrollToTopControlller";
+import CustomRoute from "./components/CustomRoute";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 import Home from "./components/Home";
 import Login from "./components/Login";
@@ -66,20 +67,11 @@ const App = (props) => {
               path="/developer/dashboard"
               render={() => <DeveloperDashboard />}
             />
-
-            {props.user.data.username ? (
-              <>
-                <Route
-                  path="/saved-dashboards"
-                  render={() => <SavedDashboards />}
-                />
-                <Route path="/settings" render={() => <Settings />} />
-              </>
-            ) : (
-              <>
-                <Login />
-              </>
-            )}
+            <CustomRoute
+              path="/saved-dashboards"
+              render={() => <SavedDashboards />}
+            />
+            <CustomRoute path="/settings" render={() => <Settings />} />
           </Switch>
           <UserTypeModal />
           <SaveDashboardModal />
