@@ -16,20 +16,19 @@ const SavedDashboards = (props) => {
 
   const history = useHistory();
 
-  const handleView = async (dashboard) => {
-    await props.setDashboard(dashboard);
+  const handleView = (dashboard) => {
     if (dashboard.values.type === "developer") {
-      history.push("/developer/dashboard");
+      history.push(`/developer/dash/${d._id}`);
     } else if (
       dashboard.values.type === "occupierInvestor" &&
       dashboard.values.investor
     ) {
-      history.push("/investor/dashboard");
+      history.push(`/investor/dash/${d._id}`);
     } else if (
       dashboard.values.type === "occupierInvestor" &&
       !dashboard.values.investor
     ) {
-      history.push("/owner-occupier/dashboard");
+      history.push(`/occupier/dash/${d._id}`);
     }
   };
 

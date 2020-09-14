@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import CalculatorFormTooltip from "../CalculatorForms/CalculatorFormTooltip";
 import { editDashboard } from "../../reducers/dashboardReducer";
 import { setCashflow, setModal } from "../../reducers/navigationReducer";
@@ -21,11 +21,34 @@ import { Table, Card, ListGroup, Button } from "react-bootstrap";
 import "../styles/Dashboard.css";
 
 const OccupierInvestorDashboard = (props) => {
+  const id = useParams().id;
   const history = useHistory();
-  const rawData = occupierInvestorCalculation(props.values.values);
-  const chartData = cumulativeChartParse(rawData);
-  const tableData = tableParse(rawData);
-  const cardData = cardParse(rawData);
+
+  const occupier = history.location.pathname.includes("occupier");
+  const userType = occupier ? "ownerOccupier" : "investor";
+
+  let rawData;
+  let chartData;
+  let tableData;
+  let cardData;
+
+  useEffect(() => {
+    if (id) {
+      // FETCH VALUES FROM BACKEND
+    }
+    if (props.values.values) {
+      rawData = occupierInvestorCalculation(props.values.values);
+      chartData = cumulativeChartParse(rawData);
+      tableData = tableParse(rawData);
+      cardData = cardParse(rawData);
+    } else {
+      if (occupier) {
+        history.push("/owner-occupier");
+      } else {
+        history.push("/investor");
+      }
+    }
+  }, []);
 
   const handleSave = (e) => {
     e.preventDefault();
@@ -34,16 +57,21 @@ const OccupierInvestorDashboard = (props) => {
 
   const handleEdit = (e) => {
     e.preventDefault();
-    props.editDashboard();
-    if (props.values.values.investor) {
-      history.replace("/investor");
+    if (id) {
+      if (props.values.values.investor) {
+        history.push(`/investor/edit/${id}`);
+      } else {
+        history.push(`/owner-occupier/edit/${id}`);
+      }
     } else {
-      history.replace("/owner-occupier");
+      props.editDashboard();
+      if (props.values.values.investor) {
+        history.replace("/investor");
+      } else {
+        history.replace("/owner-occupier");
+      }
     }
   };
-
-  const occupier = history.location.pathname.includes("occupier");
-  const userType = occupier ? "ownerOccupier" : "investor";
 
   return (
     <section className="dashboard-section">
@@ -179,7 +207,7 @@ const OccupierInvestorDashboard = (props) => {
           </div>
         </div>
         <div
-          className={`dashboard-table-row 
+          className={`dashboard-table-row
                         ${props.cashflowTable[userType] ? "" : "hide"}`}
         >
           <Table striped bordered hover>

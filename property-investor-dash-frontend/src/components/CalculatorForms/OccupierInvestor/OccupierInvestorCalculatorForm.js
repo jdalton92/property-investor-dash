@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Form as FinalForm } from "react-final-form";
 import arrayMutators from "final-form-arrays";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import dashboardService from "../../services/dashboardService";
 import { setValues } from "../../../reducers/formReducer";
 import { setAccordian, setModal } from "../../../reducers/navigationReducer";
 import CalculatorFormModal from "../CalculatorFormModal";
@@ -11,12 +12,26 @@ import OccupierInvestorAdvancedAssumptions from "./OccupierInvestorAdvancedAssum
 import { Form, Button } from "react-bootstrap";
 import "../../styles/CalculatorForm.css";
 
-const OccupierInvestorCalculatorForm = props => {
+const OccupierInvestorCalculatorForm = (props) => {
+  const id = useParams().id;
   const history = useHistory();
+
   const occupier = history.location.pathname.includes("occupier");
   const title = occupier ? "Owner Occupier Inputs" : "Investor Inputs";
 
-  const onSubmit = values => {
+  let initialValues = null;
+
+  useEffect(() => {
+    if (id) {
+      const getDashboard = async () => {
+        initialValues = await dashboardService.getDash(id);
+      };
+      getDashboard();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const onSubmit = (values) => {
     props.setModal("disclaimer");
     if (history.location.pathname.includes("occupier")) {
       props.setValues({ ...values, investor: false, type: "occupierInvestor" });
@@ -24,11 +39,6 @@ const OccupierInvestorCalculatorForm = props => {
       props.setValues({ ...values, investor: true, type: "occupierInvestor" });
     }
   };
-
-  const initialValues =
-    props.values.type === "occupierInvestor" && props.dashboards.isEditing
-      ? props.values
-      : null;
 
   return (
     <section className="calculator-section">
@@ -41,18 +51,18 @@ const OccupierInvestorCalculatorForm = props => {
         <FinalForm
           onSubmit={onSubmit}
           mutators={{
-            ...arrayMutators
+            ...arrayMutators,
           }}
           initialValues={{
-            ...initialValues
+            ...initialValues,
           }}
           render={({
             handleSubmit,
             values,
             form,
             form: {
-              mutators: { push, pop }
-            }
+              mutators: { push, pop },
+            },
           }) => (
             <Form onSubmit={handleSubmit}>
               <div id="accordian accordian1">
@@ -147,18 +157,18 @@ const OccupierInvestorCalculatorForm = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     values: state.values.values,
     dashboards: state.dashboards,
-    navigation: state.navigation
+    navigation: state.navigation,
   };
 };
 
 const mapDispatchToProps = {
   setValues,
   setAccordian,
-  setModal
+  setModal,
 };
 
 export default connect(

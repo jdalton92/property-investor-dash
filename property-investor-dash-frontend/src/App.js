@@ -56,15 +56,42 @@ const App = (props) => {
               render={() => <DeveloperCalculatorForm />}
             />
             <Route
-              path="/owner-occupier/dashboard"
+              exact
+              path="/owner-occupier/edit/:id"
+              render={() => <OccupierInvestorCalculatorForm />}
+            />
+            <Route
+              exact
+              path="/investor/edit/:id"
+              render={() => <OccupierInvestorCalculatorForm />}
+            />
+            <Route
+              exact
+              path="/developer/edit/:id"
+              render={() => <DeveloperCalculatorForm />}
+            />
+            <Route
+              path="/owner-occupier/dash"
               render={() => <OccupierInvestorDashboard />}
             />
             <Route
-              path="/investor/dashboard"
+              path="/investor/dash"
               render={() => <OccupierInvestorDashboard />}
             />
             <Route
-              path="/developer/dashboard"
+              path="/developer/dash"
+              render={() => <DeveloperDashboard />}
+            />
+            <Route
+              path="/owner-occupier/dash/:id"
+              render={() => <OccupierInvestorDashboard />}
+            />
+            <Route
+              path="/investor/dash/:id"
+              render={() => <OccupierInvestorDashboard />}
+            />
+            <Route
+              path="/developer/dash/:id"
               render={() => <DeveloperDashboard />}
             />
             <CustomRoute
