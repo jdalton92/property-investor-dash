@@ -1,38 +1,36 @@
 import dashboardService from "../services/dashboard";
 
-let initialState = { isFetching: false, isEditing: false, data: [] };
+let initialState = { isFetching: false, preSave: true, data: [] };
 
 const dashboardReducer = (state = initialState, action) => {
   switch (action.type) {
     case "DASHBOARD_REQUEST":
       return { ...state, isFetching: true };
     case "DASHBOARD_REQUEST_FAIL":
-      return { ...state, isFetching: false, isEditing: false };
-    case "EDIT_DASHBOARD":
-      return { ...state, isEditing: true };
-    case "EDIT_DASHBOARD_CANCEL":
-      return { ...state, isEditing: false };
+      return { ...state, isFetching: false, preSave: true };
+    case "TEST_DASHBOARD":
+      return { isFetching: false, preSave: true, data: [action.data] };
     case "INIT_DASHBOARDS":
-      return { isFetching: false, isEditing: false, data: [...action.data] };
+      return { isFetching: false, preSave: false, data: [...action.data] };
     case "GET_DASHBOARD":
-      return { isFetching: false, isEditing: false, data: [action.data] };
+      return { isFetching: false, preSave: false, data: [action.data] };
     case "SAVE_DASHBOARD":
       return {
         isFetching: false,
-        isEditing: false,
+        preSave: false,
         data: [...state.data, action.data],
       };
-    case "UPDATE_DASHBOARD":
+    case "UPDATE_DASHBOARDS":
       const dashboardList = state.data.filter((d) => d._id !== action.data._id);
       return {
         isFetching: false,
-        isEditing: false,
+        preSave: false,
         data: [...dashboardList, action.data],
       };
     case "DELETE_DASHBOARD":
       return {
         isFetching: false,
-        isEditing: false,
+        preSave: false,
         data: [...state.data.filter((d) => d._id !== action.id)],
       };
     default:
@@ -94,6 +92,15 @@ export const getDashboard = (id) => {
   };
 };
 
+export const testDashboard = (dashboard) => {
+  return (dispatch) => {
+    dispatch({
+      type: "TEST_DASHBOARD",
+      data: dashboard,
+    });
+  };
+};
+
 export const saveDashboard = (dashboardObject) => {
   return async (dispatch) => {
     dispatch({
@@ -121,14 +128,6 @@ export const saveDashboard = (dashboardObject) => {
   };
 };
 
-export const editDashboard = () => {
-  return (dispatch) => {
-    dispatch({
-      type: "EDIT_DASHBOARD",
-    });
-  };
-};
-
 export const updateDashboard = (dashboardObject) => {
   return async (dispatch) => {
     dispatch({
@@ -138,7 +137,7 @@ export const updateDashboard = (dashboardObject) => {
       const newDash = await dashboardService.updateDash(dashboardObject);
 
       dispatch({
-        type: "UPDATE_DASHBOARD",
+        type: "UPDATE_DASHBOARDS",
         data: newDash,
       });
     } catch (e) {

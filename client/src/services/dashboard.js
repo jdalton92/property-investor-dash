@@ -8,7 +8,6 @@ const getAllDash = async () => {
 };
 
 const getDash = async (id) => {
-  console.log(getConfig());
   const response = await axios.get(`${baseUrl}/${id}`, getConfig());
   return response.data;
 };

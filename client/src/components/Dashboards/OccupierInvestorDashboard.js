@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import CalculatorFormTooltip from "../CalculatorForms/CalculatorFormTooltip";
-import { editDashboard, getDashboard } from "../../reducers/dashboardReducer";
+import { getDashboard } from "../../reducers/dashboardReducer";
 import { setCashflow, setModal } from "../../reducers/navigationReducer";
 import {
   cumulativeChartParse,
@@ -24,12 +24,6 @@ const OccupierInvestorDashboard = (props) => {
   const id = useParams().id;
   const history = useHistory();
 
-  let userType;
-  let rawData;
-  let chartData;
-  let tableData;
-  let cardData;
-
   useEffect(() => {
     if (id) {
       props.getDashboard(id);
@@ -50,7 +44,6 @@ const OccupierInvestorDashboard = (props) => {
         history.push(`/owner-occupier/edit/${id}`);
       }
     } else {
-      props.editDashboard();
       if (props.values.values.investor) {
         history.replace("/investor");
       } else {
@@ -70,14 +63,13 @@ const OccupierInvestorDashboard = (props) => {
       </div>
     );
   } else {
-    console.log(props.values);
-    userType = props.values.data[0].values.investor
+    const userType = props.values.data[0].values.investor
       ? "investor"
       : "ownerOccupier";
-    rawData = occupierInvestorCalculation(props.values.data[0].values);
-    chartData = cumulativeChartParse(rawData);
-    tableData = tableParse(rawData);
-    cardData = cardParse(rawData);
+    const rawData = occupierInvestorCalculation(props.values.data[0].values);
+    const chartData = cumulativeChartParse(rawData);
+    const tableData = tableParse(rawData);
+    const cardData = cardParse(rawData);
     return (
       <section className="dashboard-section">
         <div className="dashboard-header">
@@ -121,16 +113,14 @@ const OccupierInvestorDashboard = (props) => {
                 <ListGroup variant="flush">
                   <ListGroup.Item>
                     Rental Income:{" "}
-                    <b>{currencyFormatter.format(cardData?.rentalIncome)}</b>
+                    <b>{currencyFormatter.format(cardData.rentalIncome)}</b>
                   </ListGroup.Item>
                   <ListGroup.Item>
                     Loan Interest:{" "}
-                    <b>
-                      {currencyFormatter.format(cardData?.mortgageInterest)}
-                    </b>
+                    <b>{currencyFormatter.format(cardData.mortgageInterest)}</b>
                   </ListGroup.Item>
                   <ListGroup.Item>
-                    Profit: <b>{currencyFormatter.format(cardData?.profit)}</b>
+                    Profit: <b>{currencyFormatter.format(cardData.profit)}</b>
                   </ListGroup.Item>
                 </ListGroup>
               </Card>
@@ -141,7 +131,7 @@ const OccupierInvestorDashboard = (props) => {
                     Rental Income:{" "}
                     <b>
                       {currencyFormatter.format(
-                        cardData?.rentalIncome / cardData?.months
+                        cardData.rentalIncome / cardData.months
                       )}
                     </b>
                   </ListGroup.Item>
@@ -149,7 +139,7 @@ const OccupierInvestorDashboard = (props) => {
                     Operating Costs:{" "}
                     <b>
                       {currencyFormatter.format(
-                        cardData?.opex / cardData?.months
+                        cardData.opex / cardData.months
                       )}
                     </b>
                   </ListGroup.Item>
@@ -157,7 +147,7 @@ const OccupierInvestorDashboard = (props) => {
                     Mortgage Payment:{" "}
                     <b>
                       {currencyFormatter.format(
-                        cardData?.mortgagePayment / cardData?.months
+                        cardData.mortgagePayment / cardData.months
                       )}
                     </b>
                   </ListGroup.Item>
@@ -327,7 +317,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   setCashflow,
   setModal,
-  editDashboard,
   getDashboard,
 };
 

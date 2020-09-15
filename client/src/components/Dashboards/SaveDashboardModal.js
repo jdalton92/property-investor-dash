@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { Form as FinalForm, Field } from "react-final-form";
 import { setModal } from "../../reducers/navigationReducer";
 import {
@@ -20,6 +20,7 @@ import { Spinner } from "react-bootstrap";
 import "../styles/SavedDashboardModal.css";
 
 const SaveDashboardModal = (props) => {
+  const id = useParams().id;
   const history = useHistory();
 
   const handleSave = async (saveData) => {
@@ -35,10 +36,7 @@ const SaveDashboardModal = (props) => {
       ...saveData,
     };
 
-    if (
-      props.dashboards.isEditing &&
-      props.dashboards.data.filter((d) => d._id === props.values._id).length > 0
-    ) {
+    if (id) {
       await props.updateDashboard(dashObject);
     } else {
       await props.saveDashboard(dashObject);
@@ -58,7 +56,7 @@ const SaveDashboardModal = (props) => {
     props.setModal("saveDashboard");
   };
 
-  const initialValues = props.dashboards.isEditing ? props.values : null;
+  const initialValues = id ? props.values : null;
 
   return (
     <Modal

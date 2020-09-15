@@ -82,6 +82,7 @@ const App = (props) => {
               )}
             />
             <Route
+              exact
               path="/developer/dash"
               render={() => <DeveloperDashboard />}
             />
