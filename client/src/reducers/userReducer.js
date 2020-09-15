@@ -14,7 +14,7 @@ const userReducer = (state = initialState, action) => {
       return {
         isFetching: false,
         didInvalidate: false,
-        data: action.data
+        data: action.data,
       };
     case "CLEAR_USER":
       return initialState;
@@ -24,7 +24,7 @@ const userReducer = (state = initialState, action) => {
 };
 
 export const initUser = () => {
-  return async dispatch => {
+  return async (dispatch) => {
     try {
       const loggedUserJSON = window.localStorage.getItem("loggedUser");
 
@@ -34,7 +34,7 @@ export const initUser = () => {
 
         dispatch({
           type: "SET_USER",
-          data: user
+          data: user,
         });
       }
     } catch (e) {
@@ -42,34 +42,29 @@ export const initUser = () => {
         type: "SET_NOTIFICATION",
         content: {
           message: e.response.data.error,
-          type: "error"
-        }
+          type: "error",
+        },
       });
-      setTimeout(() => {
-        dispatch({
-          type: "CLEAR_NOTIFICATION"
-        });
-      }, 5000);
     }
   };
 };
 
 export const createUser = ({ username, email, password, checkPassword }) => {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "USER_REQUEST"
+      type: "USER_REQUEST",
     });
     try {
       await userService.create({
         username,
         email,
         password,
-        checkPassword
+        checkPassword,
       });
 
       const user = await loginService.login({
         email,
-        password
+        password,
       });
 
       window.localStorage.setItem("loggedUser", JSON.stringify(user));
@@ -78,55 +73,49 @@ export const createUser = ({ username, email, password, checkPassword }) => {
 
       dispatch({
         type: "SET_USER",
-        data: user
+        data: user,
       });
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
           message: `${username} created`,
-          type: "success"
-        }
+          type: "success",
+        },
       });
     } catch (e) {
       dispatch({
-        type: "USER_REQUEST_FAIL"
+        type: "USER_REQUEST_FAIL",
       });
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
           message: e.response.data.error,
-          type: "danger"
-        }
+          type: "danger",
+        },
       });
-
-      setTimeout(() => {
-        dispatch({
-          type: "CLEAR_NOTIFICATION"
-        });
-      }, 5000);
     }
   };
 };
 
 export const logoutUser = () => {
-  return async dispatch => {
+  return async (dispatch) => {
     destroyToken();
     window.localStorage.removeItem("loggedUser");
     dispatch({
-      type: "CLEAR_USER"
+      type: "CLEAR_USER",
     });
   };
 };
 
 export const loginUser = (email, password) => {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "USER_REQUEST"
+      type: "USER_REQUEST",
     });
     try {
       const user = await loginService.login({
         email,
-        password
+        password,
       });
 
       window.localStorage.setItem("loggedUser", JSON.stringify(user));
@@ -134,24 +123,19 @@ export const loginUser = (email, password) => {
 
       dispatch({
         type: "SET_USER",
-        data: user
+        data: user,
       });
     } catch (e) {
       dispatch({
-        type: "USER_REQUEST_FAIL"
+        type: "USER_REQUEST_FAIL",
       });
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
           message: "wrong username or password",
-          type: "error"
-        }
+          type: "error",
+        },
       });
-      setTimeout(() => {
-        dispatch({
-          type: "CLEAR_NOTIFICATION"
-        });
-      }, 5000);
     }
   };
 };
@@ -163,9 +147,9 @@ export const updateUser = (
   confirmNewPassword,
   id
 ) => {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "USER_REQUEST"
+      type: "USER_REQUEST",
     });
     try {
       const user = await userService.update(
@@ -182,32 +166,27 @@ export const updateUser = (
 
       dispatch({
         type: "SET_USER",
-        data: user
+        data: user,
       });
     } catch (e) {
       dispatch({
-        type: "USER_REQUEST_FAIL"
+        type: "USER_REQUEST_FAIL",
       });
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
           message: e.response.data.error,
-          type: "error"
-        }
+          type: "error",
+        },
       });
-      setTimeout(() => {
-        dispatch({
-          type: "CLEAR_NOTIFICATION"
-        });
-      }, 5000);
     }
   };
 };
 
 export const deleteUser = (password, id) => {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "USER_REQUEST"
+      type: "USER_REQUEST",
     });
     try {
       await userService.deleteUser(password, id);
@@ -216,24 +195,19 @@ export const deleteUser = (password, id) => {
       destroyToken();
 
       dispatch({
-        type: "CLEAR_USER"
+        type: "CLEAR_USER",
       });
     } catch (e) {
       dispatch({
-        type: "USER_REQUEST_FAIL"
+        type: "USER_REQUEST_FAIL",
       });
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
           message: e.response.data.error,
-          type: "error"
-        }
+          type: "error",
+        },
       });
-      setTimeout(() => {
-        dispatch({
-          type: "CLEAR_NOTIFICATION"
-        });
-      }, 5000);
     }
   };
 };

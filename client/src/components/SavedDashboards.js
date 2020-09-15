@@ -18,17 +18,17 @@ const SavedDashboards = (props) => {
 
   const handleView = (dashboard) => {
     if (dashboard.values.type === "developer") {
-      history.push(`/developer/dash/${d._id}`);
+      history.push(`/developer/dash/${dashboard._id}`);
     } else if (
       dashboard.values.type === "occupierInvestor" &&
       dashboard.values.investor
     ) {
-      history.push(`/investor/dash/${d._id}`);
+      history.push(`/investor/dash/${dashboard._id}`);
     } else if (
       dashboard.values.type === "occupierInvestor" &&
       !dashboard.values.investor
     ) {
-      history.push(`/occupier/dash/${d._id}`);
+      history.push(`/occupier/dash/${dashboard._id}`);
     }
   };
 

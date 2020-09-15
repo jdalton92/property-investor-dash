@@ -14,24 +14,26 @@ const dashboardReducer = (state = initialState, action) => {
       return { ...state, isEditing: false };
     case "INIT_DASHBOARDS":
       return { isFetching: false, isEditing: false, data: [...action.data] };
+    case "GET_DASHBOARD":
+      return { isFetching: false, isEditing: false, data: [action.data] };
     case "SAVE_DASHBOARD":
       return {
         isFetching: false,
         isEditing: false,
-        data: [...state.data, action.data]
+        data: [...state.data, action.data],
       };
     case "UPDATE_DASHBOARD":
-      const dashboardList = state.data.filter(d => d._id !== action.data._id);
+      const dashboardList = state.data.filter((d) => d._id !== action.data._id);
       return {
         isFetching: false,
         isEditing: false,
-        data: [...dashboardList, action.data]
+        data: [...dashboardList, action.data],
       };
     case "DELETE_DASHBOARD":
       return {
         isFetching: false,
         isEditing: false,
-        data: [...state.data.filter(d => d._id !== action.id)]
+        data: [...state.data.filter((d) => d._id !== action.id)],
       };
     default:
       return state;
@@ -39,138 +41,144 @@ const dashboardReducer = (state = initialState, action) => {
 };
 
 export const getDashboards = () => {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "DASHBOARD_REQUEST"
+      type: "DASHBOARD_REQUEST",
     });
     try {
       const dashboards = await dashboardService.getAllDash();
 
       dispatch({
         type: "INIT_DASHBOARDS",
-        data: dashboards
+        data: dashboards,
       });
     } catch (e) {
       dispatch({
-        type: "DASHBOARD_REQUEST_FAIL"
+        type: "DASHBOARD_REQUEST_FAIL",
       });
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
           message: e.response.data.error,
-          type: "danger"
-        }
+          type: "danger",
+        },
       });
-
-      setTimeout(() => {
-        dispatch({
-          type: "CLEAR_NOTIFICATION"
-        });
-      }, 5000);
     }
   };
 };
 
-export const saveDashboard = dashboardObject => {
-  return async dispatch => {
+export const getDashboard = (id) => {
+  return async (dispatch) => {
     dispatch({
-      type: "DASHBOARD_REQUEST"
+      type: "DASHBOARD_REQUEST",
+    });
+    try {
+      const dashboard = await dashboardService.getDash(id);
+
+      dispatch({
+        type: "GET_DASHBOARD",
+        data: dashboard,
+      });
+    } catch (e) {
+      dispatch({
+        type: "DASHBOARD_REQUEST_FAIL",
+      });
+      dispatch({
+        type: "SET_NOTIFICATION",
+        content: {
+          message: e.response.data.error,
+          type: "danger",
+        },
+      });
+    }
+  };
+};
+
+export const saveDashboard = (dashboardObject) => {
+  return async (dispatch) => {
+    dispatch({
+      type: "DASHBOARD_REQUEST",
     });
     try {
       const newDash = await dashboardService.saveDash(dashboardObject);
 
       dispatch({
         type: "SAVE_DASHBOARD",
-        data: newDash
+        data: newDash,
       });
     } catch (e) {
       dispatch({
-        type: "DASHBOARD_REQUEST_FAIL"
+        type: "DASHBOARD_REQUEST_FAIL",
       });
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
           message: e.response.data.error,
-          type: "danger"
-        }
+          type: "danger",
+        },
       });
-      setTimeout(() => {
-        dispatch({
-          type: "CLEAR_NOTIFICATION"
-        });
-      }, 5000);
     }
   };
 };
 
 export const editDashboard = () => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
-      type: "EDIT_DASHBOARD"
+      type: "EDIT_DASHBOARD",
     });
   };
 };
 
-export const updateDashboard = dashboardObject => {
-  return async dispatch => {
+export const updateDashboard = (dashboardObject) => {
+  return async (dispatch) => {
     dispatch({
-      type: "DASHBOARD_REQUEST"
+      type: "DASHBOARD_REQUEST",
     });
     try {
       const newDash = await dashboardService.updateDash(dashboardObject);
 
       dispatch({
         type: "UPDATE_DASHBOARD",
-        data: newDash
+        data: newDash,
       });
     } catch (e) {
       dispatch({
-        type: "DASHBOARD_REQUEST_FAIL"
+        type: "DASHBOARD_REQUEST_FAIL",
       });
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
           message: e.response.data.error,
-          type: "danger"
-        }
+          type: "danger",
+        },
       });
-      setTimeout(() => {
-        dispatch({
-          type: "CLEAR_NOTIFICATION"
-        });
-      }, 5000);
     }
   };
 };
 
-export const deleteDashboard = id => {
-  return async dispatch => {
+export const deleteDashboard = (id) => {
+  return async (dispatch) => {
     dispatch({
-      type: "DASHBOARD_REQUEST"
+      type: "DASHBOARD_REQUEST",
     });
     try {
       await dashboardService.removeDash(id);
 
       dispatch({
         type: "DELETE_DASHBOARD",
-        id
+        id,
       });
     } catch (e) {
       dispatch({
-        type: "DASHBOARD_REQUEST_FAIL"
+        type: "DASHBOARD_REQUEST_FAIL",
       });
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
           message: e.response.data.error,
-          type: "danger"
-        }
+          type: "danger",
+        },
       });
-      setTimeout(() => {
-        dispatch({
-          type: "CLEAR_NOTIFICATION"
-        });
-      }, 5000);
     }
   };
 };

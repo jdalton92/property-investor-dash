@@ -1,3 +1,9 @@
+.dashboard-spinner-container {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+}
+
 .dashboard-section {
   display: flex;
   padding-left: 10%;

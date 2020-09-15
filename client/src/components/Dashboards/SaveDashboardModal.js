@@ -5,43 +5,39 @@ import { Form as FinalForm, Field } from "react-final-form";
 import { setModal } from "../../reducers/navigationReducer";
 import {
   saveDashboard,
-  updateDashboard
+  updateDashboard,
 } from "../../reducers/dashboardReducer";
 import { setDashboard } from "../../reducers/formReducer";
-import {
-  setNotification,
-  clearNotification
-} from "../../reducers/notificationReducer";
+import { setNotification } from "../../reducers/notificationReducer";
 import { Modal, Button, Form } from "react-bootstrap";
 import {
   composeValidators,
   required,
   maxLength,
-  minLength
+  minLength,
 } from "../../helpers/formValidatorHelper";
 import { Spinner } from "react-bootstrap";
 import "../styles/SavedDashboardModal.css";
 
-const SaveDashboardModal = props => {
+const SaveDashboardModal = (props) => {
   const history = useHistory();
 
-  const handleSave = async saveData => {
+  const handleSave = async (saveData) => {
     // React Final Form handles preventDefault()
     if (!props.user.data.username) {
       props.setModal("saveDashboard");
       props.setNotification("Please login to save dashboard", "danger");
-      setTimeout(() => props.clearNotification(), 7500);
       return;
     }
 
     const dashObject = {
       values: props.values.values,
-      ...saveData
+      ...saveData,
     };
 
     if (
       props.dashboards.isEditing &&
-      props.dashboards.data.filter(d => d._id === props.values._id).length > 0
+      props.dashboards.data.filter((d) => d._id === props.values._id).length > 0
     ) {
       await props.updateDashboard(dashObject);
     } else {
@@ -57,7 +53,7 @@ const SaveDashboardModal = props => {
     }
   };
 
-  const handleCancel = e => {
+  const handleCancel = (e) => {
     // React Final Form handles preventDefault()
     props.setModal("saveDashboard");
   };
@@ -171,13 +167,13 @@ const SaveDashboardModal = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     values: state.values,
     dashboards: state.dashboards,
     saveDashboardModal: state.navigation.modal.saveDashboard,
     user: state.user,
-    requestSuceed: state.navigation.requestSuceed
+    requestSuceed: state.navigation.requestSuceed,
   };
 };
 
@@ -187,7 +183,6 @@ const mapDispatchToProps = {
   saveDashboard,
   updateDashboard,
   setNotification,
-  clearNotification
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SaveDashboardModal);

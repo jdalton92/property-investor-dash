@@ -13,41 +13,31 @@ const contactReducer = (state = initialState, action) => {
   }
 };
 
-export const setMessage = values => {
-  return async dispatch => {
+export const setMessage = (values) => {
+  return async (dispatch) => {
     dispatch({
-      type: "CONTACT_REQUEST"
+      type: "CONTACT_REQUEST",
     });
     try {
       const response = await contactService.sendEmail(values);
       dispatch({
-        type: "MESSAGE_SENT"
+        type: "MESSAGE_SENT",
       });
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
           message: response.message,
-          type: "success"
-        }
+          type: "success",
+        },
       });
-      setTimeout(() => {
-        dispatch({
-          type: "CLEAR_NOTIFICATION"
-        });
-      }, 7500);
     } catch (e) {
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
           message: e.response,
-          type: "danger"
-        }
+          type: "danger",
+        },
       });
-      setTimeout(() => {
-        dispatch({
-          type: "CLEAR_NOTIFICATION"
-        });
-      }, 7500);
     }
   };
 };

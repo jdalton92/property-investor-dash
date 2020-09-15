@@ -14,8 +14,8 @@ import Contact from "./components/Contact";
 import CreateUser from "./components/CreateUser";
 import Settings from "./components/Settings";
 import SavedDashboards from "./components/SavedDashboards";
-import OccupierInvestorCalculatorForm from "./components/CalculatorForms/OccupierInvestor/OccupierInvestorCalculatorForm";
-import DeveloperCalculatorForm from "./components/CalculatorForms/Developer/DeveloperCalculatorForm";
+import OccupierInvestorInputs from "./components/CalculatorForms/OccupierInvestor/OccupierInvestorInputs";
+import DeveloperInputs from "./components/CalculatorForms/Developer/DeveloperInputs";
 import DeveloperDashboard from "./components/Dashboards/DeveloperDashboard";
 import OccupierInvestorDashboard from "./components/Dashboards/OccupierInvestorDashboard";
 import UserTypeModal from "./components/UserTypeModal";
@@ -43,40 +43,43 @@ const App = (props) => {
             <Route
               exact
               path="/owner-occupier"
-              render={() => <OccupierInvestorCalculatorForm />}
+              render={() => (
+                <OccupierInvestorInputs title="Owner Occupier Inputs" />
+              )}
             />
             <Route
               exact
               path="/investor"
-              render={() => <OccupierInvestorCalculatorForm />}
+              render={() => <OccupierInvestorInputs title="Investor Inputs" />}
             />
+            <Route exact path="/developer" render={() => <DeveloperInputs />} />
             <Route
-              exact
-              path="/developer"
-              render={() => <DeveloperCalculatorForm />}
-            />
-            <Route
-              exact
               path="/owner-occupier/edit/:id"
-              render={() => <OccupierInvestorCalculatorForm />}
+              render={() => (
+                <OccupierInvestorInputs title="Owner-Occupier Inputs" />
+              )}
             />
             <Route
-              exact
               path="/investor/edit/:id"
-              render={() => <OccupierInvestorCalculatorForm />}
+              render={() => <OccupierInvestorInputs title="Investor Inputs" />}
+            />
+            <Route
+              path="/developer/edit/:id"
+              render={() => <DeveloperInputs />}
             />
             <Route
               exact
-              path="/developer/edit/:id"
-              render={() => <DeveloperCalculatorForm />}
-            />
-            <Route
               path="/owner-occupier/dash"
-              render={() => <OccupierInvestorDashboard />}
+              render={() => (
+                <OccupierInvestorDashboard title="Owner-Occupier Dashboard" />
+              )}
             />
             <Route
+              exact
               path="/investor/dash"
-              render={() => <OccupierInvestorDashboard />}
+              render={() => (
+                <OccupierInvestorDashboard title="Investor Dashboard" />
+              )}
             />
             <Route
               path="/developer/dash"
@@ -84,11 +87,15 @@ const App = (props) => {
             />
             <Route
               path="/owner-occupier/dash/:id"
-              render={() => <OccupierInvestorDashboard />}
+              render={() => (
+                <OccupierInvestorDashboard title="Owner-Occupier Dashboard" />
+              )}
             />
             <Route
               path="/investor/dash/:id"
-              render={() => <OccupierInvestorDashboard />}
+              render={() => (
+                <OccupierInvestorDashboard title="Investor Dashboard" />
+              )}
             />
             <Route
               path="/developer/dash/:id"

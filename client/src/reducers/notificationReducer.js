@@ -12,22 +12,19 @@ const notificationReducer = (state = initialState, action) => {
 };
 
 export const setNotification = (message, type) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "SET_NOTIFICATION",
       content: {
         message,
-        type
-      }
+        type,
+      },
     });
-  };
-};
-
-export const clearNotification = () => {
-  return dispatch => {
-    dispatch({
-      type: "CLEAR_NOTIFICATION"
-    });
+    setTimeout(() => {
+      dispatch({
+        type: "CLEAR_NOTIFICATION",
+      });
+    }, 5000);
   };
 };
 

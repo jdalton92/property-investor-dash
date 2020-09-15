@@ -7,17 +7,18 @@ const getAllDash = async () => {
   return response.data;
 };
 
-const getDash = async id => {
+const getDash = async (id) => {
+  console.log(getConfig());
   const response = await axios.get(`${baseUrl}/${id}`, getConfig());
   return response.data;
 };
 
-const saveDash = async newObject => {
+const saveDash = async (newObject) => {
   const response = await axios.post(baseUrl, newObject, getConfig());
   return response.data;
 };
 
-const updateDash = async newObject => {
+const updateDash = async (newObject) => {
   const response = await axios.put(
     `${baseUrl}/${newObject._id}`,
     newObject,
@@ -26,7 +27,7 @@ const updateDash = async newObject => {
   return response.data;
 };
 
-const removeDash = async id => {
+const removeDash = async (id) => {
   const response = await axios.delete(`${baseUrl}/${id}`, getConfig());
   return response.data;
 };
@@ -36,5 +37,5 @@ export default {
   getDash,
   saveDash,
   updateDash,
-  removeDash
+  removeDash,
 };
