@@ -2,17 +2,24 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getDashboards, deleteDashboard } from "../reducers/dashboardReducer";
-import { setDashboard } from "../reducers/formReducer";
 import { dashboardType, formatDate } from "../helpers/dashboardHelper";
 import { setNotification } from "../reducers/notificationReducer";
 import { Table, Button, Spinner } from "react-bootstrap";
 import "./styles/SavedDashboards.css";
 
-const SavedDashboards = (props) => {
+const SavedDashboards = ({
+  getDashboards,
+  deleteDashboard,
+  setNotification,
+  dashboards,
+  user,
+}) => {
   useEffect(() => {
-    props.getDashboards();
+    if (!user.isFetching) {
+      getDashboards();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [user.isFetching]);
 
   const history = useHistory();
 
@@ -34,8 +41,8 @@ const SavedDashboards = (props) => {
 
   const handleDelete = async (dashboard) => {
     if (window.confirm(`Delete dashboard ${dashboard.description}?`)) {
-      await props.deleteDashboard(dashboard._id);
-      props.setNotification(`${dashboard.description} deleted`, "success");
+      await deleteDashboard(dashboard._id);
+      setNotification(`${dashboard.description} deleted`, "success");
     }
   };
 
@@ -48,7 +55,7 @@ const SavedDashboards = (props) => {
           </h1>
         </div>
         <div className="saved-dashboard-table-container">
-          {props.dashboards.isFetching ? (
+          {dashboards.isFetching || user.isFetching ? (
             <div className="saved-dashboards-loader-wrapper">
               <Spinner
                 className="loading-spinner"
@@ -56,7 +63,7 @@ const SavedDashboards = (props) => {
                 variant="primary"
               />
             </div>
-          ) : props.dashboards.data.length === 0 ? (
+          ) : dashboards.data.length === 0 ? (
             <h2 className="saved-dashboard-subheader">No saved Dashboards</h2>
           ) : (
             <Table
@@ -77,7 +84,7 @@ const SavedDashboards = (props) => {
                 </tr>
               </thead>
               <tbody>
-                {props.dashboards.data.map((d, i) => (
+                {dashboards.data.map((d, i) => (
                   <tr className="saved-dashboard-row" key={d._id}>
                     <td className="saved-dashboard-mobile">{i + 1}</td>
                     <td>{d.description}</td>
@@ -124,7 +131,6 @@ const SavedDashboards = (props) => {
 const mapStateToProps = (state) => {
   return {
     dashboards: state.dashboards,
-    values: state.values,
     user: state.user,
   };
 };
@@ -132,7 +138,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   getDashboards,
   deleteDashboard,
-  setDashboard,
   setNotification,
 };
 

@@ -8,16 +8,16 @@ import {
   required,
   minLength,
   isEmail,
-  composeValidators
+  composeValidators,
 } from "../helpers/formValidatorHelper";
 import { Button, Spinner } from "react-bootstrap";
 import "./styles/Form.css";
 
-const CreateUser = props => {
+const CreateUser = ({ createUser, user }) => {
   const history = useHistory();
-  const onSubmit = async values => {
+  const onSubmit = async (values) => {
     // React final form handles e.preventDefault()
-    await props.createUser(values);
+    await createUser(values);
     history.push("/");
   };
 
@@ -28,9 +28,9 @@ const CreateUser = props => {
           <h1>Create Account</h1>
         </div>
         <div className="form-inner-container">
-          {props.user.data.username ? (
+          {user.data.username ? (
             <i className="form-message">Log out to create new account</i>
-          ) : props.user.isFetching ? (
+          ) : user.isFetching ? (
             <Spinner
               className="loading-spinner"
               animation="border"
@@ -38,7 +38,7 @@ const CreateUser = props => {
             />
           ) : (
             <FinalForm
-              validate={values => {
+              validate={(values) => {
                 const errors = {};
                 if (!values.checkPassword) {
                   errors.checkPassword = "Required";
@@ -152,15 +152,15 @@ const CreateUser = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
   };
 };
 
 const mapDispatchToProps = {
   createUser,
-  setNotification
+  setNotification,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateUser);

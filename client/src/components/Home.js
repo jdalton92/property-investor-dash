@@ -11,7 +11,7 @@ import firstHomeBuyer from "./styles/images/card-first-home-buyer.png";
 import investor from "./styles/images/card-investor.png";
 import owner from "./styles/images/card-owner.png";
 
-const Home = (props) => {
+const Home = ({ setModal }) => {
   const history = useHistory();
   const handleClick = (e) => {
     e.preventDefault();
@@ -19,7 +19,7 @@ const Home = (props) => {
   };
   const handleModal = (e) => {
     e.preventDefault();
-    props.setModal("userType");
+    setModal("userType");
   };
 
   return (

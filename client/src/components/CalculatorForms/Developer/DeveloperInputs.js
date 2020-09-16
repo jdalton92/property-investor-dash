@@ -14,22 +14,29 @@ import DeveloperAdvancedAssumptions from "./DeveloperAdvancedAssumptions";
 import { Form, Button, Spinner } from "react-bootstrap";
 import "../../styles/CalculatorForm.css";
 
-const DeveloperCalculatorForm = (props) => {
+const DeveloperCalculatorForm = ({
+  getDashboard,
+  setModal,
+  testDashboard,
+  dashboards,
+  navigation,
+  isUserFetching,
+}) => {
   const id = useParams().id;
 
   useEffect(() => {
-    if (id && !props.values.preSave) {
-      props.getDashboard(id);
+    if (id && !dashboards.preSave && !isUserFetching) {
+      getDashboard(id);
     }
-  }, [id]);
+  }, [id, isUserFetching]);
 
   const onSubmit = (values) => {
-    props.setModal("disclaimer");
+    setModal("disclaimer");
     values.type = "developer";
-    props.testDashboard(values);
+    testDashboard(values);
   };
 
-  if (props.values.isFetching || !props.values.data[0]) {
+  if (dashboards.isFetching || !dashboards.data[0] || isUserFetching) {
     return (
       <div className="dashboard-spinner-container">
         <Spinner
@@ -41,7 +48,7 @@ const DeveloperCalculatorForm = (props) => {
     );
   } else {
     const initialValues =
-      props.values.preSave || id ? props.values.data[0].values : null;
+      dashboards.preSave || id ? dashboards.data[0].values : null;
     return (
       <section className="calculator-section">
         <div className="header-container">
@@ -73,9 +80,7 @@ const DeveloperCalculatorForm = (props) => {
                       <h5 className="mb-0">
                         <button
                           type="button"
-                          onClick={() =>
-                            props.setAccordian("developer", "standard")
-                          }
+                          onClick={() => setAccordian("developer", "standard")}
                           className="btn btn-link"
                           data-toggle="collapse"
                           data-target="#collapseOne"
@@ -90,7 +95,7 @@ const DeveloperCalculatorForm = (props) => {
                     <div
                       id="collapseOne"
                       className={
-                        props.navigation.accordianShow.developer.standard
+                        navigation.accordianShow.developer.standard
                           ? "collapse show"
                           : "collapse"
                       }
@@ -106,9 +111,7 @@ const DeveloperCalculatorForm = (props) => {
                     <h5 className="mb-0">
                       <button
                         type="button"
-                        onClick={() =>
-                          props.setAccordian("developer", "advanced")
-                        }
+                        onClick={() => setAccordian("developer", "advanced")}
                         className="btn btn-link collapsed"
                         data-toggle="collapse"
                         data-target="#collapseTwo"
@@ -122,7 +125,7 @@ const DeveloperCalculatorForm = (props) => {
                   <div
                     id="collapseTwo"
                     className={
-                      props.navigation.accordianShow.developer.advanced
+                      navigation.accordianShow.developer.advanced
                         ? "collapse show"
                         : "collapse"
                     }
@@ -161,8 +164,9 @@ const DeveloperCalculatorForm = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    values: state.dashboards,
+    dashboards: state.dashboards,
     navigation: state.navigation,
+    isUserFetching: state.user.isFetching,
   };
 };
 

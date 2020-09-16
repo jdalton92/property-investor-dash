@@ -7,15 +7,15 @@ import {
   required,
   minLength,
   isEmail,
-  composeValidators
+  composeValidators,
 } from "../helpers/formValidatorHelper";
 import { Button, Spinner } from "react-bootstrap";
 import "./styles/Form.css";
 
-const Login = props => {
+const Login = ({ loginUser, user }) => {
   const history = useHistory();
-  const onSubmit = async values => {
-    await props.loginUser(values.email, values.password);
+  const onSubmit = async (values) => {
+    await loginUser(values.email, values.password);
     history.push("/saved-dashboards");
   };
 
@@ -26,13 +26,7 @@ const Login = props => {
           <h1>Login</h1>
         </div>
         <div className="form-inner-container">
-          {props.user.isFetching ? (
-            <Spinner
-              className="loading-spinner"
-              animation="border"
-              variant="primary"
-            />
-          ) : props.user.data.username ? (
+          {user.data.username ? (
             <i className="form-element logged-in">User already logged in</i>
           ) : (
             <FinalForm
@@ -103,14 +97,14 @@ const Login = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
   };
 };
 
 const mapDispatchToProps = {
-  loginUser
+  loginUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

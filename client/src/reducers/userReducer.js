@@ -2,18 +2,17 @@ import loginService from "../services/login";
 import { setToken, destroyToken } from "../helpers/tokenHelper";
 import userService from "../services/user";
 
-const initialState = { isFetching: false, didInvalidate: false, data: {} };
+const initialState = { isFetching: true, data: {} };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case "USER_REQUEST":
-      return { ...state, isFetching: true, didInvalidate: true };
+      return { ...state, isFetching: true };
     case "USER_REQUEST_FAIL":
-      return { ...state, isFetching: false, didInvalidate: true };
+      return { ...state, isFetching: false };
     case "SET_USER":
       return {
         isFetching: false,
-        didInvalidate: false,
         data: action.data,
       };
     case "CLEAR_USER":
@@ -25,6 +24,9 @@ const userReducer = (state = initialState, action) => {
 
 export const initUser = () => {
   return async (dispatch) => {
+    dispatch({
+      type: "USER_REQUEST",
+    });
     try {
       const loggedUserJSON = window.localStorage.getItem("loggedUser");
 
@@ -35,6 +37,10 @@ export const initUser = () => {
         dispatch({
           type: "SET_USER",
           data: user,
+        });
+      } else {
+        dispatch({
+          type: "USER_REQUEST_FAIL",
         });
       }
     } catch (e) {

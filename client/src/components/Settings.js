@@ -7,39 +7,39 @@ import {
   required,
   minLength,
   isEmail,
-  composeValidators
+  composeValidators,
 } from "../helpers/formValidatorHelper";
 import { Button, Spinner } from "react-bootstrap";
 import "./styles/Form.css";
 
-const Settings = props => {
+const Settings = ({ user, updateUser, deleteUser }) => {
   const userDetails = {
-    username: props.user.data.username,
-    oldEmail: props.user.data.email,
-    id: props.user.data.id
+    username: user.data.username,
+    oldEmail: user.data.email,
+    id: user.data.id,
   };
 
-  const handleEmailChange = async values => {
+  const handleEmailChange = async (values) => {
     // React final form handles e.preventDefault()
     const confirm = window.confirm(
       `Change email from ${userDetails.oldEmail} to ${values.newEmail}?`
     );
     if (confirm) {
-      await props.updateUser({
+      await updateUser({
         newEmail: values.newEmail,
-        ...userDetails
+        ...userDetails,
       });
     }
   };
 
-  const handlePasswordChange = async values => {
+  const handlePasswordChange = async (values) => {
     // React final form handles e.preventDefault()
     const { oldPassword, newPassword, checkPassword } = values;
-    await props.updateUser({
+    await updateUser({
       oldPassword,
       newPassword,
       checkPassword,
-      ...userDetails
+      ...userDetails,
     });
   };
 
@@ -47,13 +47,13 @@ const Settings = props => {
     // React final form handles e.preventDefault()
     const confirm = window.confirm(`Delete ${userDetails.username}?`);
     if (confirm) {
-      await props.deleteUser(password, props.user.id);
+      await deleteUser(password, user.id);
     }
   };
 
   return (
     <section className="form-section" id="create-form-section">
-      {props.user.isFetching ? (
+      {user.isFetching ? (
         <Spinner
           className="loading-spinner"
           animation="border"
@@ -69,7 +69,7 @@ const Settings = props => {
               <div className="form-item">
                 <h5>Existing Email</h5>
                 <div className="form-control" id="existing-email">
-                  {props.user.data.email}
+                  {user.data.email}
                 </div>
               </div>
               <FinalForm
@@ -122,7 +122,7 @@ const Settings = props => {
             <div className="form-inner-container">
               <FinalForm
                 onSubmit={handlePasswordChange}
-                validate={values => {
+                validate={(values) => {
                   const errors = {};
                   if (!values.checkPassword) {
                     errors.checkPassword = "Required";
@@ -258,9 +258,9 @@ const Settings = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
   };
 };
 
@@ -268,7 +268,7 @@ const mapDispatchToProps = {
   createUser,
   updateUser,
   deleteUser,
-  setNotification
+  setNotification,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

@@ -7,7 +7,6 @@ import {
   saveDashboard,
   updateDashboard,
 } from "../../reducers/dashboardReducer";
-import { setDashboard } from "../../reducers/formReducer";
 import { setNotification } from "../../reducers/notificationReducer";
 import { Modal, Button, Form } from "react-bootstrap";
 import {
@@ -19,49 +18,56 @@ import {
 import { Spinner } from "react-bootstrap";
 import "../styles/SavedDashboardModal.css";
 
-const SaveDashboardModal = (props) => {
+const SaveDashboardModal = ({
+  dashboards,
+  user,
+  setModal,
+  setNotification,
+  saveDashboard,
+  updateDashboard,
+  saveDashboardModal,
+}) => {
   const id = useParams().id;
   const history = useHistory();
 
   const handleSave = async (saveData) => {
     // React Final Form handles preventDefault()
-    if (!props.user.data.username) {
-      props.setModal("saveDashboard");
-      props.setNotification("Please login to save dashboard", "danger");
+    if (!user.data.username) {
+      setModal("saveDashboard");
+      setNotification("Please login to save dashboard", "danger");
       return;
     }
 
     const dashObject = {
-      values: props.values.values,
+      values: dashboards.data[0].values,
       ...saveData,
     };
 
     if (id) {
-      await props.updateDashboard(dashObject);
+      await updateDashboard(dashObject);
     } else {
-      await props.saveDashboard(dashObject);
+      await saveDashboard(dashObject);
     }
 
-    props.setDashboard(dashObject);
-    props.setModal("saveDashboard");
+    setModal("saveDashboard");
 
-    if (!props.dashboards.isFetching) {
-      props.setNotification(`${saveData.description} saved`, "success");
+    if (!dashboards.isFetching) {
+      setNotification(`${saveData.description} saved`, "success");
       history.push("/saved-dashboards");
     }
   };
 
   const handleCancel = (e) => {
     // React Final Form handles preventDefault()
-    props.setModal("saveDashboard");
+    setModal("saveDashboard");
   };
 
-  const initialValues = id ? props.values : null;
+  const initialValues = id ? dashboards.data[0].values : null;
 
   return (
     <Modal
-      show={props.saveDashboardModal}
-      onHide={() => props.setModal("saveDashboard")}
+      show={saveDashboardModal}
+      onHide={() => setModal("saveDashboard")}
       size="xl"
       aria-labelledby="contained-modal-title-vcenter"
       centered
@@ -71,7 +77,7 @@ const SaveDashboardModal = (props) => {
           Save Dashboard
         </Modal.Title>
       </Modal.Header>
-      {props.dashboards.isFetching ? (
+      {dashboards.isFetching ? (
         <Modal.Body>
           <Spinner
             className="loading-spinner"
@@ -167,7 +173,6 @@ const SaveDashboardModal = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    values: state.values,
     dashboards: state.dashboards,
     saveDashboardModal: state.navigation.modal.saveDashboard,
     user: state.user,
@@ -177,7 +182,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   setModal,
-  setDashboard,
   saveDashboard,
   updateDashboard,
   setNotification,

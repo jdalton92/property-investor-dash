@@ -14,7 +14,13 @@ import Notification from "./Notification.js";
 import { Button } from "react-bootstrap";
 import "../styles/NavigationBar.css";
 
-const NavigationBar = (props) => {
+const NavigationBar = ({
+  setModal,
+  setDropdown,
+  logoutUser,
+  user,
+  navigation,
+}) => {
   let history = useHistory();
 
   const handleLogoClick = (e) => {
@@ -24,12 +30,12 @@ const NavigationBar = (props) => {
 
   const handleCalculatorClick = (e) => {
     e.preventDefault();
-    props.setModal("userType");
+    setModal("userType");
   };
 
   const handleDropdownClick = (e) => {
     e.preventDefault();
-    props.setDropdown("username");
+    setDropdown("username");
   };
 
   const handleLoginClick = (e) => {
@@ -39,7 +45,7 @@ const NavigationBar = (props) => {
 
   const handleLogout = (e) => {
     e.preventDefault();
-    props.logoutUser();
+    logoutUser();
     history.push("/");
   };
 
@@ -71,7 +77,7 @@ const NavigationBar = (props) => {
           </div>
         </div>
         <div className="navbar-section navbar-links-right">
-          {props.user.data.username ? (
+          {user.data.username ? (
             <>
               <div className="navbar-dropdown-container">
                 <OutsideAlerter>
@@ -79,14 +85,14 @@ const NavigationBar = (props) => {
                     className="navbar-link navbar-dropdown"
                     onClick={handleDropdownClick}
                   >
-                    {props.user.data.username.toUpperCase()}{" "}
+                    {user.data.username.toUpperCase()}{" "}
                     <i className="navbar-arrow-down"></i>
                   </div>
                   <div
                     className={`navbar-dropdown-links ${
-                      props.navigation.dropdown.username ? "" : "hide"
+                      navigation.dropdown.username ? "" : "hide"
                     }`}
-                    onClick={() => props.setDropdown("username")}
+                    onClick={() => setDropdown("username")}
                   >
                     <Link className="dropdown-item" to="/saved-dashboards">
                       Saved Dashboards

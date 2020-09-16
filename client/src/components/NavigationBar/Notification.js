@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 import NotificationAlert from "./NotificationAlert";
 import "../styles/Notification.css";
 
-const Notification = props => {
-  if (props.notification.length > 0) {
+const Notification = ({ notification }) => {
+  if (notification.length > 0) {
     return (
       <section className="notification-section">
-        {props.notification.map((n, i) => (
+        {notification.map((n, i) => (
           <NotificationAlert notification={n} key={i} />
         ))}
       </section>
@@ -17,9 +17,9 @@ const Notification = props => {
   }
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    notification: state.notification
+    notification: state.notification,
   };
 };
 

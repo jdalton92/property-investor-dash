@@ -5,25 +5,23 @@ import { Field } from "react-final-form";
 import { Form, InputGroup } from "react-bootstrap";
 import { composeValidators } from "../helpers/formValidatorHelper";
 
-const FinalFormField = props => {
-  const {
-    title,
-    fieldName,
-    type,
-    validators,
-    placeholder,
-    fieldType,
-    maxLength,
-    min,
-    max,
-    step,
-    prependStart,
-    prependEnd,
-    parseType,
-    readOnly
-  } = props;
-
-  const parse = value => {
+const FinalFormField = ({
+  title,
+  fieldName,
+  type,
+  validators,
+  placeholder,
+  fieldType,
+  maxLength,
+  min,
+  max,
+  step,
+  prependStart,
+  prependEnd,
+  parseType,
+  readOnly,
+}) => {
+  const parse = (value) => {
     if (parseType === "parseInt") {
       return isNaN(parseInt(value)) ? "" : parseInt(value);
     }

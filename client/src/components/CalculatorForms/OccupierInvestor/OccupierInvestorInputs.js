@@ -7,24 +7,29 @@ import OccupierInvestorCalculatorForm from "./OccupierInvestorCalculatorForm";
 import CalculatorFormModal from "../CalculatorFormModal";
 import "../../styles/CalculatorForm.css";
 
-const OccupierInvestorInputs = (props) => {
+const OccupierInvestorInputs = ({
+  title,
+  getDashboard,
+  dashboards,
+  isUserFetching,
+}) => {
   const id = useParams().id;
 
   useEffect(() => {
-    if (id && !props.values.preSave) {
-      props.getDashboard(id);
+    if (id && !dashboards.preSave && !isUserFetching) {
+      getDashboard(id);
     }
-  }, [id]);
+  }, [id, isUserFetching]);
 
   return (
     <section className="calculator-section">
       <div className="header-container">
         <h1>
-          <b>{props.title}</b>
+          <b>{title}</b>
         </h1>
       </div>
       <OccupierInvestorCalculatorForm
-        investor={props.title.toLowerCase().includes("investor")}
+        investor={title.toLowerCase().includes("investor")}
         id={id}
       />
       <CalculatorFormModal />
@@ -34,8 +39,8 @@ const OccupierInvestorInputs = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    values: state.dashboards,
-    navigation: state.navigation,
+    dashboards: state.dashboards,
+    isUserFetching: state.user.isFetching,
   };
 };
 

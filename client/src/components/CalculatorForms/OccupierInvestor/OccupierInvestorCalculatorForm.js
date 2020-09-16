@@ -9,15 +9,24 @@ import OccupierInvestorAdvancedAssumptions from "./OccupierInvestorAdvancedAssum
 import { Form, Button, Spinner } from "react-bootstrap";
 import "../../styles/CalculatorForm.css";
 
-const OccupierInvestorCalculatorForm = (props) => {
+const OccupierInvestorCalculatorForm = ({
+  id,
+  investor,
+  setModal,
+  testDashboard,
+  dashboards,
+  setAccordian,
+  navigation,
+  isUserFetching,
+}) => {
   const onSubmit = (values) => {
-    props.setModal("disclaimer");
-    values.investor = props.investor;
+    setModal("disclaimer");
+    values.investor = investor;
     values.type = "occupierInvestor";
-    props.testDashboard(values);
+    testDashboard(values);
   };
 
-  if (props.values.isFetching || !props.values.data[0]) {
+  if (dashboards.isFetching || !dashboards.data[0] || isUserFetching) {
     return (
       <div className="dashboard-spinner-container">
         <Spinner
@@ -29,7 +38,7 @@ const OccupierInvestorCalculatorForm = (props) => {
     );
   } else {
     const initialValues =
-      props.values.preSave || props.id ? props.values.data[0].values : null;
+      dashboards.preSave || id ? dashboards.data[0].values : null;
     return (
       <div className="calculator-container">
         <FinalForm
@@ -56,7 +65,7 @@ const OccupierInvestorCalculatorForm = (props) => {
                       <button
                         type="button"
                         onClick={() =>
-                          props.setAccordian("ownerOccupier", "standard")
+                          setAccordian("ownerOccupier", "standard")
                         }
                         className="btn btn-link"
                         data-toggle="collapse"
@@ -72,7 +81,7 @@ const OccupierInvestorCalculatorForm = (props) => {
                   <div
                     id="collapseOne"
                     className={
-                      props.navigation.accordianShow.ownerOccupier.standard
+                      navigation.accordianShow.ownerOccupier.standard
                         ? "collapse show"
                         : "collapse"
                     }
@@ -88,9 +97,7 @@ const OccupierInvestorCalculatorForm = (props) => {
                   <h5 className="mb-0">
                     <button
                       type="button"
-                      onClick={() =>
-                        props.setAccordian("ownerOccupier", "advanced")
-                      }
+                      onClick={() => setAccordian("ownerOccupier", "advanced")}
                       className="btn btn-link collapsed"
                       data-toggle="collapse"
                       data-target="#collapseTwo"
@@ -104,7 +111,7 @@ const OccupierInvestorCalculatorForm = (props) => {
                 <div
                   id="collapseTwo"
                   className={
-                    props.navigation.accordianShow.ownerOccupier.advanced
+                    navigation.accordianShow.ownerOccupier.advanced
                       ? "collapse show"
                       : "collapse"
                   }
@@ -142,8 +149,9 @@ const OccupierInvestorCalculatorForm = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    values: state.dashboards,
+    dashboards: state.dashboards,
     navigation: state.navigation,
+    isUserFetching: state.user.isFetching,
   };
 };
 

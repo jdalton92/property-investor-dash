@@ -7,12 +7,12 @@ import "./styles/Form.css";
 import {
   required,
   isEmail,
-  composeValidators
+  composeValidators,
 } from "../helpers/formValidatorHelper";
 
-const Contact = props => {
-  const onSubmit = values => {
-    props.setMessage(values);
+const Contact = ({ setMessage, isFetching }) => {
+  const onSubmit = (values) => {
+    setMessage(values);
   };
 
   return (
@@ -22,7 +22,7 @@ const Contact = props => {
           <h1>Contact</h1>
         </div>
         <div className="form-inner-container">
-          {props.isFetching ? (
+          {isFetching ? (
             <Spinner
               className="loading-spinner"
               animation="border"
@@ -131,14 +131,14 @@ const Contact = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    isFetching: state.contact.isFetching
+    isFetching: state.contact.isFetching,
   };
 };
 
 const mapDispatchToProps = {
-  setMessage
+  setMessage,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Contact);

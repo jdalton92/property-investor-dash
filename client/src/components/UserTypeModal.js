@@ -8,28 +8,28 @@ import ownerOccupierImage from "./styles/images/owner-occupier.jfif";
 import investorImage from "./styles/images/investor.jfif";
 import developerImage from "./styles/images/developer.jfif";
 
-const UserTypeModal = (props) => {
+const UserTypeModal = ({ setModal, userModalShow }) => {
   const history = useHistory();
   const handleOwnerClick = (e) => {
     e.preventDefault();
-    props.setModal("userType");
+    setModal("userType");
     history.push("/owner-occupier/edit");
   };
   const handleInvestorClick = (e) => {
     e.preventDefault();
-    props.setModal("userType");
+    setModal("userType");
     history.push("/investor/edit");
   };
   const handleDeveloperClick = (e) => {
     e.preventDefault();
-    props.setModal("userType");
+    setModal("userType");
     history.push("/developer/edit");
   };
 
   return (
     <Modal
-      show={props.userModalShow}
-      onHide={() => props.setModal("userType")}
+      show={userModalShow}
+      onHide={() => setModal("userType")}
       size="xl"
       aria-labelledby="contained-modal-title-vcenter"
       centered

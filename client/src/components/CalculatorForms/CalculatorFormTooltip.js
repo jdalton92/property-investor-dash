@@ -3,20 +3,20 @@ import { connect } from "react-redux";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import {
   developerTooltipHelper,
-  occupierInvestorTooltipHelper
+  occupierInvestorTooltipHelper,
 } from "../../helpers/tooltipHelper";
 
-const CalculatorFormTooltip = props => {
+const CalculatorFormTooltip = ({ type, input, placement }) => {
   const header =
-    props.type === "developer"
-      ? developerTooltipHelper[props.input].header
-      : occupierInvestorTooltipHelper[props.input].header;
+    type === "developer"
+      ? developerTooltipHelper[input].header
+      : occupierInvestorTooltipHelper[input].header;
   const message =
-    props.type === "developer"
-      ? developerTooltipHelper[props.input].message
-      : occupierInvestorTooltipHelper[props.input].message;
+    type === "developer"
+      ? developerTooltipHelper[input].message
+      : occupierInvestorTooltipHelper[input].message;
 
-  const placement = props.placement ? props.placement : "left";
+  const setPlacement = placement || "left";
 
   const popover = (
     <Popover id="popover-basic">
@@ -26,7 +26,7 @@ const CalculatorFormTooltip = props => {
   );
 
   return (
-    <OverlayTrigger trigger="click" placement={placement} overlay={popover}>
+    <OverlayTrigger trigger="click" placement={setPlacement} overlay={popover}>
       <button type="button" className="input-helper-button">
         ?
       </button>

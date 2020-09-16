@@ -5,12 +5,12 @@ import { setModal } from "../../reducers/navigationReducer";
 import { Modal, Button } from "react-bootstrap";
 import "../styles/CalculatorFormModal.css";
 
-const CalculatorFormModal = (props) => {
+const CalculatorFormModal = ({ setModal, disclaimerModalShow }) => {
   const history = useHistory();
 
   const handleAccept = (e) => {
     e.preventDefault();
-    props.setModal("disclaimer");
+    setModal("disclaimer");
     const pathname = history.location.pathname;
     if (pathname.includes("occupier")) {
       history.push(`/owner-occupier/dash`);
@@ -23,13 +23,13 @@ const CalculatorFormModal = (props) => {
 
   const handleCancel = (e) => {
     e.preventDefault();
-    props.setModal("disclaimer");
+    setModal("disclaimer");
   };
 
   return (
     <Modal
-      show={props.disclaimerModalShow}
-      onHide={() => props.setModal("disclaimer")}
+      show={disclaimerModalShow}
+      onHide={() => setModal("disclaimer")}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered

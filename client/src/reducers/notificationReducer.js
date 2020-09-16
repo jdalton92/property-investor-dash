@@ -1,3 +1,5 @@
+import { v4 as uuid } from "uuid";
+
 const initialState = [];
 
 const notificationReducer = (state = initialState, action) => {
@@ -5,7 +7,7 @@ const notificationReducer = (state = initialState, action) => {
     case "SET_NOTIFICATION":
       return [...state, action.content];
     case "CLEAR_NOTIFICATION":
-      return state.filter((_, i) => i !== state.length - 1);
+      return state.filter((n) => n.id !== action.content.id);
     default:
       return state;
   }
@@ -13,9 +15,11 @@ const notificationReducer = (state = initialState, action) => {
 
 export const setNotification = (message, type) => {
   return (dispatch) => {
+    const id = uuid();
     dispatch({
       type: "SET_NOTIFICATION",
       content: {
+        id,
         message,
         type,
       },
@@ -23,6 +27,9 @@ export const setNotification = (message, type) => {
     setTimeout(() => {
       dispatch({
         type: "CLEAR_NOTIFICATION",
+        content: {
+          id,
+        },
       });
     }, 5000);
   };

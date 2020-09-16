@@ -23,32 +23,41 @@ import { Line } from "react-chartjs-2";
 import { Table, Card, ListGroup, Button, Spinner } from "react-bootstrap";
 import "../styles/Dashboard.css";
 
-const OccupierInvestorDashboard = (props) => {
+const OccupierInvestorDashboard = ({
+  title,
+  dashboards,
+  getDashboard,
+  preSaveDashboard,
+  setModal,
+  cashflowTable,
+  setCashflow,
+  isUserFetching,
+}) => {
   const id = useParams().id;
   const history = useHistory();
 
   useEffect(() => {
-    if (id && !props.values.preSave) {
-      props.getDashboard(id);
+    if (id && !dashboards.preSave && !isUserFetching) {
+      getDashboard(id);
     }
-  }, [id]);
+  }, [id, isUserFetching]);
 
   const handleSave = (e) => {
     e.preventDefault();
-    props.setModal("saveDashboard");
+    setModal("saveDashboard");
   };
 
   const handleEdit = (e) => {
     e.preventDefault();
-    props.preSaveDashboard();
+    preSaveDashboard();
     if (id) {
-      if (props.values.data[0].values.investor) {
+      if (dashboards.data[0].values.investor) {
         history.push(`/investor/edit/${id}`);
       } else {
         history.push(`/owner-occupier/edit/${id}`);
       }
     } else {
-      if (props.values.data[0].values.investor) {
+      if (dashboards.data[0].values.investor) {
         history.replace("/investor/edit");
       } else {
         history.replace("/owner-occupier/edit");
@@ -56,7 +65,7 @@ const OccupierInvestorDashboard = (props) => {
     }
   };
 
-  if (props.values.isFetching || !props.values.data[0]) {
+  if (dashboards.isFetching || !dashboards.data[0] || isUserFetching) {
     return (
       <div className="dashboard-spinner-container">
         <Spinner
@@ -67,10 +76,10 @@ const OccupierInvestorDashboard = (props) => {
       </div>
     );
   } else {
-    const userType = props.values.data[0].values.investor
+    const userType = dashboards.data[0].values.investor
       ? "investor"
       : "ownerOccupier";
-    const rawData = occupierInvestorCalculation(props.values.data[0].values);
+    const rawData = occupierInvestorCalculation(dashboards.data[0].values);
     const chartData = cumulativeChartParse(rawData);
     const tableData = tableParse(rawData);
     const cardData = cardParse(rawData);
@@ -78,7 +87,7 @@ const OccupierInvestorDashboard = (props) => {
       <section className="dashboard-section">
         <div className="dashboard-header">
           <h1>
-            <b>{props.title}</b>
+            <b>{title}</b>
           </h1>
           <Button
             id="dashboard-button"
@@ -202,16 +211,16 @@ const OccupierInvestorDashboard = (props) => {
               <Button
                 id="dashboard-button"
                 className="dashboard-table-button"
-                onClick={() => props.setCashflow(userType)}
+                onClick={() => setCashflow(userType)}
                 variant="primary"
               >
-                {props.cashflowTable[userType] ? "hide" : "show"}
+                {cashflowTable[userType] ? "hide" : "show"}
               </Button>
             </div>
           </div>
           <div
             className={`dashboard-table-row
-                        ${props.cashflowTable[userType] ? "" : "hide"}`}
+                        ${cashflowTable[userType] ? "" : "hide"}`}
           >
             <Table striped bordered hover>
               <thead>
@@ -313,8 +322,9 @@ const OccupierInvestorDashboard = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    values: state.dashboards,
+    dashboards: state.dashboards,
     cashflowTable: state.navigation.cashflowTable,
+    isUserFetching: state.user.isFetching,
   };
 };
 

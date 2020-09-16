@@ -1,13 +1,13 @@
 import dashboardService from "../services/dashboard";
 
-let initialState = { isFetching: false, preSave: true, data: [] };
+let initialState = { isFetching: false, preSave: false, data: [] };
 
 const dashboardReducer = (state = initialState, action) => {
   switch (action.type) {
     case "DASHBOARD_REQUEST":
       return { ...state, isFetching: true };
     case "DASHBOARD_REQUEST_FAIL":
-      return { ...state, isFetching: false, preSave: true };
+      return { ...state, isFetching: false, preSave: false };
     case "TEST_DASHBOARD":
       return {
         isFetching: false,

@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 import { StyledBurger } from "../styles/NavigationBar";
 import { setSidebar } from "../../reducers/navigationReducer";
 
-const Burger = props => {
+const Burger = ({ navigation, setSidebar }) => {
   return (
     <StyledBurger
-      open={props.navigation.sidebarOpen}
-      onClick={() => props.setSidebar(!props.navigation.sidebarOpen)}
+      open={navigation.sidebarOpen}
+      onClick={() => setSidebar(!navigation.sidebarOpen)}
     >
       <div />
       <div />
@@ -16,14 +16,14 @@ const Burger = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    navigation: state.navigation
+    navigation: state.navigation,
   };
 };
 
 const mapDispatchToProps = {
-  setSidebar
+  setSidebar,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Burger);

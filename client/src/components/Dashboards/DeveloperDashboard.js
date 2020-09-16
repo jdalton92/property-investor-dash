@@ -24,24 +24,32 @@ import { Line, Bar } from "react-chartjs-2";
 import { Table, Card, ListGroup, Button, Spinner } from "react-bootstrap";
 import "../styles/Dashboard.css";
 
-const DeveloperDashboard = (props) => {
+const DeveloperDashboard = ({
+  dashboards,
+  getDashboard,
+  preSaveDashboard,
+  setModal,
+  cashflowTable,
+  setCashflow,
+  isUserFetching,
+}) => {
   const id = useParams().id;
   const history = useHistory();
 
   useEffect(() => {
-    if (id && !props.values.preSave) {
-      props.getDashboard(id);
+    if (id && !dashboards.preSave && !isUserFetching) {
+      getDashboard(id);
     }
-  }, [id]);
+  }, [id, isUserFetching]);
 
   const handleSave = (e) => {
     e.preventDefault();
-    props.setModal("saveDashboard");
+    setModal("saveDashboard");
   };
 
   const handleEdit = (e) => {
     e.preventDefault();
-    props.preSaveDashboard();
+    preSaveDashboard();
     if (id) {
       history.push(`/developer/edit/${id}`);
     } else {
@@ -49,7 +57,7 @@ const DeveloperDashboard = (props) => {
     }
   };
 
-  if (props.values.isFetching || !props.values.data[0]) {
+  if (dashboards.isFetching || !dashboards.data[0] || isUserFetching) {
     return (
       <div className="dashboard-spinner-container">
         <Spinner
@@ -60,7 +68,7 @@ const DeveloperDashboard = (props) => {
       </div>
     );
   } else {
-    const rawData = developerCalculation(props.values.data[0].values);
+    const rawData = developerCalculation(dashboards.data[0].values);
     const annualChart = annualChartParse(rawData);
     const cumulativeChart = cumulativeChartParse(rawData);
     const tableData = tableParse(rawData);
@@ -143,7 +151,7 @@ const DeveloperDashboard = (props) => {
                     <b>
                       {currencyFormatter.format(
                         tableData.summaryCashflow[0].totalRevenue /
-                          props.values.data[0].values.dwellings
+                          dashboards.data[0].values.dwellings
                       )}
                     </b>
                   </ListGroup.Item>
@@ -152,7 +160,7 @@ const DeveloperDashboard = (props) => {
                     <b>
                       {currencyFormatter.format(
                         tableData.summaryCashflow[0].totalCostsPreFinance /
-                          props.values.data[0].values.dwellings
+                          dashboards.data[0].values.dwellings
                       )}
                     </b>
                   </ListGroup.Item>
@@ -161,7 +169,7 @@ const DeveloperDashboard = (props) => {
                     <b>
                       {currencyFormatter.format(
                         tableData.summaryCashflow[0].preFinanceCashflow /
-                          props.values.data[0].values.dwellings
+                          dashboards.data[0].values.dwellings
                       )}
                     </b>
                   </ListGroup.Item>
@@ -245,7 +253,7 @@ const DeveloperDashboard = (props) => {
                     <b>
                       {currencyFormatter.format(
                         tableData.summaryCashflow[0].totalRevenue /
-                          props.values.data[0].values.dwellings
+                          dashboards.data[0].values.dwellings
                       )}
                     </b>
                   </ListGroup.Item>
@@ -254,7 +262,7 @@ const DeveloperDashboard = (props) => {
                     <b>
                       {currencyFormatter.format(
                         tableData.summaryCashflow[0].totalCostsPostFinance /
-                          props.values.data[0].values.dwellings
+                          dashboards.data[0].values.dwellings
                       )}
                     </b>
                   </ListGroup.Item>
@@ -263,7 +271,7 @@ const DeveloperDashboard = (props) => {
                     <b>
                       {currencyFormatter.format(
                         tableData.summaryCashflow[0].postFinanceCashflow /
-                          props.values.data[0].values.dwellings
+                          dashboards.data[0].values.dwellings
                       )}
                     </b>
                   </ListGroup.Item>
@@ -340,18 +348,16 @@ const DeveloperDashboard = (props) => {
               <Button
                 id="dashboard-button"
                 className="dashboard-table-button"
-                onClick={() => props.setCashflow("developer", "preFinance")}
+                onClick={() => setCashflow("developer", "preFinance")}
                 variant="primary"
               >
-                {props.cashflowTable.developer.preFinance ? "hide" : "show"}
+                {cashflowTable.developer.preFinance ? "hide" : "show"}
               </Button>
             </div>
           </div>
           <div
             className={`dashboard-table-row
-                        ${
-                          props.cashflowTable.developer.preFinance ? "" : "hide"
-                        }`}
+                        ${cashflowTable.developer.preFinance ? "" : "hide"}`}
           >
             <Table striped bordered hover>
               <thead>
@@ -457,20 +463,16 @@ const DeveloperDashboard = (props) => {
               <Button
                 id="dashboard-button"
                 className="dashboard-table-button"
-                onClick={() => props.setCashflow("developer", "postFinance")}
+                onClick={() => setCashflow("developer", "postFinance")}
                 variant="primary"
               >
-                {props.cashflowTable.developer.postFinance ? "hide" : "show"}
+                {cashflowTable.developer.postFinance ? "hide" : "show"}
               </Button>
             </div>
           </div>
           <div
             className={`dashboard-table-row
-                        ${
-                          props.cashflowTable.developer.postFinance
-                            ? ""
-                            : "hide"
-                        }`}
+                        ${cashflowTable.developer.postFinance ? "" : "hide"}`}
           >
             <Table striped bordered hover>
               <thead>
@@ -579,8 +581,10 @@ const DeveloperDashboard = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    values: state.dashboards,
+    dashboards: state.dashboards,
     cashflowTable: state.navigation.cashflowTable,
+    isUserFetching: state.user.isFetching,
+    user: state.user,
   };
 };
 
