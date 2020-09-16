@@ -5,22 +5,23 @@ import { setModal } from "../../reducers/navigationReducer";
 import { Modal, Button } from "react-bootstrap";
 import "../styles/CalculatorFormModal.css";
 
-const CalculatorFormModal = props => {
+const CalculatorFormModal = (props) => {
   const history = useHistory();
-  const handleAccept = e => {
+
+  const handleAccept = (e) => {
     e.preventDefault();
     props.setModal("disclaimer");
     const pathname = history.location.pathname;
     if (pathname.includes("occupier")) {
-      history.push("/owner-occupier/dashboard");
+      history.push(`/owner-occupier/dash`);
     } else if (pathname.includes("investor")) {
-      history.push("/investor/dashboard");
+      history.push(`/investor/dash`);
     } else if (pathname.includes("developer")) {
-      history.push("/developer/dashboard");
+      history.push(`/developer/dash`);
     }
   };
 
-  const handleCancel = e => {
+  const handleCancel = (e) => {
     e.preventDefault();
     props.setModal("disclaimer");
   };
@@ -82,15 +83,15 @@ const CalculatorFormModal = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    values: state.values,
-    disclaimerModalShow: state.navigation.modal.disclaimer
+    values: state.dashboards,
+    disclaimerModalShow: state.navigation.modal.disclaimer,
   };
 };
 
 const mapDispatchToProps = {
-  setModal
+  setModal,
 };
 
 export default connect(

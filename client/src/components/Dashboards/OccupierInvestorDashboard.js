@@ -2,7 +2,10 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import CalculatorFormTooltip from "../CalculatorForms/CalculatorFormTooltip";
-import { getDashboard } from "../../reducers/dashboardReducer";
+import {
+  getDashboard,
+  preSaveDashboard,
+} from "../../reducers/dashboardReducer";
 import { setCashflow, setModal } from "../../reducers/navigationReducer";
 import {
   cumulativeChartParse,
@@ -25,7 +28,7 @@ const OccupierInvestorDashboard = (props) => {
   const history = useHistory();
 
   useEffect(() => {
-    if (id) {
+    if (id && !props.values.preSave) {
       props.getDashboard(id);
     }
   }, [id]);
@@ -37,17 +40,18 @@ const OccupierInvestorDashboard = (props) => {
 
   const handleEdit = (e) => {
     e.preventDefault();
+    props.preSaveDashboard();
     if (id) {
-      if (props.values.data[0].investor) {
+      if (props.values.data[0].values.investor) {
         history.push(`/investor/edit/${id}`);
       } else {
         history.push(`/owner-occupier/edit/${id}`);
       }
     } else {
-      if (props.values.values.investor) {
-        history.replace("/investor");
+      if (props.values.data[0].values.investor) {
+        history.replace("/investor/edit");
       } else {
-        history.replace("/owner-occupier");
+        history.replace("/owner-occupier/edit");
       }
     }
   };
@@ -318,6 +322,7 @@ const mapDispatchToProps = {
   setCashflow,
   setModal,
   getDashboard,
+  preSaveDashboard,
 };
 
 export default connect(

@@ -13,17 +13,17 @@ const UserTypeModal = (props) => {
   const handleOwnerClick = (e) => {
     e.preventDefault();
     props.setModal("userType");
-    history.push("/owner-occupier");
+    history.push("/owner-occupier/edit");
   };
   const handleInvestorClick = (e) => {
     e.preventDefault();
     props.setModal("userType");
-    history.push("/investor");
+    history.push("/investor/edit");
   };
   const handleDeveloperClick = (e) => {
     e.preventDefault();
     props.setModal("userType");
-    history.push("/developer");
+    history.push("/developer/edit");
   };
 
   return (

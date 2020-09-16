@@ -42,17 +42,21 @@ const App = (props) => {
             <Route path="/login" render={() => <Login />} />
             <Route
               exact
-              path="/owner-occupier"
+              path="/owner-occupier/edit"
               render={() => (
                 <OccupierInvestorInputs title="Owner Occupier Inputs" />
               )}
             />
             <Route
               exact
-              path="/investor"
+              path="/investor/edit"
               render={() => <OccupierInvestorInputs title="Investor Inputs" />}
             />
-            <Route exact path="/developer" render={() => <DeveloperInputs />} />
+            <Route
+              exact
+              path="/developer/edit"
+              render={() => <DeveloperInputs />}
+            />
             <Route
               path="/owner-occupier/edit/:id"
               render={() => (

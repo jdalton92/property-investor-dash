@@ -11,7 +11,7 @@ const OccupierInvestorInputs = (props) => {
   const id = useParams().id;
 
   useEffect(() => {
-    if (id) {
+    if (id && !props.values.preSave) {
       props.getDashboard(id);
     }
   }, [id]);
@@ -34,7 +34,7 @@ const OccupierInvestorInputs = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    dashboards: state.dashboards,
+    values: state.dashboards,
     navigation: state.navigation,
   };
 };

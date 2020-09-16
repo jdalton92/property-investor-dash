@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Form as FinalForm } from "react-final-form";
 import arrayMutators from "final-form-arrays";
-import { setValues } from "../../../reducers/formReducer";
+import { testDashboard } from "../../../reducers/dashboardReducer";
 import { setAccordian, setModal } from "../../../reducers/navigationReducer";
 import OccupierInvestorStandardAssumptions from "./OccupierInvestorStandardAssumptions";
 import OccupierInvestorAdvancedAssumptions from "./OccupierInvestorAdvancedAssumptions";
@@ -12,11 +12,9 @@ import "../../styles/CalculatorForm.css";
 const OccupierInvestorCalculatorForm = (props) => {
   const onSubmit = (values) => {
     props.setModal("disclaimer");
-    props.setValues({
-      ...values,
-      investor: props.investor,
-      type: "occupierInvestor",
-    });
+    values.investor = props.investor;
+    values.type = "occupierInvestor";
+    props.testDashboard(values);
   };
 
   if (props.values.isFetching || !props.values.data[0]) {
@@ -150,7 +148,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  setValues,
+  testDashboard,
   setAccordian,
   setModal,
 };

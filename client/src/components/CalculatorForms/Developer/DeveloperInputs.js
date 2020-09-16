@@ -3,8 +3,10 @@ import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Form as FinalForm } from "react-final-form";
 import arrayMutators from "final-form-arrays";
-import { getDashboard } from "../../../reducers/dashboardReducer";
-import { setValues } from "../../../reducers/formReducer";
+import {
+  getDashboard,
+  testDashboard,
+} from "../../../reducers/dashboardReducer";
 import { setAccordian, setModal } from "../../../reducers/navigationReducer";
 import CalculatorFormModal from "../CalculatorFormModal";
 import DeveloperStandardAssumptions from "./DeveloperStandardAssumptions";
@@ -16,14 +18,15 @@ const DeveloperCalculatorForm = (props) => {
   const id = useParams().id;
 
   useEffect(() => {
-    if (id) {
+    if (id && !props.values.preSave) {
       props.getDashboard(id);
     }
   }, [id]);
 
   const onSubmit = (values) => {
     props.setModal("disclaimer");
-    props.setValues({ ...values, type: "developer" });
+    values.type = "developer";
+    props.testDashboard(values);
   };
 
   if (props.values.isFetching || !props.values.data[0]) {
@@ -164,7 +167,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  setValues,
+  testDashboard,
   setAccordian,
   setModal,
   getDashboard,

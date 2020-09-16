@@ -9,7 +9,13 @@ const dashboardReducer = (state = initialState, action) => {
     case "DASHBOARD_REQUEST_FAIL":
       return { ...state, isFetching: false, preSave: true };
     case "TEST_DASHBOARD":
-      return { isFetching: false, preSave: true, data: [action.data] };
+      return {
+        isFetching: false,
+        preSave: true,
+        data: [{ values: action.data }],
+      };
+    case "PRE_SAVE_DASHBOARD":
+      return { ...state, preSave: true };
     case "INIT_DASHBOARDS":
       return { isFetching: false, preSave: false, data: [...action.data] };
     case "GET_DASHBOARD":
@@ -97,6 +103,14 @@ export const testDashboard = (dashboard) => {
     dispatch({
       type: "TEST_DASHBOARD",
       data: dashboard,
+    });
+  };
+};
+
+export const preSaveDashboard = () => {
+  return (dispatch) => {
+    dispatch({
+      type: "PRE_SAVE_DASHBOARD",
     });
   };
 };

@@ -2,7 +2,10 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { setCashflow, setModal } from "../../reducers/navigationReducer";
-import { getDashboard } from "../../reducers/dashboardReducer";
+import {
+  getDashboard,
+  preSaveDashboard,
+} from "../../reducers/dashboardReducer";
 import CalculatorFormTooltip from "../CalculatorForms/CalculatorFormTooltip";
 import {
   cumulativeChartParse,
@@ -26,7 +29,7 @@ const DeveloperDashboard = (props) => {
   const history = useHistory();
 
   useEffect(() => {
-    if (id) {
+    if (id && !props.values.preSave) {
       props.getDashboard(id);
     }
   }, [id]);
@@ -38,10 +41,11 @@ const DeveloperDashboard = (props) => {
 
   const handleEdit = (e) => {
     e.preventDefault();
+    props.preSaveDashboard();
     if (id) {
       history.push(`/developer/edit/${id}`);
     } else {
-      // TO DO - EDIT DASHBOARD IF NOT SAVED
+      history.push(`/developer/edit`);
     }
   };
 
@@ -584,6 +588,7 @@ const mapDispatchToProps = {
   setCashflow,
   setModal,
   getDashboard,
+  preSaveDashboard,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeveloperDashboard);
