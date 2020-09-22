@@ -23,11 +23,6 @@ const NavigationBar = ({
 }) => {
   let history = useHistory();
 
-  const handleLogoClick = (e) => {
-    e.preventDefault();
-    history.push("/");
-  };
-
   const handleCalculatorClick = (e) => {
     e.preventDefault();
     setModal("userType");
@@ -51,12 +46,6 @@ const NavigationBar = ({
 
   return (
     <>
-      <div className="navbar-upper-container">
-        <div className="logo" onClick={handleLogoClick}>
-          <div className="house-icon" />
-          <b>PropertyInvestor</b>DASH
-        </div>
-      </div>
       <div className="navbar-lower-container">
         <div className="navbar-burger">
           <Menu />

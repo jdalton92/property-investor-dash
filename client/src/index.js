@@ -2,7 +2,7 @@ import React from "react";
 import ReactGA from "react-ga";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import App from "./App";
+import App2 from "./App2";
 import store from "./store";
 
 if (process.env.NODE_ENV === "production") {
@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === "production") {
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <App2 />
   </Provider>,
   document.getElementById("root")
 );

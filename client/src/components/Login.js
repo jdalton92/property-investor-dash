@@ -9,7 +9,7 @@ import {
   isEmail,
   composeValidators,
 } from "../helpers/formValidatorHelper";
-import { Button, Spinner } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import "./styles/Form.css";
 
 const Login = ({ loginUser, user }) => {

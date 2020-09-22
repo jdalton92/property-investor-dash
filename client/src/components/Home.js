@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { setModal } from "../reducers/navigationReducer";
 import { Button } from "react-bootstrap";
-import "./styles/Home.css";
 import desktopDashboard from "./styles/images/desktop-dashboard.png";
 import developer from "./styles/images/card-developer.png";
 import financiers from "./styles/images/card-financiers.png";

@@ -20,15 +20,14 @@ const DeveloperCalculatorForm = ({
   testDashboard,
   dashboards,
   navigation,
-  isUserFetching,
 }) => {
   const id = useParams().id;
 
   useEffect(() => {
-    if (id && !dashboards.preSave && !isUserFetching) {
+    if (id && !dashboards.preSave) {
       getDashboard(id);
     }
-  }, [id, isUserFetching]);
+  }, [id]);
 
   const onSubmit = (values) => {
     setModal("disclaimer");
@@ -36,7 +35,7 @@ const DeveloperCalculatorForm = ({
     testDashboard(values);
   };
 
-  if (dashboards.isFetching || !dashboards.data[0] || isUserFetching) {
+  if (dashboards.isFetching || !dashboards.data[0]) {
     return (
       <div className="dashboard-spinner-container">
         <Spinner
@@ -166,7 +165,6 @@ const mapStateToProps = (state) => {
   return {
     dashboards: state.dashboards,
     navigation: state.navigation,
-    isUserFetching: state.user.isFetching,
   };
 };
 

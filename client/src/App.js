@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { initUser } from "./reducers/userReducer";
-import "./components/styles/App.css";
+import { Spinner } from "react-bootstrap";
+import "./components/styles/main.scss";
 
 import ScrollToTopControlller from "./components/ScrollToTopControlller";
 import CustomRoute from "./components/CustomRoute";
@@ -28,6 +29,13 @@ const App = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  if (props.user.isFetching) {
+    return (
+      <div>
+        <Spinner />
+      </div>
+    );
+  }
   return (
     <>
       <Router>

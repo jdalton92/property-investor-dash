@@ -31,16 +31,15 @@ const OccupierInvestorDashboard = ({
   setModal,
   cashflowTable,
   setCashflow,
-  isUserFetching,
 }) => {
   const id = useParams().id;
   const history = useHistory();
 
   useEffect(() => {
-    if (id && !dashboards.preSave && !isUserFetching) {
+    if (id && !dashboards.preSave) {
       getDashboard(id);
     }
-  }, [id, isUserFetching]);
+  }, [id]);
 
   const handleSave = (e) => {
     e.preventDefault();
@@ -65,7 +64,7 @@ const OccupierInvestorDashboard = ({
     }
   };
 
-  if (dashboards.isFetching || !dashboards.data[0] || isUserFetching) {
+  if (dashboards.isFetching || !dashboards.data[0]) {
     return (
       <div className="dashboard-spinner-container">
         <Spinner
@@ -324,7 +323,6 @@ const mapStateToProps = (state) => {
   return {
     dashboards: state.dashboards,
     cashflowTable: state.navigation.cashflowTable,
-    isUserFetching: state.user.isFetching,
   };
 };
 

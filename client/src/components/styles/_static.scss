@@ -1,0 +1,75 @@
+$nav-height: 56px;
+
+$font-family-base: "Raleway", sans-serif;
+$font-size-base: 12px;
+$weight-normal: normal; // TO DO;
+
+$color-base: lightblue !default;
+$bg-color-base: lightgrey !default;
+
+$line-height-base: 1.5;
+$letter-spacing-base: 0.2px;
+
+$weight-normal: 400;
+$weight-bold: 700;
+
+// Colours
+$primary-l: #e0edff !default;
+$primary: #5471ff !default;
+$primary-d1: #4558e6 !default;
+$primary-d2: #2c32a2 !default;
+$secondary: #485ef0 !default;
+
+$n1: #f7f8fb !default;
+$n2: #edeff5 !default;
+$n3: #dfe1eb !default;
+$n4: #bcc0d1 !default;
+$n5: #888ca6 !default;
+$n6: #545677 !default;
+$n7: #141733 !default;
+$n1-transp: rgba(0, 21, 128, 0.03) !default;
+$n2-transp: rgba(4, 22, 110, 0.07) !default;
+$n3-transp: rgba(8, 22, 102, 0.13) !default;
+$n4-transp: rgba(0, 12, 82, 0.26) !default;
+$n5-transp: rgba(3, 10, 66, 0.47) !default;
+$n6-transp: rgba(0, 4, 54, 0.67) !default;
+$n7-transp: rgba(2, 6, 36, 0.93) !default;
+$white: #fff !default;
+
+// System UI palette
+$g1: #e6fae7 !default;
+$g2: #3eb066 !default;
+$g3: #168745 !default;
+$g4: #005925 !default;
+$r1: #fff1f0 !default;
+$r2: #f73b45 !default;
+$r3: #e62236 !default;
+$r4: #940f1c !default;
+$y1: #fff4e4 !default;
+$y2: #ffb54c !default;
+$y3: #a46000 !default;
+
+// Shadows
+$card-shadow: 0 1px 3px -1px $n2-transp, 0px 0px 1px 0 $n3-transp !default;
+$text-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+$dropdown-shadow: 0 16px 40px -20px $n4-transp, 0 2px 10px -7px $n4-transp,
+  0px 0px 2px -1px $n5-transp !default;
+
+// Borders
+$border-color-base: black !default;
+$border-radius-base: 5px !default;
+$border-width-base: 2px !default;
+
+// Text Sizes
+$text-sizes: (
+  sm: 12px,
+  md: 14px,
+  lg: 16px,
+) !default;
+
+$heading-sizes: (
+  h3: 20px,
+  h2: 24px,
+  h1: 28px,
+  h0: 36px,
+) !default;

@@ -17,7 +17,6 @@ const OccupierInvestorCalculatorForm = ({
   dashboards,
   setAccordian,
   navigation,
-  isUserFetching,
 }) => {
   const onSubmit = (values) => {
     setModal("disclaimer");
@@ -26,7 +25,7 @@ const OccupierInvestorCalculatorForm = ({
     testDashboard(values);
   };
 
-  if (dashboards.isFetching || !dashboards.data[0] || isUserFetching) {
+  if (dashboards.isFetching || !dashboards.data[0]) {
     return (
       <div className="dashboard-spinner-container">
         <Spinner
@@ -151,7 +150,6 @@ const mapStateToProps = (state) => {
   return {
     dashboards: state.dashboards,
     navigation: state.navigation,
-    isUserFetching: state.user.isFetching,
   };
 };
 

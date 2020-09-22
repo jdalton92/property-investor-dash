@@ -1,14 +1,3 @@
-.navbar-upper-container {
-  width: 100%;
-  min-height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  text-align: center;
-  background-color: rgb(20, 27, 77);
-  text-shadow: -5px 5px 2px rgba(0, 0, 0, 1);
-}
-
 .house-icon {
   height: 70px;
   width: 70px;
@@ -42,7 +31,7 @@
   z-index: 9;
   display: flex;
   position: sticky;
-  height: 45px;
+  height: 56px;
   background-color: rgb(20, 27, 77);
 }
 
