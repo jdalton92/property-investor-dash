@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { StyledBurger } from "../styles/NavigationBar";
+import { StyledBurger } from "./StyledBurger";
 import { setSidebar } from "../../reducers/navigationReducer";
 
 const Burger = ({ navigation, setSidebar }) => {

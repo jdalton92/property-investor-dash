@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { setModal } from "../reducers/navigationReducer";
-import "./styles/UserTypeModal.css";
 import { Modal, Button } from "react-bootstrap";
 import ownerOccupierImage from "./styles/images/owner-occupier.jfif";
 import investorImage from "./styles/images/investor.jfif";

@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { Form as FinalForm, Field } from "react-final-form";
 import { setMessage } from "../reducers/contactReducer";
 import { Button, Spinner } from "react-bootstrap";
-import "./styles/Form.css";
 import {
   required,
   isEmail,

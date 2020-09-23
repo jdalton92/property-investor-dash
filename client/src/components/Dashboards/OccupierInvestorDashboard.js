@@ -21,7 +21,6 @@ import {
 } from "../../helpers/dashboardHelper";
 import { Line } from "react-chartjs-2";
 import { Table, Card, ListGroup, Button, Spinner } from "react-bootstrap";
-import "../styles/Dashboard.css";
 
 const OccupierInvestorDashboard = ({
   title,

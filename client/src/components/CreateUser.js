@@ -11,7 +11,6 @@ import {
   composeValidators,
 } from "../helpers/formValidatorHelper";
 import { Button, Spinner } from "react-bootstrap";
-import "./styles/Form.css";
 
 const CreateUser = ({ createUser, user }) => {
   const history = useHistory();

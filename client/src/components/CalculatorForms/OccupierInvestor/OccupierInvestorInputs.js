@@ -5,7 +5,6 @@ import { getDashboard } from "../../../reducers/dashboardReducer";
 import { setAccordian, setModal } from "../../../reducers/navigationReducer";
 import OccupierInvestorCalculatorForm from "./OccupierInvestorCalculatorForm";
 import CalculatorFormModal from "../CalculatorFormModal";
-import "../../styles/CalculatorForm.css";
 
 const OccupierInvestorInputs = ({ title, getDashboard, dashboards }) => {
   const id = useParams().id;

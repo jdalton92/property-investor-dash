@@ -22,7 +22,6 @@ import {
 } from "../../helpers/dashboardHelper";
 import { Line, Bar } from "react-chartjs-2";
 import { Table, Card, ListGroup, Button, Spinner } from "react-bootstrap";
-import "../styles/Dashboard.css";
 
 const DeveloperDashboard = ({
   dashboards,

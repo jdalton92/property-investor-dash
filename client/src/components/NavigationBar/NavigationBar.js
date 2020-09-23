@@ -10,9 +10,6 @@ import {
 } from "../../reducers/navigationReducer";
 import Burger from "./Burger";
 import Menu from "./Menu";
-import Notification from "./Notification.js";
-import { Button } from "react-bootstrap";
-import "../styles/NavigationBar.css";
 
 const NavigationBar = ({
   setModal,
@@ -45,80 +42,13 @@ const NavigationBar = ({
   };
 
   return (
-    <>
-      <div className="navbar-lower-container">
-        <div className="navbar-burger">
-          <Menu />
-          <Burger />
-        </div>
-        <div className="navbar-section navbar-links-left">
-          <Link className="navbar-link" to="/">
-            Home
-          </Link>
-          <Link className="navbar-link" to="/about">
-            About
-          </Link>
-          <Link className="navbar-link" to="/contact">
-            Contact
-          </Link>
-          <div className="navbar-link" onClick={handleCalculatorClick}>
-            Calculators
-          </div>
-        </div>
-        <div className="navbar-section navbar-links-right">
-          {user.data.username ? (
-            <>
-              <div className="navbar-dropdown-container">
-                <OutsideAlerter>
-                  <div
-                    className="navbar-link navbar-dropdown"
-                    onClick={handleDropdownClick}
-                  >
-                    {user.data.username.toUpperCase()}{" "}
-                    <i className="navbar-arrow-down"></i>
-                  </div>
-                  <div
-                    className={`navbar-dropdown-links ${
-                      navigation.dropdown.username ? "" : "hide"
-                    }`}
-                    onClick={() => setDropdown("username")}
-                  >
-                    <Link className="dropdown-item" to="/saved-dashboards">
-                      Saved Dashboards
-                    </Link>
-                    <Link className="dropdown-item" to="/settings">
-                      User Settings
-                    </Link>
-                    <Button
-                      className="dropdown-item"
-                      variant="outline-primary"
-                      onClick={handleLogout}
-                    >
-                      Logout
-                    </Button>
-                  </div>
-                </OutsideAlerter>
-              </div>
-              <div alt="user" title="user" className="user-icon" />
-            </>
-          ) : (
-            <>
-              <Link className="navbar-link" to="/create-user">
-                New Account
-              </Link>
-              <Button
-                className="navbar-button"
-                variant="primary"
-                onClick={handleLoginClick}
-              >
-                Login
-              </Button>
-            </>
-          )}
-        </div>
-        <Notification />
+    <div className="navbar p0 flex-row justify-c">
+      <div className="navbar-side h100 p8 b-primary">
+        <Burger />
       </div>
-    </>
+      <div className="navbar-main h100 p8 w100 b-primary">main</div>
+      <div className="navbar-side h100 p8 b-primary">side</div>
+    </div>
   );
 };
 

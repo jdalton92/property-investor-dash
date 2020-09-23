@@ -1,0 +1,24 @@
+.navbar {
+  height: 56px;
+  flex-wrap: nowrap;
+}
+
+.navbar-side {
+  min-width: 300px;
+}
+
+.navbar-main {
+  max-width: 900px;
+}
+
+.navbar-burger {
+  display: none;
+}
+
+@media screen and (max-width: 1080px) {
+  .navbar-burger {
+    float: none;
+    display: flex;
+    text-align: left;
+  }
+}

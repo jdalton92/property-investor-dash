@@ -7,7 +7,6 @@ import { setAccordian, setModal } from "../../../reducers/navigationReducer";
 import OccupierInvestorStandardAssumptions from "./OccupierInvestorStandardAssumptions";
 import OccupierInvestorAdvancedAssumptions from "./OccupierInvestorAdvancedAssumptions";
 import { Form, Button, Spinner } from "react-bootstrap";
-import "../../styles/CalculatorForm.css";
 
 const OccupierInvestorCalculatorForm = ({
   id,

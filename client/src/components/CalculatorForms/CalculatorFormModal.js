@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { setModal } from "../../reducers/navigationReducer";
 import { Modal, Button } from "react-bootstrap";
-import "../styles/CalculatorFormModal.css";
 
 const CalculatorFormModal = ({ setModal, disclaimerModalShow }) => {
   const history = useHistory();

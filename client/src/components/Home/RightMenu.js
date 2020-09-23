@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 
 const RightMenu = () => {
   return (
-    <container className="p8 flex-col vh100 menu b-primary">
+    <div className="p8 flex-col vh100 menu b-primary">
       <div className="w100 h100 fixed o-y-scroll">right menu</div>
-    </container>
+    </div>
   );
 };
 

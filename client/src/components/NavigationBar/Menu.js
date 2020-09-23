@@ -2,8 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { setModal } from "../../reducers/navigationReducer";
-import { StyledMenu } from "../styles/NavigationBar";
-import "../styles/NavigationBar.css";
+import { StyledMenu } from "./StyledMenu";
 
 const Menu = ({ setModal, sidebarOpen }) => {
   const handleModal = (e) => {

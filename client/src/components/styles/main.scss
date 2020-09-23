@@ -1,4 +1,12 @@
+// Core imports
 @import "./_static.scss";
 @import "./core.scss";
 @import "./app.scss";
+
+// Shared components
+@import "./loader.scss";
+@import "./button.scss";
+
+// Views
 @import "./home.scss";
+@import "./navigationbar.scss";

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Alert } from "react-bootstrap";
-import "../styles/Notification.css";
 
 const NotificationAlert = ({ notification }) => {
   const [show, setShow] = useState(true);

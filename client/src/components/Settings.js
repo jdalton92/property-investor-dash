@@ -10,7 +10,6 @@ import {
   composeValidators,
 } from "../helpers/formValidatorHelper";
 import { Button, Spinner } from "react-bootstrap";
-import "./styles/Form.css";
 
 const Settings = ({ user, updateUser, deleteUser }) => {
   const userDetails = {

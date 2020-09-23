@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import "./styles/About.css";
 import ownerOccupierImage from "./styles/images/owner-occupier.jfif";
 import investorImage from "./styles/images/investor.jfif";
 import developerImage from "./styles/images/developer.jfif";

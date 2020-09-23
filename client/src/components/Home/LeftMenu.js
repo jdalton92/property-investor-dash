@@ -10,13 +10,13 @@ const LeftMenu = () => {
   }
 
   return (
-    <container className="sticky p8 flex-col menu b-primary">
+    <div className="sticky p8 flex-col menu b-primary">
       <div className="o-y-scroll o-x-hidden">
         {y.map((c) => (
           <div>test</div>
         ))}
       </div>
-    </container>
+    </div>
   );
 };
 

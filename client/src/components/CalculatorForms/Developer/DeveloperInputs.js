@@ -12,7 +12,6 @@ import CalculatorFormModal from "../CalculatorFormModal";
 import DeveloperStandardAssumptions from "./DeveloperStandardAssumptions";
 import DeveloperAdvancedAssumptions from "./DeveloperAdvancedAssumptions";
 import { Form, Button, Spinner } from "react-bootstrap";
-import "../../styles/CalculatorForm.css";
 
 const DeveloperCalculatorForm = ({
   getDashboard,

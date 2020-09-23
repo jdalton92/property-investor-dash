@@ -5,7 +5,6 @@ import { getDashboards, deleteDashboard } from "../reducers/dashboardReducer";
 import { dashboardType, formatDate } from "../helpers/dashboardHelper";
 import { setNotification } from "../reducers/notificationReducer";
 import { Table, Button, Spinner } from "react-bootstrap";
-import "./styles/SavedDashboards.css";
 
 const SavedDashboards = ({
   getDashboards,

@@ -16,6 +16,7 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import CreateUser from "./components/CreateUser";
 import Settings from "./components/Settings";
+import Notification from "./components/Notification";
 import SavedDashboards from "./components/SavedDashboards";
 import OccupierInvestorInputs from "./components/CalculatorForms/OccupierInvestor/OccupierInvestorInputs";
 import DeveloperInputs from "./components/CalculatorForms/Developer/DeveloperInputs";
@@ -34,15 +35,16 @@ const App = ({ initUser, isUserFetching }) => {
     return <Loader />;
   } else {
     return (
-      <div className="app w100">
+      <div className="w100">
         <Router>
+          <Notification />
           <UserTypeModal />
           <SaveDashboardModal />
           <ScrollToTopControlller />
           <NavigationBar />
           <div className="vh100 w100 flex-row justify-c">
             <LeftMenu />
-            <div className="p8 w100 main b-primary">
+            <div className="main p8 w100 b-primary">
               app body
               {/* <Switch>
               <Route exact path="/" render={() => <Home />} />
