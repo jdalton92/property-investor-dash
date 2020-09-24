@@ -1,7 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
+import Button from "../Button";
+import Burger from "../NavigationBar/Burger";
 
-const LeftMenu = () => {
+const LeftMenu = ({ sidebarOpen }) => {
   let x;
   let y = [];
 
@@ -10,11 +12,20 @@ const LeftMenu = () => {
   }
 
   return (
-    <div className="sticky p8 flex-col menu b-primary">
-      <div className="o-y-scroll o-x-hidden">
-        {y.map((c) => (
-          <div>test</div>
-        ))}
+    <div
+      className={`left-menu-wrapper flex-col background-p ${
+        sidebarOpen ? "open" : ""
+      }`}
+    >
+      <div className="navbar-side navbar-menu h100 p8 border-p flex-row justify-e">
+        <Burger />
+      </div>
+      <div className="left-menu sticky flex-col border-p">
+        <div className="o-y-scroll o-x-hidden p8 flex-col">
+          {y.map((c) => (
+            <Button caption={"test button"} />
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -22,8 +33,7 @@ const LeftMenu = () => {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user,
-    isUserFetching: state.user.isFetching,
+    sidebarOpen: state.navigation.sidebarOpen,
   };
 };
 

@@ -4,21 +4,26 @@
 }
 
 .navbar-side {
+  width: 300px;
   min-width: 300px;
+  height: 56px;
 }
 
 .navbar-main {
   max-width: 900px;
 }
 
-.navbar-burger {
+.navbar-menu {
+  display: none;
+}
+
+.mobile {
   display: none;
 }
 
 @media screen and (max-width: 1080px) {
-  .navbar-burger {
-    float: none;
-    display: flex;
-    text-align: left;
+  .mobile,
+  .navbar-menu {
+    display: inherit;
   }
 }

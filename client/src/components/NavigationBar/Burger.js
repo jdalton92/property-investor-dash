@@ -3,16 +3,18 @@ import { connect } from "react-redux";
 import { StyledBurger } from "./StyledBurger";
 import { setSidebar } from "../../reducers/navigationReducer";
 
-const Burger = ({ navigation, setSidebar }) => {
+const Burger = ({ navigation, setSidebar, customClass }) => {
   return (
-    <StyledBurger
-      open={navigation.sidebarOpen}
-      onClick={() => setSidebar(!navigation.sidebarOpen)}
-    >
-      <div />
-      <div />
-      <div />
-    </StyledBurger>
+    <div className={customClass}>
+      <StyledBurger
+        open={navigation.sidebarOpen}
+        onClick={() => setSidebar(!navigation.sidebarOpen)}
+      >
+        <div />
+        <div />
+        <div />
+      </StyledBurger>
+    </div>
   );
 };
 

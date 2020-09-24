@@ -44,7 +44,7 @@ const App = ({ initUser, isUserFetching }) => {
           <NavigationBar />
           <div className="vh100 w100 flex-row justify-c">
             <LeftMenu />
-            <div className="main p8 w100 b-primary">
+            <div className="main p8 w100 border-p">
               app body
               {/* <Switch>
               <Route exact path="/" render={() => <Home />} />

@@ -14,11 +14,12 @@ $weight-normal: 400;
 $weight-bold: 700;
 
 // Colours
-$primary-l: #e0edff !default;
-$primary: #5471ff !default;
-$primary-d1: #4558e6 !default;
-$primary-d2: #2c32a2 !default;
-$secondary: #485ef0 !default;
+$primary-1: rgba(82, 110, 255, 1) !default;
+$primary-2: rgba(82, 110, 255, 0.6) !default;
+$primary-3: rgba(82, 110, 255, 0.2) !default;
+$secondary-1: #485ef0 !default;
+$secondary-2: #485ef0 !default;
+$secondary-3: #485ef0 !default;
 
 $n1: #f7f8fb !default;
 $n2: #edeff5 !default;
@@ -58,7 +59,7 @@ $dropdown-shadow: 0 16px 40px -20px $n4-transp, 0 2px 10px -7px $n4-transp,
 // Borders
 $border-color-base: black !default;
 $border-radius-base: 5px !default;
-$border-width-base: 2px !default;
+$border-width-base: 1px !default;
 
 // Text Sizes
 $text-sizes: (

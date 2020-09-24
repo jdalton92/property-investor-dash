@@ -42,12 +42,13 @@ const NavigationBar = ({
   };
 
   return (
-    <div className="navbar p0 flex-row justify-c">
-      <div className="navbar-side h100 p8 b-primary">
-        <Burger />
+    <div className="navbar sticky p0 flex-row justify-c">
+      <div className="navbar-side navbar-left flex-row h100 p8 border-p">
+        <Burger customClass={"mobile"} />
+        Left Navbar
       </div>
-      <div className="navbar-main h100 p8 w100 b-primary">main</div>
-      <div className="navbar-side h100 p8 b-primary">side</div>
+      <div className="navbar-main h100 p8 w100 border-p">Main Navbar</div>
+      <div className="navbar-side h100 p8 border-p">Right Navbar</div>
     </div>
   );
 };
