@@ -17,6 +17,7 @@ import Contact from "./components/Contact";
 import CreateUser from "./components/CreateUser";
 import Settings from "./components/Settings";
 import Notifications from "./components/Shared/Notification/Notifications";
+import Overlay from "./components/Shared/Overlay";
 import SavedDashboards from "./components/SavedDashboards";
 import OccupierInvestorInputs from "./components/CalculatorForms/OccupierInvestor/OccupierInvestorInputs";
 import DeveloperInputs from "./components/CalculatorForms/Developer/DeveloperInputs";
@@ -25,7 +26,7 @@ import OccupierInvestorDashboard from "./components/Dashboards/OccupierInvestorD
 import UserTypeModal from "./components/UserTypeModal";
 import SaveDashboardModal from "./components/Dashboards/SaveDashboardModal";
 
-const App = ({ initUser, isUserFetching }) => {
+const App = ({ initUser, isUserFetching, overlay }) => {
   useEffect(() => {
     initUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -37,6 +38,7 @@ const App = ({ initUser, isUserFetching }) => {
     return (
       <div className="w100">
         <Router>
+          {overlay && <div className="overlay fade-in" />}
           <Notifications />
           {/* <UserTypeModal /> */}
           {/* <SaveDashboardModal /> */}
@@ -141,6 +143,7 @@ const mapStateToProps = (state) => {
   return {
     user: state.user,
     isUserFetching: state.user.isFetching,
+    overlay: state.navigation.overlay,
   };
 };
 

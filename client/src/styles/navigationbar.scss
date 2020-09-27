@@ -14,10 +14,6 @@
   max-width: 1500px;
 }
 
-.navbar-menu {
-  display: none;
-}
-
 .nav-burger {
   position: absolute;
   left: 8px;
@@ -32,13 +28,18 @@
   right: 0px;
 }
 
-.icon {
-  height: 32px;
-  width: 32px;
+@media screen and (max-width: 1080px) {
+  .title {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+  }
 }
 
-@media screen and (max-width: 1080px) {
-  .navbar-menu {
-    display: inherit;
+@media screen and (max-width: 768px) {
+  .title {
+    text-align: initial;
+    position: initial;
+    margin-left: 40px;
   }
 }

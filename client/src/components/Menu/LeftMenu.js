@@ -17,11 +17,11 @@ const LeftMenu = ({ leftSidebarOpen }) => {
         leftSidebarOpen ? "open-left" : ""
       }`}
     >
-      <div className="navbar-side navbar-menu h100 p8 border-p flex-row justify-e">
+      <div className="navbar-side h1080 h100 p8 border-p flex-row justify-e">
         <Burger customClass={"h1080"} />
       </div>
       <div className="left-menu sticky-below-nav flex-col border-p">
-        <div className="o-y-scroll o-x-hidden p8 flex-col">
+        <div className="o-y-scroll o-x-hidden mt8 mb8 flex-col">
           {y.map((c, i) => (
             <Button extraClass={"button-p"} caption={"test button"} key={i} />
           ))}

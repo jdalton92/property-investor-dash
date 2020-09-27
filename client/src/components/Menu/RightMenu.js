@@ -26,13 +26,13 @@ const RightMenu = ({ rightSidebarOpen, setRightSidebar }) => {
 
   return (
     <div
-      className={`right-menu-wrapper flex-col background-p border-p ${
+      className={`right-menu-wrapper flex-col background-p ${
         rightSidebarOpen ? "open-right" : ""
       }`}
     >
       <div className="w100 flex-row justify-e p8 h768">
         <Button
-          ariaLabel={"Menu"}
+          ariaLabel={rightSidebarOpen ? "Close Menu" : "Open Menu"}
           dataBalloonPos={"left"}
           extraClass={"button-p align-c justify-c"}
           onClick={handleRightMenuClick}
@@ -40,8 +40,8 @@ const RightMenu = ({ rightSidebarOpen, setRightSidebar }) => {
           iconColor={"white"}
         />
       </div>
-      <div className="right-menu sticky-below-nav flex-col">
-        <div className="o-y-scroll o-x-hidden p8 flex-col scrollbar">
+      <div className="right-menu sticky-below-nav flex-col border-p">
+        <div className="o-y-scroll o-x-hidden mt8 mb8 flex-col scrollbar">
           {y.map((c, i) => (
             <Button extraClass={"button-p"} caption={"test button"} key={i} />
           ))}

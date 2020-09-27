@@ -33,6 +33,7 @@ const initialState = {
   dropdown: {
     username: false,
   },
+  overlay: false,
 };
 
 const navigationReducer = (state = initialState, action) => {
@@ -40,6 +41,7 @@ const navigationReducer = (state = initialState, action) => {
     case "SET_RIGHT_SIDEBAR":
       return {
         ...state,
+        overlay: action.status,
         sidebarOpen: {
           right: action.status,
           left: state.sidebarOpen.left,
@@ -48,6 +50,7 @@ const navigationReducer = (state = initialState, action) => {
     case "SET_LEFT_SIDEBAR":
       return {
         ...state,
+        overlay: action.status,
         sidebarOpen: {
           left: action.status,
           right: state.sidebarOpen.right,
