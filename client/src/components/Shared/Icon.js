@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const Icon = styled.div`
-  height: 32px;
-  width: 32px;
+  height: ${({ size }) => (size ? `${size}` : `32px`)};
+  width: ${({ size }) => (size ? `${size}` : `32px`)};
   -webkit-mask: ${({ url }) => `url(${url}) no-repeat center`};
   mask: ${({ url }) => `url(${url}) no-repeat center`};
   background-color: ${({ color }) => color};

@@ -11,11 +11,16 @@
 }
 
 .navbar-main {
-  max-width: 900px;
+  max-width: 1500px;
 }
 
 .navbar-menu {
   display: none;
+}
+
+.nav-burger {
+  position: absolute;
+  left: 8px;
 }
 
 .mobile {
@@ -23,7 +28,7 @@
 }
 
 .user-dropdown {
-  z-index: 10;
+  z-index: 111;
   background-color: $n1;
   width: 200px;
   position: absolute;

@@ -18,6 +18,7 @@ import Menu from "./Menu";
 import Button from "../Shared/Button";
 import UserIcon from "../../styles/svg/user.svg";
 import SettingsIcon from "../../styles/svg/settings.svg";
+import GitHubIcon from "../../styles/svg/github.svg";
 
 const NavigationBar = ({
   setModal,
@@ -49,6 +50,17 @@ const NavigationBar = ({
     history.push("/login");
   };
 
+  const handleGitHubClick = (e) => {
+    e.preventDefault();
+    const win = window.open(
+      "https://github.com/jdalton92/property-investor-dash",
+      "_blank"
+    );
+    if (win != null) {
+      win.focus();
+    }
+  };
+
   const handleLogout = (e) => {
     e.preventDefault();
     logoutUser();
@@ -57,13 +69,19 @@ const NavigationBar = ({
 
   return (
     <div className="navbar sticky p0 flex-row justify-c">
-      <div className="navbar-side flex-row h100 p8 border-p">
-        <Burger customClass={"mobile"} />
-        Left Navbar
-      </div>
-      <div className="navbar-main h100 p8 w100 border-p">Main Navbar</div>
-      <div className="navbar-side flex-row align-c justify-e h100 p8 border-p">
+      <div className="navbar-main flex-row align-c justify-e h100 w100 p8 relative border-p">
+        <Burger customClass={"nav-burger mobile"} />
         <Button
+          ariaLabel={"GitHub"}
+          dataBalloonPos={"left"}
+          extraClass={"button-p align-c justify-c"}
+          onClick={handleGitHubClick}
+          iconUrl={GitHubIcon}
+          iconColor={"white"}
+        />
+        <Button
+          ariaLabel={"Settings"}
+          dataBalloonPos={"left"}
           extraClass={"button-p align-c justify-c"}
           onClick={handleSettingsClick}
           iconUrl={SettingsIcon}
@@ -71,12 +89,16 @@ const NavigationBar = ({
         />
         <div className="relative">
           <Button
+            ariaLabel={"User Options"}
+            dataBalloonPos={"left"}
             extraClass={"button-p align-c justify-c"}
             onClick={handleDropdownClick}
             iconUrl={UserIcon}
             iconColor={"white"}
           />
-          <UserDropdown />
+          <OutsideAlerter>
+            <UserDropdown />
+          </OutsideAlerter>
         </div>
       </div>
     </div>

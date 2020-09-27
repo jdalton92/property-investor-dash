@@ -63,6 +63,8 @@ const NotificationAlert = ({ notification, clearNotification }) => {
         </span>
       </div>
       <Button
+        ariaLabel={"Close"}
+        dataBalloonPos={"left"}
         extraClass={"button-p align-c justify-c"}
         onClick={handleCloseNotification}
         iconUrl={CloseIcon}
