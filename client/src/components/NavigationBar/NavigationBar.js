@@ -5,8 +5,9 @@ import { OutsideAlerter } from "../../helpers/hooks";
 import { logoutUser } from "../../reducers/userReducer";
 import {
   setModal,
-  setSidebar,
   setDropdown,
+  setRightSidebar,
+  setLeftSidebar,
 } from "../../reducers/navigationReducer";
 import { setNotification } from "../../reducers/notificationReducer";
 
@@ -18,17 +19,32 @@ import Menu from "./Menu";
 import Button from "../Shared/Button";
 import UserIcon from "../../styles/svg/user.svg";
 import SettingsIcon from "../../styles/svg/settings.svg";
-import GitHubIcon from "../../styles/svg/github.svg";
+import ExpandIcon from "../../styles/svg/expand.svg";
+import CollapseIcon from "../../styles/svg/collapse.svg";
 
 const NavigationBar = ({
   setModal,
   setDropdown,
   logoutUser,
   user,
-  navigation,
+  rightSidebarOpen,
+  setRightSidebar,
+  setLeftSidebar,
   setNotification,
 }) => {
   let history = useHistory();
+
+  let RightMenuIcon;
+  if (rightSidebarOpen) {
+    RightMenuIcon = CollapseIcon;
+  } else {
+    RightMenuIcon = ExpandIcon;
+  }
+
+  const handleRightMenuClick = () => {
+    setLeftSidebar(false);
+    setRightSidebar(!rightSidebarOpen);
+  };
 
   const handleCalculatorClick = (e) => {
     e.preventDefault();
@@ -50,17 +66,6 @@ const NavigationBar = ({
     history.push("/login");
   };
 
-  const handleGitHubClick = (e) => {
-    e.preventDefault();
-    const win = window.open(
-      "https://github.com/jdalton92/property-investor-dash",
-      "_blank"
-    );
-    if (win != null) {
-      win.focus();
-    }
-  };
-
   const handleLogout = (e) => {
     e.preventDefault();
     logoutUser();
@@ -70,15 +75,7 @@ const NavigationBar = ({
   return (
     <div className="navbar sticky p0 flex-row justify-c">
       <div className="navbar-main flex-row align-c justify-e h100 w100 p8 relative border-p">
-        <Burger customClass={"nav-burger mobile"} />
-        <Button
-          ariaLabel={"GitHub"}
-          dataBalloonPos={"left"}
-          extraClass={"button-p align-c justify-c"}
-          onClick={handleGitHubClick}
-          iconUrl={GitHubIcon}
-          iconColor={"white"}
-        />
+        <Burger customClass={"nav-burger h1080"} />
         <Button
           ariaLabel={"Settings"}
           dataBalloonPos={"left"}
@@ -100,6 +97,16 @@ const NavigationBar = ({
             <UserDropdown />
           </OutsideAlerter>
         </div>
+        <div className="h768">
+          <Button
+            ariaLabel={"Menu"}
+            dataBalloonPos={"left"}
+            extraClass={"button-p align-c justify-c"}
+            onClick={handleRightMenuClick}
+            iconUrl={RightMenuIcon}
+            iconColor={"white"}
+          />
+        </div>
       </div>
     </div>
   );
@@ -108,13 +115,14 @@ const NavigationBar = ({
 const mapStateToProps = (state) => {
   return {
     user: state.user,
-    navigation: state.navigation,
+    rightSidebarOpen: state.navigation.sidebarOpen.right,
   };
 };
 
 const mapDispatchToProps = {
   logoutUser,
-  setSidebar,
+  setRightSidebar,
+  setLeftSidebar,
   setModal,
   setDropdown,
   setNotification,

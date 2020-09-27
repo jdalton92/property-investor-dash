@@ -42,16 +42,8 @@ const NotificationAlert = ({ notification, clearNotification }) => {
   };
 
   return (
-    <div className="notification p8 mb8 fade-in flex-row align-c relative bs-2 jump border-p">
+    <div className="notification pl8 ml8 mr8 mb8 fade-in flex-row align-c relative bs-2 jump border-p">
       <Icon url={iconUrl} color={"white"} hover={false} active={false} />
-      {/* <div
-        className="background-img"
-        style={{
-          background: `url(${icon})`,
-          height: "32px",
-          width: "32px",
-        }}
-      ></div> */}
       <div className="w100 ml8">
         <span className={`${notificationType} bold`}>
           {toTitleCase(notificationType)}:
@@ -74,11 +66,9 @@ const NotificationAlert = ({ notification, clearNotification }) => {
   );
 };
 
-// const mapStateToProps = (state) => {
-//   return {
-//     notification: state.notification,
-//   };
-// };
+const mapStateToProps = (state) => {
+  return;
+};
 
 const mapDispatchToProps = {
   clearNotification,

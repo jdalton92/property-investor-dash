@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { setModal } from "../../reducers/navigationReducer";
 import { StyledMenu } from "./StyledMenu";
 
-const Menu = ({ setModal, sidebarOpen }) => {
+const Menu = ({ setModal, leftSidebarOpen }) => {
   const handleModal = (e) => {
     e.preventDefault();
     setModal("userType");
@@ -12,7 +12,7 @@ const Menu = ({ setModal, sidebarOpen }) => {
 
   return (
     <>
-      <StyledMenu open={sidebarOpen}>
+      <StyledMenu open={leftSidebarOpen}>
         <div className="menu-link-container">
           <Link className="navbar-burger-link" to="/">
             Home
@@ -34,7 +34,7 @@ const Menu = ({ setModal, sidebarOpen }) => {
 
 const mapStateToProps = (state) => {
   return {
-    sidebarOpen: state.navigation.sidebarOpen,
+    leftSidebarOpen: state.navigation.sidebarOpen.left,
   };
 };
 

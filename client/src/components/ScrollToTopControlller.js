@@ -1,13 +1,14 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { setSidebar } from "../reducers/navigationReducer";
+import { setLeftSidebar, setRightSidebar } from "../reducers/navigationReducer";
 
-const ScrollToTopControlller = ({ setSidebar }) => {
+const ScrollToTopControlller = ({ setLeftSidebar, setRightSidebar }) => {
   const history = useHistory();
   const pathname = history.location.pathname;
   useEffect(() => {
-    setSidebar(false);
+    setLeftSidebar(false);
+    setRightSidebar(false);
     try {
       window.scroll({
         top: 0,
@@ -25,7 +26,8 @@ const ScrollToTopControlller = ({ setSidebar }) => {
 };
 
 const mapDispatchToProps = {
-  setSidebar,
+  setLeftSidebar,
+  setRightSidebar,
 };
 
 export default connect(null, mapDispatchToProps)(ScrollToTopControlller);

@@ -1,15 +1,24 @@
 import React from "react";
 import { connect } from "react-redux";
 import { StyledBurger } from "./StyledBurger";
-import { setSidebar } from "../../reducers/navigationReducer";
+import {
+  setLeftSidebar,
+  setRightSidebar,
+} from "../../reducers/navigationReducer";
 
-const Burger = ({ navigation, setSidebar, customClass }) => {
+const Burger = ({
+  leftSidebarOpen,
+  setRightSidebar,
+  setLeftSidebar,
+  customClass,
+}) => {
+  const handleClick = () => {
+    setRightSidebar(false);
+    setLeftSidebar(!leftSidebarOpen);
+  };
   return (
     <div className={customClass}>
-      <StyledBurger
-        open={navigation.sidebarOpen}
-        onClick={() => setSidebar(!navigation.sidebarOpen)}
-      >
+      <StyledBurger open={leftSidebarOpen} onClick={handleClick}>
         <div />
         <div />
         <div />
@@ -20,12 +29,13 @@ const Burger = ({ navigation, setSidebar, customClass }) => {
 
 const mapStateToProps = (state) => {
   return {
-    navigation: state.navigation,
+    leftSidebarOpen: state.navigation.sidebarOpen.left,
   };
 };
 
 const mapDispatchToProps = {
-  setSidebar,
+  setLeftSidebar,
+  setRightSidebar,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Burger);

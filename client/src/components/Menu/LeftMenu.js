@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Button from "../Shared/Button";
 import Burger from "../NavigationBar/Burger";
 
-const LeftMenu = ({ sidebarOpen }) => {
+const LeftMenu = ({ leftSidebarOpen }) => {
   let x;
   let y = [];
 
@@ -14,11 +14,11 @@ const LeftMenu = ({ sidebarOpen }) => {
   return (
     <div
       className={`left-menu-wrapper sticky flex-col background-p ${
-        sidebarOpen ? "open" : ""
+        leftSidebarOpen ? "open-left" : ""
       }`}
     >
       <div className="navbar-side navbar-menu h100 p8 border-p flex-row justify-e">
-        <Burger customClass={"mobile"} />
+        <Burger customClass={"h1080"} />
       </div>
       <div className="left-menu sticky-below-nav flex-col border-p">
         <div className="o-y-scroll o-x-hidden p8 flex-col">
@@ -33,7 +33,7 @@ const LeftMenu = ({ sidebarOpen }) => {
 
 const mapStateToProps = (state) => {
   return {
-    sidebarOpen: state.navigation.sidebarOpen,
+    leftSidebarOpen: state.navigation.sidebarOpen.left,
   };
 };
 

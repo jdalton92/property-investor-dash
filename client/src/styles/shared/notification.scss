@@ -22,3 +22,9 @@
 .message {
   color: white;
 }
+
+@media screen and (max-width: 550px) {
+  .notifications {
+    width: 100%;
+  }
+}

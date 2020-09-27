@@ -23,10 +23,6 @@
   left: 8px;
 }
 
-.mobile {
-  display: none;
-}
-
 .user-dropdown {
   z-index: 111;
   background-color: $n1;
@@ -42,7 +38,6 @@
 }
 
 @media screen and (max-width: 1080px) {
-  .mobile,
   .navbar-menu {
     display: inherit;
   }
