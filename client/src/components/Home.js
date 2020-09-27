@@ -3,12 +3,12 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { setModal } from "../reducers/navigationReducer";
 import { Button } from "react-bootstrap";
-import desktopDashboard from "./styles/images/desktop-dashboard.png";
-import developer from "./styles/images/card-developer.png";
-import financiers from "./styles/images/card-financiers.png";
-import firstHomeBuyer from "./styles/images/card-first-home-buyer.png";
-import investor from "./styles/images/card-investor.png";
-import owner from "./styles/images/card-owner.png";
+import desktopDashboard from "../styles/images/desktop-dashboard.png";
+import developer from "../styles/images/card-developer.png";
+import financiers from "../styles/images/card-financiers.png";
+import firstHomeBuyer from "../styles/images/card-first-home-buyer.png";
+import investor from "../styles/images/card-investor.png";
+import owner from "../styles/images/card-owner.png";
 
 const Home = ({ setModal }) => {
   const history = useHistory();

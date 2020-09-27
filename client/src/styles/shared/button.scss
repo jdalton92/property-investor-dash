@@ -1,0 +1,25 @@
+.button-p {
+  display: flex;
+  height: 40px;
+
+  &:hover {
+    background-color: $primary-3;
+  }
+
+  &:active {
+    background-color: $primary-2;
+  }
+}
+
+.button-s {
+  display: flex;
+  height: 40px;
+
+  &:hover {
+    background-color: $primary-3;
+  }
+
+  &:active {
+    background-color: $primary-2;
+  }
+}

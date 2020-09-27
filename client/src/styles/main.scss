@@ -4,8 +4,9 @@
 @import "./app.scss";
 
 // Shared components
-@import "./loader.scss";
-@import "./button.scss";
+@import "./shared/loader.scss";
+@import "./shared/button.scss";
+@import "./shared/notification.scss";
 
 // Views
 @import "./home.scss";

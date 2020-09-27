@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { initUser } from "./reducers/userReducer";
-import "./components/styles/main.scss";
+import "./styles/main.scss";
 
-import Loader from "./components/Loader";
+import Loader from "./components/Shared/Loader";
 import ScrollToTopControlller from "./components/ScrollToTopControlller";
 import CustomRoute from "./components/CustomRoute";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
@@ -16,7 +16,7 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import CreateUser from "./components/CreateUser";
 import Settings from "./components/Settings";
-import Notification from "./components/Notification";
+import Notifications from "./components/Shared/Notification/Notifications";
 import SavedDashboards from "./components/SavedDashboards";
 import OccupierInvestorInputs from "./components/CalculatorForms/OccupierInvestor/OccupierInvestorInputs";
 import DeveloperInputs from "./components/CalculatorForms/Developer/DeveloperInputs";
@@ -37,9 +37,9 @@ const App = ({ initUser, isUserFetching }) => {
     return (
       <div className="w100">
         <Router>
-          <Notification />
-          <UserTypeModal />
-          <SaveDashboardModal />
+          <Notifications />
+          {/* <UserTypeModal /> */}
+          {/* <SaveDashboardModal /> */}
           <ScrollToTopControlller />
           <NavigationBar />
           <div className="vh100 w100 flex-row justify-c">

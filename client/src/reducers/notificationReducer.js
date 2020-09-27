@@ -24,14 +24,17 @@ export const setNotification = (message, type) => {
         type,
       },
     });
-    setTimeout(() => {
-      dispatch({
-        type: "CLEAR_NOTIFICATION",
-        content: {
-          id,
-        },
-      });
-    }, 5000);
+  };
+};
+
+export const clearNotification = (id) => {
+  return (dispatch) => {
+    dispatch({
+      type: "CLEAR_NOTIFICATION",
+      content: {
+        id,
+      },
+    });
   };
 };
 

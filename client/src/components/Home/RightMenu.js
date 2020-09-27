@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import Button from "../Button";
+import Button from "../Shared/Button";
 
 const RightMenu = () => {
   let x;
@@ -11,10 +11,10 @@ const RightMenu = () => {
   }
 
   return (
-    <div className="left-menu sticky flex-col border-p">
+    <div className="right-menu sticky-below-nav flex-col border-p">
       <div className="o-y-scroll o-x-hidden p8 flex-col scrollbar">
-        {y.map((c) => (
-          <Button caption={"test button"} />
+        {y.map((c, i) => (
+          <Button extraClass={"button-p"} caption={"test button"} key={i} />
         ))}
       </div>
     </div>
@@ -27,4 +27,4 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = null;
 
-export default connect(mapStateToProps, mapDispatchToProps)(RightMenu);
+export default connect(null, null)(RightMenu);

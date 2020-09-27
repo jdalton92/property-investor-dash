@@ -1,12 +1,13 @@
 .navbar {
-  height: 56px;
+  height: $nav-height;
   flex-wrap: nowrap;
+  z-index: 1;
 }
 
 .navbar-side {
   width: 300px;
   min-width: 300px;
-  height: 56px;
+  height: $nav-height;
 }
 
 .navbar-main {
@@ -19,6 +20,20 @@
 
 .mobile {
   display: none;
+}
+
+.user-dropdown {
+  z-index: 10;
+  background-color: $n1;
+  width: 200px;
+  position: absolute;
+  top: 40px;
+  right: 0px;
+}
+
+.icon {
+  height: 32px;
+  width: 32px;
 }
 
 @media screen and (max-width: 1080px) {

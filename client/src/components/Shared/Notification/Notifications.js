@@ -2,14 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 import NotificationAlert from "./NotificationAlert";
 
-const Notification = ({ notification }) => {
+const Notifications = ({ notification }) => {
   if (notification.length > 0) {
     return (
-      <section className="notification-section">
-        {notification.map((n, i) => (
-          <NotificationAlert notification={n} key={i} />
-        ))}
-      </section>
+      <div className="notifications mr8 flex-col">
+        {notification.map((n) => {
+          return <NotificationAlert notification={n} key={n.id} />;
+        })}
+      </div>
     );
   } else {
     return null;
@@ -22,4 +22,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null)(Notification);
+export default connect(mapStateToProps, null)(Notifications);

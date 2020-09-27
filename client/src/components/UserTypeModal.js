@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { setModal } from "../reducers/navigationReducer";
 import { Modal, Button } from "react-bootstrap";
-import ownerOccupierImage from "./styles/images/owner-occupier.jfif";
-import investorImage from "./styles/images/investor.jfif";
-import developerImage from "./styles/images/developer.jfif";
+import ownerOccupierImage from "../styles/images/owner-occupier.jfif";
+import investorImage from "../styles/images/investor.jfif";
+import developerImage from "../styles/images/developer.jfif";
 
 const UserTypeModal = ({ setModal, userModalShow }) => {
   const history = useHistory();

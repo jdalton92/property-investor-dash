@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import ownerOccupierImage from "./styles/images/owner-occupier.jfif";
-import investorImage from "./styles/images/investor.jfif";
-import developerImage from "./styles/images/developer.jfif";
+import ownerOccupierImage from "../styles/images/owner-occupier.jfif";
+import investorImage from "../styles/images/investor.jfif";
+import developerImage from "../styles/images/developer.jfif";
 
 const About = () => {
   const history = useHistory();
