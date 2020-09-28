@@ -17,8 +17,8 @@ const Burger = ({
     setLeftSidebar(!leftSidebarOpen);
   };
   return (
-    <div className={customClass}>
-      <StyledBurger open={leftSidebarOpen} onClick={handleClick}>
+    <div onClick={handleClick} className={customClass}>
+      <StyledBurger open={leftSidebarOpen}>
         <div />
         <div />
         <div />

@@ -4,6 +4,7 @@ import { setRightSidebar } from "../../reducers/navigationReducer";
 import Button from "../Shared/Button";
 import ExpandIcon from "../../styles/svg/expand.svg";
 import CollapseIcon from "../../styles/svg/collapse.svg";
+import CloseIcon from "../../styles/svg/close.svg";
 
 const RightMenu = ({ rightSidebarOpen, setRightSidebar }) => {
   let x;
@@ -26,7 +27,7 @@ const RightMenu = ({ rightSidebarOpen, setRightSidebar }) => {
 
   return (
     <div
-      className={`right-menu-wrapper flex-col background-p ${
+      className={`right-menu-wrapper flex-col ${
         rightSidebarOpen ? "open-right" : ""
       }`}
     >
@@ -36,14 +37,18 @@ const RightMenu = ({ rightSidebarOpen, setRightSidebar }) => {
           dataBalloonPos={"left"}
           extraClass={"button-p align-c justify-c"}
           onClick={handleRightMenuClick}
-          iconUrl={RightMenuIcon}
+          iconUrl={CloseIcon}
           iconColor={"white"}
         />
       </div>
-      <div className="right-menu sticky-below-nav flex-col border-p">
+      <div className="right-menu sticky-below-nav flex-col border-p background-p">
         <div className="o-y-scroll o-x-hidden mt8 mb8 flex-col scrollbar">
           {y.map((c, i) => (
-            <Button extraClass={"button-p"} caption={"test button"} key={i} />
+            <Button
+              extraClass={"button-transp-p"}
+              caption={"test button"}
+              key={i}
+            />
           ))}
         </div>
       </div>

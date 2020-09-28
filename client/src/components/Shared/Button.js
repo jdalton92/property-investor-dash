@@ -6,10 +6,11 @@ const Button = ({
   iconColor,
   iconHover = false,
   iconActive = false,
-  size = null,
+  iconSize = null,
+  iconPos = "left",
   caption,
   extraClass,
-  extraStyle,
+  captionClass,
   onClick,
   ariaLabel,
   dataBalloonPos,
@@ -19,13 +20,12 @@ const Button = ({
       aria-label={ariaLabel}
       data-balloon-pos={dataBalloonPos}
       className={`${extraClass} r pt12 pb12 pl4 pr4 flex-row`}
-      style={extraStyle}
       onClick={onClick}
     >
-      {iconUrl ? (
+      {iconUrl && iconPos === "left" ? (
         <span>
           <Icon
-            size={size}
+            size={iconSize}
             url={iconUrl}
             color={iconColor}
             hover={iconHover}
@@ -33,7 +33,18 @@ const Button = ({
           />
         </span>
       ) : null}
-      <span>{caption}</span>
+      <span className={captionClass}>{caption}</span>
+      {iconUrl && iconPos === "right" ? (
+        <span>
+          <Icon
+            size={iconSize}
+            url={iconUrl}
+            color={iconColor}
+            hover={iconHover}
+            active={iconActive}
+          />
+        </span>
+      ) : null}
     </button>
   );
 };

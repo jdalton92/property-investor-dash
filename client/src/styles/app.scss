@@ -11,6 +11,11 @@
   outline: none;
 }
 
+.main {
+  max-width: 900px;
+  height: 125vh;
+}
+
 .overlay {
   width: 100%;
   min-height: 100vh;
@@ -22,6 +27,50 @@
   background: rgba(0, 0, 0, 0.5);
   opacity: 1;
   z-index: 2;
+}
+
+.bg1 {
+  background-color: $n1;
+}
+
+.bg2 {
+  background-color: $n2;
+}
+
+.bg3 {
+  background-color: $n3;
+}
+
+.bg4 {
+  background-color: $n4;
+}
+
+.bg5 {
+  background-color: $n5;
+}
+
+.f32 {
+  font-size: 32px;
+}
+
+.f28 {
+  font-size: 28px;
+}
+
+.f24 {
+  font-size: 24px;
+}
+
+.f20 {
+  font-size: 20px;
+}
+
+.f16 {
+  font-size: 16px;
+}
+
+.f12 {
+  font-size: 12px;
 }
 
 .fixed {
@@ -55,6 +104,11 @@
   position: relative;
   top: 0;
   right: 0;
+}
+
+.expand {
+  transition: height 0.3s ease;
+  transition: width 0.3s ease;
 }
 
 .hide {

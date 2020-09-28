@@ -42,7 +42,7 @@ const NotificationAlert = ({ notification, clearNotification }) => {
   };
 
   return (
-    <div className="notification pl8 ml8 mr8 mb8 fade-in flex-row align-c relative bs-2 jump border-p">
+    <div className="notification p8 ml8 mr8 mb8 fade-in flex-row align-c relative bs-2 jump r bs-3">
       <Icon url={iconUrl} color={"white"} hover={false} active={false} />
       <div className="w100 ml8">
         <span className={`${notificationType} bold`}>
@@ -57,7 +57,7 @@ const NotificationAlert = ({ notification, clearNotification }) => {
       <Button
         ariaLabel={"Close"}
         dataBalloonPos={"left"}
-        extraClass={"button-p align-c justify-c"}
+        extraClass={"button-transp-p align-c justify-c"}
         onClick={handleCloseNotification}
         iconUrl={CloseIcon}
         iconColor={"white"}

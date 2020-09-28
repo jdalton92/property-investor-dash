@@ -1,25 +1,52 @@
+.button-transp-p {
+  display: flex;
+  height: 40px;
+
+  &:hover {
+    background-color: $primary-3;
+  }
+
+  &:active {
+    background-color: $primary-2;
+  }
+}
+
+.button-transp-s {
+  display: flex;
+  height: 40px;
+
+  &:hover {
+    background-color: $primary-3;
+  }
+
+  &:active {
+    background-color: $primary-2;
+  }
+}
+
 .button-p {
   display: flex;
   height: 40px;
+  background-color: $n4-transp;
 
   &:hover {
-    background-color: $primary-3;
+    background-color: $n5-transp;
   }
 
   &:active {
-    background-color: $primary-2;
+    background-color: $n6-transp;
   }
 }
 
-.button-s {
-  display: flex;
-  height: 40px;
+// .button-s {
+//   display: flex;
+//   height: 40px;
 
-  &:hover {
-    background-color: $primary-3;
-  }
+//   &:hover {
+//     background-color: $primary-3;
+//   }
 
-  &:active {
-    background-color: $primary-2;
-  }
-}
+//   &:active {
+//     background-color: $primary-2;
+//   }
+// }

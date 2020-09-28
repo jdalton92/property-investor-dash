@@ -1,15 +1,33 @@
 import React from "react";
 import { connect } from "react-redux";
-import Button from "../Shared/Button";
+import MenuContainer from "./MenuContainer";
 import Burger from "../NavigationBar/Burger";
 
-const LeftMenu = ({ leftSidebarOpen }) => {
-  let x;
-  let y = [];
+import MessageIcon from "../../styles/svg/message.svg";
 
-  for (x = 0; x < 100; x++) {
-    y = [...y, 1];
-  }
+const LeftMenu = ({ leftSidebarOpen }) => {
+  const menuItems = [
+    {
+      title: "heading1, item1",
+      link: "/link1",
+      icon: MessageIcon,
+    },
+    {
+      title: "heading1, item2",
+      link: "/link2",
+      icon: MessageIcon,
+    },
+    {
+      title: "heading1, item3",
+      link: "/link3",
+      icon: MessageIcon,
+    },
+    {
+      title: "heading1, item4",
+      link: "/link4",
+      icon: MessageIcon,
+    },
+  ];
 
   return (
     <div
@@ -21,10 +39,8 @@ const LeftMenu = ({ leftSidebarOpen }) => {
         <Burger customClass={"h1080"} />
       </div>
       <div className="left-menu sticky-below-nav flex-col border-p">
-        <div className="o-y-scroll o-x-hidden mt8 mb8 flex-col">
-          {y.map((c, i) => (
-            <Button extraClass={"button-p"} caption={"test button"} key={i} />
-          ))}
+        <div className="o-y-scroll o-x-hidden mt8 mb8 flex-col h100">
+          <MenuContainer title={"heading1"} menuItems={menuItems} />
         </div>
       </div>
     </div>

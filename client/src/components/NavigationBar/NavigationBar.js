@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { OutsideAlerter } from "../../helpers/hooks";
+import { DropdownOutsideAlerter } from "../../helpers/hooks";
 import { logoutUser } from "../../reducers/userReducer";
 import {
   setModal,
@@ -18,7 +18,7 @@ import Burger from "./Burger";
 import Menu from "./Menu";
 import Button from "../Shared/Button";
 import UserIcon from "../../styles/svg/user.svg";
-import SettingsIcon from "../../styles/svg/settings.svg";
+import EmailIcon from "../../styles/svg/email.svg";
 import ExpandIcon from "../../styles/svg/expand.svg";
 import CollapseIcon from "../../styles/svg/collapse.svg";
 
@@ -51,9 +51,12 @@ const NavigationBar = ({
     setModal("userType");
   };
 
-  const handleSettingsClick = (e) => {
+  const handleContactClick = (e) => {
     e.preventDefault();
-    setNotification("Settings button clicked", CONSTANTS.NOTIFICATION.MESSAGE);
+    setNotification(
+      "Contact Us button clicked",
+      CONSTANTS.NOTIFICATION.MESSAGE
+    );
   };
 
   const handleDropdownClick = (e) => {
@@ -78,31 +81,31 @@ const NavigationBar = ({
         <Burger customClass={"nav-burger h1080"} />
         <h1 className="w100 title">PropertyInvestorDash</h1>
         <Button
-          ariaLabel={"Settings"}
+          ariaLabel={"Contact Us"}
           dataBalloonPos={"left"}
-          extraClass={"button-p align-c justify-c"}
-          onClick={handleSettingsClick}
-          iconUrl={SettingsIcon}
+          extraClass={"button-transp-p align-c justify-c"}
+          onClick={handleContactClick}
+          iconUrl={EmailIcon}
           iconColor={"white"}
         />
         <div className="relative">
-          <Button
-            ariaLabel={"User Options"}
-            dataBalloonPos={"left"}
-            extraClass={"button-p align-c justify-c"}
-            onClick={handleDropdownClick}
-            iconUrl={UserIcon}
-            iconColor={"white"}
-          />
-          <OutsideAlerter>
+          <DropdownOutsideAlerter>
+            <Button
+              ariaLabel={"User Options"}
+              dataBalloonPos={"left"}
+              extraClass={"button-transp-p align-c justify-c"}
+              onClick={handleDropdownClick}
+              iconUrl={UserIcon}
+              iconColor={"white"}
+            />
             <UserDropdown />
-          </OutsideAlerter>
+          </DropdownOutsideAlerter>
         </div>
         <div className="h768">
           <Button
             ariaLabel={rightSidebarOpen ? "Close Menu" : "Open Menu"}
             dataBalloonPos={"left"}
-            extraClass={"button-p align-c justify-c"}
+            extraClass={"button-transp-p align-c justify-c"}
             onClick={handleRightMenuClick}
             iconUrl={RightMenuIcon}
             iconColor={"white"}

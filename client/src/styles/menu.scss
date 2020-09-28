@@ -4,11 +4,6 @@
   height: calc(100vh - 56px);
 }
 
-.main {
-  max-width: 900px;
-  height: 125vh;
-}
-
 @media screen and (max-width: 1080px) {
   .left-menu-wrapper {
     z-index: 2;
@@ -34,7 +29,7 @@
   }
 
   .right-menu {
-    height: 50vh;
+    height: 70vh;
     width: 100%;
   }
 

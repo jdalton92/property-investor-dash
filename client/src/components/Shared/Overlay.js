@@ -1,7 +1,12 @@
 import React from "react";
+import { OverlayOutsideAlerter } from "../../helpers/hooks";
 
-const Loader = () => {
-  return <div className="overlay" />;
+const Overlay = () => {
+  return (
+    <OverlayOutsideAlerter>
+      <div className="overlay fade-in" />
+    </OverlayOutsideAlerter>
+  );
 };
 
-export default Loader;
+export default Overlay;

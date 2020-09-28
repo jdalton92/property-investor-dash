@@ -36,9 +36,9 @@ const App = ({ initUser, isUserFetching, overlay }) => {
     return <Loader />;
   } else {
     return (
-      <div className="w100">
+      <div className="w100 fade-in">
         <Router>
-          {overlay && <div className="overlay fade-in" />}
+          {overlay && <Overlay />}
           <Notifications />
           {/* <UserTypeModal /> */}
           {/* <SaveDashboardModal /> */}
