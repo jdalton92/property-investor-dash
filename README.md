@@ -22,7 +22,7 @@ Simple open source tool for calculating your return for property investments
 
 ```sh
 git clone https://github.com/jdalton92/property-investor-dash.git
-cd property-investor-dash-frontend
+cd client
 npm install
 npm start
 ```
@@ -36,7 +36,7 @@ Create `.env` file in backend root directory with environment variables for the 
 - **Mailgun:** API_KEY, DOMAIN, EMAIL
 
 ```sh
-cd property-investor-dash-backend
+cd server
 npm install
 npm run watch
 ```
