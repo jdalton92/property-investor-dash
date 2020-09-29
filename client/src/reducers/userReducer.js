@@ -1,4 +1,5 @@
 import loginService from "../services/login";
+import { CONSTANTS } from "../static/constants";
 import { setToken, destroyToken } from "../helpers/tokenHelper";
 import userService from "../services/user";
 
@@ -16,7 +17,7 @@ const userReducer = (state = initialState, action) => {
         data: action.data,
       };
     case "CLEAR_USER":
-      return initialState;
+      return { isFetching: false, data: {} };
     default:
       return state;
   }
@@ -48,6 +49,31 @@ export const initUser = () => {
         type: "SET_NOTIFICATION",
         content: {
           message: e.response.data.error,
+          type: "error",
+        },
+      });
+    }
+  };
+};
+
+export const demoUser = () => {
+  return async (dispatch) => {
+    dispatch({
+      type: "USER_REQUEST",
+    });
+    try {
+      const user = CONSTANTS.DEMOTOKEN;
+      window.localStorage.setItem("loggedUser", JSON.stringify(user));
+      setToken(user.token);
+      dispatch({
+        type: "SET_USER",
+        data: user,
+      });
+    } catch (e) {
+      dispatch({
+        type: "SET_NOTIFICATION",
+        content: {
+          message: e,
           type: "error",
         },
       });

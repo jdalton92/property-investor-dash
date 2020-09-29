@@ -14,11 +14,11 @@ const MenuContainer = ({ title, menuItems }) => {
   };
 
   return (
-    <div className="bg2 r bs-1 mb12 w100 flex-col align-c">
+    <div className="bg-2 r bs-1 mb12 flex-1 flex-col align-c">
       <div className="flex-row w100">
         <Button
           iconSize={"20px"}
-          extraClass={"button-transp-p align-c w100"}
+          extraClass={"button-transp-p align-c flex-1"}
           captionClass={"ml8 bold f16"}
           onClick={() => setExpand(!expand)}
           iconUrl={expand ? CollapseIcon : ExpandIcon}
@@ -26,12 +26,12 @@ const MenuContainer = ({ title, menuItems }) => {
           caption={title}
         />
       </div>
-      <div className="flex-col pl20 w100">
+      <div className="flex-col pl24 w100">
         {expand &&
           menuItems.map((item, index) => (
             <Button
               key={index}
-              extraClass={"button-p align-c"}
+              extraClass={"button-transp-p align-c"}
               iconColor={"black"}
               iconUrl={item.icon}
               caption={item.title}

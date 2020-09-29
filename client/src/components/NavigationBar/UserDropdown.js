@@ -7,7 +7,7 @@ import Button from "../Shared/Button";
 import SettingsIcon from "../../styles/svg/settings.svg";
 import LogoutIcon from "../../styles/svg/logout.svg";
 
-const UserDropdown = ({ showDropdown, logoutUser }) => {
+const UserDropdown = ({ showDropdown, logoutUser, username }) => {
   const history = useHistory();
 
   const handleLogout = (e) => {
@@ -20,7 +20,7 @@ const UserDropdown = ({ showDropdown, logoutUser }) => {
     <>
       {showDropdown ? (
         <div className="user-dropdown flex-col pt8 pb8 fade-in r bs-3">
-          <span className="bold ml8 f16">Username</span>
+          <span className="bold ml8 f16">{username}</span>
           <Button
             extraClass={"button-transp-p align-c"}
             captionClass={"ml8"}
@@ -45,6 +45,7 @@ const UserDropdown = ({ showDropdown, logoutUser }) => {
 const mapStateToProps = (state) => {
   return {
     showDropdown: state.navigation.dropdown[CONSTANTS.DROPDOWNS.USERNAME],
+    username: state.user.data.username,
   };
 };
 

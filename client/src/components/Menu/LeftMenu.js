@@ -29,7 +29,7 @@ const LeftMenu = ({ leftSidebarOpen }) => {
     },
   ];
 
-  const calcualtorMenuItems = [
+  const calculatorMenuItems = [
     {
       title: "Owner Occupier",
       link: "/owner-occupier/edit",
@@ -47,13 +47,32 @@ const LeftMenu = ({ leftSidebarOpen }) => {
     },
   ];
 
+  const otherMenuItems = [
+    {
+      title: "GitHub Repo",
+      link: "https://github.com/jdalton92/property-investor-dash",
+      icon: MessageIcon,
+    },
+    {
+      title: "Terms and Conditions",
+      link: "/terms-and-conditions",
+      icon: MessageIcon,
+    },
+    {
+      title: "Privacy Policy",
+      link: "/privacy-policy",
+      icon: MessageIcon,
+    },
+  ];
+
   return (
     <div
       className={`left-menu-wrapper sticky flex-col background-p ${
         leftSidebarOpen ? "open-left" : ""
       }`}
     >
-      <div className="navbar-side h1080 h100 p8 border-p flex-row justify-e">
+      <div className="navbar-side h1080 h100 p8 flex-row align-c justify-e">
+        <h1 className="w100 f16 bold text-start">PropertyInvestorDash</h1>
         <Burger customClass={"h1080"} />
       </div>
       <div className="left-menu sticky-below-nav flex-col border-p">
@@ -61,8 +80,9 @@ const LeftMenu = ({ leftSidebarOpen }) => {
           <MenuContainer title={"Company"} menuItems={companyMenuItems} />
           <MenuContainer
             title={"Calculators"}
-            menuItems={calcualtorMenuItems}
+            menuItems={calculatorMenuItems}
           />
+          <MenuContainer title={"Other"} menuItems={otherMenuItems} />
         </div>
       </div>
     </div>

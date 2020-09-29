@@ -71,7 +71,7 @@ const NavigationBar = ({
     <div className="navbar sticky p0 flex-row justify-c">
       <div className="navbar-main flex-row align-c justify-e h100 w100 p8 relative border-p">
         <Burger customClass={"nav-burger h1080"} />
-        <h1 className="w100 title">PropertyInvestorDash</h1>
+        <h1 className="w100 bold title">PropertyInvestorDash</h1>
         <Button
           ariaLabel={"Contact Us"}
           dataBalloonPos={"left"}

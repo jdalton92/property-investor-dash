@@ -29,24 +29,28 @@
   z-index: 2;
 }
 
-.bg1 {
+.bg-1 {
   background-color: $n1;
 }
 
-.bg2 {
+.bg-2 {
   background-color: $n2;
 }
 
-.bg3 {
+.bg-3 {
   background-color: $n3;
 }
 
-.bg4 {
+.bg-4 {
   background-color: $n4;
 }
 
-.bg5 {
+.bg-5 {
   background-color: $n5;
+}
+
+.bg-blue-1 {
+  background-color: $primary-1;
 }
 
 .f32 {
@@ -75,6 +79,18 @@
 
 .text-center {
   text-align: center;
+}
+
+.text-start {
+  text-align: start;
+}
+
+.link {
+  color: $n3;
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
 }
 
 .fixed {
@@ -146,6 +162,10 @@
 .flex-col {
   display: flex;
   flex-direction: column;
+}
+
+.flex-grow-1 {
+  flex-grow: 1;
 }
 
 .align-s {
@@ -588,6 +608,10 @@
   padding-left: 20px;
 }
 
+.pl24 {
+  padding-left: 24px;
+}
+
 .pr0 {
   padding-right: 0px;
 }
@@ -760,23 +784,21 @@
 
 .o-y-scroll {
   overflow: hidden;
-  transition: opacity 0.5s ease;
   &:hover,
   &:active,
   &:focus {
-    opacity: 1;
     overflow-y: scroll;
+    overflow-y: overlay;
   }
 }
 
 .o-x-scroll {
   overflow: hidden;
-  transition: opacity 0.5s ease;
   &:hover,
   &:active,
   &:focus {
-    opacity: 1;
     overflow-x: scroll;
+    overflow-x: overlay;
   }
 }
 
@@ -818,7 +840,7 @@
 // }
 
 .scrollbar::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 .scrollbar::-webkit-scrollbar-track {
@@ -827,10 +849,11 @@
 
 .scrollbar::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.5);
-  border-radius: 3px;
+  border-radius: 4px;
 }
 
 .form-input {
+  transition: background-color 0.2s ease;
   display: block;
   padding: 7px 12px;
   font-size: 16px;

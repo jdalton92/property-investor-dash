@@ -35,7 +35,12 @@ const App = ({ initUser, isUserFetching, overlay, user }) => {
   if (isUserFetching) {
     return <Loader />;
   } else if (!user.data.username) {
-    return <Login />;
+    return (
+      <>
+        <Login />
+        <Notifications />
+      </>
+    );
   } else {
     return (
       <div className="w100 fade-in">

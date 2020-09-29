@@ -2,15 +2,17 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Form as FinalForm, Field } from "react-final-form";
 import { useHistory } from "react-router-dom";
-import { loginUser } from "../reducers/userReducer";
+import { loginUser, demoUser } from "../reducers/userReducer";
+import { setNotification } from "../reducers/notificationReducer";
 import {
   required,
   minLength,
   isEmail,
   composeValidators,
 } from "../helpers/formValidatorHelper";
+import { CONSTANTS } from "../static/constants";
 
-const Login = ({ loginUser, user }) => {
+const Login = ({ loginUser, user, demoUser, setNotification }) => {
   const history = useHistory();
 
   useEffect(() => {
@@ -23,10 +25,18 @@ const Login = ({ loginUser, user }) => {
     await loginUser(email, password);
   };
 
+  const handleForgotPassword = () => {
+    setNotification("Forgot password clicked", CONSTANTS.NOTIFICATION.MESSAGE);
+  };
+
+  const handleDemo = () => {
+    demoUser();
+  };
+
   return (
-    <div className="vh100 w100 fade-in relative">
-      <div className="center login m8">
-        <div className="w100 h100 r p24 mb8 bs-3 bg1">
+    <div className="vh100 w100 fade-in relative bg-blue-1">
+      <div className="center login">
+        <div className="h100 r p24 m8 bs-3 bg-1">
           <h1 className="bold f24 mb56 mt32 text-center">
             PropertyInvestorDash
           </h1>
@@ -62,7 +72,7 @@ const Login = ({ loginUser, user }) => {
                   {({ input, meta }) => (
                     <div className="relative">
                       <input
-                        className="form-input mb24 w100"
+                        className="form-input mb32 w100"
                         placeholder="Password"
                         type="password"
                         {...input}
@@ -84,8 +94,16 @@ const Login = ({ loginUser, user }) => {
             )}
           />
         </div>
-        <div className="mb8">Forgot your password?</div>
-        <div>Try a demo account</div>
+        <div className="mb8 ml8 mr8">
+          <span className="link" onClick={handleForgotPassword}>
+            Forgot your password?
+          </span>
+        </div>
+        <div className="ml8 mr8">
+          <span className="link" onClick={handleDemo}>
+            Try a demo account
+          </span>
+        </div>
       </div>
     </div>
   );
@@ -99,6 +117,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   loginUser,
+  demoUser,
+  setNotification,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
