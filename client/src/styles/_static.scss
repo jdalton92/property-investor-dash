@@ -7,6 +7,9 @@ $weight-normal: normal; // TO DO;
 $color-base: black !default;
 $bg-color-base: rgb(196, 196, 196) !default;
 
+$font-p: #0c0c0c;
+$font-s: #131313;
+
 $line-height-base: 1.5;
 $letter-spacing-base: 0.2px;
 
@@ -15,10 +18,10 @@ $weight-bold: 700;
 
 // Colours
 $primary-1: rgba(82, 110, 255, 1) !default;
-$primary-2: rgba(82, 110, 255, 0.6) !default;
-$primary-3: rgba(82, 110, 255, 0.2) !default;
-$secondary-1: #485ef0 !default;
-$secondary-2: #485ef0 !default;
+$primary-2: rgba(82, 111, 255, 0.801) !default;
+$primary-3: rgba(82, 110, 255, 0.85) !default;
+$secondary-1: #485ef08a !default;
+$secondary-2: #485ef0d5 !default;
 $secondary-3: #485ef0 !default;
 
 $n1: #f7f8fb !default;
@@ -60,17 +63,3 @@ $dropdown-shadow: 0 16px 40px -20px $n4-transp, 0 2px 10px -7px $n4-transp,
 $border-color-base: black !default;
 $border-radius-base: 5px !default;
 $border-width-base: 1px !default;
-
-// Text Sizes
-$text-sizes: (
-  sm: 12px,
-  md: 14px,
-  lg: 16px,
-) !default;
-
-$heading-sizes: (
-  h3: 20px,
-  h2: 24px,
-  h1: 28px,
-  h0: 36px,
-) !default;

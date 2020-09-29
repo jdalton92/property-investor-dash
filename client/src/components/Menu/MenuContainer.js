@@ -26,7 +26,7 @@ const MenuContainer = ({ title, menuItems }) => {
           caption={title}
         />
       </div>
-      <div className="flex-col ml20 w100 expand">
+      <div className="flex-col pl20 w100">
         {expand &&
           menuItems.map((item, index) => (
             <Button

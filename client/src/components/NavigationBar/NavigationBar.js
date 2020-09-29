@@ -10,9 +10,7 @@ import {
   setLeftSidebar,
 } from "../../reducers/navigationReducer";
 import { setNotification } from "../../reducers/notificationReducer";
-
 import { CONSTANTS } from "../../static/constants";
-
 import UserDropdown from "./UserDropdown";
 import Burger from "./Burger";
 import Menu from "./Menu";
@@ -61,18 +59,12 @@ const NavigationBar = ({
 
   const handleDropdownClick = (e) => {
     e.preventDefault();
-    setDropdown("username");
+    setDropdown(CONSTANTS.DROPDOWNS.USERNAME);
   };
 
   const handleLoginClick = (e) => {
     e.preventDefault();
     history.push("/login");
-  };
-
-  const handleLogout = (e) => {
-    e.preventDefault();
-    logoutUser();
-    history.push("/");
   };
 
   return (

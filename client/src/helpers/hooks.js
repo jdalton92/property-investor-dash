@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import { CONSTANTS } from "../static/constants";
 import store from "../store";
 
 const useDropdownOutsideAlerter = (ref) => {
@@ -7,11 +8,11 @@ const useDropdownOutsideAlerter = (ref) => {
     if (
       ref.current &&
       !ref.current.contains(e.target) &&
-      navigation.dropdown.username
+      navigation.dropdown[CONSTANTS.DROPDOWNS.USERNAME]
     ) {
       store.dispatch({
         type: "SET_DROPDOWN",
-        dropdownType: "username",
+        dropdown: CONSTANTS.DROPDOWNS.USERNAME,
       });
     }
   };

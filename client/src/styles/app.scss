@@ -73,6 +73,10 @@
   font-size: 12px;
 }
 
+.text-center {
+  text-align: center;
+}
+
 .fixed {
   position: fixed;
   top: 0;
@@ -117,6 +121,14 @@
 
 .bold {
   font-weight: bold;
+}
+
+.font-p {
+  color: $font-p;
+}
+
+.font-s {
+  color: $font-s;
 }
 
 .font-black {
@@ -334,6 +346,13 @@
   background-repeat: no-repeat;
 }
 
+.center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .h-auto {
   width: 100%;
   height: auto;
@@ -346,6 +365,14 @@
 
 .m-auto {
   margin-left: auto;
+  margin-right: auto;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
+.mr-auto {
   margin-right: auto;
 }
 
@@ -495,6 +522,10 @@
 
 .mb32 {
   margin-bottom: 32px;
+}
+
+.mb56 {
+  margin-bottom: 56px;
 }
 
 .m0 {
@@ -680,7 +711,7 @@
 .bs-hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   &:hover {
-    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 15px 0 rgba(0, 0, 0, 0.19);
   }
 }
 
@@ -785,6 +816,61 @@
 //   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 //   background-color: #555;
 // }
+
+.scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 3px;
+}
+
+.form-input {
+  display: block;
+  padding: 7px 12px;
+  font-size: 16px;
+  line-height: 1.5;
+  background-color: #d6d6d6;
+  border: none;
+  border-radius: 5px;
+  min-height: 40px;
+  &:hover {
+    background-color: #e7e7e7;
+  }
+  &:focus {
+    border: solid 1px $primary-1;
+    background-color: #eeeeee;
+  }
+}
+
+.form-error {
+  position: absolute;
+  bottom: -20px;
+  color: $r3;
+}
+
+.form-button-p {
+  text-align: center;
+  padding: 7px 12px;
+  font-size: 16px;
+  line-height: 1.5;
+  border: none;
+  border-radius: 5px;
+  min-height: 40px;
+  transition: background-color 0.2s ease;
+  background-color: $primary-1;
+  &:hover {
+    background-color: $secondary-2;
+  }
+  &:active {
+    background-color: $secondary-3;
+  }
+}
 
 .jump:hover {
   transform: translateY(-2px);

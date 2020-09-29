@@ -4,4 +4,7 @@ export const CONSTANTS = {
     SUCCESS: "SUCCESS",
     ERROR: "ERROR",
   },
+  DROPDOWNS: {
+    USERNAME: "USERNAME",
+  },
 };

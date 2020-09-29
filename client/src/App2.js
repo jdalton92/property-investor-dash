@@ -26,7 +26,7 @@ import OccupierInvestorDashboard from "./components/Dashboards/OccupierInvestorD
 import UserTypeModal from "./components/UserTypeModal";
 import SaveDashboardModal from "./components/Dashboards/SaveDashboardModal";
 
-const App = ({ initUser, isUserFetching, overlay }) => {
+const App = ({ initUser, isUserFetching, overlay, user }) => {
   useEffect(() => {
     initUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -34,6 +34,8 @@ const App = ({ initUser, isUserFetching, overlay }) => {
 
   if (isUserFetching) {
     return <Loader />;
+  } else if (!user.data.username) {
+    return <Login />;
   } else {
     return (
       <div className="w100 fade-in">

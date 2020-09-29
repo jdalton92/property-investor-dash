@@ -1,10 +1,21 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
+import { CONSTANTS } from "../../static/constants";
+import { logoutUser } from "../../reducers/userReducer";
 import Button from "../Shared/Button";
 import SettingsIcon from "../../styles/svg/settings.svg";
 import LogoutIcon from "../../styles/svg/logout.svg";
 
-const UserDropdown = ({ showDropdown }) => {
+const UserDropdown = ({ showDropdown, logoutUser }) => {
+  const history = useHistory();
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    logoutUser();
+    history.push("/");
+  };
+
   return (
     <>
       {showDropdown ? (
@@ -21,6 +32,7 @@ const UserDropdown = ({ showDropdown }) => {
             extraClass={"button-transp-p align-c"}
             captionClass={"ml8"}
             caption={"logout"}
+            onClick={handleLogout}
             iconUrl={LogoutIcon}
             iconColor={"black"}
           />
@@ -32,10 +44,12 @@ const UserDropdown = ({ showDropdown }) => {
 
 const mapStateToProps = (state) => {
   return {
-    showDropdown: state.navigation.dropdown.username,
+    showDropdown: state.navigation.dropdown[CONSTANTS.DROPDOWNS.USERNAME],
   };
 };
 
-const mapDispatchToProps = null;
+const mapDispatchToProps = {
+  logoutUser,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserDropdown);

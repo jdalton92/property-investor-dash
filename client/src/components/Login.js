@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Form as FinalForm, Field } from "react-final-form";
 import { useHistory } from "react-router-dom";
@@ -9,90 +9,85 @@ import {
   isEmail,
   composeValidators,
 } from "../helpers/formValidatorHelper";
-import { Button } from "react-bootstrap";
 
 const Login = ({ loginUser, user }) => {
   const history = useHistory();
-  const onSubmit = async (values) => {
-    await loginUser(values.email, values.password);
-    history.push("/saved-dashboards");
+
+  useEffect(() => {
+    if (user.data.username) {
+      history.push("/");
+    }
+  }, []);
+
+  const onSubmit = async ({ email, password }) => {
+    await loginUser(email, password);
   };
 
   return (
-    <section className="form-section" id="login-form-section">
-      <div className="form-outer-container form-card-container">
-        <div className="form-header">
-          <h1>Login</h1>
-        </div>
-        <div className="form-inner-container">
-          {user.data.username ? (
-            <i className="form-element logged-in">User already logged in</i>
-          ) : (
-            <FinalForm
-              onSubmit={onSubmit}
-              render={({ handleSubmit }) => (
-                <form className="form-element" onSubmit={handleSubmit}>
-                  <div className="form-item">
-                    <h5>Email</h5>
-                    <Field
-                      name="email"
-                      validate={composeValidators(isEmail, required)}
-                    >
-                      {({ input, meta }) => (
-                        <div>
-                          <input
-                            className="form-control"
-                            placeholder="example@email.com"
-                            type="email"
-                            {...input}
-                            required
-                          />
-                          {meta.error && meta.touched && (
-                            <span className="form-error">{meta.error}</span>
-                          )}
-                        </div>
+    <div className="vh100 w100 fade-in relative">
+      <div className="center login m8">
+        <div className="w100 h100 r p24 mb8 bs-3 bg1">
+          <h1 className="bold f24 mb56 mt32 text-center">
+            PropertyInvestorDash
+          </h1>
+          <FinalForm
+            onSubmit={onSubmit}
+            render={({ handleSubmit }) => (
+              <form onSubmit={handleSubmit}>
+                <h2 className="f16 mb8">Email</h2>
+                <Field
+                  name="email"
+                  validate={composeValidators(isEmail, required)}
+                >
+                  {({ input, meta }) => (
+                    <div className="relative">
+                      <input
+                        className="form-input mb24 w100"
+                        placeholder="example@email.com"
+                        type="email"
+                        {...input}
+                        required
+                      />
+                      {meta.error && meta.touched && (
+                        <div className="form-error">{meta.error}</div>
                       )}
-                    </Field>
-                  </div>
-                  <div className="form-item">
-                    <h5>Password</h5>
-                    <Field
-                      name="password"
-                      validate={composeValidators(required, minLength(3))}
-                    >
-                      {({ input, meta }) => (
-                        <div>
-                          <input
-                            className="form-control"
-                            placeholder="Password"
-                            type="password"
-                            {...input}
-                            required
-                          />
-                          {meta.error && meta.touched && (
-                            <span className="form-error">{meta.error}</span>
-                          )}
-                        </div>
+                    </div>
+                  )}
+                </Field>
+                <h2 className="f16 mb8">Password</h2>
+                <Field
+                  name="password"
+                  validate={composeValidators(required, minLength(3))}
+                >
+                  {({ input, meta }) => (
+                    <div className="relative">
+                      <input
+                        className="form-input mb24 w100"
+                        placeholder="Password"
+                        type="password"
+                        {...input}
+                        required
+                      />
+                      {meta.error && meta.touched && (
+                        <span className="form-error">{meta.error}</span>
                       )}
-                    </Field>
-                  </div>
-                  <div className="form-button-container">
-                    <Button
-                      className="form-button"
-                      id="form-submit"
-                      type="submit"
-                      variant="primary"
-                    >
-                      Submit
-                    </Button>
-                  </div>
-                </form>
-              )}
-            />
-          )}
+                    </div>
+                  )}
+                </Field>
+                <button
+                  className="form-button-p font-white bs-2 w100 pt8 pb8 r"
+                  type="submit"
+                >
+                  Login
+                </button>
+              </form>
+            )}
+          />
         </div>
+        <div className="mb8">Forgot your password?</div>
+        <div>Try a demo account</div>
       </div>
-    </section>
+    </div>
   );
 };
 

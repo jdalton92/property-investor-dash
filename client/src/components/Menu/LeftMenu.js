@@ -6,25 +6,43 @@ import Burger from "../NavigationBar/Burger";
 import MessageIcon from "../../styles/svg/message.svg";
 
 const LeftMenu = ({ leftSidebarOpen }) => {
-  const menuItems = [
+  const companyMenuItems = [
     {
-      title: "heading1, item1",
-      link: "/link1",
+      title: "About Us",
+      link: "/about",
       icon: MessageIcon,
     },
     {
-      title: "heading1, item2",
-      link: "/link2",
+      title: "Dashboard Types",
+      link: "/dashboard-types",
       icon: MessageIcon,
     },
     {
-      title: "heading1, item3",
-      link: "/link3",
+      title: "Who Is It For",
+      link: "/about",
       icon: MessageIcon,
     },
     {
-      title: "heading1, item4",
-      link: "/link4",
+      title: "Contact Us",
+      link: "/contact",
+      icon: MessageIcon,
+    },
+  ];
+
+  const calcualtorMenuItems = [
+    {
+      title: "Owner Occupier",
+      link: "/owner-occupier/edit",
+      icon: MessageIcon,
+    },
+    {
+      title: "Investor",
+      link: "/investor/edit",
+      icon: MessageIcon,
+    },
+    {
+      title: "Developer",
+      link: "/developer/edit",
       icon: MessageIcon,
     },
   ];
@@ -39,8 +57,12 @@ const LeftMenu = ({ leftSidebarOpen }) => {
         <Burger customClass={"h1080"} />
       </div>
       <div className="left-menu sticky-below-nav flex-col border-p">
-        <div className="o-y-scroll o-x-hidden mt8 mb8 flex-col h100">
-          <MenuContainer title={"heading1"} menuItems={menuItems} />
+        <div className="o-y-scroll o-x-hidden mt8 mb8 pflex-col h100 scrollbar">
+          <MenuContainer title={"Company"} menuItems={companyMenuItems} />
+          <MenuContainer
+            title={"Calculators"}
+            menuItems={calcualtorMenuItems}
+          />
         </div>
       </div>
     </div>

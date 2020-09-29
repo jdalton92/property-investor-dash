@@ -1,3 +1,5 @@
+import { CONSTANTS } from "../static/constants";
+
 const initialState = {
   sidebarOpen: {
     right: false,
@@ -31,31 +33,24 @@ const initialState = {
     saveDashboard: false,
   },
   dropdown: {
-    username: false,
+    [CONSTANTS.DROPDOWNS.USERNAME]: false,
   },
   overlay: false,
 };
 
 const navigationReducer = (state = initialState, action) => {
+  let newState;
   switch (action.type) {
     case "SET_RIGHT_SIDEBAR":
-      return {
-        ...state,
-        overlay: action.status,
-        sidebarOpen: {
-          right: action.status,
-          left: state.sidebarOpen.left,
-        },
-      };
+      newState = { ...state };
+      newState.overlay = action.status;
+      newState.sidebarOpen.right = action.status;
+      return newState;
     case "SET_LEFT_SIDEBAR":
-      return {
-        ...state,
-        overlay: action.status,
-        sidebarOpen: {
-          left: action.status,
-          right: state.sidebarOpen.right,
-        },
-      };
+      newState = { ...state };
+      newState.overlay = action.status;
+      newState.sidebarOpen.left = action.status;
+      return newState;
     case "SET_ACCORDIAN":
       return {
         ...state,
@@ -78,13 +73,9 @@ const navigationReducer = (state = initialState, action) => {
         },
       };
     case "SET_DROPDOWN":
-      return {
-        ...state,
-        dropdown: {
-          ...state.dropdown,
-          [action.dropdownType]: !state.dropdown[action.dropdownType],
-        },
-      };
+      newState = { ...state };
+      newState.dropdown[action.dropdown] = !newState.dropdown[action.dropdown];
+      return newState;
     case "SET_CASHFLOW":
       if (action.user === "developer") {
         return {
@@ -152,11 +143,11 @@ export const setModal = (modalType) => {
   };
 };
 
-export const setDropdown = (dropdownType) => {
+export const setDropdown = (dropdown) => {
   return (dispatch) => {
     dispatch({
       type: "SET_DROPDOWN",
-      dropdownType,
+      dropdown,
     });
   };
 };
