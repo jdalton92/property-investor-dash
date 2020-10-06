@@ -19,9 +19,16 @@ import Settings from "./components/Settings";
 import Notifications from "./components/Shared/Notification/Notifications";
 import Overlay from "./components/Shared/Overlay";
 import SavedDashboards from "./components/SavedDashboards";
+
+// Old inputs
 import OccupierInvestorInputs from "./components/CalculatorForms/OccupierInvestor/OccupierInvestorInputs";
 import DeveloperInputs from "./components/CalculatorForms/Developer/DeveloperInputs";
 import DeveloperDashboard from "./components/Dashboards/DeveloperDashboard";
+
+// New inputs
+import OccupierForm from "./components/CalculatorInputs/Occupier/OccupierForm";
+// TO DO
+
 import OccupierInvestorDashboard from "./components/Dashboards/OccupierInvestorDashboard";
 import UserTypeModal from "./components/UserTypeModal";
 import SaveDashboardModal from "./components/Dashboards/SaveDashboardModal";
@@ -54,21 +61,18 @@ const App = ({ initUser, isUserFetching, overlay, user }) => {
           <div className="vh100 w100 flex-row justify-c">
             <LeftMenu />
             <div className="main p8 w100 border-p">
-              app body
-              {/* <Switch>
-              <Route exact path="/" render={() => <Home />} />
+              <Switch>
+                {/* <Route exact path="/" render={() => <Home />} />
               <Route path="/about" render={() => <About />} />
               <Route path="/contact" render={() => <Contact />} />
-              <Route path="/create-user" render={() => <CreateUser />} />
-              <Route path="/login" render={() => <Login />} />
-              <Route
-                exact
-                path="/owner-occupier/edit"
-                render={() => (
-                  <OccupierInvestorInputs title="Owner Occupier Inputs" />
-                )}
-              />
-              <Route
+              <Route path="/create-user" render={() => <CreateUser />} /> */}
+                <Route path="/login" render={() => <Login />} />
+                <Route
+                  exact
+                  path="/owner-occupier/edit"
+                  render={() => <OccupierForm />}
+                />
+                {/* <Route
                 exact
                 path="/investor/edit"
                 render={() => (
@@ -79,14 +83,12 @@ const App = ({ initUser, isUserFetching, overlay, user }) => {
                 exact
                 path="/developer/edit"
                 render={() => <DeveloperInputs />}
-              />
-              <Route
-                path="/owner-occupier/edit/:id"
-                render={() => (
-                  <OccupierInvestorInputs title="Owner-Occupier Inputs" />
-                )}
-              />
-              <Route
+              /> */}
+                <Route
+                  path="/owner-occupier/edit/:id"
+                  render={() => <OccupierForm />}
+                />
+                {/* <Route
                 path="/investor/edit/:id"
                 render={() => (
                   <OccupierInvestorInputs title="Investor Inputs" />
@@ -135,8 +137,8 @@ const App = ({ initUser, isUserFetching, overlay, user }) => {
                 path="/saved-dashboards"
                 render={() => <SavedDashboards />}
               />
-              <CustomRoute path="/settings" render={() => <Settings />} />
-            </Switch> */}
+              <CustomRoute path="/settings" render={() => <Settings />} /> */}
+              </Switch>
             </div>
             <RightMenu />
           </div>

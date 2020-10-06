@@ -1,16 +1,3 @@
-* {
-  // font-family: "Raleway", sans-serif;
-  font-family: $font-family-base;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  list-style-position: inside;
-}
-
-*:focus {
-  outline: none;
-}
-
 .main {
   max-width: 900px;
   height: 125vh;
@@ -782,6 +769,10 @@
   background-color: $bg-color-base;
 }
 
+.o-hidden {
+  overflow: hidden;
+}
+
 .o-y-scroll {
   overflow: hidden;
   &:hover,
@@ -862,12 +853,13 @@
   border: none;
   border-radius: 5px;
   min-height: 40px;
+  border: solid 2px transparent;
   &:hover {
     background-color: #e7e7e7;
   }
   &:focus {
-    border: solid 1px $primary-1;
-    background-color: #eeeeee;
+    border: solid 2px $primary-1;
+    background-color: white;
   }
 }
 
@@ -900,6 +892,14 @@
   transition: transform 0.3s ease;
 }
 
+.transition-y {
+  transition: height 0.3s ease;
+}
+
+.transition-x {
+  transition: width 0.3s ease;
+}
+
 .fade-in {
   animation: fade-in 0.3s ease-out;
 }
@@ -910,6 +910,19 @@
   }
   100% {
     opacity: 1;
+  }
+}
+
+.drop-down {
+  animation: drop-down 0.3s ease-out;
+}
+
+@keyframes drop-down {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0%);
   }
 }
 
