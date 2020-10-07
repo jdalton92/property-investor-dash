@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getConfig } from "../helpers/tokenHelper";
+import { getConfig } from "../utils/tokenHelper";
 const baseUrl = "/api/dashboards";
 
 const getAllDash = async () => {

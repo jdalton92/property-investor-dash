@@ -14,7 +14,7 @@ import {
   required,
   maxLength,
   minLength,
-} from "../../helpers/formValidatorHelper";
+} from "../../utils/formValidatorHelper";
 import { Spinner } from "react-bootstrap";
 
 const SaveDashboardModal = ({

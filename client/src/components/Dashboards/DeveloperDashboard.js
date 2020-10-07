@@ -14,12 +14,12 @@ import {
   developerCalculation,
   developerMOCCalculation,
   fundingChartParse,
-} from "../../helpers/developerDashboardHelper";
+} from "../../utils/developerDashboardHelper";
 import {
   currencyFormatter,
   percentageFormatter,
   IRRCalculation,
-} from "../../helpers/dashboardHelper";
+} from "../../utils/dashboardHelper";
 import { Line, Bar } from "react-chartjs-2";
 import { Table, Card, ListGroup, Button, Spinner } from "react-bootstrap";
 

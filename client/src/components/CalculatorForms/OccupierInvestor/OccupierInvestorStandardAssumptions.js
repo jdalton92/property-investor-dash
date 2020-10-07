@@ -8,10 +8,10 @@ import { Form } from "react-bootstrap";
 import {
   required,
   minValue,
-  maxValue
-} from "../../../helpers/formValidatorHelper";
+  maxValue,
+} from "../../../utils/formValidatorHelper";
 
-const OccupierInvestorStandardAssumptions = props => {
+const OccupierInvestorStandardAssumptions = (props) => {
   const history = useHistory();
   const occupier = history.location.pathname.includes("occupier");
 
@@ -70,7 +70,7 @@ const OccupierInvestorStandardAssumptions = props => {
             validators={[
               required,
               minValue(0),
-              maxValue(props.values.housePrice)
+              maxValue(props.values.housePrice),
             ]}
             placeholder={"Deposit"}
             fieldType={"number"}

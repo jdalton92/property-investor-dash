@@ -8,7 +8,7 @@ import {
   minLength,
   isEmail,
   composeValidators,
-} from "../helpers/formValidatorHelper";
+} from "../utils/formValidatorHelper";
 import { Button, Spinner } from "react-bootstrap";
 
 const Settings = ({ user, updateUser, deleteUser }) => {

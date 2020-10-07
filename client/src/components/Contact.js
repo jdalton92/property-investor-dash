@@ -7,7 +7,7 @@ import {
   required,
   isEmail,
   composeValidators,
-} from "../helpers/formValidatorHelper";
+} from "../utils/formValidatorHelper";
 
 const Contact = ({ setMessage, isFetching }) => {
   const onSubmit = (values) => {

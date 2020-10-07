@@ -10,7 +10,8 @@ import {
   required,
   minValue,
   maxValue,
-} from "../../../helpers/formValidatorHelper";
+} from "../../../utils/formValidatorHelper";
+import { CONSTANTS } from "../../../static/constants";
 
 const OccupierForm = ({
   id,
@@ -18,7 +19,6 @@ const OccupierForm = ({
   setModal,
   testDashboard,
   dashboards,
-  setAccordian,
   navigation,
 }) => {
   const onSubmit = (values) => {
@@ -56,18 +56,38 @@ const OccupierForm = ({
               <h2 className="f20 bold mb16">Input Heading 1</h2>
               <div className="r bs-3 bg-1 p16">
                 <FinalFormField
-                  title={"House Price"}
-                  fieldName={"housePrice"}
-                  type={"occupierInvestor"}
-                  validators={[required, minValue(0), maxValue(100000000)]}
+                  label={"House Price"}
                   placeholder={"House Price"}
+                  fieldName={"housePrice"}
+                  type={CONSTANTS.TYPES.OWNEROCCUPIER}
+                  validators={[required, minValue(0), maxValue(100000000)]}
                   fieldType={"number"}
                   step={"1"}
-                  prependStart={"$"}
+                  prepend={"$"}
+                />
+                <FinalFormField
+                  label={"Ownership Length"}
+                  fieldName={"investmentPeriod"}
+                  type={"occupierInvestor"}
+                  validators={[required, minValue(0), maxValue(30)]}
+                  placeholder={"Ownership Length"}
+                  fieldType={"number"}
+                  step={1}
+                  append={"years"}
+                  parseType={"parseInt"}
                 />
               </div>
-              <button type="submit">Submit</button>
-              <button type="button" onClick={form.reset}>
+              <button
+                type="submit"
+                className="form-button-p mr12 font-white bs-2 mt12 pt8 pb8 r"
+              >
+                Submit
+              </button>
+              <button
+                type="button"
+                className="form-button-s font-white bs-2 mt12 pt8 pb8 r"
+                onClick={form.reset}
+              >
                 Reset
               </button>
             </form>

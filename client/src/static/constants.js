@@ -14,4 +14,10 @@ export const CONSTANTS = {
     username: "test",
     id: "5e5b9a751333b55db048112a",
   },
+  TYPES: {
+    OWNEROCCUPIER: "OWNEROCCUPIER",
+    INVESTOR: "INVESTOR",
+    OCCUPIERINVESTOR: "OCCUPIERINVESTOR",
+    DEVELOPER: "DEVELOPER",
+  },
 };

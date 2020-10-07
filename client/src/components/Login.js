@@ -9,7 +9,7 @@ import {
   minLength,
   isEmail,
   composeValidators,
-} from "../helpers/formValidatorHelper";
+} from "../utils/formValidatorHelper";
 import { CONSTANTS } from "../static/constants";
 
 const Login = ({ loginUser, user, demoUser, setNotification }) => {
@@ -44,7 +44,7 @@ const Login = ({ loginUser, user, demoUser, setNotification }) => {
             onSubmit={onSubmit}
             render={({ handleSubmit }) => (
               <form onSubmit={handleSubmit}>
-                <h2 className="f16 mb8 bold">Email</h2>
+                <h2 className="f16 mb8">Email</h2>
                 <Field
                   name="email"
                   validate={composeValidators(isEmail, required)}
@@ -64,7 +64,7 @@ const Login = ({ loginUser, user, demoUser, setNotification }) => {
                     </div>
                   )}
                 </Field>
-                <h2 className="f16 mb8 bold">Password</h2>
+                <h2 className="f16 mb8">Password</h2>
                 <Field
                   name="password"
                   validate={composeValidators(required, minLength(3))}
@@ -85,7 +85,7 @@ const Login = ({ loginUser, user, demoUser, setNotification }) => {
                   )}
                 </Field>
                 <button
-                  className="form-button-p font-white bold bs-2 w100 pt8 pb8 r"
+                  className="form-button-p font-white bs-2 w100 pt8 pb8 r"
                   type="submit"
                 >
                   Login

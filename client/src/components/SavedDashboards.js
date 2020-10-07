@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getDashboards, deleteDashboard } from "../reducers/dashboardReducer";
-import { dashboardType, formatDate } from "../helpers/dashboardHelper";
+import { dashboardType, formatDate } from "../utils/dashboardHelper";
 import { setNotification } from "../reducers/notificationReducer";
 import { Table, Button, Spinner } from "react-bootstrap";
 

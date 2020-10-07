@@ -1,5 +1,5 @@
 import React from "react";
-import { OverlayOutsideAlerter } from "../../helpers/hooks";
+import { OverlayOutsideAlerter } from "../../utils/hooks";
 
 const Overlay = () => {
   return (

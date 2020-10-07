@@ -1,6 +1,6 @@
 import loginService from "../services/login";
 import { CONSTANTS } from "../static/constants";
-import { setToken, destroyToken } from "../helpers/tokenHelper";
+import { setToken, destroyToken } from "../utils/tokenHelper";
 import userService from "../services/user";
 
 const initialState = { isFetching: true, data: {} };

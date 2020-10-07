@@ -4,7 +4,7 @@ import { OverlayTrigger, Popover } from "react-bootstrap";
 import {
   developerTooltipHelper,
   occupierInvestorTooltipHelper,
-} from "../../helpers/tooltipHelper";
+} from "../../utils/tooltipHelper";
 
 const CalculatorFormTooltip = ({ type, input, placement }) => {
   const header =

@@ -6,8 +6,8 @@ import CalculatorFormTooltip from "../CalculatorFormTooltip";
 import {
   required,
   minValue,
-  maxValue
-} from "../../../helpers/formValidatorHelper";
+  maxValue,
+} from "../../../utils/formValidatorHelper";
 import { Form } from "react-bootstrap";
 
 const DeveloperStandardAssumptions = () => {

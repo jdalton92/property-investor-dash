@@ -1,11 +1,14 @@
 import React from "react";
-import CalculatorFormTooltip from "../CalculatorForms/CalculatorFormTooltip";
 import { Field } from "react-final-form";
-import { Form, InputGroup } from "react-bootstrap";
-import { composeValidators } from "../../helpers/formValidatorHelper";
+import { required, composeValidators } from "../../utils/formValidatorHelper";
+import {
+  developerTooltipHelper,
+  occupierInvestorTooltipHelper,
+} from "../../utils/tooltipHelper";
+import { CONSTANTS } from "../../static/constants";
 
 const FinalFormField = ({
-  title,
+  label,
   fieldName,
   type,
   validators,
@@ -15,64 +18,72 @@ const FinalFormField = ({
   min,
   max,
   step,
-  prependStart,
-  prependEnd,
+  prepend,
+  append,
   parseType,
   readOnly,
 }) => {
+  const message =
+    type === CONSTANTS.TYPES.DEVELOPER
+      ? developerTooltipHelper[fieldName].message
+      : occupierInvestorTooltipHelper[fieldName].message;
+
   const parse = (value) => {
     if (parseType === "parseInt") {
       return isNaN(parseInt(value)) ? "" : parseInt(value);
     }
     return isNaN(parseFloat(value)) ? "" : parseFloat(value);
   };
+
+  const id = `${type}-${fieldName}`;
+
   return (
-    <div className="input-item">
-      <Form.Label>
-        <div className="input-label-container">
-          <div className="input-title-separator">{title}</div>
-          <div className="input-helper-separator">
-            <CalculatorFormTooltip input={fieldName} type={type} />
-          </div>
-        </div>
-      </Form.Label>
+    <>
+      <label for={id} className="f16 mb8">
+        {label}
+        {validators.includes(required) && (
+          <span className="font-red f12 bold ml4">*</span>
+        )}
+      </label>
+      <button type="button" className="ml8">
+        <span aria-label={message} data-balloon-pos="up" className="f12">
+          ?
+        </span>
+      </button>
       <Field
         name={fieldName}
         validate={composeValidators(...validators)}
         parse={parse}
       >
         {({ input, meta }) => (
-          <div className="input-error-group">
-            <InputGroup>
-              {prependStart ? (
-                <InputGroup.Prepend>
-                  <InputGroup.Text>{prependStart}</InputGroup.Text>
-                </InputGroup.Prepend>
-              ) : null}
-              <input
-                className="form-control"
-                placeholder={placeholder}
-                type={fieldType}
-                maxLength={maxLength}
-                min={min}
-                max={max}
-                step={step}
-                {...input}
-                readOnly={readOnly}
-              />
-              {prependEnd ? (
-                <InputGroup.Prepend>
-                  <InputGroup.Text>{prependEnd}</InputGroup.Text>
-                </InputGroup.Prepend>
-              ) : null}
-            </InputGroup>
+          <div className="relative mb20">
+            <input
+              id={id}
+              className={`form-input w100 ${prepend ? "pl32" : ""} ${
+                append ? "pr60" : ""
+              }`}
+              placeholder={placeholder}
+              type={fieldType}
+              maxLength={maxLength}
+              min={min}
+              max={max}
+              step={step}
+              {...input}
+              readOnly={readOnly}
+            />
+            {prepend && (
+              <span className="prepend absolute f16 ml12 mt10">{prepend}</span>
+            )}
+            {append && (
+              <span className="append absolute f16 mr12 mt10">{append}</span>
+            )}
             {meta.error && meta.touched && (
               <span className="form-error">{meta.error}</span>
             )}
           </div>
         )}
       </Field>
-    </div>
+    </>
   );
 };
 

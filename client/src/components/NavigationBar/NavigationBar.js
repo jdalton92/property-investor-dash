@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { DropdownOutsideAlerter } from "../../helpers/hooks";
+import { DropdownOutsideAlerter } from "../../utils/hooks";
 import { logoutUser } from "../../reducers/userReducer";
 import {
   setModal,

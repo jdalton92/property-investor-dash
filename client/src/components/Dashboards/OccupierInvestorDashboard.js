@@ -13,12 +13,12 @@ import {
   occupierInvestorCalculation,
   cardParse,
   occupierInvestorMOCCalculation,
-} from "../../helpers/occupierInvestorDashboardHelper";
+} from "../../utils/occupierInvestorDashboardHelper";
 import {
   currencyFormatter,
   percentageFormatter,
   IRRCalculation,
-} from "../../helpers/dashboardHelper";
+} from "../../utils/dashboardHelper";
 import { Line } from "react-chartjs-2";
 import { Table, Card, ListGroup, Button, Spinner } from "react-bootstrap";
 

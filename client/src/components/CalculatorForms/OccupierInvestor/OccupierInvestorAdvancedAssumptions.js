@@ -5,10 +5,10 @@ import { Field } from "react-final-form";
 import { FieldArray } from "react-final-form-arrays";
 import CalculatorFormTooltip from "../CalculatorFormTooltip";
 import FinalFormField from "../../FinalFormField";
-import { minValue, maxValue } from "../../../helpers/formValidatorHelper";
+import { minValue, maxValue } from "../../../utils/formValidatorHelper";
 import { Table, Button, InputGroup } from "react-bootstrap";
 
-const OccupierInvestorAdvancedAssumptions = props => {
+const OccupierInvestorAdvancedAssumptions = (props) => {
   const history = useHistory();
   const occupier = history.location.pathname.includes("occupier");
 

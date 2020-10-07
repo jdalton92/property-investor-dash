@@ -64,6 +64,10 @@
   font-size: 12px;
 }
 
+.f8 {
+  font-size: 8px;
+}
+
 .text-center {
   text-align: center;
 }
@@ -114,7 +118,7 @@
 }
 
 .expand {
-  transition: height 0.3s ease;
+  transition: height 5s ease;
   transition: width 0.3s ease;
 }
 
@@ -140,6 +144,10 @@
 
 .font-white {
   color: white;
+}
+
+.font-red {
+  color: red;
 }
 
 .flex-row {
@@ -384,327 +392,367 @@
 }
 
 .ml0 {
-  margin-left: 0px;
+  margin-left: 0px !important;
 }
 
 .ml4 {
-  margin-left: 4px;
+  margin-left: 4px !important;
 }
 
 .ml8 {
-  margin-left: 8px;
+  margin-left: 8px !important;
 }
 
 .ml12 {
-  margin-left: 12px;
+  margin-left: 12px !important;
 }
 
 .ml16 {
-  margin-left: 16px;
+  margin-left: 16px !important;
 }
 
 .ml20 {
-  margin-left: 20px;
+  margin-left: 20px !important;
 }
 
 .ml24 {
-  margin-left: 24px;
+  margin-left: 24px !important;
 }
 
 .ml28 {
-  margin-left: 28px;
+  margin-left: 28px !important;
 }
 
 .ml32 {
-  margin-left: 32px;
+  margin-left: 32px !important;
 }
 
 .mr0 {
-  margin-right: 0px;
+  margin-right: 0px !important;
 }
 
 .mr4 {
-  margin-right: 4px;
+  margin-right: 4px !important;
 }
 
 .mr8 {
-  margin-right: 8px;
+  margin-right: 8px !important;
 }
 
 .mr12 {
-  margin-right: 12px;
+  margin-right: 12px !important;
 }
 
 .mr16 {
-  margin-right: 16px;
+  margin-right: 16px !important;
 }
 
 .mr20 {
-  margin-right: 20px;
+  margin-right: 20px !important;
 }
 
 .mr24 {
-  margin-right: 24px;
+  margin-right: 24px !important;
 }
 
 .mr28 {
-  margin-right: 28px;
+  margin-right: 28px !important;
 }
 
 .mr32 {
-  margin-right: 32px;
+  margin-right: 32px !important;
 }
 
 .mr36 {
-  margin-right: 36px;
+  margin-right: 36px !important;
 }
 
 .mt0 {
-  margin-top: 0px;
+  margin-top: 0px !important;
 }
 
 .mt4 {
-  margin-top: 4px;
+  margin-top: 4px !important;
 }
 
 .mt8 {
-  margin-top: 8px;
+  margin-top: 8px !important;
+}
+
+.mt10 {
+  margin-top: 10px !important;
 }
 
 .mt12 {
-  margin-top: 12px;
+  margin-top: 12px !important;
 }
 
 .mt16 {
-  margin-top: 16px;
+  margin-top: 16px !important;
 }
 
 .mt20 {
-  margin-top: 20px;
+  margin-top: 20px !important;
 }
 
 .mt24 {
-  margin-top: 24px;
+  margin-top: 24px !important;
 }
 
 .mt28 {
-  margin-top: 28px;
+  margin-top: 28px !important;
 }
 
 .mt32 {
-  margin-top: 32px;
+  margin-top: 32px !important;
 }
 
 .mb0 {
-  margin-bottom: 0px;
+  margin-bottom: 0px !important;
 }
 
 .mb4 {
-  margin-bottom: 4px;
+  margin-bottom: 4px !important;
 }
 
 .mb8 {
-  margin-bottom: 8px;
+  margin-bottom: 8px !important;
 }
 
 .mb12 {
-  margin-bottom: 12px;
+  margin-bottom: 12px !important;
 }
 
 .mb16 {
-  margin-bottom: 16px;
+  margin-bottom: 16px !important;
 }
 
 .mb20 {
-  margin-bottom: 20px;
+  margin-bottom: 20px !important;
 }
 
 .mb24 {
-  margin-bottom: 24px;
+  margin-bottom: 24px !important;
 }
 
 .mb28 {
-  margin-bottom: 28px;
+  margin-bottom: 28px !important;
 }
 
 .mb32 {
-  margin-bottom: 32px;
+  margin-bottom: 32px !important;
 }
 
 .mb56 {
-  margin-bottom: 56px;
+  margin-bottom: 56px !important;
 }
 
 .m0 {
-  margin: 0px;
+  margin: 0px !important;
 }
 
 .m4 {
-  margin: 4px;
+  margin: 4px !important;
 }
 
 .m8 {
-  margin: 8px;
+  margin: 8px !important;
 }
 
 .m12 {
-  margin: 12px;
+  margin: 12px !important;
 }
 
 .m16 {
-  margin: 16px;
+  margin: 16px !important;
 }
 
 .m20 {
-  margin: 20px;
+  margin: 20px !important;
 }
 
 .m24 {
-  margin: 24px;
+  margin: 24px !important;
 }
 
 .m28 {
-  margin: 28px;
+  margin: 28px !important;
 }
 
 .m32 {
-  margin: 32px;
+  margin: 32px !important;
 }
 
 .pl0 {
-  padding-left: 0px;
+  padding-left: 0px !important;
 }
 
 .pl4 {
-  padding-left: 4px;
+  padding-left: 4px !important;
 }
 
 .pl8 {
-  padding-left: 8px;
+  padding-left: 8px !important;
 }
 
 .pl12 {
-  padding-left: 12px;
+  padding-left: 12px !important;
 }
 
 .pl16 {
-  padding-left: 16px;
+  padding-left: 16px !important;
 }
 
 .pl20 {
-  padding-left: 20px;
+  padding-left: 20px !important;
 }
 
 .pl24 {
-  padding-left: 24px;
+  padding-left: 24px !important;
+}
+
+.pl28 {
+  padding-left: 28px !important;
+}
+
+.pl32 {
+  padding-left: 32px !important;
+}
+
+.pl36 {
+  padding-left: 36px !important;
 }
 
 .pr0 {
-  padding-right: 0px;
+  padding-right: 0px !important;
 }
 
 .pr4 {
-  padding-right: 4px;
+  padding-right: 4px !important;
 }
 
 .pr8 {
-  padding-right: 8px;
+  padding-right: 8px !important;
 }
 
 .pr12 {
-  padding-right: 12px;
+  padding-right: 12px !important;
 }
 
 .pr16 {
-  padding-right: 16px;
+  padding-right: 16px !important;
 }
 
 .pr20 {
-  padding-right: 20px;
+  padding-right: 20px !important;
+}
+
+.pr24 {
+  padding-right: 24px !important;
+}
+
+.pr28 {
+  padding-right: 28px !important;
+}
+
+.pr32 {
+  padding-right: 32px !important;
+}
+
+.pr36 {
+  padding-right: 36px !important;
+}
+
+.pr40 {
+  padding-right: 40px !important;
+}
+
+.pr60 {
+  padding-right: 60px !important;
 }
 
 .pt0 {
-  padding-top: 0px;
+  padding-top: 0px !important;
 }
 
 .pt4 {
-  padding-top: 4px;
+  padding-top: 4px !important;
 }
 
 .pt8 {
-  padding-top: 8px;
+  padding-top: 8px !important;
 }
 
 .pt12 {
-  padding-top: 12px;
+  padding-top: 12px !important;
 }
 
 .pt16 {
-  padding-top: 16px;
+  padding-top: 16px !important;
 }
 
 .pt20 {
-  padding-top: 20px;
+  padding-top: 20px !important;
 }
 
 .pb0 {
-  padding-bottom: 0px;
+  padding-bottom: 0px !important;
 }
 
 .pb4 {
-  padding-bottom: 4px;
+  padding-bottom: 4px !important;
 }
 
 .pb8 {
-  padding-bottom: 8px;
+  padding-bottom: 8px !important;
 }
 
 .pb12 {
-  padding-bottom: 12px;
+  padding-bottom: 12px !important;
 }
 
 .pb16 {
-  padding-bottom: 16px;
+  padding-bottom: 16px !important;
 }
 
 .pb20 {
-  padding-bottom: 20px;
+  padding-bottom: 20px !important;
 }
 
 .p0 {
-  padding: 0px;
+  padding: 0px !important;
 }
 
 .p4 {
-  padding: 4px;
+  padding: 4px !important;
 }
 
 .p8 {
-  padding: 8px;
+  padding: 8px !important;
 }
 
 .p12 {
-  padding: 12px;
+  padding: 12px !important;
 }
 
 .p16 {
-  padding: 16px;
+  padding: 16px !important;
 }
 
 .p20 {
-  padding: 20px;
+  padding: 20px !important;
 }
 
 .p24 {
-  padding: 24px;
+  padding: 24px !important;
 }
 
 .p28 {
-  padding: 28px;
+  padding: 28px !important;
 }
 
 .p32 {
-  padding: 32px;
+  padding: 32px !important;
 }
 
 .bs-1 {
@@ -841,50 +889,6 @@
 .scrollbar::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.5);
   border-radius: 4px;
-}
-
-.form-input {
-  transition: background-color 0.2s ease;
-  display: block;
-  padding: 7px 12px;
-  font-size: 16px;
-  line-height: 1.5;
-  background-color: #d6d6d6;
-  border: none;
-  border-radius: 5px;
-  min-height: 40px;
-  border: solid 2px transparent;
-  &:hover {
-    background-color: #e7e7e7;
-  }
-  &:focus {
-    border: solid 2px $primary-1;
-    background-color: white;
-  }
-}
-
-.form-error {
-  position: absolute;
-  bottom: -20px;
-  color: $r3;
-}
-
-.form-button-p {
-  text-align: center;
-  padding: 7px 12px;
-  font-size: 16px;
-  line-height: 1.5;
-  border: none;
-  border-radius: 5px;
-  min-height: 40px;
-  transition: background-color 0.2s ease;
-  background-color: $primary-1;
-  &:hover {
-    background-color: $secondary-2;
-  }
-  &:active {
-    background-color: $secondary-3;
-  }
 }
 
 .jump:hover {

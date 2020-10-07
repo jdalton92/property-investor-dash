@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import CalculatorFormTooltip from "./CalculatorForms/CalculatorFormTooltip";
 import { Field } from "react-final-form";
 import { Form, InputGroup } from "react-bootstrap";
-import { composeValidators } from "../helpers/formValidatorHelper";
+import { composeValidators } from "../utils/formValidatorHelper";
 
 const FinalFormField = ({
   title,
