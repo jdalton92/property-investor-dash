@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import Button from "../Shared/Button";
+import { setLeftSidebar } from "../../reducers/navigationReducer";
 import ExpandIcon from "../../styles/svg/expand.svg";
 import CollapseIcon from "../../styles/svg/collapse.svg";
 
-const MenuContainer = ({ title, menuItems }) => {
+const MenuContainer = ({ title, menuItems, setLeftSidebar }) => {
   const [expand, setExpand] = useState(true);
   const history = useHistory();
 
   const handleLink = (link) => {
+    setLeftSidebar(false);
     history.push(link);
   };
 
@@ -51,6 +53,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = null;
+const mapDispatchToProps = {
+  setLeftSidebar,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(MenuContainer);

@@ -1,6 +1,6 @@
 .main {
   max-width: 900px;
-  height: 125vh;
+  min-height: 125vh;
 }
 
 .overlay {
@@ -64,6 +64,10 @@
   font-size: 12px;
 }
 
+.f10 {
+  font-size: 10px;
+}
+
 .f8 {
   font-size: 8px;
 }
@@ -115,6 +119,10 @@
   position: relative;
   top: 0;
   right: 0;
+}
+
+.fixed {
+  position: fixed;
 }
 
 .expand {
@@ -671,6 +679,10 @@
   padding-right: 60px !important;
 }
 
+.pr80 {
+  padding-right: 80px !important;
+}
+
 .pt0 {
   padding-top: 0px !important;
 }
@@ -681,6 +693,10 @@
 
 .pt8 {
   padding-top: 8px !important;
+}
+
+.pt10 {
+  padding-top: 10px !important;
 }
 
 .pt12 {

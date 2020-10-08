@@ -2,16 +2,18 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { CONSTANTS } from "../../static/constants";
+import { setDropdown } from "../../reducers/navigationReducer";
 import { logoutUser } from "../../reducers/userReducer";
 import Button from "../Shared/Button";
 import SettingsIcon from "../../styles/svg/settings.svg";
 import LogoutIcon from "../../styles/svg/logout.svg";
 
-const UserDropdown = ({ showDropdown, logoutUser, username }) => {
+const UserDropdown = ({ showDropdown, setDropdown, logoutUser, username }) => {
   const history = useHistory();
 
   const handleLogout = (e) => {
     e.preventDefault();
+    setDropdown(CONSTANTS.DROPDOWNS.USERNAME);
     logoutUser();
     history.push("/");
   };
@@ -51,6 +53,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   logoutUser,
+  setDropdown,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserDropdown);

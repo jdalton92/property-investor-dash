@@ -54,9 +54,9 @@ const App = ({ initUser, isUserFetching, overlay, user }) => {
         <Router>
           {overlay && <Overlay />}
           <Notifications />
+          <ScrollToTopControlller />
           {/* <UserTypeModal /> */}
           {/* <SaveDashboardModal /> */}
-          <ScrollToTopControlller />
           <NavigationBar />
           <div className="vh100 w100 flex-row justify-c">
             <LeftMenu />

@@ -21,8 +21,14 @@ const RightMenu = ({ rightSidebarOpen, setRightSidebar }) => {
     RightMenuIcon = ExpandIcon;
   }
 
-  const handleRightMenuClick = () => {
+  const handleRightMenuClick = (e) => {
+    e.preventDefault();
     setRightSidebar(!rightSidebarOpen);
+  };
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    setRightSidebar(false);
   };
 
   return (
@@ -45,6 +51,7 @@ const RightMenu = ({ rightSidebarOpen, setRightSidebar }) => {
         <div className="o-y-scroll o-x-hidden mt8 mb8 flex-col scrollbar">
           {y.map((c, i) => (
             <Button
+              onClick={handleClick}
               extraClass={"button-transp-p"}
               caption={"test button"}
               key={i}

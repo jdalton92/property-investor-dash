@@ -35,21 +35,21 @@ const FinalFormField = ({
     return isNaN(parseFloat(value)) ? "" : parseFloat(value);
   };
 
-  const id = `${type}-${fieldName}`;
+  const id = `${type}-${fieldName}`.toLowerCase();
 
   return (
     <>
-      <label for={id} className="f16 mb8">
+      <label htmlFor={id} className="f16 mb8">
         {label}
         {validators.includes(required) && (
           <span className="font-red f12 bold ml4">*</span>
         )}
       </label>
-      <button type="button" className="ml8">
+      {/* <button type="button" className="ml8">
         <span aria-label={message} data-balloon-pos="up" className="f12">
           ?
         </span>
-      </button>
+      </button> */}
       <Field
         name={fieldName}
         validate={composeValidators(...validators)}
@@ -60,7 +60,7 @@ const FinalFormField = ({
             <input
               id={id}
               className={`form-input w100 ${prepend ? "pl32" : ""} ${
-                append ? "pr60" : ""
+                append ? "pr80" : ""
               }`}
               placeholder={placeholder}
               type={fieldType}
@@ -72,13 +72,13 @@ const FinalFormField = ({
               readOnly={readOnly}
             />
             {prepend && (
-              <span className="prepend absolute f16 ml12 mt10">{prepend}</span>
+              <span className="prepend absolute f16 pl12 pt10">{prepend}</span>
             )}
             {append && (
-              <span className="append absolute f16 mr12 mt10">{append}</span>
+              <span className="append absolute f16 pr12 pt10">{append}</span>
             )}
             {meta.error && meta.touched && (
-              <span className="form-error">{meta.error}</span>
+              <span className="form-error f10">{meta.error}</span>
             )}
           </div>
         )}
