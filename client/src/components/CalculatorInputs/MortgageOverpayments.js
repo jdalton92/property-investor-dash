@@ -16,22 +16,28 @@ const MortgageOverpayments = ({ push, type }) => {
       <FieldArray name="overPayments">
         {({ fields }) => (
           <>
-            <table id={`${type}-overpayments`} className="w100">
+            <table id={`${type}-overpayments`} className="w100 mb20">
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Year</th>
-                  <th>Overpayment</th>
+                  <th>
+                    <span className="mb8">Year</span>
+                  </th>
+                  <th>
+                    <span className="ml8 mb8">Overpayment</span>
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {fields.map((name, index) => (
                   <tr key={index}>
-                    <th scope="row">{index + 1}</th>
+                    <th>
+                      <span>{index + 1}</span>
+                    </th>
                     <td>
                       <Field name={`${name}.year`} validate={minValue(0)}>
                         {({ input, meta }) => (
-                          <div className="relative mb20">
+                          <div className="relative mr8">
                             <input
                               className="form-input w100"
                               placeholder="Year"
@@ -56,7 +62,7 @@ const MortgageOverpayments = ({ push, type }) => {
                         )}
                       >
                         {({ input, meta }) => (
-                          <div className="relative mb20">
+                          <div className="relative ml8">
                             <input
                               className="form-input w100 pl32"
                               placeholder="Overpayment"

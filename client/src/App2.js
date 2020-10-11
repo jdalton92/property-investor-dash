@@ -27,6 +27,7 @@ import DeveloperDashboard from "./components/Dashboards/DeveloperDashboard";
 
 // New inputs
 import OccupierForm from "./components/CalculatorInputs/Occupier/OccupierForm";
+import InvestorForm from "./components/CalculatorInputs/Investor/InvestorForm";
 // TO DO
 
 import OccupierInvestorDashboard from "./components/Dashboards/OccupierInvestorDashboard";
@@ -72,14 +73,12 @@ const App = ({ initUser, isUserFetching, overlay, user }) => {
                   path="/owner-occupier/edit"
                   render={() => <OccupierForm />}
                 />
+                <Route
+                  exact
+                  path="/investor/edit"
+                  render={() => <InvestorForm />}
+                />
                 {/* <Route
-                exact
-                path="/investor/edit"
-                render={() => (
-                  <OccupierInvestorInputs title="Investor Inputs" />
-                )}
-              />
-              <Route
                 exact
                 path="/developer/edit"
                 render={() => <DeveloperInputs />}

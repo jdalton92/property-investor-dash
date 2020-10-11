@@ -7,15 +7,15 @@ import HelperMessage from "../../Shared/Helper";
 import Loader from "../../Shared/Loader";
 import OwnerOccupierInvestorInputs from "../OwnerOccupierInvestorInputs";
 
-const OccupierForm = ({ id, setModal, testDashboard, dashboards }) => {
+const InvestorForm = ({ id, setModal, testDashboard, dashboards }) => {
   const history = useHistory();
 
   const onSubmit = (values) => {
     setModal("disclaimer");
-    values.investor = false;
+    values.investor = true;
     values.type = "occupierInvestor";
     testDashboard(values);
-    history.push("/owner-occupier/dash");
+    history.push("/investor/dash");
   };
 
   if (dashboards.isFetching) {
@@ -35,17 +35,17 @@ const OccupierForm = ({ id, setModal, testDashboard, dashboards }) => {
       sellingCosts: 3,
       capitalGrowth: 3.5,
       upfrontCosts: 3,
-      recurringCosts: 1000,
+      recurringCosts: 5,
       rentalYield: 3,
-      investor: false,
+      investor: true,
       inflation: 3,
     };
     return (
       <>
-        <h1 className="f24 bold mt16 mb32">Owner Occupier Inputs</h1>
-        <HelperMessage title={"Owner Occupier"} body={"Helper body"} />
+        <h1 className="f24 bold mt16 mb32">Investor Inputs</h1>
+        <HelperMessage title={"Investor"} body={"Helper body"} />
         <OwnerOccupierInvestorInputs
-          investor={false}
+          investor={true}
           initialValues={initialValues}
           onSubmit={onSubmit}
         />
@@ -66,4 +66,4 @@ const mapDispatchToProps = {
   setModal,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OccupierForm);
+export default connect(mapStateToProps, mapDispatchToProps)(InvestorForm);
