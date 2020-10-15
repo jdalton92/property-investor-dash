@@ -5,35 +5,32 @@ const User = require("../models/user");
 
 loginRouter.post("/", async (request, response, next) => {
   try {
-    const body = request.body;
+    const { email, password } = request.body;
 
-    const user = await User.findOne({ email: body.email });
+    const user = await User.findOne({ email });
     const passwordCorrect =
-      user === null
-        ? false
-        : await bcrypt.compare(body.password, user.passwordHash);
+      user === null ? false : await bcrypt.compare(password, user.passwordHash);
 
     if (!(user && passwordCorrect)) {
       return response.status(401).json({
-        error: "invalid email or password"
+        error: "invalid email or password",
       });
     }
 
     const userForToken = {
       email: user.email,
-      id: user._id
+      id: user._id,
     };
 
     const token = jwt.sign(userForToken, process.env.SECRET);
 
-    response
-      .status(200)
-      .send({
-        token,
-        email: user.email,
-        username: user.username,
-        id: user._id
-      });
+    response.status(200).send({
+      token,
+      email: user.email,
+      username: user.username,
+      messagesRead: user.messagesRead,
+      id: user._id,
+    });
   } catch (e) {
     next(e);
   }

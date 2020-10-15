@@ -7,25 +7,31 @@ const userSchema = mongoose.Schema({
     unique: true,
     minlength: 3,
     present: true,
-    required: true
+    required: true,
   },
   email: {
     type: String,
     unique: true,
     minlength: 3,
     present: true,
-    required: true
+    required: true,
   },
   passwordHash: {
     type: String,
-    required: true
+    required: true,
   },
+  messagesRead: [
+    {
+      type: String,
+      unique: true,
+    },
+  ],
   dashboards: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Dashboard"
-    }
-  ]
+      ref: "Dashboard",
+    },
+  ],
 });
 
 userSchema.plugin(uniqueValidator);
@@ -33,7 +39,7 @@ userSchema.plugin(uniqueValidator);
 userSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     delete returnedObject.passwordHash;
-  }
+  },
 });
 
 const User = mongoose.model("User", userSchema);

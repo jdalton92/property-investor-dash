@@ -13,37 +13,37 @@ usersRouter.post("/", async (request, response, next) => {
 
     if (!username || username.length < 3) {
       return response.status(400).send({
-        error: "Username must be longer than 3 characters"
+        error: "Username must be longer than 3 characters",
       });
     }
 
     if (existingUser.length > 0) {
       return response.status(400).send({
-        error: "Email already has existing account"
+        error: "Email already has existing account",
       });
     }
 
     if (existingUsername.length > 0) {
       return response.status(400).send({
-        error: "Username already in use"
+        error: "Username already in use",
       });
     }
 
     if (password !== checkPassword) {
       return response.status(400).send({
-        error: "Passwords must match"
+        error: "Passwords must match",
       });
     }
 
     if (!password || password.length < 3) {
       return response.status(400).send({
-        error: "Pasword minimum length 3"
+        error: "Pasword minimum length 3",
       });
     }
 
     if (!username || !email) {
       return response.status(400).send({
-        error: "Username and email required"
+        error: "Username and email required",
       });
     }
 
@@ -53,7 +53,7 @@ usersRouter.post("/", async (request, response, next) => {
     const user = new User({
       username,
       email,
-      passwordHash
+      passwordHash,
     });
 
     const savedUser = await user.save();
@@ -65,16 +65,47 @@ usersRouter.post("/", async (request, response, next) => {
 });
 
 usersRouter.put(
+  "/:id/helper-messages",
+  middleware.tokenValidate,
+  async (request, response, next) => {
+    const user = await User.findByIdAndUpdate(request.params.id);
+    try {
+      const readMessage = request.body.type;
+
+      if (user.messagesRead.indexOf(readMessage) === -1) {
+        messagesRead = [...user.messagesRead, readMessage];
+        const newUser = await User.findByIdAndUpdate(
+          request.params.id,
+          { messagesRead },
+          {
+            new: true,
+          }
+        );
+
+        response.status(200).send({
+          newUser,
+        });
+      } else {
+        response.status(200).send({
+          user,
+        });
+      }
+    } catch (e) {
+      next(e);
+    }
+  }
+);
+
+usersRouter.put(
   "/:id",
   middleware.tokenValidate,
-  middleware.idValidate,
   async (request, response, next) => {
     try {
       const {
         newEmail,
         oldPassword,
         newPassword,
-        checkPassword
+        checkPassword,
       } = request.body;
 
       const user = await User.findById(request.params.id);
@@ -82,13 +113,13 @@ usersRouter.put(
 
       if (existingEmail.length > 0) {
         return response.status(401).json({
-          error: "Email already in use"
+          error: "Email already in use",
         });
       }
 
       if (!user) {
         return response.status(401).json({
-          error: "invalid user id"
+          error: "invalid user id",
         });
       }
 
@@ -105,19 +136,19 @@ usersRouter.put(
 
         if (!(user && passwordCorrect)) {
           return response.status(401).json({
-            error: "invalid user or password"
+            error: "invalid user or password",
           });
         }
 
         if (newPassword !== checkPassword) {
           return response.status(400).send({
-            error: "Passwords must match"
+            error: "Passwords must match",
           });
         }
 
         if (!newPassword || newPassword.length < 3) {
           return response.status(400).send({
-            error: "Pasword minimum length 3"
+            error: "Pasword minimum length 3",
           });
         }
         const saltRounds = 10;
@@ -130,20 +161,20 @@ usersRouter.put(
 
       const updatedUser = {
         email,
-        passwordHash
+        passwordHash,
       };
 
       const newUser = await User.findByIdAndUpdate(
         request.params.id,
         updatedUser,
         {
-          new: true
+          new: true,
         }
       );
 
       const userForToken = {
         email: newUser.email,
-        id: newUser._id
+        id: newUser._id,
       };
 
       const token = jwt.sign(userForToken, process.env.SECRET);
@@ -152,7 +183,8 @@ usersRouter.put(
         token,
         email: newUser.email,
         username: newUser.username,
-        id: newUser._id
+        messagesRead: newUser.messagesRead,
+        id: newUser._id,
       });
     } catch (e) {
       next(e);
@@ -173,7 +205,7 @@ usersRouter.delete("/:id", async (request, response, next) => {
       response.status(204).end();
     } else {
       return response.status(401).json({
-        error: "invalid user or password"
+        error: "invalid user or password",
       });
     }
   } catch (e) {

@@ -9,7 +9,7 @@ const requestLogger = (request, response, next) => {
   next();
 };
 
-const getTokenFrom = request => {
+const getTokenFrom = (request) => {
   const authorization = request.get("authorization");
   if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
     return authorization.substring(7);
@@ -63,7 +63,7 @@ const dashboardValidate = (request, response, next) => {
     "sellingCosts",
     "recurringCosts",
     "capitalGrowth",
-    "constructionCostGrowth"
+    "constructionCostGrowth",
   ];
 
   const nonRequiredOccupierInvestorInputs = [
@@ -71,17 +71,17 @@ const dashboardValidate = (request, response, next) => {
     "capitalGrowth",
     "upfrontCosts",
     "recurringCosts",
-    "inflation"
+    "inflation",
   ];
 
   if (type === "developer") {
-    nonRequiredDeveloperInputs.forEach(i => {
+    nonRequiredDeveloperInputs.forEach((i) => {
       if (!values[i]) {
         values[i] = 0;
       }
     });
   } else {
-    nonRequiredOccupierInvestorInputs.forEach(i => {
+    nonRequiredOccupierInvestorInputs.forEach((i) => {
       if (!values[i]) {
         values[i] = 0;
       }
@@ -91,21 +91,10 @@ const dashboardValidate = (request, response, next) => {
   next();
 };
 
-const idValidate = (request, response, next) => {
-  const { id } = request.body;
-  if (id !== request.params.id) {
-    return response.status(401).json({
-      error: "malformatted id"
-    });
-  }
-  next();
-};
-
 module.exports = {
   errorHandler,
   tokenExtractor,
   tokenValidate,
   requestLogger,
   dashboardValidate,
-  idValidate
 };
