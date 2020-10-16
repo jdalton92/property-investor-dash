@@ -1,11 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { testDashboard } from "../../../reducers/dashboardReducer";
-import { setAccordian, setModal } from "../../../reducers/navigationReducer";
-import HelperMessage from "../../Shared/Helper";
-import Loader from "../../Shared/Loader";
-import OwnerOccupierInvestorInputs from "../OwnerOccupierInvestorInputs";
+import { testDashboard } from "../../reducers/dashboardReducer";
+import { setAccordian, setModal } from "../../reducers/navigationReducer";
+import { CONSTANTS } from "../../static/constants";
+import HelperMessage from "../Shared/HelperMessage";
+import Loader from "../Shared/Loader";
+import OwnerOccupierInvestorInputs from "./OwnerOccupierInvestorInputs";
 
 const OccupierForm = ({ id, setModal, testDashboard, dashboards }) => {
   const history = useHistory();
@@ -17,6 +18,8 @@ const OccupierForm = ({ id, setModal, testDashboard, dashboards }) => {
     testDashboard(values);
     history.push("/owner-occupier/dash");
   };
+
+  const helperMessage = `Owner Occupier inputs to help you forecast your financial return if you buy a house and live in it for the ownership length, and then sell the property`;
 
   if (dashboards.isFetching) {
     return <Loader />;
@@ -42,8 +45,11 @@ const OccupierForm = ({ id, setModal, testDashboard, dashboards }) => {
     };
     return (
       <>
-        <h1 className="f24 bold mt16 mb32">Owner Occupier Inputs</h1>
-        <HelperMessage title={"Owner Occupier"} body={"Helper body"} />
+        <h1 className="f24 bold mt16 mb16">Owner Occupier Inputs</h1>
+        <HelperMessage
+          type={CONSTANTS.HELPERMESSAGES.OWNEROCCUPIERFORM}
+          body={helperMessage}
+        />
         <OwnerOccupierInvestorInputs
           investor={false}
           initialValues={initialValues}

@@ -35,7 +35,7 @@ const OwnerOccupierInvestorInputs = ({ initialValues, investor, onSubmit }) => {
           },
         }) => (
           <form onSubmit={handleSubmit}>
-            <h2 className="f20 bold mb16">Base Assumptions</h2>
+            <h2 className="f20 bold mt16 mb16">Base Assumptions</h2>
             <div className="r bs-3 bg-1 p20 mb20">
               {investor ? (
                 <div className="form-row">
@@ -117,7 +117,7 @@ const OwnerOccupierInvestorInputs = ({ initialValues, investor, onSubmit }) => {
                     placeholder={"Agents/legal fees etc"}
                     fieldType={"number"}
                     step={0.01}
-                    append={"% of cost"}
+                    append={"% of price"}
                   />
                 </div>
                 <div className="form-item">
@@ -142,7 +142,7 @@ const OwnerOccupierInvestorInputs = ({ initialValues, investor, onSubmit }) => {
                   placeholder={"Water, electricity, insurance etc"}
                   fieldType={"number"}
                   step={0.01}
-                  append={"% of gross rent"}
+                  append={"% of rent"}
                 />
               ) : (
                 <div className="form-row">
@@ -270,13 +270,13 @@ const OwnerOccupierInvestorInputs = ({ initialValues, investor, onSubmit }) => {
             <div className="form-buttons">
               <button
                 type="submit"
-                className="form-button-p font-white bs-2 mt12 pt8 pb8"
+                className="form-button-p bs-3 font-white mt12 pt8 pb8"
               >
                 Submit
               </button>
               <button
                 type="button"
-                className="form-button-s font-white bs-2 mt12 pt8 pb8 r"
+                className="form-button-s bs-3 font-white mt12 pt8 pb8 r"
                 onClick={form.reset}
               >
                 Reset

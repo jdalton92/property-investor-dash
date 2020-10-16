@@ -86,7 +86,7 @@ const MortgageOverpayments = ({ push, type }) => {
               </tbody>
             </table>
             <button
-              className="form-button-p font-white"
+              className="form-button-p bs-3 font-white"
               onClick={() => push("overPayments", undefined)}
               type="button"
             >

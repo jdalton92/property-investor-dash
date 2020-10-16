@@ -34,7 +34,10 @@ export const initUser = () => {
       if (loggedUserJSON) {
         const user = JSON.parse(loggedUserJSON);
         setToken(user.token);
-
+        dispatch({
+          type: "SET_MESSAGES",
+          messages: user.messagesRead,
+        });
         dispatch({
           type: "SET_USER",
           data: user,
@@ -66,10 +69,15 @@ export const demoUser = () => {
       window.localStorage.setItem("loggedUser", JSON.stringify(user));
       setToken(user.token);
       dispatch({
+        type: "SET_MESSAGES",
+        messages: user.messagesRead,
+      });
+      dispatch({
         type: "SET_USER",
         data: user,
       });
     } catch (e) {
+      console.log(e);
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
@@ -103,6 +111,10 @@ export const createUser = ({ username, email, password, checkPassword }) => {
 
       setToken(user.token);
 
+      dispatch({
+        type: "SET_MESSAGES",
+        messages: user.messagesRead,
+      });
       dispatch({
         type: "SET_USER",
         data: user,
@@ -154,10 +166,15 @@ export const loginUser = (email, password) => {
       setToken(user.token);
 
       dispatch({
+        type: "SET_MESSAGES",
+        messages: user.messagesRead,
+      });
+      dispatch({
         type: "SET_USER",
         data: user,
       });
     } catch (e) {
+      console.log(e);
       dispatch({
         type: "USER_REQUEST_FAIL",
       });

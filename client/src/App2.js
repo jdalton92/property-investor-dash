@@ -26,8 +26,9 @@ import DeveloperInputs from "./components/CalculatorForms/Developer/DeveloperInp
 import DeveloperDashboard from "./components/Dashboards/DeveloperDashboard";
 
 // New inputs
-import OccupierForm from "./components/CalculatorInputs/Occupier/OccupierForm";
-import InvestorForm from "./components/CalculatorInputs/Investor/InvestorForm";
+import OccupierForm from "./components/CalculatorInputs/OccupierForm";
+import InvestorForm from "./components/CalculatorInputs/InvestorForm";
+import DeveloperForm from "./components/CalculatorInputs/DeveloperForm";
 // TO DO
 
 import OccupierInvestorDashboard from "./components/Dashboards/OccupierInvestorDashboard";
@@ -78,26 +79,24 @@ const App = ({ initUser, isUserFetching, overlay, user }) => {
                   path="/investor/edit"
                   render={() => <InvestorForm />}
                 />
-                {/* <Route
-                exact
-                path="/developer/edit"
-                render={() => <DeveloperInputs />}
-              /> */}
+                <Route
+                  exact
+                  path="/developer/edit"
+                  render={() => <DeveloperForm />}
+                />
                 <Route
                   path="/owner-occupier/edit/:id"
                   render={() => <OccupierForm />}
                 />
+                <Route
+                  path="/investor/edit/:id"
+                  render={() => <InvestorForm />}
+                />
+                <Route
+                  path="/developer/edit/:id"
+                  render={() => <DeveloperForm />}
+                />
                 {/* <Route
-                path="/investor/edit/:id"
-                render={() => (
-                  <OccupierInvestorInputs title="Investor Inputs" />
-                )}
-              />
-              <Route
-                path="/developer/edit/:id"
-                render={() => <DeveloperInputs />}
-              />
-              <Route
                 exact
                 path="/owner-occupier/dash"
                 render={() => (

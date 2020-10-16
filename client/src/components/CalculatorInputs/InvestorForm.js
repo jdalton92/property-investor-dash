@@ -1,11 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { testDashboard } from "../../../reducers/dashboardReducer";
-import { setAccordian, setModal } from "../../../reducers/navigationReducer";
-import HelperMessage from "../../Shared/Helper";
-import Loader from "../../Shared/Loader";
-import OwnerOccupierInvestorInputs from "../OwnerOccupierInvestorInputs";
+import { testDashboard } from "../../reducers/dashboardReducer";
+import { setAccordian, setModal } from "../../reducers/navigationReducer";
+import { CONSTANTS } from "../../static/constants";
+import HelperMessage from "../Shared/HelperMessage";
+import Loader from "../Shared/Loader";
+import OwnerOccupierInvestorInputs from "./OwnerOccupierInvestorInputs";
 
 const InvestorForm = ({ id, setModal, testDashboard, dashboards }) => {
   const history = useHistory();
@@ -42,8 +43,11 @@ const InvestorForm = ({ id, setModal, testDashboard, dashboards }) => {
     };
     return (
       <>
-        <h1 className="f24 bold mt16 mb32">Investor Inputs</h1>
-        <HelperMessage title={"Investor"} body={"Helper body"} />
+        <h1 className="f24 bold mt16 mb16">Investor Inputs</h1>
+        <HelperMessage
+          type={CONSTANTS.HELPERMESSAGES.INVESTORFORM}
+          body={"Helper body"}
+        />
         <OwnerOccupierInvestorInputs
           investor={true}
           initialValues={initialValues}

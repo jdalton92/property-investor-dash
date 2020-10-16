@@ -29,6 +29,10 @@ const Login = ({ loginUser, user, demoUser, setNotification }) => {
     setNotification("Forgot password clicked", CONSTANTS.NOTIFICATION.MESSAGE);
   };
 
+  const handleCreateAccount = () => {
+    setNotification("Create account clicked", CONSTANTS.NOTIFICATION.MESSAGE);
+  };
+
   const handleDemo = () => {
     demoUser();
   };
@@ -97,6 +101,11 @@ const Login = ({ loginUser, user, demoUser, setNotification }) => {
         <div className="mb8 ml8 mr8">
           <span className="link" onClick={handleForgotPassword}>
             Forgot your password?
+          </span>
+        </div>
+        <div className="mb8 ml8 mr8">
+          <span className="link" onClick={handleCreateAccount}>
+            Create an account
           </span>
         </div>
         <div className="ml8 mr8">

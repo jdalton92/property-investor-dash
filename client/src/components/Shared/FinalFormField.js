@@ -60,7 +60,7 @@ const FinalFormField = ({
             <input
               id={id}
               className={`form-input w100 ${prepend ? "pl32" : ""} ${
-                append ? "pr80" : ""
+                append ? "pr70" : ""
               }`}
               placeholder={placeholder}
               type={fieldType}
@@ -72,10 +72,10 @@ const FinalFormField = ({
               readOnly={readOnly}
             />
             {prepend && (
-              <span className="prepend absolute f16 pl12 pt10">{prepend}</span>
+              <span className="prepend absolute f12 pl12 pt12">{prepend}</span>
             )}
             {append && (
-              <span className="append absolute f16 pr12 pt10">{append}</span>
+              <span className="append absolute f12 pr12 pt12">{append}</span>
             )}
             {meta.error && meta.touched && (
               <span className="form-error f10">{meta.error}</span>
