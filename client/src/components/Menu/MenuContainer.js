@@ -37,7 +37,7 @@ const MenuContainer = ({ title, menuItems, setLeftSidebar }) => {
               iconColor={"black"}
               iconUrl={item.icon}
               caption={item.title}
-              captionClass={"ml4"}
+              captionClass={"ml8"}
               iconSize={"24px"}
               onClick={() => handleLink(item.link)}
             />

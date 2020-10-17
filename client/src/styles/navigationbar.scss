@@ -20,7 +20,7 @@
 }
 
 .user-dropdown {
-  z-index: 111;
+  z-index: $menu-z-index + 1;
   background-color: $n1;
   width: 200px;
   position: absolute;

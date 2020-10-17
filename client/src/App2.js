@@ -16,21 +16,16 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import CreateUser from "./components/CreateUser";
 import Settings from "./components/Settings";
+import TermsAndConditions from "./components/TermsAndConditions";
 import Notifications from "./components/Shared/Notification/Notifications";
 import Overlay from "./components/Shared/Overlay";
 import SavedDashboards from "./components/SavedDashboards";
 
-// Old inputs
-import OccupierInvestorInputs from "./components/CalculatorForms/OccupierInvestor/OccupierInvestorInputs";
-import DeveloperInputs from "./components/CalculatorForms/Developer/DeveloperInputs";
-import DeveloperDashboard from "./components/Dashboards/DeveloperDashboard";
-
-// New inputs
 import OccupierForm from "./components/CalculatorInputs/OccupierForm";
 import InvestorForm from "./components/CalculatorInputs/InvestorForm";
 import DeveloperForm from "./components/CalculatorInputs/DeveloperForm";
-// TO DO
 
+import DeveloperDashboard from "./components/Dashboards/DeveloperDashboard";
 import OccupierInvestorDashboard from "./components/Dashboards/OccupierInvestorDashboard";
 import UserTypeModal from "./components/UserTypeModal";
 import SaveDashboardModal from "./components/Dashboards/SaveDashboardModal";
@@ -64,11 +59,15 @@ const App = ({ initUser, isUserFetching, overlay, user }) => {
             <LeftMenu />
             <div className="main p8 w100 border-p">
               <Switch>
+                <Route path="/login" render={() => <Login />} />
                 {/* <Route exact path="/" render={() => <Home />} />
               <Route path="/about" render={() => <About />} />
               <Route path="/contact" render={() => <Contact />} />
               <Route path="/create-user" render={() => <CreateUser />} /> */}
-                <Route path="/login" render={() => <Login />} />
+                <Route
+                  path="/terms-and-conditions"
+                  render={() => <TermsAndConditions />}
+                />
                 <Route
                   exact
                   path="/owner-occupier/edit"

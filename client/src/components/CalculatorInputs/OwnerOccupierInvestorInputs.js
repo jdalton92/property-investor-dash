@@ -6,14 +6,10 @@ import { testDashboard } from "../../reducers/dashboardReducer";
 import { setAccordian, setModal } from "../../reducers/navigationReducer";
 import MortgageOverpayments from "./MortgageOverpayments";
 import FinalFormField from "../Shared/FinalFormField";
-import {
-  required,
-  minValue,
-  maxValue,
-  composeValidators,
-} from "../../utils/formValidatorHelper";
+import { required, minValue, maxValue } from "../../utils/formValidatorHelper";
 import { occupierInvestorTooltipHelper } from "../../utils/tooltipHelper";
 import { CONSTANTS } from "../../static/constants";
+import Tooltip from "./Tooltip";
 
 const OwnerOccupierInvestorInputs = ({ initialValues, investor, onSubmit }) => {
   return (
@@ -88,7 +84,7 @@ const OwnerOccupierInvestorInputs = ({ initialValues, investor, onSubmit }) => {
                     fieldType={"number"}
                     step={1}
                     append={"years"}
-                    parseType={"parseInt"}
+                    parseType={CONSTANTS.PARSETYPE.INT}
                   />
                 </div>
                 <div className="form-item">
@@ -203,32 +199,26 @@ const OwnerOccupierInvestorInputs = ({ initialValues, investor, onSubmit }) => {
                     fieldType={"number"}
                     step={"1"}
                     append={"years"}
-                    parseType={"parseInt"}
+                    parseType={CONSTANTS.PARSETYPE.INT}
                   />
                 </div>
               </div>
               <div className="form-row">
                 <div className="form-item">
-                  <label htmlFor="owneroccupier-loantype" className="f16 mb8">
-                    Repayment Type
-                    <span className="font-red f12 bold ml4">*</span>
-                  </label>
-                  {/* <button type="button" className="ml8">
-                      <span
-                        aria-label={
-                          occupierInvestorTooltipHelper.loanType.message
-                        }
-                        data-balloon-pos="up"
-                        className="f12"
-                      >
-                        ?
-                      </span>
-                    </button> */}
+                  <div className="flex-row align-c">
+                    <label htmlFor="owneroccupier-loantype" className="f16 mb8">
+                      Repayment Type
+                      <span className="font-red f12 bold ml4">*</span>
+                    </label>
+                    <Tooltip
+                      message={occupierInvestorTooltipHelper.loanType.message}
+                    />
+                  </div>
                   <Field name="loanType" validate={required}>
                     {({ input, meta }) => (
                       <div className="relative mb20">
                         <select
-                          className="form-input select w100"
+                          className="form-input select w100 bs-1"
                           id="owneroccupier-loantype"
                           name="loanType"
                           defaultValue={"default"}

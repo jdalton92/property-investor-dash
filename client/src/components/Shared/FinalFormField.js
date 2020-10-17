@@ -6,6 +6,7 @@ import {
   occupierInvestorTooltipHelper,
 } from "../../utils/tooltipHelper";
 import { CONSTANTS } from "../../static/constants";
+import Tooltip from "../CalculatorInputs/Tooltip";
 
 const FinalFormField = ({
   label,
@@ -29,7 +30,7 @@ const FinalFormField = ({
       : occupierInvestorTooltipHelper[fieldName].message;
 
   const parse = (value) => {
-    if (parseType === "parseInt") {
+    if (parseType === CONSTANTS.PARSETYPE.INT) {
       return isNaN(parseInt(value)) ? "" : parseInt(value);
     }
     return isNaN(parseFloat(value)) ? "" : parseFloat(value);
@@ -39,17 +40,15 @@ const FinalFormField = ({
 
   return (
     <>
-      <label htmlFor={id} className="f16 mb8">
-        {label}
-        {validators.includes(required) && (
-          <span className="font-red f12 bold ml4">*</span>
-        )}
-      </label>
-      {/* <button type="button" className="ml8">
-        <span aria-label={message} data-balloon-pos="up" className="f12">
-          ?
-        </span>
-      </button> */}
+      <div className="flex-row align-c relative">
+        <label htmlFor={id} className="f16 mb8">
+          {label}
+          {validators.includes(required) && (
+            <span className="font-red f12 bold ml4">*</span>
+          )}
+        </label>
+        <Tooltip message={message} />
+      </div>
       <Field
         name={fieldName}
         validate={composeValidators(...validators)}
@@ -59,7 +58,7 @@ const FinalFormField = ({
           <div className="relative mb20">
             <input
               id={id}
-              className={`form-input w100 ${prepend ? "pl32" : ""} ${
+              className={`form-input bs-1 w100 ${prepend ? "pl32" : ""} ${
                 append ? "pr70" : ""
               }`}
               placeholder={placeholder}

@@ -6,13 +6,27 @@ import {
   maxValue,
   composeValidators,
 } from "../../utils/formValidatorHelper";
+import {
+  developerTooltipHelper,
+  occupierInvestorTooltipHelper,
+} from "../../utils/tooltipHelper";
+import Tooltip from "./Tooltip";
+import { CONSTANTS } from "../../static/constants";
 
 const MortgageOverpayments = ({ push, type }) => {
+  const message =
+    type === CONSTANTS.TYPES.DEVELOPER
+      ? developerTooltipHelper["overPayments"].message
+      : occupierInvestorTooltipHelper["overPayments"].message;
+
   return (
     <>
-      <label htmlFor={`${type}-overpayments`} className="f16 mb8">
-        Mortgage Overpayments
-      </label>
+      <div className="flex-row align-c relative">
+        <label htmlFor={`${type}-overpayments`} className="f16 mb8">
+          Mortgage Overpayments
+        </label>
+        <Tooltip message={message} />
+      </div>
       <FieldArray name="overPayments">
         {({ fields }) => (
           <>
@@ -39,7 +53,7 @@ const MortgageOverpayments = ({ push, type }) => {
                         {({ input, meta }) => (
                           <div className="relative mr8">
                             <input
-                              className="form-input w100"
+                              className="form-input w100 bs-1"
                               placeholder="Year"
                               type="number"
                               step="1"
@@ -64,7 +78,7 @@ const MortgageOverpayments = ({ push, type }) => {
                         {({ input, meta }) => (
                           <div className="relative ml8">
                             <input
-                              className="form-input w100 pl32"
+                              className="form-input w100 pl32 bs-1"
                               placeholder="Overpayment"
                               type="number"
                               step="1"

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import CalculatorFormTooltip from "../CalculatorForms/CalculatorFormTooltip";
+// import CalculatorFormTooltip from "../CalculatorForms/CalculatorFormTooltip";
 import {
   getDashboard,
   preSaveDashboard,
@@ -198,11 +198,11 @@ const OccupierInvestorDashboard = ({
                 </h5>
               </div>
               <div className="dashboard-table-tooltip">
-                <CalculatorFormTooltip
+                {/* <CalculatorFormTooltip
                   input={"cashflowAfterFunding"}
                   type={"occupierInvestor"}
                   placement={"right"}
-                />
+                /> */}
               </div>
             </div>
             <div className="dashboard-button-container">

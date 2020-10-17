@@ -1,0 +1,34 @@
+.tooltip-btn {
+  display: flex;
+  height: 16px;
+  border-radius: 4px;
+  background-color: $n4-transp;
+  transition: background-color 0.2s ease;
+  &:hover {
+    background-color: $n5-transp;
+  }
+
+  &:active {
+    background-color: $n6-transp;
+  }
+}
+
+.tooltip-msg {
+  width: 250px;
+  bottom: 0;
+  transform: translate(-50%, calc(100% - 8px));
+  z-index: $tooltip-z-index;
+}
+
+@media screen and (max-width: 768px) {
+  .tooltip-msg {
+    width: 250px;
+    bottom: 0;
+    transform: translate(calc(-100% + 16px), calc(100% + 4px));
+  }
+
+  .tooltip-container {
+    position: absolute;
+    right: 0;
+  }
+}

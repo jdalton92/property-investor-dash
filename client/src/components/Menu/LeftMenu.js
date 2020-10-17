@@ -3,29 +3,38 @@ import { connect } from "react-redux";
 import MenuContainer from "./MenuContainer";
 import Burger from "../NavigationBar/Burger";
 
+import QuestionIcon from "../../styles/svg/question.svg";
 import MessageIcon from "../../styles/svg/message.svg";
+import DashboardIcon from "../../styles/svg/dashboard.svg";
+import ContactIcon from "../../styles/svg/email.svg";
+import GitHubIcon from "../../styles/svg/github.svg";
+import HomeOwnerIcon from "../../styles/svg/home-owner.svg";
+import UserIcon from "../../styles/svg/user2.svg";
+import UnitsIcon from "../../styles/svg/units.svg";
+import FinanceIcon from "../../styles/svg/finance.svg";
+import PrivacyIcon from "../../styles/svg/privacy.svg";
 
 const LeftMenu = ({ leftSidebarOpen }) => {
   const companyMenuItems = [
     {
       title: "About Us",
       link: "/about",
-      icon: MessageIcon,
+      icon: QuestionIcon,
     },
     {
       title: "Dashboard Types",
       link: "/dashboard-types",
-      icon: MessageIcon,
+      icon: DashboardIcon,
     },
     {
       title: "Who Is It For",
       link: "/about",
-      icon: MessageIcon,
+      icon: UserIcon,
     },
     {
       title: "Contact Us",
       link: "/contact",
-      icon: MessageIcon,
+      icon: ContactIcon,
     },
   ];
 
@@ -33,25 +42,25 @@ const LeftMenu = ({ leftSidebarOpen }) => {
     {
       title: "Owner Occupier",
       link: "/owner-occupier/edit",
-      icon: MessageIcon,
+      icon: HomeOwnerIcon,
     },
     {
       title: "Investor",
       link: "/investor/edit",
-      icon: MessageIcon,
+      icon: FinanceIcon,
     },
     {
       title: "Developer",
       link: "/developer/edit",
-      icon: MessageIcon,
+      icon: UnitsIcon,
     },
   ];
 
   const otherMenuItems = [
     {
-      title: "GitHub Repo",
+      title: "GitHub",
       link: "https://github.com/jdalton92/property-investor-dash",
-      icon: MessageIcon,
+      icon: GitHubIcon,
     },
     {
       title: "Terms and Conditions",
@@ -61,7 +70,7 @@ const LeftMenu = ({ leftSidebarOpen }) => {
     {
       title: "Privacy Policy",
       link: "/privacy-policy",
-      icon: MessageIcon,
+      icon: PrivacyIcon,
     },
   ];
 
@@ -76,7 +85,7 @@ const LeftMenu = ({ leftSidebarOpen }) => {
         <Burger customClass={"h1080"} />
       </div>
       <div className="left-menu sticky-below-nav flex-col border-p">
-        <div className="o-y-scroll o-x-hidden mt8 mb8 pflex-col h100 scrollbar">
+        <div className="o-y-scroll o-x-hidden mt8 mb8 h100 scrollbar">
           <MenuContainer title={"Company"} menuItems={companyMenuItems} />
           <MenuContainer
             title={"Calculators"}

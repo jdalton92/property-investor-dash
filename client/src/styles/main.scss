@@ -7,11 +7,12 @@
 // source: https://kazzkiq.github.io/balloon.css/
 @import "./balloon.scss";
 
-// Shared components
-@import "./shared/loader.scss";
-@import "./shared/button.scss";
-@import "./shared/notification.scss";
-@import "./shared/form.scss";
+// Components
+@import "./components/loader.scss";
+@import "./components/button.scss";
+@import "./components/notification.scss";
+@import "./components/form.scss";
+@import "./components/tooltip.scss";
 
 // Views
 @import "./login.scss";

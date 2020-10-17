@@ -6,17 +6,13 @@ import arrayMutators from "final-form-arrays";
 import { testDashboard } from "../../reducers/dashboardReducer";
 import { setAccordian, setModal } from "../../reducers/navigationReducer";
 import { CONSTANTS } from "../../static/constants";
-import {
-  required,
-  minValue,
-  maxValue,
-  composeValidators,
-} from "../../utils/formValidatorHelper";
+import { required, minValue, maxValue } from "../../utils/formValidatorHelper";
+import { developerTooltipHelper } from "../../utils/tooltipHelper";
 import FinalFormField from "../Shared/FinalFormField";
 import HelperMessage from "../Shared/HelperMessage";
 import Loader from "../Shared/Loader";
 import MortgageOverpayments from "./MortgageOverpayments";
-import OwnerOccupierInvestorInputs from "./OwnerOccupierInvestorInputs";
+import Tooltip from "./Tooltip";
 
 const DeveloperForm = ({ id, testDashboard, dashboards }) => {
   const history = useHistory();
@@ -35,20 +31,30 @@ const DeveloperForm = ({ id, testDashboard, dashboards }) => {
     //   dashboards.preSave || id ? dashboards.data[0].values : {overPayments: [{}]};
 
     const initialValues = {
-      housePrice: 1000000,
-      deposit: 200000,
-      loanType: "principalAndInterest",
+      acquisitionPrice: 100000,
+      acquisitionCosts: 5,
+      dwellings: 4,
+      constructionCostPerDwelling: 400000,
+      designFees: 10,
+      constructionContingency: 10,
+      statutoryFees: 3,
+      constructionDuration: 24,
+      planningAndDesign: 6,
+
+      revenuePerDwelling: 750000,
+      sellingCosts: 5,
+      investmentPeriod: 5,
+      recurringCosts: 30,
+      rentalYield: 4,
+
+      initialEquity: 400000,
+      loanType: "interestOnly",
       interestRate: 3.5,
-      homeloanTerm: 30,
+      loanTerm: 30,
       overPayments: [{}],
-      investmentPeriod: 15,
-      sellingCosts: 3,
+
       capitalGrowth: 3.5,
-      upfrontCosts: 3,
-      recurringCosts: 1000,
-      rentalYield: 3,
-      investor: false,
-      inflation: 3,
+      constructionCostGrowth: 2.5,
     };
     return (
       <>
@@ -87,7 +93,7 @@ const DeveloperForm = ({ id, testDashboard, dashboards }) => {
                       fieldType={"number"}
                       step={1}
                       append={"mths"}
-                      parseType={"parseInt"}
+                      parseType={CONSTANTS.PARSETYPE.INT}
                     />
                   </div>
                   <div className="form-item">
@@ -100,7 +106,7 @@ const DeveloperForm = ({ id, testDashboard, dashboards }) => {
                       fieldType={"number"}
                       step={1}
                       append={"mths"}
-                      parseType={"parseInt"}
+                      parseType={CONSTANTS.PARSETYPE.INT}
                     />
                   </div>
                 </div>
@@ -113,7 +119,7 @@ const DeveloperForm = ({ id, testDashboard, dashboards }) => {
                   fieldType={"number"}
                   step={1}
                   append={"yrs"}
-                  parseType={"parseInt"}
+                  parseType={CONSTANTS.PARSETYPE.INT}
                 />
               </div>
               <h2 className="f20 bold mt16 mb16">Cost Assumptions</h2>
@@ -182,7 +188,7 @@ const DeveloperForm = ({ id, testDashboard, dashboards }) => {
                       fieldType={"number"}
                       maxLength={3}
                       step={0.01}
-                      append={"% of constn cost"}
+                      append={"% of cost"}
                     />
                   </div>
                   <div className="form-item">
@@ -195,7 +201,7 @@ const DeveloperForm = ({ id, testDashboard, dashboards }) => {
                       fieldType={"number"}
                       maxLength={3}
                       step={0.01}
-                      append={"% of constn cost"}
+                      append={"% of cost"}
                     />
                   </div>
                 </div>
@@ -321,26 +327,20 @@ const DeveloperForm = ({ id, testDashboard, dashboards }) => {
                 </div>
                 <div className="form-row">
                   <div className="form-item">
-                    <label htmlFor="developer-loantype" className="f16 mb8">
-                      Repayment Type
-                      <span className="font-red f12 bold ml4">*</span>
-                    </label>
-                    {/* <button type="button" className="ml8">
-                      <span
-                        aria-label={
-                          occupierInvestorTooltipHelper.loanType.message
-                        }
-                        data-balloon-pos="up"
-                        className="f12"
-                      >
-                        ?
-                      </span>
-                    </button> */}
+                    <div className="flex-row align-c">
+                      <label htmlFor="developer-loantype" className="f16 mb8">
+                        Repayment Type
+                        <span className="font-red f12 bold ml4">*</span>
+                      </label>
+                      <Tooltip
+                        message={developerTooltipHelper.loanType.message}
+                      />
+                    </div>
                     <Field name="loanType" validate={required}>
                       {({ input, meta }) => (
                         <div className="relative mb20">
                           <select
-                            className="form-input select w100"
+                            className="form-input select w100 bs-1"
                             id="developer-loantype"
                             name="loanType"
                             defaultValue={"default"}

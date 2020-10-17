@@ -6,7 +6,7 @@ import {
   getDashboard,
   preSaveDashboard,
 } from "../../reducers/dashboardReducer";
-import CalculatorFormTooltip from "../CalculatorForms/CalculatorFormTooltip";
+// import CalculatorFormTooltip from "../CalculatorForms/CalculatorFormTooltip";
 import {
   cumulativeChartParse,
   annualChartParse,
@@ -335,11 +335,11 @@ const DeveloperDashboard = ({
                 </h5>
               </div>
               <div className="dashboard-table-tooltip">
-                <CalculatorFormTooltip
+                {/* <CalculatorFormTooltip
                   input={"cashflowBeforeFunding"}
                   type={"developer"}
                   placement={"right"}
-                />
+                /> */}
               </div>
             </div>
             <div className="dashboard-button-container">
@@ -450,11 +450,11 @@ const DeveloperDashboard = ({
                 </h5>
               </div>
               <div className="dashboard-table-tooltip">
-                <CalculatorFormTooltip
+                {/* <CalculatorFormTooltip
                   input={"cashflowAfterFunding"}
                   type={"developer"}
                   placement={"right"}
-                />
+                /> */}
               </div>
             </div>
             <div className="dashboard-button-container">
