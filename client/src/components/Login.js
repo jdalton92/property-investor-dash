@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { Form as FinalForm, Field } from "react-final-form";
+import { Form, Field } from "react-final-form";
 import { useHistory } from "react-router-dom";
 import { loginUser, demoUser } from "../reducers/userReducer";
 import { setNotification } from "../reducers/notificationReducer";
@@ -44,7 +44,7 @@ const Login = ({ loginUser, user, demoUser, setNotification }) => {
           <h1 className="bold f24 mb56 mt32 text-center">
             PropertyInvestorDash
           </h1>
-          <FinalForm
+          <Form
             onSubmit={onSubmit}
             render={({ handleSubmit }) => (
               <form onSubmit={handleSubmit}>

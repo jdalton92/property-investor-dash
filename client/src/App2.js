@@ -16,6 +16,7 @@ import PrivacyPolicy from "./components/PrivacyPolicy";
 import About from "./components/About";
 import DashboardTypes from "./components/DashboardTypes";
 import Blog from "./components/Blog";
+import Settings from "./components/Settings/Settings";
 import TermsAndConditions from "./components/TermsAndConditions";
 import Notifications from "./components/Shared/Notification/Notifications";
 import Overlay from "./components/Shared/Overlay";
@@ -46,9 +47,8 @@ const App = ({ initUser, isUserFetching, overlay, user }) => {
             <div className="main p8 w100 border-p">
               <Switch>
                 <Route path="/login" render={() => <Login />} />
-                {/* <Route exact path="/" render={() => <Home />} />
-              <Route path="/about" render={() => <About />} />
-              <Route path="/create-user" render={() => <CreateUser />} /> */}
+                <Route path="/settings" render={() => <Settings />} />
+                {/* <Route path="/create-user" render={() => <CreateUser />} /> */}
                 <Route path="/contact" render={() => <Contact />} />
                 <Route
                   path="/terms-and-conditions"

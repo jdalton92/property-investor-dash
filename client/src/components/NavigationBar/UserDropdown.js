@@ -11,6 +11,11 @@ import LogoutIcon from "../../styles/svg/logout.svg";
 const UserDropdown = ({ showDropdown, setDropdown, logoutUser, username }) => {
   const history = useHistory();
 
+  const handleLink = (url) => {
+    setDropdown(CONSTANTS.DROPDOWNS.USERNAME);
+    history.push(url);
+  };
+
   const handleLogout = (e) => {
     e.preventDefault();
     setDropdown(CONSTANTS.DROPDOWNS.USERNAME);
@@ -27,6 +32,7 @@ const UserDropdown = ({ showDropdown, setDropdown, logoutUser, username }) => {
             extraClass={"button-transp-p align-c"}
             captionClass={"ml8"}
             caption={"account settings"}
+            onClick={() => handleLink("/settings")}
             iconUrl={SettingsIcon}
             iconColor={"black"}
           />

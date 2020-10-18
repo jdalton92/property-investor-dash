@@ -1,5 +1,6 @@
 .main {
   max-width: 900px;
+  min-height: calc(100vh - 56px);
 }
 
 .overlay {
@@ -81,6 +82,13 @@
 
 .text-start {
   text-align: start;
+}
+
+.link-underline {
+  text-decoration: underline;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .link {
