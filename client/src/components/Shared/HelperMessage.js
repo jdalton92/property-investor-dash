@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { hideHelperMessage } from "../../reducers/notificationReducer";
 import { Icon } from "./Icon";
-import Button from "../Shared/Button";
 import TickIcon from "../../styles/svg/tick.svg";
 import MessageIcon from "../../styles/svg/message.svg";
 
@@ -32,14 +31,20 @@ const HelperMessage = ({
           />
           <span className="ml20">{body}</span>
         </div>
-        <Button
-          extraClass={"form-button-p bs-3 font-white r"}
-          // captionClass={"mt8"}
-          caption={"Okay"}
+        <button
+          type="submit"
+          className="form-button-p bs-3 font-white mt20 pt4 pb4 flex-row align-c justify-c"
           onClick={handleClick}
-          iconUrl={TickIcon}
-          iconColor={"white"}
-        />
+        >
+          <Icon
+            size={"20px"}
+            url={TickIcon}
+            color={"white"}
+            hover={false}
+            active={false}
+          />
+          <span className="ml8">Okay</span>
+        </button>
       </div>
     );
   }

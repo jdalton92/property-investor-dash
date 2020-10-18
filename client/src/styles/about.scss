@@ -1,0 +1,46 @@
+.about-card button,
+.about-card-rev button {
+  max-width: 175px;
+}
+
+.about-img {
+  min-width: 300px;
+  min-height: 200px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  &:nth-child(1),
+  &:nth-child(3) {
+    border-top-left-radius: $border-radius-base;
+    border-bottom-left-radius: $border-radius-base;
+  }
+  &:nth-child(2) {
+    border-top-right-radius: $border-radius-base;
+    border-bottom-right-radius: $border-radius-base;
+  }
+}
+
+@media screen and (max-width: 1080px) {
+  .about-card button,
+  .about-card-rev button {
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .about-card {
+    flex-direction: column;
+  }
+
+  .about-card-rev {
+    flex-direction: column-reverse;
+  }
+
+  .about-img {
+    min-height: 300px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: $border-radius-base;
+    border-top-left-radius: $border-radius-base;
+  }
+}

@@ -1,6 +1,5 @@
 .main {
   max-width: 900px;
-  min-height: 125vh;
 }
 
 .overlay {
@@ -85,7 +84,6 @@
 }
 
 .link {
-  color: $n3;
   &:hover {
     cursor: pointer;
     text-decoration: underline;
@@ -173,6 +171,10 @@
 .flex-col {
   display: flex;
   flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
 }
 
 .flex-grow-1 {
@@ -919,9 +921,11 @@
   border-radius: 4px;
 }
 
-.jump:hover {
-  transform: translateY(-2px);
+.jump {
   transition: transform 0.3s ease;
+  &:hover {
+    transform: translateY(-2px);
+  }
 }
 
 .transition-y {
@@ -958,22 +962,34 @@
   }
 }
 
-.h768 {
+.s768 {
   display: none;
 }
 
-.h1080 {
+.s1080 {
   display: none;
 }
 
 @media screen and (max-width: 768px) {
-  .h768 {
+  .s768 {
     display: inherit;
   }
 }
 
 @media screen and (max-width: 1080px) {
-  .h1080 {
+  .s1080 {
     display: inherit;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .h768 {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1080px) {
+  .h1080 {
+    display: none;
   }
 }

@@ -4,31 +4,24 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { initUser } from "./reducers/userReducer";
 import "./styles/main.scss";
 
-import Loader from "./components/Shared/Loader";
 import ScrollToTopControlller from "./components/ScrollToTopControlller";
 import CustomRoute from "./components/CustomRoute";
+import Loader from "./components/Shared/Loader";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 import LeftMenu from "./components/Menu/LeftMenu";
 import RightMenu from "./components/Menu/RightMenu";
-import Home from "./components/Home";
 import Login from "./components/Login";
-import About from "./components/About";
 import Contact from "./components/Contact";
-import CreateUser from "./components/CreateUser";
-import Settings from "./components/Settings";
+import PrivacyPolicy from "./components/PrivacyPolicy";
+import About from "./components/About";
+import DashboardTypes from "./components/DashboardTypes";
+import Blog from "./components/Blog";
 import TermsAndConditions from "./components/TermsAndConditions";
 import Notifications from "./components/Shared/Notification/Notifications";
 import Overlay from "./components/Shared/Overlay";
-import SavedDashboards from "./components/SavedDashboards";
-
 import OccupierForm from "./components/CalculatorInputs/OccupierForm";
 import InvestorForm from "./components/CalculatorInputs/InvestorForm";
 import DeveloperForm from "./components/CalculatorInputs/DeveloperForm";
-
-import DeveloperDashboard from "./components/Dashboards/DeveloperDashboard";
-import OccupierInvestorDashboard from "./components/Dashboards/OccupierInvestorDashboard";
-import UserTypeModal from "./components/UserTypeModal";
-import SaveDashboardModal from "./components/Dashboards/SaveDashboardModal";
 
 const App = ({ initUser, isUserFetching, overlay, user }) => {
   useEffect(() => {
@@ -38,14 +31,7 @@ const App = ({ initUser, isUserFetching, overlay, user }) => {
 
   if (isUserFetching) {
     return <Loader />;
-  } else if (!user.data.username) {
-    return (
-      <>
-        <Login />
-        <Notifications />
-      </>
-    );
-  } else {
+  } else if (user.data?.username) {
     return (
       <div className="w100 fade-in">
         <Router>
@@ -55,19 +41,30 @@ const App = ({ initUser, isUserFetching, overlay, user }) => {
           {/* <UserTypeModal /> */}
           {/* <SaveDashboardModal /> */}
           <NavigationBar />
-          <div className="vh100 w100 flex-row justify-c">
+          <div className="w100 flex-row justify-c">
             <LeftMenu />
             <div className="main p8 w100 border-p">
               <Switch>
                 <Route path="/login" render={() => <Login />} />
                 {/* <Route exact path="/" render={() => <Home />} />
               <Route path="/about" render={() => <About />} />
-              <Route path="/contact" render={() => <Contact />} />
               <Route path="/create-user" render={() => <CreateUser />} /> */}
+                <Route path="/contact" render={() => <Contact />} />
                 <Route
                   path="/terms-and-conditions"
                   render={() => <TermsAndConditions />}
                 />
+                <Route
+                  path="/privacy-policy"
+                  render={() => <PrivacyPolicy />}
+                />
+                <Route path="/about" render={() => <About />} />
+                <Route
+                  exact
+                  path="/dashboard-types"
+                  render={() => <DashboardTypes />}
+                />
+                <Route path="/blog" render={() => <Blog />} />
                 <Route
                   exact
                   path="/owner-occupier/edit"
@@ -141,6 +138,13 @@ const App = ({ initUser, isUserFetching, overlay, user }) => {
           </div>
         </Router>
       </div>
+    );
+  } else {
+    return (
+      <>
+        <Login />
+        <Notifications />
+      </>
     );
   }
 };

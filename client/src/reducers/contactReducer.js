@@ -31,10 +31,14 @@ export const setMessage = (values) => {
         },
       });
     } catch (e) {
+      console.log(e);
+      dispatch({
+        type: "MESSAGE_SENT",
+      });
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
-          message: e.response,
+          message: e.response.data.error,
           type: "danger",
         },
       });

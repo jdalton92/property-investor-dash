@@ -37,7 +37,7 @@ const RightMenu = ({ rightSidebarOpen, setRightSidebar }) => {
         rightSidebarOpen ? "open-right" : ""
       }`}
     >
-      <div className="w100 flex-row justify-e p8 h768">
+      <div className="w100 flex-row justify-e p8 s768">
         <Button
           ariaLabel={rightSidebarOpen ? "Close Menu" : "Open Menu"}
           dataBalloonPos={"left"}

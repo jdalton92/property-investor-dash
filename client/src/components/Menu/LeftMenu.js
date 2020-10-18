@@ -7,9 +7,9 @@ import QuestionIcon from "../../styles/svg/question.svg";
 import MessageIcon from "../../styles/svg/message.svg";
 import DashboardIcon from "../../styles/svg/dashboard.svg";
 import ContactIcon from "../../styles/svg/email.svg";
+import BookIcon from "../../styles/svg/book.svg";
 import GitHubIcon from "../../styles/svg/github.svg";
 import HomeOwnerIcon from "../../styles/svg/home-owner.svg";
-import UserIcon from "../../styles/svg/user2.svg";
 import UnitsIcon from "../../styles/svg/units.svg";
 import FinanceIcon from "../../styles/svg/finance.svg";
 import PrivacyIcon from "../../styles/svg/privacy.svg";
@@ -17,23 +17,23 @@ import PrivacyIcon from "../../styles/svg/privacy.svg";
 const LeftMenu = ({ leftSidebarOpen }) => {
   const companyMenuItems = [
     {
-      title: "About Us",
-      link: "/about",
+      title: "About",
+      link: { url: "/about", internal: true },
       icon: QuestionIcon,
     },
     {
       title: "Dashboard Types",
-      link: "/dashboard-types",
+      link: { url: "/dashboard-types", internal: true },
       icon: DashboardIcon,
     },
     {
-      title: "Who Is It For",
-      link: "/about",
-      icon: UserIcon,
+      title: "Blog",
+      link: { url: "/blog", internal: true },
+      icon: BookIcon,
     },
     {
-      title: "Contact Us",
-      link: "/contact",
+      title: "Contact",
+      link: { url: "/contact", internal: true },
       icon: ContactIcon,
     },
   ];
@@ -41,36 +41,48 @@ const LeftMenu = ({ leftSidebarOpen }) => {
   const calculatorMenuItems = [
     {
       title: "Owner Occupier",
-      link: "/owner-occupier/edit",
+      link: { url: "/owner-occupier/edit", internal: true },
       icon: HomeOwnerIcon,
     },
     {
       title: "Investor",
-      link: "/investor/edit",
+      link: {
+        url: "/investor/edit",
+        internal: true,
+      },
       icon: FinanceIcon,
     },
     {
       title: "Developer",
-      link: "/developer/edit",
+      link: {
+        url: "/developer/edit",
+        internal: true,
+      },
       icon: UnitsIcon,
     },
   ];
 
   const otherMenuItems = [
     {
-      title: "GitHub",
-      link: "https://github.com/jdalton92/property-investor-dash",
-      icon: GitHubIcon,
-    },
-    {
       title: "Terms and Conditions",
-      link: "/terms-and-conditions",
+      link: { url: "/terms-and-conditions", internal: true },
       icon: MessageIcon,
     },
     {
       title: "Privacy Policy",
-      link: "/privacy-policy",
+      link: {
+        url: "/privacy-policy",
+        internal: true,
+      },
       icon: PrivacyIcon,
+    },
+    {
+      title: "GitHub",
+      link: {
+        url: "https://github.com/jdalton92/property-investor-dash",
+        internal: false,
+      },
+      icon: GitHubIcon,
     },
   ];
 
@@ -80,9 +92,9 @@ const LeftMenu = ({ leftSidebarOpen }) => {
         leftSidebarOpen ? "open-left" : ""
       }`}
     >
-      <div className="navbar-side h1080 h100 p8 flex-row align-c justify-e">
+      <div className="navbar-side s1080 h100 p8 flex-row align-c justify-e">
         <h1 className="w100 f16 bold text-start">PropertyInvestorDash</h1>
-        <Burger customClass={"h1080"} />
+        <Burger customClass={"s1080"} />
       </div>
       <div className="left-menu sticky-below-nav flex-col border-p">
         <div className="o-y-scroll o-x-hidden mt8 mb8 h100 scrollbar">

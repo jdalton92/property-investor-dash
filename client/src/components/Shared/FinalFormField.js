@@ -26,8 +26,8 @@ const FinalFormField = ({
 }) => {
   const message =
     type === CONSTANTS.TYPES.DEVELOPER
-      ? developerTooltipHelper[fieldName].message
-      : occupierInvestorTooltipHelper[fieldName].message;
+      ? developerTooltipHelper[fieldName]?.message
+      : occupierInvestorTooltipHelper[fieldName]?.message;
 
   const parse = (value) => {
     if (parseType === CONSTANTS.PARSETYPE.INT) {
@@ -47,7 +47,7 @@ const FinalFormField = ({
             <span className="font-red f12 bold ml4">*</span>
           )}
         </label>
-        <Tooltip message={message} />
+        {message && <Tooltip message={message} />}
       </div>
       <Field
         name={fieldName}

@@ -1,13 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Form as FinalForm, Field } from "react-final-form";
+import { Form, Field } from "react-final-form";
 import { setMessage } from "../reducers/contactReducer";
-import { Button, Spinner } from "react-bootstrap";
 import {
   required,
+  maxLength,
   isEmail,
   composeValidators,
 } from "../utils/formValidatorHelper";
+import Loader from "./Shared/Loader";
 
 const Contact = ({ setMessage, isFetching }) => {
   const onSubmit = (values) => {
@@ -15,118 +16,123 @@ const Contact = ({ setMessage, isFetching }) => {
   };
 
   return (
-    <section className="form-section" id="contact-form-section">
-      <div className="form-outer-container form-card-container">
-        <div className="form-header">
-          <h1>Contact</h1>
-        </div>
-        <div className="form-inner-container">
-          {isFetching ? (
-            <Spinner
-              className="loading-spinner"
-              animation="border"
-              variant="primary"
-            />
-          ) : (
-            <FinalForm
-              onSubmit={onSubmit}
-              render={({ handleSubmit, rest }) => (
-                <form className="form-element" onSubmit={handleSubmit}>
-                  <div className="form-item">
-                    <h5>Full Name</h5>
-                    <Field name="fullName" validate={required}>
-                      {({ input, meta }) => (
-                        <div>
-                          <input
-                            className="form-control"
-                            placeholder="Full Name"
-                            type="text"
-                            maxLength="50"
-                            {...input}
-                            required
-                          />
-                          {meta.error && meta.touched && (
-                            <span className="form-error">{meta.error}</span>
-                          )}
-                        </div>
-                      )}
-                    </Field>
-                  </div>
-                  <div className="form-item">
-                    <h5>Company</h5>
-                    <Field name="company">
-                      {({ input, meta }) => (
+    <>
+      <h1 className="f24 bold mt16 mb16">Contact</h1>
+      <Form
+        onSubmit={onSubmit}
+        render={({ handleSubmit, rest }) => (
+          <form className="contact-form" onSubmit={handleSubmit}>
+            <div id="contact-wrapper" className="r bs-3 bg-1 p20 mb20">
+              {isFetching && <Loader />}
+              {!isFetching && (
+                <>
+                  <label htmlFor={"contact-fullname"} className="f16 mb8">
+                    Full Name
+                    <span className="font-red f12 bold ml4">*</span>
+                  </label>
+                  <Field
+                    name="fullName"
+                    validate={composeValidators(required, maxLength(50))}
+                  >
+                    {({ input, meta }) => (
+                      <div className="relative mb20">
                         <input
-                          className="form-control"
-                          placeholder="Company"
-                          type="text"
-                          maxLength="50"
+                          id="contact-fullname"
+                          className="form-input bs-1 w100"
+                          placeholder="Full Name"
+                          input="text"
+                          maxLength="1250"
                           {...input}
                         />
-                      )}
-                    </Field>
-                  </div>
-                  <div className="form-item">
-                    <h5>Email</h5>
-                    <Field
-                      name="email"
-                      validate={composeValidators(isEmail, required)}
-                    >
-                      {({ input, meta }) => (
-                        <div>
-                          <input
-                            className="form-control"
-                            placeholder="example@email.com"
-                            type="email"
-                            maxLength="100"
-                            {...input}
-                            required
-                          />
-                          {meta.error && meta.touched && (
-                            <span className="form-error">{meta.error}</span>
-                          )}
-                        </div>
-                      )}
-                    </Field>
-                  </div>
-                  <div className="form-item">
-                    <h5>Message</h5>
-                    <Field name="message" validate={required}>
-                      {({ input, meta }) => (
-                        <div>
-                          <textarea
-                            id="form-message"
-                            className="form-control"
-                            placeholder="Message"
-                            input="text"
-                            maxLength="1250"
-                            {...input}
-                            required
-                          />
-                          {meta.error && meta.touched && (
-                            <span className="form-error">{meta.error}</span>
-                          )}
-                        </div>
-                      )}
-                    </Field>
-                  </div>
-                  <div className="form-button-container">
-                    <Button
-                      className="form-button"
-                      id="form-submit"
-                      type="submit"
-                      variant="primary"
-                    >
-                      Submit
-                    </Button>
-                  </div>
-                </form>
+                        {meta.error && meta.touched && (
+                          <span className="form-error f10">{meta.error}</span>
+                        )}
+                      </div>
+                    )}
+                  </Field>
+                  <label htmlFor={"contact-company"} className="f16 mb8">
+                    Company
+                  </label>
+                  <Field
+                    name="company"
+                    validate={composeValidators(maxLength(200))}
+                  >
+                    {({ input, meta }) => (
+                      <div className="relative mb20">
+                        <input
+                          id="contact-company"
+                          className="form-input bs-1 w100"
+                          placeholder="Company Name"
+                          input="text"
+                          {...input}
+                        />
+                        {meta.error && meta.touched && (
+                          <span className="form-error f10">{meta.error}</span>
+                        )}
+                      </div>
+                    )}
+                  </Field>
+                  <label htmlFor={"contact-email"} className="f16 mb8">
+                    Email
+                    <span className="font-red f12 bold ml4">*</span>
+                  </label>
+                  <Field
+                    name="email"
+                    validate={composeValidators(isEmail, maxLength(200))}
+                  >
+                    {({ input, meta }) => (
+                      <div className="relative mb20">
+                        <input
+                          id="contact-email"
+                          className="form-input bs-1 w100"
+                          placeholder="example@email.com"
+                          input="email"
+                          {...input}
+                        />
+                        {meta.error && meta.touched && (
+                          <span className="form-error f10">{meta.error}</span>
+                        )}
+                      </div>
+                    )}
+                  </Field>
+                  <label htmlFor={"contact-message"} className="f16 mb8">
+                    Message
+                    <span className="font-red f12 bold ml4">*</span>
+                  </label>
+                  <Field
+                    name="message"
+                    validate={composeValidators(required, maxLength(1250))}
+                  >
+                    {({ input, meta }) => (
+                      <div className="relative mb20">
+                        <textarea
+                          id="contact-message"
+                          className="form-input bs-1 w100"
+                          placeholder="Message"
+                          input="text"
+                          {...input}
+                        />
+                        {meta.error && meta.touched && (
+                          <span className="form-error f10">{meta.error}</span>
+                        )}
+                      </div>
+                    )}
+                  </Field>
+                </>
               )}
-            />
-          )}
-        </div>
-      </div>
-    </section>
+            </div>
+            <div className="form-buttons">
+              <button
+                type="submit"
+                className="form-button-p bs-3 font-white mt12 pt8 pb8"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        )}
+      />
+    </>
   );
 };
 

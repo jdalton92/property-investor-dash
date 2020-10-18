@@ -1,19 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { DropdownOutsideAlerter } from "../../utils/hooks";
 import { logoutUser } from "../../reducers/userReducer";
 import {
-  setModal,
   setDropdown,
   setRightSidebar,
   setLeftSidebar,
 } from "../../reducers/navigationReducer";
-import { setNotification } from "../../reducers/notificationReducer";
 import { CONSTANTS } from "../../static/constants";
 import UserDropdown from "./UserDropdown";
 import Burger from "./Burger";
-import Menu from "./Menu";
 import Button from "../Shared/Button";
 import UserIcon from "../../styles/svg/user.svg";
 import EmailIcon from "../../styles/svg/email.svg";
@@ -21,14 +18,10 @@ import ExpandIcon from "../../styles/svg/expand.svg";
 import CollapseIcon from "../../styles/svg/collapse.svg";
 
 const NavigationBar = ({
-  setModal,
   setDropdown,
-  logoutUser,
-  user,
   rightSidebarOpen,
   setRightSidebar,
   setLeftSidebar,
-  setNotification,
 }) => {
   let history = useHistory();
 
@@ -44,17 +37,9 @@ const NavigationBar = ({
     setRightSidebar(!rightSidebarOpen);
   };
 
-  const handleCalculatorClick = (e) => {
-    e.preventDefault();
-    setModal("userType");
-  };
-
   const handleContactClick = (e) => {
     e.preventDefault();
-    setNotification(
-      "Contact Us button clicked",
-      CONSTANTS.NOTIFICATION.MESSAGE
-    );
+    history.push("/contact");
   };
 
   const handleDropdownClick = (e) => {
@@ -62,15 +47,10 @@ const NavigationBar = ({
     setDropdown(CONSTANTS.DROPDOWNS.USERNAME);
   };
 
-  const handleLoginClick = (e) => {
-    e.preventDefault();
-    history.push("/login");
-  };
-
   return (
     <div className="navbar sticky p0 flex-row justify-c">
       <div className="navbar-main flex-row align-c justify-e h100 w100 p8 relative border-p">
-        <Burger customClass={"nav-burger h1080"} />
+        <Burger customClass={"nav-burger s1080"} />
         <h1 className="w100 bold title">PropertyInvestorDash</h1>
         <Button
           ariaLabel={"Contact Us"}
@@ -93,7 +73,7 @@ const NavigationBar = ({
             <UserDropdown />
           </DropdownOutsideAlerter>
         </div>
-        <div className="h768">
+        <div className="s768">
           <Button
             ariaLabel={rightSidebarOpen ? "Close Menu" : "Open Menu"}
             dataBalloonPos={"left"}
@@ -119,9 +99,7 @@ const mapDispatchToProps = {
   logoutUser,
   setRightSidebar,
   setLeftSidebar,
-  setModal,
   setDropdown,
-  setNotification,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavigationBar);

@@ -12,7 +12,14 @@ const MenuContainer = ({ title, menuItems, setLeftSidebar }) => {
 
   const handleLink = (link) => {
     setLeftSidebar(false);
-    history.push(link);
+    if (link.internal) {
+      history.push(link.url);
+    } else {
+      const win = window.open(link, "_blank");
+      if (win !== null) {
+        win.focus();
+      }
+    }
   };
 
   return (
