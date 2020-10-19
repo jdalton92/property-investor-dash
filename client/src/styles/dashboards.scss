@@ -1,0 +1,94 @@
+.dash-btns {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.dash-btns button {
+  &:nth-child(1) {
+    margin-right: 8px;
+  }
+  &:nth-child(2) {
+    margin-left: 8px;
+  }
+}
+
+.dash-row table {
+  flex: 1;
+  border-collapse: collapse;
+  &:nth-child(1) {
+    margin-right: 4px;
+  }
+  &:nth-child(2) {
+    margin-right: 4px;
+    margin-left: 4px;
+  }
+  &:nth-child(3) {
+    margin-left: 4px;
+  }
+}
+
+.dash-cashflow button {
+  top: 0;
+  right: 0;
+}
+
+.dash-cashflow table thead tr,
+.dash-cashflow table tfoot tr,
+.dash-row table thead tr,
+.dash-row table tfoot tr {
+  background-color: $gr1 !important;
+  font-weight: bold;
+}
+
+.dash-cashflow table tr,
+.dash-row table tr {
+  &:nth-child(odd) {
+    background-color: $gr2;
+  }
+  &:nth-child(even) {
+    background-color: $gr3;
+  }
+  &:hover {
+    background-color: $gr4 !important;
+  }
+}
+
+.dash-cashflow table th,
+.dash-cashflow table td,
+.dash-row table th,
+.dash-row table td {
+  padding: 8px;
+  border-top: 1px solid #bbbbbb;
+}
+
+.dash-chart {
+  min-height: 400px !important;
+}
+
+@media screen and (max-width: 600px) {
+  .dash-btns {
+    position: inherit;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dash-btns button {
+    &:nth-child(1) {
+      margin-right: 0px;
+      margin-bottom: 16px;
+    }
+    &:nth-child(2) {
+      margin-left: 0px;
+    }
+  }
+
+  .dash-row {
+    flex-direction: column;
+  }
+
+  .dash-row table {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}

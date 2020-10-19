@@ -40,7 +40,6 @@ $n6-transp: rgba(0, 4, 54, 0.67) !default;
 $n7-transp: rgba(2, 6, 36, 0.93) !default;
 $white: #ffff !default;
 
-// System UI palette
 $g1: #e6fae7 !default;
 $g2: #3eb066 !default;
 $g3: #168745 !default;
@@ -52,6 +51,10 @@ $r4: #940f1c !default;
 $y1: #fff4e4 !default;
 $y2: #ffb54c !default;
 $y3: #a46000 !default;
+$gr1: rgba(200, 200, 200, 0.75) !default;
+$gr2: rgba(200, 200, 200, 0.5) !default;
+$gr3: rgba(200, 200, 200, 0.25) !default;
+$gr4: rgba(220, 220, 220, 0.75) !default;
 
 // Shadows
 $card-shadow: 0 1px 3px -1px $n2-transp, 0px 0px 1px 0 $n3-transp !default;

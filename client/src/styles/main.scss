@@ -13,10 +13,12 @@
 @import "./components/notification.scss";
 @import "./components/form.scss";
 @import "./components/tooltip.scss";
-@import "./navigationbar.scss";
+@import "./components/navigationbar.scss";
+@import "./components/mortgageoverpayments.scss";
 
 // Views
 @import "./login.scss";
 @import "./menu.scss";
 @import "./about.scss";
 @import "./settings.scss";
+@import "./dashboards.scss";

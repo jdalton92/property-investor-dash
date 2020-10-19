@@ -1,6 +1,27 @@
 import dashboardService from "../services/dashboard";
 
-let initialState = { isFetching: false, preSave: false, data: [] };
+const initialData = {
+  housePrice: 1000000,
+  deposit: 200000,
+  loanType: "principalAndInterest",
+  interestRate: 3.5,
+  homeloanTerm: 30,
+  overPayments: [{}],
+  investmentPeriod: 15,
+  sellingCosts: 3,
+  capitalGrowth: 3.5,
+  upfrontCosts: 3,
+  recurringCosts: 1000,
+  rentalYield: 3,
+  investor: false,
+  inflation: 3,
+};
+
+let initialState = {
+  isFetching: false,
+  preSave: false,
+  data: [{ values: initialData }],
+};
 
 const dashboardReducer = (state = initialState, action) => {
   switch (action.type) {

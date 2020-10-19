@@ -1,9 +1,9 @@
-.about-card button,
-.about-card-rev button {
+.card button,
+.card-rev button {
   max-width: 175px;
 }
 
-.about-img {
+.card-img {
   min-width: 300px;
   min-height: 200px;
   background-size: cover;
@@ -20,61 +20,27 @@
   }
 }
 
-.who-row {
-  display: flex;
-}
-
-.who-card {
-  width: 100%;
-  &:nth-child(even) {
-    margin-left: 8px;
-  }
-  &:nth-child(odd) {
-    margin-right: 8px;
-  }
-}
-
-.who-img {
-  width: 100%;
-  min-height: 400px;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  border-top-right-radius: $border-radius-base;
-  border-top-left-radius: $border-radius-base;
-}
-
 @media screen and (max-width: 850px) {
-  .about-card {
+  .card {
     flex-direction: column;
   }
 
-  .about-card-rev {
+  .card-rev {
     flex-direction: column-reverse;
   }
 
-  .about-img {
+  .card-img {
     min-height: 300px;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     border-top-right-radius: $border-radius-base;
     border-top-left-radius: $border-radius-base;
   }
-
-  .who-row {
-    flex-direction: column;
-  }
-
-  .who-card {
-    width: 100%;
-    margin-left: 0px !important;
-    margin-right: 0px !important;
-  }
 }
 
 @media screen and (max-width: 1080px) {
-  .about-card button,
-  .about-card-rev button {
+  .card button,
+  .card-rev button {
     max-width: 100%;
   }
 }

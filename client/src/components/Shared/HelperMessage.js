@@ -22,29 +22,31 @@ const HelperMessage = ({
   } else {
     return (
       <div className="r w100 p20 bg-1 bs-2">
-        <div className="flex-row align-c mb20">
+        <div className="flex-row align-c">
           <Icon
             url={MessageIcon}
             color={"black"}
             hover={false}
             active={false}
           />
-          <span className="ml20">{body}</span>
+          <div className="ml20">
+            <p>{body}</p>
+            <button
+              type="submit"
+              className="form-button-p bs-3 font-white mt20 pt4 pb4 flex-row align-c justify-c"
+              onClick={handleClick}
+            >
+              <Icon
+                size={"20px"}
+                url={TickIcon}
+                color={"white"}
+                hover={false}
+                active={false}
+              />
+              <span className="ml8">Okay</span>
+            </button>
+          </div>
         </div>
-        <button
-          type="submit"
-          className="form-button-p bs-3 font-white mt20 pt4 pb4 flex-row align-c justify-c"
-          onClick={handleClick}
-        >
-          <Icon
-            size={"20px"}
-            url={TickIcon}
-            color={"white"}
-            hover={false}
-            active={false}
-          />
-          <span className="ml8">Okay</span>
-        </button>
       </div>
     );
   }

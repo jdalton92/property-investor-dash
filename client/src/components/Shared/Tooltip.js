@@ -28,7 +28,7 @@ const Tooltip = ({ message }) => {
       )}
       <button
         type="button"
-        className="tooltip-btn bs-2"
+        className="tooltip-btn bs-2 flex-row align-c"
         onClick={() => handleMousEvent(true)}
         onMouseEnter={() => handleMousEvent(true)}
         onMouseLeave={() => handleMousEvent(false)}

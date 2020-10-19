@@ -99,17 +99,17 @@ const Login = ({ loginUser, user, demoUser, setNotification }) => {
           />
         </div>
         <div className="mb8 ml8 mr8">
-          <span className="link" onClick={handleForgotPassword}>
+          <span className="link font-n1" onClick={handleForgotPassword}>
             Forgot your password?
           </span>
         </div>
         <div className="mb8 ml8 mr8">
-          <span className="link" onClick={handleCreateAccount}>
+          <span className="link font-n1" onClick={handleCreateAccount}>
             Create an account
           </span>
         </div>
         <div className="ml8 mr8">
-          <span className="link" onClick={handleDemo}>
+          <span className="link font-n1" onClick={handleDemo}>
             Try a demo account
           </span>
         </div>

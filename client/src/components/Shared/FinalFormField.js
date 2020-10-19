@@ -6,7 +6,7 @@ import {
   occupierInvestorTooltipHelper,
 } from "../../utils/tooltipHelper";
 import { CONSTANTS } from "../../static/constants";
-import Tooltip from "../CalculatorInputs/Tooltip";
+import Tooltip from "./Tooltip";
 
 const FinalFormField = ({
   label,

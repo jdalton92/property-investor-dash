@@ -12,7 +12,7 @@ import FinalFormField from "../Shared/FinalFormField";
 import HelperMessage from "../Shared/HelperMessage";
 import Loader from "../Shared/Loader";
 import MortgageOverpayments from "./MortgageOverpayments";
-import Tooltip from "./Tooltip";
+import Tooltip from "../Shared/Tooltip";
 
 const DeveloperForm = ({ id, testDashboard, dashboards }) => {
   const history = useHistory();
@@ -327,7 +327,7 @@ const DeveloperForm = ({ id, testDashboard, dashboards }) => {
                 </div>
                 <div className="form-row">
                   <div className="form-item">
-                    <div className="flex-row align-c">
+                    <div className="flex-row align-c relative">
                       <label htmlFor="developer-loantype" className="f16 mb8">
                         Repayment Type
                         <span className="font-red f12 bold ml4">*</span>

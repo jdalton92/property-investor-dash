@@ -32,9 +32,9 @@ const DashboardTypes = () => {
           Calculator 1: Owner-Occupier
         </span>
       </h2>
-      <div className="about-card r bs-3 bg-1 mb20 flex-row jump">
+      <div className="card r bs-3 bg-1 mb20 flex-row jump">
         <div
-          className="about-img"
+          className="card-img"
           style={{
             backgroundImage: `url(${ownerOccupierImage})`,
           }}
@@ -65,7 +65,7 @@ const DashboardTypes = () => {
           Calculator 2: Investor
         </span>
       </h2>
-      <div className="about-card-rev r bs-3 bg-1 mb20 flex-row jump">
+      <div className="card-rev r bs-3 bg-1 mb20 flex-row jump">
         <div className="p20 flex-col justify-c">
           The investor profile will suit you if you are looking to forecast
           income and expenses for the purchase an investment property to rent,
@@ -87,7 +87,7 @@ const DashboardTypes = () => {
           </button>
         </div>
         <div
-          className="about-img"
+          className="card-img"
           style={{
             backgroundImage: `url(${investorImage})`,
           }}
@@ -98,9 +98,9 @@ const DashboardTypes = () => {
           Calculator 3: Developer
         </span>
       </h2>
-      <div className="about-card r bs-3 bg-1 mb20 flex-row jump">
+      <div className="card r bs-3 bg-1 mb20 flex-row jump">
         <div
-          className="about-img"
+          className="card-img"
           style={{
             backgroundImage: `url(${developerImage})`,
           }}

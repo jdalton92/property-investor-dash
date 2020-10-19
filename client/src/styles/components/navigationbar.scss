@@ -53,3 +53,9 @@
     font-size: 16px;
   }
 }
+
+@media screen and (max-width: 340px) {
+  .title {
+    font-size: 12px;
+  }
+}

@@ -9,7 +9,7 @@ import FinalFormField from "../Shared/FinalFormField";
 import { required, minValue, maxValue } from "../../utils/formValidatorHelper";
 import { occupierInvestorTooltipHelper } from "../../utils/tooltipHelper";
 import { CONSTANTS } from "../../static/constants";
-import Tooltip from "./Tooltip";
+import Tooltip from "../Shared/Tooltip";
 
 const OwnerOccupierInvestorInputs = ({ initialValues, investor, onSubmit }) => {
   return (
@@ -205,7 +205,7 @@ const OwnerOccupierInvestorInputs = ({ initialValues, investor, onSubmit }) => {
               </div>
               <div className="form-row">
                 <div className="form-item">
-                  <div className="flex-row align-c">
+                  <div className="flex-row align-c relative">
                     <label htmlFor="owneroccupier-loantype" className="f16 mb8">
                       Repayment Type
                       <span className="font-red f12 bold ml4">*</span>

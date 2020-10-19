@@ -10,7 +10,7 @@ import {
   developerTooltipHelper,
   occupierInvestorTooltipHelper,
 } from "../../utils/tooltipHelper";
-import Tooltip from "./Tooltip";
+import Tooltip from "../Shared/Tooltip";
 import { CONSTANTS } from "../../static/constants";
 
 const MortgageOverpayments = ({ push, type }) => {
@@ -22,7 +22,10 @@ const MortgageOverpayments = ({ push, type }) => {
   return (
     <>
       <div className="flex-row align-c relative">
-        <label htmlFor={`${type}-overpayments`} className="f16 mb8">
+        <label
+          htmlFor={`${type.toLowerCase()}-overpayments`}
+          className="f16 mb8"
+        >
           Mortgage Overpayments
         </label>
         <Tooltip message={message} />
@@ -30,7 +33,10 @@ const MortgageOverpayments = ({ push, type }) => {
       <FieldArray name="overPayments">
         {({ fields }) => (
           <>
-            <table id={`${type}-overpayments`} className="w100 mb20">
+            <table
+              id={`${type.toLowerCase()}-overpayments`}
+              className="overpayments w100 mb20"
+            >
               <thead>
                 <tr>
                   <th>#</th>
@@ -83,7 +89,7 @@ const MortgageOverpayments = ({ push, type }) => {
                               type="number"
                               step="1"
                             />
-                            <span className="prepend absolute f16 pl12 pt10">
+                            <span className="prepend absolute f12 pl12 pt10">
                               $
                             </span>
                             {meta.error && meta.touched && (
