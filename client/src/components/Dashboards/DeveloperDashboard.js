@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { setModal } from "../../reducers/navigationReducer";
+import { CONSTANTS } from "../../static/constants";
 import {
   getDashboard,
   preSaveDashboard,
@@ -20,7 +21,7 @@ import {
   percentageFormatter,
   IRRCalculation,
 } from "../../utils/dashboardHelper";
-import { developerTooltipHelper } from "../../utils/tooltipHelper";
+import { developerTooltip } from "../../static/tooltipText";
 import { Line, Bar } from "react-chartjs-2";
 import Loader from "../Shared/Loader";
 import { Icon } from "../Shared/Icon";
@@ -49,7 +50,7 @@ const DeveloperDashboard = ({
 
   const handleSave = (e) => {
     e.preventDefault();
-    setModal("saveDashboard");
+    setModal(CONSTANTS.MODALS.SAVEDASHBOARD, true);
   };
 
   const handleEdit = (e) => {
@@ -62,13 +63,14 @@ const DeveloperDashboard = ({
     }
   };
 
-  if (dashboards.isFetching || !dashboards.data[0]) {
+  if (dashboards.isFetching) {
     return <Loader />;
+  } else if (!dashboards.data.length) {
+    history.push("/developer/edit");
+    return null;
   } else {
-    const preFinanceMessage =
-      developerTooltipHelper.cashflowBeforeFunding.message;
-    const postFinanceMessage =
-      developerTooltipHelper.cashflowAfterFunding.message;
+    const preFinanceMessage = developerTooltip.cashflowBeforeFunding.message;
+    const postFinanceMessage = developerTooltip.cashflowAfterFunding.message;
     const rawData = developerCalculation(dashboards.data[0].values);
     const annualChart = annualChartParse(rawData);
     const cumulativeChart = cumulativeChartParse(rawData);
@@ -218,7 +220,7 @@ const DeveloperDashboard = ({
         </div>
         <div className="dash-cashflow r bs-3 bg-1 p20 mb16">
           <div className="relative">
-            <div className="flex-row align-c mb16">
+            <div className="flex-row align-c mb16 mr100">
               <h3 className="f16">Cashflow Summary Before Funding</h3>
               <Tooltip message={preFinanceMessage} />
             </div>
@@ -240,7 +242,7 @@ const DeveloperDashboard = ({
             </button>
           </div>
           {showPreFinanceCashflow && (
-            <table className="w100 r bs-3 bg-1 p20 mb16 o-hidden">
+            <table className="w100 bg-1 p20 mb16 o-hidden">
               <thead>
                 <tr>
                   <th>Year</th>
@@ -435,7 +437,7 @@ const DeveloperDashboard = ({
         </div>
         <div className="dash-cashflow r bs-3 bg-1 p20 mb16">
           <div className="relative">
-            <div className="flex-row align-c mb16">
+            <div className="flex-row align-c mb16 mr100">
               <h3 className="f16">Cashflow Summary After Funding</h3>
               <Tooltip message={postFinanceMessage} />
             </div>
@@ -459,7 +461,7 @@ const DeveloperDashboard = ({
             </button>
           </div>
           {showPostFinanceCashflow && (
-            <table className="w100 r bs-3 bg-1 p20 mb16 o-hidden">
+            <table className="w100 bg-1 p20 mb16 o-hidden">
               <thead>
                 <tr>
                   <th>Year</th>

@@ -5,32 +5,8 @@ const initialState = {
     right: false,
     left: false,
   },
-  accordianShow: {
-    ownerOccupier: {
-      standard: true,
-      advanced: false,
-    },
-    investor: {
-      standard: true,
-      advanced: false,
-    },
-    developer: {
-      standard: true,
-      advanced: false,
-    },
-  },
-  cashflowTable: {
-    ownerOccupier: true,
-    investor: true,
-    developer: {
-      preFinance: false,
-      postFinance: false,
-    },
-  },
   modal: {
-    disclaimer: false,
-    userType: false,
-    saveDashboard: false,
+    [CONSTANTS.MODALS.SAVEDASHBOARD]: false,
   },
   dropdown: {
     [CONSTANTS.DROPDOWNS.USERNAME]: false,
@@ -51,51 +27,15 @@ const navigationReducer = (state = initialState, action) => {
       newState.overlay = action.status;
       newState.sidebarOpen.left = action.status;
       return newState;
-    case "SET_ACCORDIAN":
-      return {
-        ...state,
-        accordianShow: {
-          ...state.accordianShow,
-          [action.user]: {
-            ...state.accordianShow[action.user],
-            [action.accordian]: !state.accordianShow[action.user][
-              action.accordian
-            ],
-          },
-        },
-      };
     case "SET_MODAL":
-      return {
-        ...state,
-        modal: {
-          ...state.modal,
-          [action.modalType]: !state.modal[action.modalType],
-        },
-      };
+      newState = { ...state };
+      newState.modal[action.payload.modalType] = action.payload.status;
+      newState.overlay = action.payload.status;
+      return newState;
     case "SET_DROPDOWN":
       newState = { ...state };
       newState.dropdown[action.dropdown] = !newState.dropdown[action.dropdown];
       return newState;
-    case "SET_CASHFLOW":
-      if (action.user === "developer") {
-        return {
-          ...state,
-          cashflowTable: {
-            ...state.cashflowTable,
-            developer: {
-              ...state.cashflowTable.developer,
-              [action.finance]: !state.cashflowTable.developer[action.finance],
-            },
-          },
-        };
-      }
-      return {
-        ...state,
-        cashflowTable: {
-          ...state.cashflowTable,
-          [action.user]: !state.cashflowTable[action.user],
-        },
-      };
     default:
       return state;
   }
@@ -119,26 +59,14 @@ export const setLeftSidebar = (status) => {
   };
 };
 
-export const setAccordian = (user, accordian) => {
+export const setModal = (modalType, status) => {
   return (dispatch) => {
-    dispatch({
-      type: "SET_ACCORDIAN",
-      user,
-      accordian,
-    });
-  };
-};
-
-export const setModal = (modalType) => {
-  return (dispatch) => {
-    if (modalType === "userType") {
-      dispatch({
-        type: "EDIT_DASHBOARD_CANCEL",
-      });
-    }
     dispatch({
       type: "SET_MODAL",
-      modalType,
+      payload: {
+        modalType,
+        status,
+      },
     });
   };
 };
@@ -148,16 +76,6 @@ export const setDropdown = (dropdown) => {
     dispatch({
       type: "SET_DROPDOWN",
       dropdown,
-    });
-  };
-};
-
-export const setCashflow = (user, finance) => {
-  return (dispatch) => {
-    dispatch({
-      type: "SET_CASHFLOW",
-      user,
-      finance,
     });
   };
 };

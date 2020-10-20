@@ -7,17 +7,17 @@ import {
   composeValidators,
 } from "../../utils/formValidatorHelper";
 import {
-  developerTooltipHelper,
-  occupierInvestorTooltipHelper,
-} from "../../utils/tooltipHelper";
+  developerTooltip,
+  occupierInvestorTooltip,
+} from "../../static/tooltipText";
 import Tooltip from "../Shared/Tooltip";
 import { CONSTANTS } from "../../static/constants";
 
 const MortgageOverpayments = ({ push, type }) => {
   const message =
     type === CONSTANTS.TYPES.DEVELOPER
-      ? developerTooltipHelper["overPayments"].message
-      : occupierInvestorTooltipHelper["overPayments"].message;
+      ? developerTooltip["overPayments"].message
+      : occupierInvestorTooltip["overPayments"].message;
 
   return (
     <>

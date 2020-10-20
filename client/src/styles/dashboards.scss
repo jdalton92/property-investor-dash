@@ -37,21 +37,7 @@
 .dash-cashflow table tfoot tr,
 .dash-row table thead tr,
 .dash-row table tfoot tr {
-  background-color: $gr1 !important;
   font-weight: bold;
-}
-
-.dash-cashflow table tr,
-.dash-row table tr {
-  &:nth-child(odd) {
-    background-color: $gr2;
-  }
-  &:nth-child(even) {
-    background-color: $gr3;
-  }
-  &:hover {
-    background-color: $gr4 !important;
-  }
 }
 
 .dash-cashflow table th,
@@ -59,12 +45,24 @@
 .dash-row table th,
 .dash-row table td {
   padding: 8px;
-  border-top: 1px solid #bbbbbb;
+  border-bottom: 1px solid #bbbbbb;
 }
 
 .dash-chart {
   min-height: 400px !important;
 }
+
+@media screen and (max-width: 1250px) {
+  .dash-desktop {
+    display: none;
+  }
+}
+
+// @media screen and (max-width: 1250px) {
+//   .dash-mobile {
+//     display: none;
+//   }
+// }
 
 @media screen and (max-width: 600px) {
   .dash-btns {

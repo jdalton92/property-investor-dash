@@ -1,4 +1,4 @@
-export const developerTooltipHelper = {
+export const developerTooltip = {
   acquisitionPrice: {
     header: "Acqisition Price",
     message:
@@ -121,7 +121,7 @@ export const developerTooltipHelper = {
   },
 };
 
-export const occupierInvestorTooltipHelper = {
+export const occupierInvestorTooltip = {
   housePrice: {
     header: "House Price",
     message: "Purchase price of the property",

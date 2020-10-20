@@ -11,6 +11,7 @@ import { setModal } from "../../reducers/navigationReducer";
 import SaveIcon from "../../styles/svg/save.svg";
 import EditIcon from "../../styles/svg/edit.svg";
 import OwnerOccupierInvestorDashboard from "./OwnerOccupierInvestorDashboard";
+import { CONSTANTS } from "../../static/constants";
 
 const InvestorDashboard = ({
   dashboards,
@@ -30,7 +31,7 @@ const InvestorDashboard = ({
 
   const handleSave = (e) => {
     e.preventDefault();
-    setModal("saveDashboard");
+    setModal(CONSTANTS.MODALS.SAVEDASHBOARD, true);
   };
 
   const handleEdit = (e) => {
@@ -43,8 +44,11 @@ const InvestorDashboard = ({
     }
   };
 
-  if (dashboards.isFetching || !dashboards.data[0]) {
+  if (dashboards.isFetching) {
     return <Loader />;
+  } else if (!dashboards.data.length) {
+    history.push("/investor/edit");
+    return null;
   } else {
     return (
       <>

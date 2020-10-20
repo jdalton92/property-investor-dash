@@ -1,25 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { testDashboard } from "../../reducers/dashboardReducer";
-import { setAccordian, setModal } from "../../reducers/navigationReducer";
+import { useHistory, useParams } from "react-router-dom";
+import { testDashboard, getDashboard } from "../../reducers/dashboardReducer";
 import { CONSTANTS } from "../../static/constants";
+import { helperMessage } from "../../static/helperMessageText";
 import HelperMessage from "../Shared/HelperMessage";
 import Loader from "../Shared/Loader";
 import OwnerOccupierInvestorInputs from "./OwnerOccupierInvestorInputs";
 
-const OccupierForm = ({ id, setModal, testDashboard, dashboards }) => {
+const OccupierForm = ({ testDashboard, dashboards, getDashboard }) => {
+  const id = useParams().id;
   const history = useHistory();
 
+  useEffect(() => {
+    if (id && !dashboards.preSave) {
+      getDashboard(id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+
   const onSubmit = (values) => {
-    setModal("disclaimer");
     values.investor = false;
     values.type = "occupierInvestor";
     testDashboard(values);
     history.push("/owner-occupier/dash");
   };
-
-  const helperMessage = `Owner Occupier inputs to help you forecast your financial return if you buy a house and live in it for the ownership length, and then sell the property`;
 
   if (dashboards.isFetching) {
     return <Loader />;
@@ -48,7 +53,7 @@ const OccupierForm = ({ id, setModal, testDashboard, dashboards }) => {
         <h1 className="f24 bold mt16 mb16">Owner Occupier Inputs</h1>
         <HelperMessage
           type={CONSTANTS.HELPERMESSAGES.OWNEROCCUPIERFORM}
-          body={helperMessage}
+          body={helperMessage.occupierForm}
         />
         <OwnerOccupierInvestorInputs
           investor={false}
@@ -68,8 +73,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   testDashboard,
-  setAccordian,
-  setModal,
+  getDashboard,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(OccupierForm);

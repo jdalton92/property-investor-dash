@@ -3,11 +3,10 @@ import { connect } from "react-redux";
 import { Form, Field } from "react-final-form";
 import arrayMutators from "final-form-arrays";
 import { testDashboard } from "../../reducers/dashboardReducer";
-import { setAccordian, setModal } from "../../reducers/navigationReducer";
 import MortgageOverpayments from "./MortgageOverpayments";
 import FinalFormField from "../Shared/FinalFormField";
 import { required, minValue, maxValue } from "../../utils/formValidatorHelper";
-import { occupierInvestorTooltipHelper } from "../../utils/tooltipHelper";
+import { occupierInvestorTooltip } from "../../static/tooltipText";
 import { CONSTANTS } from "../../static/constants";
 import Tooltip from "../Shared/Tooltip";
 
@@ -211,7 +210,7 @@ const OwnerOccupierInvestorInputs = ({ initialValues, investor, onSubmit }) => {
                       <span className="font-red f12 bold ml4">*</span>
                     </label>
                     <Tooltip
-                      message={occupierInvestorTooltipHelper.loanType.message}
+                      message={occupierInvestorTooltip.loanType.message}
                     />
                   </div>
                   <Field name="loanType" validate={required}>
@@ -287,8 +286,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   testDashboard,
-  setAccordian,
-  setModal,
 };
 
 export default connect(

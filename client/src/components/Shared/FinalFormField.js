@@ -2,9 +2,9 @@ import React from "react";
 import { Field } from "react-final-form";
 import { required, composeValidators } from "../../utils/formValidatorHelper";
 import {
-  developerTooltipHelper,
-  occupierInvestorTooltipHelper,
-} from "../../utils/tooltipHelper";
+  developerTooltip,
+  occupierInvestorTooltip,
+} from "../../static/tooltipText";
 import { CONSTANTS } from "../../static/constants";
 import Tooltip from "./Tooltip";
 
@@ -26,8 +26,8 @@ const FinalFormField = ({
 }) => {
   const message =
     type === CONSTANTS.TYPES.DEVELOPER
-      ? developerTooltipHelper[fieldName]?.message
-      : occupierInvestorTooltipHelper[fieldName]?.message;
+      ? developerTooltip[fieldName]?.message
+      : occupierInvestorTooltip[fieldName]?.message;
 
   const parse = (value) => {
     if (parseType === CONSTANTS.PARSETYPE.INT) {

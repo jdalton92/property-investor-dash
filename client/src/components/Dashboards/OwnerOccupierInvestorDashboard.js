@@ -3,11 +3,6 @@ import { connect } from "react-redux";
 import Tooltip from "../Shared/Tooltip";
 import { Icon } from "../Shared/Icon";
 import {
-  getDashboard,
-  preSaveDashboard,
-} from "../../reducers/dashboardReducer";
-import { setCashflow, setModal } from "../../reducers/navigationReducer";
-import {
   cumulativeChartParse,
   tableParse,
   occupierInvestorCalculation,
@@ -20,14 +15,14 @@ import {
   IRRCalculation,
 } from "../../utils/dashboardHelper";
 import { Line } from "react-chartjs-2";
-import { occupierInvestorTooltipHelper } from "../../utils/tooltipHelper";
+import { occupierInvestorTooltip } from "../../static/tooltipText";
 import ExpandIcon from "../../styles/svg/expand.svg";
 import CollapseIcon from "../../styles/svg/collapse.svg";
 
 const OwnerOccupierInvestorDashboard = ({ dashboards }) => {
   const [showCashflow, setShowCashflow] = useState(true);
 
-  const message = occupierInvestorTooltipHelper.cashflowAfterFunding.message;
+  const message = occupierInvestorTooltip.cashflowAfterFunding.message;
   const rawData = occupierInvestorCalculation(dashboards.data[0].values);
   const chartData = cumulativeChartParse(rawData);
   const tableData = tableParse(rawData);
@@ -124,7 +119,7 @@ const OwnerOccupierInvestorDashboard = ({ dashboards }) => {
       </div>
       <div className="dash-cashflow r bs-3 bg-1 p20 mb16">
         <div className="relative">
-          <div className="flex-row align-c mb16">
+          <div className="flex-row align-c mb16 mr100">
             <h3 className="f16">Cashflow Summary After Funding</h3>
             <Tooltip message={message} />
           </div>
@@ -144,7 +139,7 @@ const OwnerOccupierInvestorDashboard = ({ dashboards }) => {
           </button>
         </div>
         {showCashflow && (
-          <table className="w100 r bs-3 bg-1 p20 mb16 o-hidden">
+          <table className="w100 r bg-1 p20 mb16 o-hidden">
             <thead>
               <tr>
                 <th>Year</th>
@@ -244,14 +239,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = {
-  setCashflow,
-  setModal,
-  getDashboard,
-  preSaveDashboard,
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(OwnerOccupierInvestorDashboard);
+export default connect(mapStateToProps, null)(OwnerOccupierInvestorDashboard);

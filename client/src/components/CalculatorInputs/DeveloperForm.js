@@ -1,28 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { Form, Field } from "react-final-form";
 import arrayMutators from "final-form-arrays";
-import { testDashboard } from "../../reducers/dashboardReducer";
-import { setAccordian, setModal } from "../../reducers/navigationReducer";
+import { testDashboard, getDashboard } from "../../reducers/dashboardReducer";
 import { CONSTANTS } from "../../static/constants";
+import { helperMessage } from "../../static/helperMessageText";
 import { required, minValue, maxValue } from "../../utils/formValidatorHelper";
-import { developerTooltipHelper } from "../../utils/tooltipHelper";
+import { developerTooltip } from "../../static/tooltipText";
 import FinalFormField from "../Shared/FinalFormField";
 import HelperMessage from "../Shared/HelperMessage";
 import Loader from "../Shared/Loader";
 import MortgageOverpayments from "./MortgageOverpayments";
 import Tooltip from "../Shared/Tooltip";
 
-const DeveloperForm = ({ id, testDashboard, dashboards }) => {
+const DeveloperForm = ({ testDashboard, dashboards, getDashboard }) => {
+  const id = useParams().id;
   const history = useHistory();
+
+  useEffect(() => {
+    if (id && !dashboards.preSave) {
+      getDashboard(id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   const onSubmit = (values) => {
     testDashboard(values);
     history.push("/developer/dash");
   };
-
-  const helperMessage = `Developer Inputs Helper Text`;
 
   if (dashboards.isFetching) {
     return <Loader />;
@@ -61,7 +67,7 @@ const DeveloperForm = ({ id, testDashboard, dashboards }) => {
         <h1 className="f24 bold mt16 mb16">Developer Inputs</h1>
         <HelperMessage
           type={CONSTANTS.HELPERMESSAGES.DEVELOPERFORM}
-          body={helperMessage}
+          body={helperMessage.developerForm}
         />
         <Form
           onSubmit={onSubmit}
@@ -332,9 +338,7 @@ const DeveloperForm = ({ id, testDashboard, dashboards }) => {
                         Repayment Type
                         <span className="font-red f12 bold ml4">*</span>
                       </label>
-                      <Tooltip
-                        message={developerTooltipHelper.loanType.message}
-                      />
+                      <Tooltip message={developerTooltip.loanType.message} />
                     </div>
                     <Field name="loanType" validate={required}>
                       {({ input, meta }) => (
@@ -410,8 +414,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   testDashboard,
-  setAccordian,
-  setModal,
+  getDashboard,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeveloperForm);

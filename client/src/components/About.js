@@ -17,9 +17,9 @@ const About = () => {
         property investment feasibilities, but these are unnecessarily
         sophisticated and expensive. There are many free online tools to
         estimate mortgage repayments, but these do not provide estimates of your
-        total investment, including rent and sale value. PropertyInvestorDash
-        aims to provide a <i>simple</i> and <i>free</i> tool for all type of
-        investors
+        total investment, including rental income and sale value.
+        PropertyInvestorDash aims to provide a <i>simple</i> and <i>free</i>{" "}
+        tool for all type of investors
       </div>
       <h2 className="f20 bold mt16 mb16">How Does PropertyInvestorDash Work</h2>
       <div className="r bs-3 bg-1 p20 mb16">
@@ -33,18 +33,18 @@ const About = () => {
         individual home owners to large developers
       </div>
       <div className="r bs-3 bg-1 p20 mb16 jump">
-        <h3 className="f12 bold mb16">Step 1: Choose your investment type</h3>
+        <h3 className="f16 bold mb16">Step 1: Choose your investment type</h3>
         Choose what type of dashboard you would like to view, with each option
         displaying bespoke outputs to suit your investment profile
       </div>
       <div className="r bs-3 bg-1 p20 mb16 jump">
-        <h3 className="f12 bold mb16">Step 2: Input your assumptions</h3>
+        <h3 className="f16 bold mb16">Step 2: Input your assumptions</h3>
         Choose your inputs for simplified revenue, cost, and timing assumptions.
         With helpful validation of inputs, and relevant tooltip helpers, anyone
         is able to use the tool
       </div>
       <div className="r bs-3 bg-1 p20 mb16 jump">
-        <h3 className="f12 bold mb16">Step 3: View your dashboard</h3>
+        <h3 className="f16 bold mb16">Step 3: View your dashboard</h3>
         Simple dashboard output summarise investment metrics, and forecast
         simple cashflows with easy to understand visual outputs. Log in to your
         account to modify your assumptions to test different investment

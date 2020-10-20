@@ -38,6 +38,13 @@ const useOverlayOutsideAlerter = (ref) => {
         type: "SET_LEFT_SIDEBAR",
         status: false,
       });
+      store.dispatch({
+        type: "SET_MODAL",
+        payload: {
+          modalType: CONSTANTS.MODALS.SAVEDASHBOARD,
+          status: false,
+        },
+      });
     }
   };
 

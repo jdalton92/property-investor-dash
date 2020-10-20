@@ -8,7 +8,7 @@ import ownerOccupierImage from "../styles/images/owner-occupier.jfif";
 import investorImage from "../styles/images/investor.jfif";
 import developerImage from "../styles/images/developer.jfif";
 
-const DashboardTypes = () => {
+const CalculatorTypes = () => {
   const history = useHistory();
   const handleLink = (url) => {
     history.push(url);
@@ -16,7 +16,7 @@ const DashboardTypes = () => {
 
   return (
     <>
-      <h1 className="f24 bold mt16 mb8">Dashboard Types</h1>
+      <h1 className="f24 bold mt16 mb8">Calculator Types</h1>
       <div className="p20 r bs-3 bg-1 mb20">
         <ul>
           <li>INFO</li>
@@ -131,4 +131,4 @@ const DashboardTypes = () => {
   );
 };
 
-export default DashboardTypes;
+export default CalculatorTypes;

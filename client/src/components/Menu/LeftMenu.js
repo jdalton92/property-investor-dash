@@ -22,8 +22,8 @@ const LeftMenu = ({ leftSidebarOpen }) => {
       icon: QuestionIcon,
     },
     {
-      title: "Dashboard Types",
-      link: { url: "/dashboard-types", internal: true },
+      title: "Calculator Types",
+      link: { url: "/calculator-types", internal: true },
       icon: DashboardIcon,
     },
     {

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { initUser } from "./reducers/userReducer";
+import { CONSTANTS } from "./static/constants";
 
 // Shared Components/Utils
 import ScrollToTopControlller from "./components/ScrollToTopControlller";
@@ -18,7 +19,7 @@ import Login from "./components/Login";
 import Contact from "./components/Contact";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import About from "./components/About";
-import DashboardTypes from "./components/DashboardTypes";
+import CalculatorTypes from "./components/CalculatorTypes";
 import Blog from "./components/Blog";
 import Settings from "./components/Settings/Settings";
 import TermsAndConditions from "./components/TermsAndConditions";
@@ -28,10 +29,19 @@ import DeveloperForm from "./components/CalculatorInputs/DeveloperForm";
 import OccupierDashboard from "./components/Dashboards/OccupierDashboard";
 import InvestorDashboard from "./components/Dashboards/InvestorDashboard";
 import DeveloperDashboard from "./components/Dashboards/DeveloperDashboard";
+import SaveDashboardModal from "./components/Dashboards/SaveDashboardModal";
+
+import NotFound from "./components/NotFound";
 
 import "./styles/main.scss";
 
-const App = ({ initUser, isUserFetching, overlay, user }) => {
+const App = ({
+  initUser,
+  isUserFetching,
+  overlay,
+  user,
+  saveDashboardModal,
+}) => {
   useEffect(() => {
     initUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,10 +54,9 @@ const App = ({ initUser, isUserFetching, overlay, user }) => {
       <div className="w100 fade-in">
         <Router>
           {overlay && <Overlay />}
+          {saveDashboardModal && <SaveDashboardModal />}
           <Notifications />
           <ScrollToTopControlller />
-          {/* <UserTypeModal /> */}
-          {/* <SaveDashboardModal /> */}
           <NavigationBar />
           <div className="w100 flex-row justify-c">
             <LeftMenu />
@@ -68,8 +77,8 @@ const App = ({ initUser, isUserFetching, overlay, user }) => {
                 <Route path="/about" render={() => <About />} />
                 <Route
                   exact
-                  path="/dashboard-types"
-                  render={() => <DashboardTypes />}
+                  path="/calculator-types"
+                  render={() => <CalculatorTypes />}
                 />
                 <Route path="/blog" render={() => <Blog />} />
                 <Route
@@ -130,6 +139,7 @@ const App = ({ initUser, isUserFetching, overlay, user }) => {
                 path="/saved-dashboards"
                 render={() => <SavedDashboards />}
               /> */}
+                <Route render={() => <NotFound />} />
               </Switch>
             </div>
             <RightMenu />
@@ -152,6 +162,7 @@ const mapStateToProps = (state) => {
     user: state.user,
     isUserFetching: state.user.isFetching,
     overlay: state.navigation.overlay,
+    saveDashboardModal: state.navigation.modal[CONSTANTS.MODALS.SAVEDASHBOARD],
   };
 };
 
