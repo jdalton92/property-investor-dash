@@ -19,6 +19,7 @@ const Login = ({ loginUser, user, demoUser, setNotification }) => {
     if (user.data.username) {
       history.push("/");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onSubmit = async ({ email, password }) => {

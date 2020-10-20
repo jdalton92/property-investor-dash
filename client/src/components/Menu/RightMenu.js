@@ -2,8 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { setRightSidebar } from "../../reducers/navigationReducer";
 import Button from "../Shared/Button";
-import ExpandIcon from "../../styles/svg/expand.svg";
-import CollapseIcon from "../../styles/svg/collapse.svg";
 import CloseIcon from "../../styles/svg/close.svg";
 
 const RightMenu = ({ rightSidebarOpen, setRightSidebar }) => {
@@ -12,13 +10,6 @@ const RightMenu = ({ rightSidebarOpen, setRightSidebar }) => {
 
   for (x = 0; x < 100; x++) {
     y = [...y, 1];
-  }
-
-  let RightMenuIcon;
-  if (rightSidebarOpen) {
-    RightMenuIcon = CollapseIcon;
-  } else {
-    RightMenuIcon = ExpandIcon;
   }
 
   const handleRightMenuClick = (e) => {

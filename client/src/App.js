@@ -27,6 +27,7 @@ import InvestorForm from "./components/CalculatorInputs/InvestorForm";
 import DeveloperForm from "./components/CalculatorInputs/DeveloperForm";
 import OccupierDashboard from "./components/Dashboards/OccupierDashboard";
 import InvestorDashboard from "./components/Dashboards/InvestorDashboard";
+import DeveloperDashboard from "./components/Dashboards/DeveloperDashboard";
 
 import "./styles/main.scss";
 
@@ -116,17 +117,16 @@ const App = ({ initUser, isUserFetching, overlay, user }) => {
                   path="/investor/dash/:id"
                   render={() => <InvestorDashboard />}
                 />
-
-                {/* <Route
-                exact
-                path="/developer/dash"
-                render={() => <DeveloperDashboard />}
-              />
-              <Route
-                path="/developer/dash/:id"
-                render={() => <DeveloperDashboard />}
-              />
-              <CustomRoute
+                <Route
+                  exact
+                  path="/developer/dash"
+                  render={() => <DeveloperDashboard />}
+                />
+                <Route
+                  path="/developer/dash/:id"
+                  render={() => <DeveloperDashboard />}
+                />
+                {/* <CustomRoute
                 path="/saved-dashboards"
                 render={() => <SavedDashboards />}
               /> */}

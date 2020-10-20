@@ -20,7 +20,6 @@ import {
   IRRCalculation,
 } from "../../utils/dashboardHelper";
 import { Line } from "react-chartjs-2";
-import { CONSTANTS } from "../../static/constants";
 import { occupierInvestorTooltipHelper } from "../../utils/tooltipHelper";
 import ExpandIcon from "../../styles/svg/expand.svg";
 import CollapseIcon from "../../styles/svg/collapse.svg";
@@ -191,35 +190,35 @@ const OwnerOccupierInvestorDashboard = ({ dashboards }) => {
             <tfoot>
               <tr>
                 <th>Total</th>
-                <td className="dashboard-table-desktop">
+                <td className="dash-desktop">
                   {currencyFormatter.format(
                     tableData?.summaryCashflow[0].equityUse
                   )}
                 </td>
-                <td className="dashboard-table-desktop">
+                <td className="dash-desktop">
                   {currencyFormatter.format(
                     tableData?.summaryCashflow[0].rentalIncome
                   )}
                 </td>
-                <td className="dashboard-table-desktop">
+                <td className="dash-desktop">
                   {currencyFormatter.format(tableData?.summaryCashflow[0].opex)}
                 </td>
-                <td className="dashboard-table-desktop">
+                <td className="dash-desktop">
                   {currencyFormatter.format(
                     tableData?.summaryCashflow[0].netSale
                   )}
                 </td>
-                <td className="dashboard-table-desktop">
+                <td className="dash-desktop">
                   {currencyFormatter.format(
                     tableData?.summaryCashflow[0].fundingCost
                   )}
                 </td>
-                <td className="dashboard-table-mobile">
+                <td className="dash-mobile">
                   {currencyFormatter.format(
                     tableData?.summaryCashflow[0].totalIncome
                   )}
                 </td>
-                <td className="dashboard-table-mobile">
+                <td className="dash-mobile">
                   {currencyFormatter.format(
                     tableData?.summaryCashflow[0].totalCost
                   )}

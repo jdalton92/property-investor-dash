@@ -190,8 +190,8 @@ export const developerCalculation = ({
     }
 
     const annualOverPayment = overPayments
-      .filter((p) => parseInt(p.year) * 12 === i + 1)
-      .reduce((a, b) => a + b.payment, 0);
+      .filter((p) => parseInt(p?.year) * 12 === i + 1)
+      .reduce((a, b) => a + b?.payment, 0);
 
     const loanInstallment = loanPayment + annualOverPayment;
 

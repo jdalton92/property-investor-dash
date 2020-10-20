@@ -25,6 +25,7 @@ const InvestorDashboard = ({
     if (id && !dashboards.preSave) {
       getDashboard(id);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const handleSave = (e) => {

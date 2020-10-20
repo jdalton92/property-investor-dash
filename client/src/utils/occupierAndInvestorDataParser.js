@@ -71,8 +71,8 @@ export const occupierInvestorCalculation = ({
           (Math.pow(1 + r / 12, n) - 1);
 
     const annualOverPayment = overPayments
-      .filter((p) => parseInt(p.year) * 12 === i + 1)
-      .reduce((a, b) => a + b.payment, 0);
+      .filter((p) => parseInt(p?.year) * 12 === i + 1)
+      .reduce((a, b) => a + b?.payment, 0);
 
     let loanInstallment = 0;
     if (i <= homeloanTerm * 12 - 1) {

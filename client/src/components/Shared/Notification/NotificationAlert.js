@@ -66,10 +66,6 @@ const NotificationAlert = ({ notification, clearNotification }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return;
-};
-
 const mapDispatchToProps = {
   clearNotification,
 };
