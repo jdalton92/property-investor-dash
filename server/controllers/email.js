@@ -7,7 +7,6 @@ emailRouter.post("/", async (request, response, next) => {
     const { fullName, company, email, message } = request.body;
     const date = new Intl.DateTimeFormat("en-GB").format(Date.now());
 
-    // TO DO - DATA VALIDATION
     if (!fullName || !email || !message) {
       return response.status(400).send({
         error: "Full name, email, and message required",
@@ -26,14 +25,14 @@ emailRouter.post("/", async (request, response, next) => {
     const mailOptions = {
       from: `"${fullName}" <${email}>`,
       to: process.env.EMAIL,
-      subject: "PropertyInvestorDASH: New Message",
+      subject: "PropertyInvestorDash: New Message",
       text: `
       Date: ${date}
       Name: ${fullName}
       Email: ${email}
       Company: ${company}
-      
-      Message: 
+
+      Message:
       ${message}
       `,
     };

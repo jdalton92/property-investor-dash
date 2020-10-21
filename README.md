@@ -1,4 +1,4 @@
-# **PropertyInvestor**DASH
+# **PropertyInvestorDash**
 
 Simple open source tool for calculating your return for property investments
 
@@ -33,9 +33,23 @@ npm start
 
 Create `.env` file in backend root directory with environment variables for the following uses;
 
-- **MongoDB:** MONGODB_URI, PORT
+- **requests:** PORT
+- **MongoDB:** MONGODB_URI
 - **jwt:** SECRET
 - **Mailgun:** API_KEY, DOMAIN, EMAIL
+
+Example `.env` file:
+
+```sh
+MONGODB_URI=mongodb+srv://<username>:<id>@<url>.mongodb.net/<collection-name>
+PORT=3001
+SECRET=<your_secret_key>
+EMAIL=<your_email>
+API_KEY=<your_mailgun_api_key>
+DOMAIN=<your_mailgun_domain>
+```
+
+Then navidate to the server directory and install packages/run the backend
 
 ```sh
 cd server

@@ -31,7 +31,6 @@ import OccupierDashboard from "./components/Dashboards/OccupierDashboard";
 import InvestorDashboard from "./components/Dashboards/InvestorDashboard";
 import DeveloperDashboard from "./components/Dashboards/DeveloperDashboard";
 import SaveDashboardModal from "./components/Dashboards/SaveDashboardModal";
-
 import NotFound from "./components/NotFound";
 
 import "./styles/main.scss";
