@@ -19,11 +19,11 @@ import { occupierInvestorTooltip } from "../../static/tooltipText";
 import ExpandIcon from "../../styles/svg/expand.svg";
 import CollapseIcon from "../../styles/svg/collapse.svg";
 
-const OwnerOccupierInvestorDashboard = ({ dashboards }) => {
+const OwnerOccupierInvestorDashboard = ({ currentDashboard }) => {
   const [showCashflow, setShowCashflow] = useState(true);
 
   const message = occupierInvestorTooltip.cashflowAfterFunding.message;
-  const rawData = occupierInvestorCalculation(dashboards.data[0].values);
+  const rawData = occupierInvestorCalculation(currentDashboard);
   const chartData = cumulativeChartParse(rawData);
   const tableData = tableParse(rawData);
   const cardData = cardParse(rawData);
@@ -234,7 +234,7 @@ const OwnerOccupierInvestorDashboard = ({ dashboards }) => {
 
 const mapStateToProps = (state) => {
   return {
-    dashboards: state.dashboards,
+    currentDashboard: state.dashboards.currentDashboard.values,
     cashflowTable: state.navigation.cashflowTable,
   };
 };

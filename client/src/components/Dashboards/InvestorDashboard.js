@@ -14,7 +14,9 @@ import OwnerOccupierInvestorDashboard from "./OwnerOccupierInvestorDashboard";
 import { CONSTANTS } from "../../static/constants";
 
 const InvestorDashboard = ({
-  dashboards,
+  isFetching,
+  preSave,
+  currentDashboard,
   getDashboard,
   preSaveDashboard,
   setModal,
@@ -23,7 +25,7 @@ const InvestorDashboard = ({
   const history = useHistory();
 
   useEffect(() => {
-    if (id && !dashboards.preSave) {
+    if (id && !preSave) {
       getDashboard(id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,9 +46,12 @@ const InvestorDashboard = ({
     }
   };
 
-  if (dashboards.isFetching) {
+  const isEmpty = (obj) =>
+    Object.keys(obj).length === 0 && obj.constructor === Object;
+
+  if (isFetching) {
     return <Loader />;
-  } else if (!dashboards.data.length) {
+  } else if (isEmpty(currentDashboard)) {
     history.push("/investor/edit");
     return null;
   } else {
@@ -93,7 +98,9 @@ const InvestorDashboard = ({
 
 const mapStateToProps = (state) => {
   return {
-    dashboards: state.dashboards,
+    currentDashboard: state.dashboards.currentDashboard.values,
+    preSave: state.dashboards.currentDashboard.preSave,
+    isFetching: state.dashboards.isFetching,
   };
 };
 

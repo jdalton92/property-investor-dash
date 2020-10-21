@@ -16,12 +16,16 @@
   height: 40px;
   transition: background-color 0.2s ease;
   &:hover {
-    background-color: $primary-3;
+    background-color: $n2;
   }
 
   &:active {
-    background-color: $primary-2;
+    background-color: $n3;
   }
+}
+
+.button-transp-s.active {
+  background-color: $n2;
 }
 
 .button-p {

@@ -8,12 +8,18 @@ import HelperMessage from "../Shared/HelperMessage";
 import Loader from "../Shared/Loader";
 import OwnerOccupierInvestorInputs from "./OwnerOccupierInvestorInputs";
 
-const OccupierForm = ({ testDashboard, dashboards, getDashboard }) => {
+const OccupierForm = ({
+  testDashboard,
+  preSave,
+  currentDashboard,
+  isFetching,
+  getDashboard,
+}) => {
   const id = useParams().id;
   const history = useHistory();
 
   useEffect(() => {
-    if (id && !dashboards.preSave) {
+    if (id && !preSave) {
       getDashboard(id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -26,11 +32,11 @@ const OccupierForm = ({ testDashboard, dashboards, getDashboard }) => {
     history.push("/owner-occupier/dash");
   };
 
-  if (dashboards.isFetching) {
+  if (isFetching) {
     return <Loader />;
   } else {
     // const initialValues =
-    //   dashboards.preSave || id ? dashboards.data[0].values : {overPayments: [{}]};
+    //   preSave || id ? currentDashboard : {overPayments: [{}]};
 
     const initialValues = {
       housePrice: 1000000,
@@ -67,7 +73,9 @@ const OccupierForm = ({ testDashboard, dashboards, getDashboard }) => {
 
 const mapStateToProps = (state) => {
   return {
-    dashboards: state.dashboards,
+    currentDashboard: state.dashboards.currentDashboard.values,
+    preSave: state.dashboards.currentDashboard.preSave,
+    isFetching: state.dashboards.isFetching,
   };
 };
 

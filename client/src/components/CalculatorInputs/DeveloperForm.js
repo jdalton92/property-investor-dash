@@ -14,12 +14,18 @@ import Loader from "../Shared/Loader";
 import MortgageOverpayments from "./MortgageOverpayments";
 import Tooltip from "../Shared/Tooltip";
 
-const DeveloperForm = ({ testDashboard, dashboards, getDashboard }) => {
+const DeveloperForm = ({
+  testDashboard,
+  currentDashboard,
+  isFetching,
+  preSave,
+  getDashboard,
+}) => {
   const id = useParams().id;
   const history = useHistory();
 
   useEffect(() => {
-    if (id && !dashboards.preSave) {
+    if (id && !preSave) {
       getDashboard(id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -30,11 +36,11 @@ const DeveloperForm = ({ testDashboard, dashboards, getDashboard }) => {
     history.push("/developer/dash");
   };
 
-  if (dashboards.isFetching) {
+  if (isFetching) {
     return <Loader />;
   } else {
     // const initialValues =
-    //   dashboards.preSave || id ? dashboards.data[0].values : {overPayments: [{}]};
+    //   preSave || id ? currentDashboard : {overPayments: [{}]};
 
     const initialValues = {
       acquisitionPrice: 100000,
@@ -408,7 +414,9 @@ const DeveloperForm = ({ testDashboard, dashboards, getDashboard }) => {
 
 const mapStateToProps = (state) => {
   return {
-    dashboards: state.dashboards,
+    currentDashboard: state.dashboards.currentDashboard.values,
+    preSave: state.dashboards.currentDashboard.preSave,
+    isFetching: state.dashboards.isFetching,
   };
 };
 

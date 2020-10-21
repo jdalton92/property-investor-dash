@@ -278,17 +278,8 @@ const OwnerOccupierInvestorInputs = ({ initialValues, investor, onSubmit }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    dashboards: state.dashboards,
-  };
-};
-
 const mapDispatchToProps = {
   testDashboard,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(OwnerOccupierInvestorInputs);
+export default connect(null, mapDispatchToProps)(OwnerOccupierInvestorInputs);

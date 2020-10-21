@@ -46,46 +46,72 @@ import dashboardService from "../services/dashboard";
 
 let initialState = {
   isFetching: false,
-  preSave: false,
-  data: [],
+  savedDashboards: [],
+  currentDashboard: {
+    preSave: false,
+    values: {},
+  },
 };
 
 const dashboardReducer = (state = initialState, action) => {
+  let newState;
   switch (action.type) {
     case "DASHBOARD_REQUEST":
       return { ...state, isFetching: true };
     case "DASHBOARD_REQUEST_FAIL":
-      return { ...state, isFetching: false, preSave: false };
+      newState = state;
+      newState.isFetching = false;
+      newState.currentDashboard.preSave = false;
+      return newState;
     case "TEST_DASHBOARD":
-      return {
-        isFetching: false,
-        preSave: true,
-        data: [{ values: action.data }],
-      };
+      newState = state;
+      newState.isFetching = false;
+      newState.currentDashboard.preSave = true;
+      newState.currentDashboard.values = action.data;
+      return newState;
     case "PRE_SAVE_DASHBOARD":
-      return { ...state, preSave: true };
+      newState = state;
+      newState.currentDashboard.preSave = true;
+      return newState;
     case "INIT_DASHBOARDS":
-      return { isFetching: false, preSave: false, data: [...action.data] };
-    case "GET_DASHBOARD":
-      return { isFetching: false, preSave: false, data: [action.data] };
-    case "SAVE_DASHBOARD":
       return {
         isFetching: false,
-        preSave: false,
-        data: [...state.data, action.data],
+        savedDashboards: action.data,
+        currentDashboard: {
+          preSave: false,
+          values: {},
+        },
       };
+    case "GET_DASHBOARD":
+      newState = state;
+      newState.isFetching = false;
+      newState.currentDashboard.preSave = false;
+      newState.currentDashboard.values = action.data;
+      return newState;
+    case "SAVE_DASHBOARD":
+      newState = state;
+      newState.isFetching = false;
+      newState.currentDashboard.preSave = false;
+      newState.savedDashboards = [...state.savedDashboards, action.data];
+      return newState;
     case "UPDATE_DASHBOARDS":
       const dashboardList = state.data.filter((d) => d._id !== action.data._id);
       return {
         isFetching: false,
-        preSave: false,
-        data: [...dashboardList, action.data],
+        savedDashboards: [...dashboardList, action.data],
+        currentDashboard: {
+          preSave: false,
+          values: {},
+        },
       };
     case "DELETE_DASHBOARD":
       return {
         isFetching: false,
-        preSave: false,
-        data: [...state.data.filter((d) => d._id !== action.id)],
+        savedDashboards: [...state.data.filter((d) => d._id !== action.id)],
+        currentDashboard: {
+          preSave: false,
+          values: {},
+        },
       };
     default:
       return state;

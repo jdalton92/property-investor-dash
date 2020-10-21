@@ -6,10 +6,14 @@ import { setLeftSidebar, setRightSidebar } from "../reducers/navigationReducer";
 const ScrollToTopControlller = ({ setLeftSidebar, setRightSidebar }) => {
   const history = useHistory();
   const pathname = history.location.pathname;
+
+  console.log(pathname);
+
   useEffect(() => {
     setLeftSidebar(false);
     setRightSidebar(false);
     try {
+      console.log("change");
       window.scroll({
         top: 0,
         left: 0,

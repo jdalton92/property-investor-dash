@@ -48,8 +48,18 @@
   border-bottom: 1px solid #bbbbbb;
 }
 
+.dash-cashflow tr {
+  &:hover {
+    background-color: $gr4 !important;
+  }
+}
+
 .dash-chart {
   min-height: 400px !important;
+}
+
+.save-form select {
+  min-height: 144px;
 }
 
 @media screen and (max-width: 1250px) {
@@ -57,12 +67,6 @@
     display: none;
   }
 }
-
-// @media screen and (max-width: 1250px) {
-//   .dash-mobile {
-//     display: none;
-//   }
-// }
 
 @media screen and (max-width: 600px) {
   .dash-btns {

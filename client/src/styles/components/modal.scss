@@ -13,14 +13,18 @@
   right: 0;
 }
 
-.modal-opt {
-  border-bottom: 2px solid transparent;
-  &:hover {
-    border-bottom: 2px solid black;
-    cursor: pointer;
-  }
-}
-
 .modal .active {
   border-bottom: 2px solid black;
+}
+
+.save-opt span {
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .save-opt {
+    width: 50%;
+    height: 65px;
+    padding: 20px 8px !important;
+  }
 }

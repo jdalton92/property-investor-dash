@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Form, Field } from "react-final-form";
 import { setModal } from "../../reducers/navigationReducer";
 import {
@@ -16,19 +16,23 @@ import {
 } from "../../utils/formValidatorHelper";
 import { CONSTANTS } from "../../static/constants";
 import Button from "../Shared/Button";
+import { Icon } from "../Shared/Icon";
 import CloseIcon from "../../styles/svg/close.svg";
+import SaveIcon from "../../styles/svg/save.svg";
+import OverwriteIcon from "../../styles/svg/overwrite.svg";
 
 const SaveDashboardModal = ({
-  dashboards,
+  isFetching,
+  currentDashboard,
+  savedDashboards,
   user,
   setModal,
   setNotification,
   saveDashboard,
   updateDashboard,
-  saveDashboardModal,
 }) => {
   const [saveNew, setSaveNew] = useState(true);
-  const id = useParams().id;
+  const [overwrite, setOverwrite] = useState("");
   const history = useHistory();
 
   const handleSave = async (saveData) => {
@@ -39,30 +43,29 @@ const SaveDashboardModal = ({
     }
 
     const dashObject = {
-      values: dashboards.data[0].values,
+      values: currentDashboard,
       ...saveData,
     };
 
-    if (id) {
-      await updateDashboard(dashObject);
-    } else {
-      await saveDashboard(dashObject);
-    }
+    await saveDashboard(dashObject);
 
     setModal(CONSTANTS.MODALS.SAVEDASHBOARD, false);
 
-    if (!dashboards.isFetching) {
+    if (!isFetching) {
       setNotification(`${saveData.description} saved`, "success");
       history.push("/saved-dashboards");
     }
+  };
+
+  const handleOverwrite = async (saveData) => {
+    // await updateDashboard(saveData);
+    console.log("overwrite ", overwrite);
   };
 
   const handleCancel = (e) => {
     // React Final Form handles preventDefault()
     setModal(CONSTANTS.MODALS.SAVEDASHBOARD, false);
   };
-
-  const initialValues = id ? dashboards.data[0].values : null;
 
   return (
     <div className="modal mt60 fixed r bs-3 bg-1 p20">
@@ -76,25 +79,44 @@ const SaveDashboardModal = ({
       />
       <h2 className="f20 bold mb16">Save Dashboard</h2>
       <div className="flex-row">
-        <h3
-          className={`modal-opt ${saveNew ? "active" : ""} f16 mb8 bold mr8`}
+        <button
+          type="submit"
+          className={`save-opt button-transp-s rt pl16 pr16 flex-row align-c justify-c jump ${
+            saveNew ? "active" : ""
+          }`}
           onClick={() => setSaveNew(true)}
         >
-          Save New
-        </h3>
-        <h3
-          className={`modal-opt ${saveNew ? "" : "active"} f16 mb8 bold ml8`}
+          <Icon
+            size={"20px"}
+            url={SaveIcon}
+            color={"black"}
+            hover={false}
+            active={false}
+          />
+          <span className="ml8 f16 bold">Save New</span>
+        </button>
+        <button
+          type="submit"
+          className={`save-opt button-transp-s rt pl16 pr16 flex-row align-c justify-c jump ${
+            saveNew ? "" : "active"
+          }`}
           onClick={() => setSaveNew(false)}
         >
-          Overwrite Existing
-        </h3>
+          <Icon
+            size={"20px"}
+            url={OverwriteIcon}
+            color={"black"}
+            hover={false}
+            active={false}
+          />
+          <span className="ml8 f16 bold">Overwrite Existing</span>
+        </button>
       </div>
       {saveNew && (
         <Form
           onSubmit={handleSave}
-          initialValues={{ ...initialValues }}
           render={({ handleSubmit, form }) => (
-            <form className="mb20" onSubmit={handleSubmit}>
+            <form className="save-form mt20 mb20" onSubmit={handleSubmit}>
               <div className="flex-row align-c relative">
                 <label htmlFor="save-description" className="f16 mb8">
                   Description
@@ -158,28 +180,77 @@ const SaveDashboardModal = ({
                   type="submit"
                   className="form-button-p bs-3 font-white mt12 pt8 pb8"
                 >
-                  Submit
-                </button>
-                <button
-                  type="button"
-                  className="form-button-s bs-3 font-white mt12 pt8 pb8 r"
-                  onClick={form.reset}
-                >
-                  Reset
+                  Save As
                 </button>
               </div>
             </form>
           )}
         />
       )}
-      {!saveNew && <div>TABLE OF EXISTING DASHBOARDS</div>}
+      {!saveNew && (
+        <Form
+          onSubmit={handleOverwrite}
+          render={({ handleSubmit, form, values }) => (
+            <form className="save-form mt20 mb20" onSubmit={handleSubmit}>
+              <div className="flex-row align-c relative">
+                <label htmlFor="save-overwrite" className="f16 mb8">
+                  Dashboard
+                  <span className="font-red f12 bold ml4">*</span>
+                </label>
+              </div>
+              <Field name="dashboard" validate={required}>
+                {({ input, meta }) => (
+                  <div className="relative mb20">
+                    <select
+                      className="form-input select w100 bs-1"
+                      id="save-overwrite"
+                      name="dashboard"
+                      onChange={() => setOverwrite(values)}
+                      multiple
+                    >
+                      {savedDashboards.map((d, i) => {
+                        let type;
+                        if (d.values.type === "developer") {
+                          type = "Developer";
+                        } else if (d.values?.investor) {
+                          type = "Investor";
+                        } else {
+                          type = "Owner Occupier";
+                        }
+                        return (
+                          <option key={i} value={d._id}>
+                            description: {d.description} | type: {type}
+                          </option>
+                        );
+                      })}
+                    </select>
+                    {meta.error && meta.touched && (
+                      <span className="form-error f10">{meta.error}</span>
+                    )}
+                  </div>
+                )}
+              </Field>
+              <div className="form-buttons">
+                <button
+                  type="submit"
+                  className="form-button-p bs-3 font-white mt12 pt8 pb8"
+                >
+                  Save
+                </button>
+              </div>
+            </form>
+          )}
+        />
+      )}
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
-    dashboards: state.dashboards,
+    isFetching: state.dashboards.isFetching,
+    currentDashboard: state.dashboards.currentDashboard.values,
+    savedDashboards: state.dashboards.savedDashboards,
     saveDashboardModal: state.navigation.modal.saveDashboard,
     user: state.user,
     requestSuceed: state.navigation.requestSuceed,

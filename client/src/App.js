@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { initUser } from "./reducers/userReducer";
+import { getDashboards } from "./reducers/dashboardReducer";
 import { CONSTANTS } from "./static/constants";
 
 // Shared Components/Utils
-import ScrollToTopControlller from "./components/ScrollToTopControlller";
+// import ScrollToTopControlller from "./components/ScrollToTopControlller";
 import CustomRoute from "./components/CustomRoute";
 import Loader from "./components/Shared/Loader";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
@@ -37,6 +38,7 @@ import "./styles/main.scss";
 
 const App = ({
   initUser,
+  getDashboards,
   isUserFetching,
   overlay,
   user,
@@ -44,6 +46,7 @@ const App = ({
 }) => {
   useEffect(() => {
     initUser();
+    getDashboards();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -56,7 +59,6 @@ const App = ({
           {overlay && <Overlay />}
           {saveDashboardModal && <SaveDashboardModal />}
           <Notifications />
-          <ScrollToTopControlller />
           <NavigationBar />
           <div className="w100 flex-row justify-c">
             <LeftMenu />
@@ -64,7 +66,12 @@ const App = ({
               <Switch>
                 <Route path="/login" render={() => <Login />} />
                 <CustomRoute path="/settings" render={() => <Settings />} />
-                {/* <Route path="/create-user" render={() => <CreateUser />} /> */}
+                {/* <Route path="/create-user" render={() => <CreateUser />} />
+                <CustomRoute
+                  path="/saved-dashboards"
+                  render={() => <SavedDashboards />}
+                />
+                <ScrollToTopControlller /> */}
                 <Route path="/contact" render={() => <Contact />} />
                 <Route
                   path="/terms-and-conditions"
@@ -135,10 +142,6 @@ const App = ({
                   path="/developer/dash/:id"
                   render={() => <DeveloperDashboard />}
                 />
-                {/* <CustomRoute
-                path="/saved-dashboards"
-                render={() => <SavedDashboards />}
-              /> */}
                 <Route render={() => <NotFound />} />
               </Switch>
             </div>
@@ -168,6 +171,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   initUser,
+  getDashboards,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
