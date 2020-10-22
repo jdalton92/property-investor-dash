@@ -51,10 +51,10 @@ const OccupierDashboard = ({
 
   if (isFetching) {
     return <Loader />;
-  } else if (isEmpty(currentDashboard)) {
-    history.push("/owner-occupier/edit");
-    return null;
   } else {
+    if (isEmpty(currentDashboard)) {
+      history.push("/owner-occupier/edit");
+    }
     return (
       <>
         <div className="dash-row relative">

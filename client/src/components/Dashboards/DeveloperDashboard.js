@@ -70,10 +70,10 @@ const DeveloperDashboard = ({
 
   if (isFetching) {
     return <Loader />;
-  } else if (isEmpty(currentDashboard)) {
-    history.push("/developer/edit");
-    return null;
   } else {
+    if (isEmpty(currentDashboard)) {
+      history.push("/developer/edit");
+    }
     const preFinanceMessage = developerTooltip.cashflowBeforeFunding.message;
     const postFinanceMessage = developerTooltip.cashflowAfterFunding.message;
     const rawData = developerCalculation(currentDashboard);

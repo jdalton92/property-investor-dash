@@ -385,6 +385,38 @@
   min-height: 10vh;
 }
 
+.mh50 {
+  max-height: 50px;
+}
+
+.mh100 {
+  max-height: 100px;
+}
+
+.mh150 {
+  max-height: 150px;
+}
+
+.mh200 {
+  max-height: 200px;
+}
+
+.mh250 {
+  max-height: 250px;
+}
+
+.mh300 {
+  max-height: 300px;
+}
+
+.mh350 {
+  max-height: 350px;
+}
+
+.mh400 {
+  max-height: 400px;
+}
+
 .img-cover {
   object-fit: cover;
   background-position: center;
@@ -914,6 +946,14 @@
 
 .o-x-hidden {
   overflow-x: hidden;
+}
+
+.o-y-auto {
+  overflow-y: auto;
+}
+
+.o-x-auto {
+  overflow-x: auto;
 }
 
 .background-img {

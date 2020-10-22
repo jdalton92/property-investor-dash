@@ -14,6 +14,7 @@ import {
   maxLength,
   minLength,
 } from "../../utils/formValidatorHelper";
+import { formatDate } from "../../utils/dashboardHelper";
 import { CONSTANTS } from "../../static/constants";
 import Button from "../Shared/Button";
 import { Icon } from "../Shared/Icon";
@@ -32,7 +33,7 @@ const SaveDashboardModal = ({
   updateDashboard,
 }) => {
   const [saveNew, setSaveNew] = useState(true);
-  const [overwrite, setOverwrite] = useState("");
+  const [selectedDashboard, setSelectedDashboard] = useState("");
   const history = useHistory();
 
   const handleSave = async (saveData) => {
@@ -48,18 +49,18 @@ const SaveDashboardModal = ({
     };
 
     await saveDashboard(dashObject);
-
     setModal(CONSTANTS.MODALS.SAVEDASHBOARD, false);
-
-    if (!isFetching) {
-      setNotification(`${saveData.description} saved`, "success");
-      history.push("/saved-dashboards");
-    }
+    setNotification(`${saveData.description} saved`, "success");
   };
 
-  const handleOverwrite = async (saveData) => {
-    // await updateDashboard(saveData);
-    console.log("overwrite ", overwrite);
+  const handleOverwrite = async (id) => {
+    // Original saved data
+    const dashboard = savedDashboards.filter((d) => d._id === id);
+    // New data
+    dashboard.data = currentDashboard;
+    await updateDashboard(dashboard);
+    setModal(CONSTANTS.MODALS.SAVEDASHBOARD, false);
+    setNotification(`${dashboard.description} updated`, "success");
   };
 
   const handleCancel = (e) => {
@@ -200,33 +201,60 @@ const SaveDashboardModal = ({
               </div>
               <Field name="dashboard" validate={required}>
                 {({ input, meta }) => (
-                  <div className="relative mb20">
-                    <select
-                      className="form-input select w100 bs-1"
+                  <div className="mh300 o-y-auto">
+                    <table
                       id="save-overwrite"
-                      name="dashboard"
-                      onChange={() => setOverwrite(values)}
-                      multiple
+                      className="overpayments w100 mb20"
                     >
-                      {savedDashboards.map((d, i) => {
-                        let type;
-                        if (d.values.type === "developer") {
-                          type = "Developer";
-                        } else if (d.values?.investor) {
-                          type = "Investor";
-                        } else {
-                          type = "Owner Occupier";
-                        }
-                        return (
-                          <option key={i} value={d._id}>
-                            description: {d.description} | type: {type}
-                          </option>
-                        );
-                      })}
-                    </select>
-                    {meta.error && meta.touched && (
-                      <span className="form-error f10">{meta.error}</span>
-                    )}
+                      <thead>
+                        <tr>
+                          <th className="h768">Ref</th>
+                          <th>Description</th>
+                          <th className="h768">Type</th>
+                          <th>Created</th>
+                          <th>Overwrite</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {savedDashboards.map((d, i) => {
+                          let type;
+                          if (d.values.type === "developer") {
+                            type = "Developer";
+                          } else if (d.values?.investor) {
+                            type = "Investor";
+                          } else {
+                            type = "Owner Occupier";
+                          }
+                          return (
+                            <tr
+                              key={i}
+                              onClick={() =>
+                                selectedDashboard === d._id
+                                  ? setSelectedDashboard("")
+                                  : setSelectedDashboard(d._id)
+                              }
+                              className={`${
+                                d._id === selectedDashboard ? "selected" : null
+                              }`}
+                            >
+                              <td className="h768">{i + 1}</td>
+                              <td>{d.description}</td>
+                              <td className="h768">{type}</td>
+                              <td>{formatDate(d.date)}</td>
+                              <td>
+                                <input
+                                  className="ml16"
+                                  type="checkbox"
+                                  checked={d._id === selectedDashboard}
+                                  value={d._id}
+                                  onChange={() => setSelectedDashboard(d._id)}
+                                />
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
                   </div>
                 )}
               </Field>

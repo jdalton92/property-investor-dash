@@ -51,10 +51,10 @@ const InvestorDashboard = ({
 
   if (isFetching) {
     return <Loader />;
-  } else if (isEmpty(currentDashboard)) {
-    history.push("/investor/edit");
-    return null;
   } else {
+    if (isEmpty(currentDashboard)) {
+      history.push("/investor/edit");
+    }
     return (
       <>
         <div className="dash-row relative">

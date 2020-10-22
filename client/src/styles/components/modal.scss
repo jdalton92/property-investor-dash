@@ -21,6 +21,16 @@
   text-align: center;
 }
 
+#save-overwrite tbody tr {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+#save-overwrite tbody tr.selected {
+  background-color: $gr4;
+}
+
 @media screen and (max-width: 768px) {
   .save-opt {
     width: 50%;
