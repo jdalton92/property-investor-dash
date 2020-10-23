@@ -1,4 +1,6 @@
 import dashboardService from "../services/dashboard";
+import { v4 as uuid } from "uuid";
+import { CONSTANTS } from "../static/constants";
 
 // const initialOwnerData = {
 //   housePrice: 1000000,
@@ -49,7 +51,9 @@ let initialState = {
   savedDashboards: [],
   currentDashboard: {
     preSave: false,
-    values: {},
+    data: {
+      values: {},
+    },
   },
 };
 
@@ -57,20 +61,22 @@ const dashboardReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
     case "DASHBOARD_REQUEST":
-      return { ...state, isFetching: true };
+      newState = { ...state };
+      newState.isFetching = true;
+      return newState;
     case "DASHBOARD_REQUEST_FAIL":
-      newState = state;
+      newState = { ...state };
       newState.isFetching = false;
       newState.currentDashboard.preSave = false;
       return newState;
     case "TEST_DASHBOARD":
-      newState = state;
+      newState = { ...state };
       newState.isFetching = false;
       newState.currentDashboard.preSave = true;
-      newState.currentDashboard.values = action.data;
+      newState.currentDashboard.data.values = action.data;
       return newState;
     case "PRE_SAVE_DASHBOARD":
-      newState = state;
+      newState = { ...state };
       newState.currentDashboard.preSave = true;
       return newState;
     case "INIT_DASHBOARDS":
@@ -79,38 +85,48 @@ const dashboardReducer = (state = initialState, action) => {
         savedDashboards: action.data,
         currentDashboard: {
           preSave: false,
-          values: {},
+          data: {
+            values: {},
+          },
         },
       };
     case "GET_DASHBOARD":
-      newState = state;
+      newState = { ...state };
       newState.isFetching = false;
       newState.currentDashboard.preSave = false;
-      newState.currentDashboard.values = action.data;
+      newState.currentDashboard.data = action.data;
       return newState;
     case "SAVE_DASHBOARD":
-      newState = state;
+      newState = { ...state };
       newState.isFetching = false;
       newState.currentDashboard.preSave = false;
       newState.savedDashboards = [...state.savedDashboards, action.data];
       return newState;
     case "UPDATE_DASHBOARDS":
-      const dashboardList = state.data.filter((d) => d._id !== action.data._id);
+      const dashboardList = state.savedDashboards.filter(
+        (d) => d._id !== action.data._id
+      );
       return {
         isFetching: false,
         savedDashboards: [...dashboardList, action.data],
         currentDashboard: {
           preSave: false,
-          values: {},
+          data: {
+            values: {},
+          },
         },
       };
     case "DELETE_DASHBOARD":
       return {
         isFetching: false,
-        savedDashboards: [...state.data.filter((d) => d._id !== action.id)],
+        savedDashboards: [
+          ...state.savedDashboards.filter((d) => d._id !== action.id),
+        ],
         currentDashboard: {
           preSave: false,
-          values: {},
+          data: {
+            values: {},
+          },
         },
       };
     default:
@@ -137,8 +153,9 @@ export const getDashboards = () => {
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
+          id: uuid(),
           message: e.response.data.error,
-          type: "danger",
+          type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });
     }
@@ -164,8 +181,9 @@ export const getDashboard = (id) => {
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
+          id: uuid(),
           message: e.response.data.error,
-          type: "danger",
+          type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });
     }
@@ -201,6 +219,14 @@ export const saveDashboard = (dashboardObject) => {
         type: "SAVE_DASHBOARD",
         data: newDash,
       });
+      dispatch({
+        type: "SET_NOTIFICATION",
+        content: {
+          id: uuid(),
+          message: `${newDash.description} saved`,
+          type: CONSTANTS.NOTIFICATION.SUCCESS,
+        },
+      });
     } catch (e) {
       dispatch({
         type: "DASHBOARD_REQUEST_FAIL",
@@ -208,8 +234,9 @@ export const saveDashboard = (dashboardObject) => {
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
+          id: uuid(),
           message: e.response.data.error,
-          type: "danger",
+          type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });
     }
@@ -228,6 +255,14 @@ export const updateDashboard = (dashboardObject) => {
         type: "UPDATE_DASHBOARDS",
         data: newDash,
       });
+      dispatch({
+        type: "SET_NOTIFICATION",
+        content: {
+          id: uuid(),
+          message: `${newDash.description} saved`,
+          type: CONSTANTS.NOTIFICATION.SUCCESS,
+        },
+      });
     } catch (e) {
       dispatch({
         type: "DASHBOARD_REQUEST_FAIL",
@@ -235,8 +270,9 @@ export const updateDashboard = (dashboardObject) => {
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
+          id: uuid(),
           message: e.response.data.error,
-          type: "danger",
+          type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });
     }
@@ -255,15 +291,25 @@ export const deleteDashboard = (id) => {
         type: "DELETE_DASHBOARD",
         id,
       });
+      dispatch({
+        type: "SET_NOTIFICATION",
+        content: {
+          id: uuid(),
+          message: "Dashboard delected",
+          type: CONSTANTS.NOTIFICATION.SUCCESS,
+        },
+      });
     } catch (e) {
+      console.log(e);
       dispatch({
         type: "DASHBOARD_REQUEST_FAIL",
       });
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
+          id: uuid(),
           message: e.response.data.error,
-          type: "danger",
+          type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });
     }

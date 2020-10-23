@@ -44,7 +44,7 @@ const DeveloperDashboard = ({
   const history = useHistory();
 
   useEffect(() => {
-    if (id && !preSave) {
+    if (id) {
       getDashboard(id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -68,15 +68,15 @@ const DeveloperDashboard = ({
   const isEmpty = (obj) =>
     Object.keys(obj).length === 0 && obj.constructor === Object;
 
-  if (isFetching) {
+  if (isFetching || (isEmpty(currentDashboard.values) && id)) {
     return <Loader />;
   } else {
-    if (isEmpty(currentDashboard)) {
+    if (isEmpty(currentDashboard.values)) {
       history.push("/developer/edit");
     }
     const preFinanceMessage = developerTooltip.cashflowBeforeFunding.message;
     const postFinanceMessage = developerTooltip.cashflowAfterFunding.message;
-    const rawData = developerCalculation(currentDashboard);
+    const rawData = developerCalculation(currentDashboard.values);
     const annualChart = annualChartParse(rawData);
     const cumulativeChart = cumulativeChartParse(rawData);
     const tableData = tableParse(rawData);
@@ -165,7 +165,7 @@ const DeveloperDashboard = ({
                 <td>
                   {currencyFormatter.format(
                     tableData.summaryCashflow[0].totalRevenue /
-                      currentDashboard.dwellings
+                      currentDashboard.values.dwellings
                   )}
                 </td>
               </tr>
@@ -174,7 +174,7 @@ const DeveloperDashboard = ({
                 <td>
                   {currencyFormatter.format(
                     tableData.summaryCashflow[0].totalCostsPreFinance /
-                      currentDashboard.dwellings
+                      currentDashboard.values.dwellings
                   )}
                 </td>
               </tr>
@@ -183,7 +183,7 @@ const DeveloperDashboard = ({
                 <td>
                   {currencyFormatter.format(
                     tableData.summaryCashflow[0].preFinanceCashflow /
-                      currentDashboard.dwellings
+                      currentDashboard.values.dwellings
                   )}
                 </td>
               </tr>
@@ -374,7 +374,7 @@ const DeveloperDashboard = ({
                 <td>
                   {currencyFormatter.format(
                     tableData.summaryCashflow[0].totalRevenue /
-                      currentDashboard.dwellings
+                      currentDashboard.values.dwellings
                   )}
                 </td>
               </tr>
@@ -383,7 +383,7 @@ const DeveloperDashboard = ({
                 <td>
                   {currencyFormatter.format(
                     tableData.summaryCashflow[0].totalCostsPostFinance /
-                      currentDashboard.dwellings
+                      currentDashboard.values.dwellings
                   )}
                 </td>
               </tr>
@@ -392,7 +392,7 @@ const DeveloperDashboard = ({
                 <td>
                   {currencyFormatter.format(
                     tableData.summaryCashflow[0].postFinanceCashflow /
-                      currentDashboard.dwellings
+                      currentDashboard.values.dwellings
                   )}
                 </td>
               </tr>
@@ -569,7 +569,7 @@ const DeveloperDashboard = ({
 
 const mapStateToProps = (state) => {
   return {
-    currentDashboard: state.dashboards.currentDashboard.values,
+    currentDashboard: state.dashboards.currentDashboard.data,
     preSave: state.dashboards.currentDashboard.preSave,
     isFetching: state.dashboards.isFetching,
   };

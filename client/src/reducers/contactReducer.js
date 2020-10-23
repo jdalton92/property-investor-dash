@@ -1,4 +1,6 @@
 import contactService from "../services/contact";
+import { v4 as uuid } from "uuid";
+import { CONSTANTS } from "../static/constants";
 
 const initialState = { isFetching: false };
 
@@ -26,8 +28,9 @@ export const setMessage = (values) => {
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
+          id: uuid(),
           message: response.message,
-          type: "success",
+          type: CONSTANTS.NOTIFICATION.SUCCES,
         },
       });
     } catch (e) {
@@ -38,8 +41,9 @@ export const setMessage = (values) => {
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
+          id: uuid(),
           message: e.response.data.error,
-          type: "danger",
+          type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });
     }

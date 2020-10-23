@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { Form, Field } from "react-final-form";
 import { setModal } from "../../reducers/navigationReducer";
 import {
   saveDashboard,
   updateDashboard,
+  getDashboards,
 } from "../../reducers/dashboardReducer";
-import { setNotification } from "../../reducers/notificationReducer";
 import {
   composeValidators,
   required,
@@ -18,6 +17,7 @@ import { formatDate } from "../../utils/dashboardHelper";
 import { CONSTANTS } from "../../static/constants";
 import Button from "../Shared/Button";
 import { Icon } from "../Shared/Icon";
+import Loader from "../Shared/Loader";
 import CloseIcon from "../../styles/svg/close.svg";
 import SaveIcon from "../../styles/svg/save.svg";
 import OverwriteIcon from "../../styles/svg/overwrite.svg";
@@ -26,23 +26,20 @@ const SaveDashboardModal = ({
   isFetching,
   currentDashboard,
   savedDashboards,
-  user,
   setModal,
-  setNotification,
   saveDashboard,
   updateDashboard,
+  getDashboards,
 }) => {
   const [saveNew, setSaveNew] = useState(true);
   const [selectedDashboard, setSelectedDashboard] = useState("");
-  const history = useHistory();
+
+  useEffect(() => {
+    getDashboards();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSave = async (saveData) => {
-    if (!user.data.username) {
-      setModal(CONSTANTS.MODALS.SAVEDASHBOARD, false);
-      setNotification("Please login to save dashboard", "danger");
-      return;
-    }
-
     const dashObject = {
       values: currentDashboard,
       ...saveData,
@@ -50,7 +47,6 @@ const SaveDashboardModal = ({
 
     await saveDashboard(dashObject);
     setModal(CONSTANTS.MODALS.SAVEDASHBOARD, false);
-    setNotification(`${saveData.description} saved`, "success");
   };
 
   const handleOverwrite = async (id) => {
@@ -60,10 +56,9 @@ const SaveDashboardModal = ({
     dashboard.data = currentDashboard;
     await updateDashboard(dashboard);
     setModal(CONSTANTS.MODALS.SAVEDASHBOARD, false);
-    setNotification(`${dashboard.description} updated`, "success");
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = () => {
     // React Final Form handles preventDefault()
     setModal(CONSTANTS.MODALS.SAVEDASHBOARD, false);
   };
@@ -81,7 +76,7 @@ const SaveDashboardModal = ({
       <h2 className="f20 bold mb16">Save Dashboard</h2>
       <div className="flex-row">
         <button
-          type="submit"
+          type="button"
           className={`save-opt button-transp-s rt pl16 pr16 flex-row align-c justify-c jump ${
             saveNew ? "active" : ""
           }`}
@@ -97,7 +92,7 @@ const SaveDashboardModal = ({
           <span className="ml8 f16 bold">Save New</span>
         </button>
         <button
-          type="submit"
+          type="button"
           className={`save-opt button-transp-s rt pl16 pr16 flex-row align-c justify-c jump ${
             saveNew ? "" : "active"
           }`}
@@ -113,7 +108,8 @@ const SaveDashboardModal = ({
           <span className="ml8 f16 bold">Overwrite Existing</span>
         </button>
       </div>
-      {saveNew && (
+      {isFetching && <Loader />}
+      {!isFetching && saveNew && (
         <Form
           onSubmit={handleSave}
           render={({ handleSubmit, form }) => (
@@ -188,7 +184,10 @@ const SaveDashboardModal = ({
           )}
         />
       )}
-      {!saveNew && (
+      {!isFetching && !saveNew && savedDashboards.length === 0 && (
+        <div className="mt20 f16">No saved dashboards...</div>
+      )}
+      {!isFetching && !saveNew && savedDashboards.length > 0 && (
         <Form
           onSubmit={handleOverwrite}
           render={({ handleSubmit, form, values }) => (
@@ -260,6 +259,7 @@ const SaveDashboardModal = ({
               </Field>
               <div className="form-buttons">
                 <button
+                  disabled={selectedDashboard === ""}
                   type="submit"
                   className="form-button-p bs-3 font-white mt12 pt8 pb8"
                 >
@@ -280,8 +280,6 @@ const mapStateToProps = (state) => {
     currentDashboard: state.dashboards.currentDashboard.values,
     savedDashboards: state.dashboards.savedDashboards,
     saveDashboardModal: state.navigation.modal.saveDashboard,
-    user: state.user,
-    requestSuceed: state.navigation.requestSuceed,
   };
 };
 
@@ -289,7 +287,7 @@ const mapDispatchToProps = {
   setModal,
   saveDashboard,
   updateDashboard,
-  setNotification,
+  getDashboards,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SaveDashboardModal);

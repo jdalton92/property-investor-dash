@@ -32,7 +32,7 @@ const DeveloperForm = ({
   }, [id]);
 
   const onSubmit = (values) => {
-    testDashboard(values);
+    testDashboard({ ...values, type: "developer" });
     history.push("/developer/dash");
   };
 
@@ -40,7 +40,7 @@ const DeveloperForm = ({
     return <Loader />;
   } else {
     // const initialValues =
-    //   preSave || id ? currentDashboard : {overPayments: [{}]};
+    //   preSave || id ? currentDashboard : { overPayments: [{}] };
 
     const initialValues = {
       acquisitionPrice: 100000,
@@ -346,7 +346,11 @@ const DeveloperForm = ({
                       </label>
                       <Tooltip message={developerTooltip.loanType.message} />
                     </div>
-                    <Field name="loanType" validate={required}>
+                    <Field
+                      name="loanType"
+                      component="select"
+                      validate={required}
+                    >
                       {({ input, meta }) => (
                         <div className="relative mb20">
                           <select

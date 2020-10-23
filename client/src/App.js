@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { initUser } from "./reducers/userReducer";
-import { getDashboards } from "./reducers/dashboardReducer";
 import { CONSTANTS } from "./static/constants";
 
 // Shared Components/Utils
@@ -31,13 +30,13 @@ import OccupierDashboard from "./components/Dashboards/OccupierDashboard";
 import InvestorDashboard from "./components/Dashboards/InvestorDashboard";
 import DeveloperDashboard from "./components/Dashboards/DeveloperDashboard";
 import SaveDashboardModal from "./components/Dashboards/SaveDashboardModal";
+import SavedDashboards from "./components/SavedDashboards";
 import NotFound from "./components/NotFound";
 
 import "./styles/main.scss";
 
 const App = ({
   initUser,
-  getDashboards,
   isUserFetching,
   overlay,
   user,
@@ -45,7 +44,6 @@ const App = ({
 }) => {
   useEffect(() => {
     initUser();
-    getDashboards();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -65,11 +63,11 @@ const App = ({
               <Switch>
                 <Route path="/login" render={() => <Login />} />
                 <CustomRoute path="/settings" render={() => <Settings />} />
-                {/* <Route path="/create-user" render={() => <CreateUser />} />
                 <CustomRoute
                   path="/saved-dashboards"
                   render={() => <SavedDashboards />}
                 />
+                {/* <Route path="/create-user" render={() => <CreateUser />} />
                 <ScrollToTopControlller /> */}
                 <Route path="/contact" render={() => <Contact />} />
                 <Route
@@ -170,7 +168,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   initUser,
-  getDashboards,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -9,7 +9,7 @@ import TickIcon from "../../../styles/svg/tick.svg";
 import ErrorIcon from "../../../styles/svg/error.svg";
 import CloseIcon from "../../../styles/svg/close.svg";
 
-const NotificationAlert = ({ notification, clearNotification }) => {
+const NotificationAlert = ({ notification, clearNotification, key }) => {
   const handleCloseNotification = (e) => {
     e.preventDefault();
     clearNotification(notification.id);
@@ -42,7 +42,10 @@ const NotificationAlert = ({ notification, clearNotification }) => {
   };
 
   return (
-    <div className="notification p8 ml8 mr8 mb8 fade-in flex-row align-c relative bs-2 jump r bs-3">
+    <div
+      key={key}
+      className="notification p8 ml8 mr8 mb8 fade-in flex-row align-c relative bs-2 jump r bs-3"
+    >
       <Icon url={iconUrl} color={"white"} hover={false} active={false} />
       <div className="w100 ml8">
         <span className={`${notificationType} bold`}>

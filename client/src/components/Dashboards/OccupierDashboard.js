@@ -49,10 +49,10 @@ const OccupierDashboard = ({
   const isEmpty = (obj) =>
     Object.keys(obj).length === 0 && obj.constructor === Object;
 
-  if (isFetching) {
+  if (isFetching || (isEmpty(currentDashboard.values) && id)) {
     return <Loader />;
   } else {
-    if (isEmpty(currentDashboard)) {
+    if (isEmpty(currentDashboard.values)) {
       history.push("/owner-occupier/edit");
     }
     return (
@@ -98,7 +98,7 @@ const OccupierDashboard = ({
 
 const mapStateToProps = (state) => {
   return {
-    currentDashboard: state.dashboards.currentDashboard.values,
+    currentDashboard: state.dashboards.currentDashboard.data,
     preSave: state.dashboards.currentDashboard.preSave,
     isFetching: state.dashboards.isFetching,
   };

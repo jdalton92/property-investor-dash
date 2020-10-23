@@ -23,7 +23,7 @@ const OwnerOccupierInvestorDashboard = ({ currentDashboard }) => {
   const [showCashflow, setShowCashflow] = useState(true);
 
   const message = occupierInvestorTooltip.cashflowAfterFunding.message;
-  const rawData = occupierInvestorCalculation(currentDashboard);
+  const rawData = occupierInvestorCalculation(currentDashboard.values);
   const chartData = cumulativeChartParse(rawData);
   const tableData = tableParse(rawData);
   const cardData = cardParse(rawData);
@@ -234,7 +234,7 @@ const OwnerOccupierInvestorDashboard = ({ currentDashboard }) => {
 
 const mapStateToProps = (state) => {
   return {
-    currentDashboard: state.dashboards.currentDashboard.values,
+    currentDashboard: state.dashboards.currentDashboard.data,
     cashflowTable: state.navigation.cashflowTable,
   };
 };
