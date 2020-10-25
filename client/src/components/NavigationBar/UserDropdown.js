@@ -7,6 +7,7 @@ import { logoutUser } from "../../reducers/userReducer";
 import Button from "../Shared/Button";
 import SettingsIcon from "../../styles/svg/settings.svg";
 import LogoutIcon from "../../styles/svg/logout.svg";
+import DashboardIcon from "../../styles/svg/dashboard.svg";
 
 const UserDropdown = ({ showDropdown, setDropdown, logoutUser, username }) => {
   const history = useHistory();
@@ -28,6 +29,14 @@ const UserDropdown = ({ showDropdown, setDropdown, logoutUser, username }) => {
       {showDropdown ? (
         <div className="user-dropdown flex-col pt8 pb8 fade-in r bs-3">
           <span className="bold ml8 f16">{username}</span>
+          <Button
+            extraClass={"button-transp-p align-c"}
+            captionClass={"ml8"}
+            caption={"saved dashboards"}
+            onClick={() => handleLink("/saved-dashboards")}
+            iconUrl={DashboardIcon}
+            iconColor={"black"}
+          />
           <Button
             extraClass={"button-transp-p align-c"}
             captionClass={"ml8"}

@@ -3,24 +3,41 @@ import { connect } from "react-redux";
 import { setRightSidebar } from "../../reducers/navigationReducer";
 import Button from "../Shared/Button";
 import CloseIcon from "../../styles/svg/close.svg";
+import MenuContainer from "./MenuContainer";
+
+import QuestionIcon from "../../styles/svg/question.svg";
+import DashboardIcon from "../../styles/svg/dashboard.svg";
+import ContactIcon from "../../styles/svg/email.svg";
+import BookIcon from "../../styles/svg/book.svg";
 
 const RightMenu = ({ rightSidebarOpen, setRightSidebar }) => {
-  let x;
-  let y = [];
-
-  for (x = 0; x < 100; x++) {
-    y = [...y, 1];
-  }
-
   const handleRightMenuClick = (e) => {
     e.preventDefault();
     setRightSidebar(!rightSidebarOpen);
   };
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    setRightSidebar(false);
-  };
+  const companyMenuItems = [
+    {
+      title: "About",
+      link: { url: "/about", internal: true },
+      icon: QuestionIcon,
+    },
+    {
+      title: "Calculator Types",
+      link: { url: "/calculator-types", internal: true },
+      icon: DashboardIcon,
+    },
+    {
+      title: "Blog",
+      link: { url: "/blog", internal: true },
+      icon: BookIcon,
+    },
+    {
+      title: "Contact",
+      link: { url: "/contact", internal: true },
+      icon: ContactIcon,
+    },
+  ];
 
   return (
     <div
@@ -40,14 +57,7 @@ const RightMenu = ({ rightSidebarOpen, setRightSidebar }) => {
       </div>
       <div className="right-menu sticky-below-nav flex-col border-p background-p">
         <div className="o-y-scroll o-x-hidden mt8 mb8 flex-col scrollbar">
-          {y.map((c, i) => (
-            <Button
-              onClick={handleClick}
-              extraClass={"button-transp-p"}
-              caption={"test button"}
-              key={i}
-            />
-          ))}
+          <MenuContainer title={"Company"} menuItems={companyMenuItems} />
         </div>
       </div>
     </div>

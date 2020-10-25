@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { setLeftSidebar, setRightSidebar } from "../reducers/navigationReducer";
+import {
+  setLeftSidebar,
+  setRightSidebar,
+} from "../../reducers/navigationReducer";
 
 const ScrollToTopControlller = ({ setLeftSidebar, setRightSidebar }) => {
   const history = useHistory();

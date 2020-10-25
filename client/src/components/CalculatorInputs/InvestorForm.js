@@ -36,7 +36,7 @@ const InvestorForm = ({
     return <Loader />;
   } else {
     // const initialValues =
-    //   preSave || id ? currentDashboard : {overPayments: [{}]};
+    //   preSave || id ? currentDashboard.values : {overPayments: [{}]};
 
     const initialValues = {
       housePrice: 1000000,
@@ -44,7 +44,7 @@ const InvestorForm = ({
       loanType: "principalAndInterest",
       interestRate: 3.5,
       homeloanTerm: 30,
-      overPayments: [{}],
+      // overPayments: [{}],
       investmentPeriod: 15,
       sellingCosts: 3,
       capitalGrowth: 3.5,
@@ -73,7 +73,7 @@ const InvestorForm = ({
 
 const mapStateToProps = (state) => {
   return {
-    currentDashboard: state.dashboards.currentDashboard.values,
+    currentDashboard: state.dashboards.currentDashboard.data,
     preSave: state.dashboards.currentDashboard.preSave,
     isFetching: state.dashboards.isFetching,
   };

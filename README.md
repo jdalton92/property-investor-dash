@@ -23,10 +23,10 @@ Simple open source tool for calculating your return for property investments
 1. Clone app, and run frontend
 
 ```sh
-git clone https://github.com/jdalton92/property-investor-dash.git
-cd client
-npm install
-npm start
+$ git clone https://github.com/jdalton92/property-investor-dash.git
+$ cd client
+$ npm install
+$ npm start
 ```
 
 2. **Optional:** Integrate Backend to allow user creation, login, save dashboard, and contact form.
@@ -52,9 +52,9 @@ DOMAIN=<your_mailgun_domain>
 Then navidate to the server directory and install packages/run the backend
 
 ```sh
-cd server
-npm install
-npm run watch
+$ cd server
+$ npm install
+$ npm run watch
 ```
 
 ## Built with

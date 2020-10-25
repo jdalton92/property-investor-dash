@@ -40,7 +40,7 @@ const DeveloperForm = ({
     return <Loader />;
   } else {
     // const initialValues =
-    //   preSave || id ? currentDashboard : { overPayments: [{}] };
+    //   preSave || id ? currentDashboard.values : { overPayments: [{}] };
 
     const initialValues = {
       acquisitionPrice: 100000,
@@ -350,16 +350,16 @@ const DeveloperForm = ({
                       name="loanType"
                       component="select"
                       validate={required}
+                      defaultValue=""
                     >
                       {({ input, meta }) => (
                         <div className="relative mb20">
                           <select
                             className="form-input select w100 bs-1"
                             id="developer-loantype"
-                            name="loanType"
-                            defaultValue={"default"}
+                            {...input}
                           >
-                            <option value="default" disabled hidden>
+                            <option value="" disabled hidden>
                               Repayment Type
                             </option>
                             <option value="interestOnly">Interest Only</option>
@@ -418,7 +418,7 @@ const DeveloperForm = ({
 
 const mapStateToProps = (state) => {
   return {
-    currentDashboard: state.dashboards.currentDashboard.values,
+    currentDashboard: state.dashboards.currentDashboard.data,
     preSave: state.dashboards.currentDashboard.preSave,
     isFetching: state.dashboards.isFetching,
   };

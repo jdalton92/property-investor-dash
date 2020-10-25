@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Form, Field } from "react-final-form";
 import { setModal } from "../../reducers/navigationReducer";
 import {
   saveDashboard,
   updateDashboard,
-  getDashboards,
 } from "../../reducers/dashboardReducer";
 import {
   composeValidators,
@@ -29,15 +28,9 @@ const SaveDashboardModal = ({
   setModal,
   saveDashboard,
   updateDashboard,
-  getDashboards,
 }) => {
   const [saveNew, setSaveNew] = useState(true);
   const [selectedDashboard, setSelectedDashboard] = useState("");
-
-  useEffect(() => {
-    getDashboards();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const handleSave = async (saveData) => {
     const dashObject = {
@@ -233,7 +226,7 @@ const SaveDashboardModal = ({
                                   : setSelectedDashboard(d._id)
                               }
                               className={`${
-                                d._id === selectedDashboard ? "selected" : null
+                                d._id === selectedDashboard ? "selected" : ""
                               }`}
                             >
                               <td className="h768">{i + 1}</td>
@@ -287,7 +280,6 @@ const mapDispatchToProps = {
   setModal,
   saveDashboard,
   updateDashboard,
-  getDashboards,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SaveDashboardModal);

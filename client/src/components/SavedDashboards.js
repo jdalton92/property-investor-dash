@@ -36,59 +36,61 @@ const SavedDashboards = ({
       <>
         <h1 className="f24 bold mt16 mb16">Saved Dashboards</h1>
         <div className="r bs-3 bg-1 p20 mb20">
-          <table id="save-overwrite" className="overpayments w100 mb20">
-            <thead>
-              <tr>
-                <th className="h768">Ref</th>
-                <th>Description</th>
-                <th className="h768">Type</th>
-                <th>Created</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {savedDashboards.map((d, i) => {
-                let baseUrl;
-                let type;
-                if (d.values.type === "developer") {
-                  baseUrl = "developer/dash";
-                  type = "Developer";
-                } else if (d.values?.investor) {
-                  baseUrl = "investor/dash";
-                  type = "Investor";
-                } else {
-                  baseUrl = "owner-occupier/dash";
-                  type = "Owner-Occupier";
-                }
-                return (
-                  <tr key={i}>
-                    <td className="h768">{i + 1}</td>
-                    <td>{d.description}</td>
-                    <td className="h768">{type}</td>
-                    <td>{formatDate(d.date)}</td>
-                    <td>
-                      <Button
-                        ariaLabel={"Open"}
-                        dataBalloonPos={"left"}
-                        extraClass={"button-p align-c justify-c"}
-                        onClick={() => history.push(`${baseUrl}/${d._id}`)}
-                        iconUrl={OpenIcon}
-                        iconColor={"white"}
-                      />
-                      <Button
-                        ariaLabel={"Delete"}
-                        dataBalloonPos={"left"}
-                        extraClass={"button-p align-c justify-c"}
-                        onClick={() => handleDelete(d)}
-                        iconUrl={CloseIcon}
-                        iconColor={"white"}
-                      />
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          <div className="mh700 o-y-auto">
+            <table id="save-overwrite" className="overpayments w100 mb20">
+              <thead>
+                <tr>
+                  <th className="h768">Ref</th>
+                  <th>Description</th>
+                  <th className="h768">Type</th>
+                  <th>Created</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {savedDashboards.map((d, i) => {
+                  let baseUrl;
+                  let type;
+                  if (d.values.type === "developer") {
+                    baseUrl = "developer/dash";
+                    type = "Developer";
+                  } else if (d.values?.investor) {
+                    baseUrl = "investor/dash";
+                    type = "Investor";
+                  } else {
+                    baseUrl = "owner-occupier/dash";
+                    type = "Owner-Occupier";
+                  }
+                  return (
+                    <tr key={i}>
+                      <td className="h768">{i + 1}</td>
+                      <td>{d.description}</td>
+                      <td className="h768">{type}</td>
+                      <td>{formatDate(d.date)}</td>
+                      <td>
+                        <Button
+                          ariaLabel={"Open"}
+                          dataBalloonPos={"left"}
+                          extraClass={"button-p align-c justify-c mb12"}
+                          onClick={() => history.push(`${baseUrl}/${d._id}`)}
+                          iconUrl={OpenIcon}
+                          iconColor={"white"}
+                        />
+                        <Button
+                          ariaLabel={"Delete"}
+                          dataBalloonPos={"left"}
+                          extraClass={"button-p align-c justify-c"}
+                          onClick={() => handleDelete(d)}
+                          iconUrl={CloseIcon}
+                          iconColor={"white"}
+                        />
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
       </>
     );

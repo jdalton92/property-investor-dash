@@ -213,16 +213,20 @@ const OwnerOccupierInvestorInputs = ({ initialValues, investor, onSubmit }) => {
                       message={occupierInvestorTooltip.loanType.message}
                     />
                   </div>
-                  <Field name="loanType" validate={required}>
+                  <Field
+                    name="loanType"
+                    component="select"
+                    validate={required}
+                    defaultValue=""
+                  >
                     {({ input, meta }) => (
                       <div className="relative mb20">
                         <select
                           className="form-input select w100 bs-1"
                           id="owneroccupier-loantype"
-                          name="loanType"
-                          defaultValue={"default"}
+                          {...input}
                         >
-                          <option value="default" disabled hidden>
+                          <option value="" disabled hidden>
                             Repayment Type
                           </option>
                           <option value="interestOnly">Interest Only</option>
