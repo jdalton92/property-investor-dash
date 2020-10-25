@@ -20,7 +20,7 @@ Simple open source tool for calculating your return for property investments
 
 ## Instructions
 
-1. Clone app, and run frontend
+1. Clone app, install dependencies, and run frontend
 
 ```sh
 $ git clone https://github.com/jdalton92/property-investor-dash.git
@@ -49,7 +49,7 @@ API_KEY=<your_mailgun_api_key>
 DOMAIN=<your_mailgun_domain>
 ```
 
-Then navidate to the server directory and install packages/run the backend
+Then navidate to the server directory and install dependencies, and run the backend
 
 ```sh
 $ cd server
