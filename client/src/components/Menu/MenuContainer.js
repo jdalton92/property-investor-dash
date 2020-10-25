@@ -37,18 +37,20 @@ const MenuContainer = ({ title, menuItems, setLeftSidebar }) => {
       </div>
       <div className="flex-col pl24 w100">
         {expand &&
-          menuItems.map((item, index) => (
-            <Button
-              key={index}
-              extraClass={"button-transp-p align-c"}
-              iconColor={"black"}
-              iconUrl={item.icon}
-              caption={item.title}
-              captionClass={"ml8"}
-              iconSize={"24px"}
-              onClick={() => handleLink(item.link)}
-            />
-          ))}
+          menuItems.map((item, index) => {
+            return (
+              <Button
+                key={index}
+                extraClass={"button-transp-p align-c"}
+                iconColor={"black"}
+                iconUrl={item.icon}
+                caption={item.title}
+                captionClass={"ml8"}
+                iconSize={"24px"}
+                onClick={() => handleLink(item.link)}
+              />
+            );
+          })}
       </div>
     </div>
   );

@@ -15,7 +15,7 @@ dashboardRouter.get(
 
       const dashboards = await Dashboard.find({
         user: user._id,
-      }).populate("user", { username: 1, email: 1 });
+      }).populate("user", { email: 1 });
 
       response.status(200).json(dashboards);
     } catch (e) {
@@ -31,7 +31,7 @@ dashboardRouter.get(
     try {
       const dashboard = await Dashboard.findById(
         request.params.id
-      ).populate("user", { username: 1, email: 1 });
+      ).populate("user", { email: 1 });
 
       response.status(200).json(dashboard);
     } catch (e) {
@@ -68,7 +68,6 @@ dashboardRouter.post(
       await user.save();
 
       const result = await Dashboard.findById(dashboard._id).populate("user", {
-        username: 1,
         name: 1,
       });
 

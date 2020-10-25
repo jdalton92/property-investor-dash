@@ -30,7 +30,7 @@ const App = ({
 
   if (isUserFetching) {
     return <Loader />;
-  } else if (user.data?.username) {
+  } else if (user.data?.email) {
     return (
       <div className="w100 fade-in">
         <Router>

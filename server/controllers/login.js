@@ -27,7 +27,6 @@ loginRouter.post("/", async (request, response, next) => {
     response.status(200).send({
       token,
       email: user.email,
-      username: user.username,
       messagesRead: user.messagesRead,
       id: user._id,
     });

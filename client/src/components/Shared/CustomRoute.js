@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
 
 const CustomRoute = (props) => {
-  if (props.user.data.username !== undefined) {
+  if (props.user.data.email !== undefined) {
     return <Route {...props} />;
   }
   return <Redirect to="/login" />;

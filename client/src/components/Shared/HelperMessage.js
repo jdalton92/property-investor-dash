@@ -21,7 +21,7 @@ const HelperMessage = ({
     return null;
   } else {
     return (
-      <div className="r w100 p20 bg-1 bs-2">
+      <div className="helper-message r w100 p20 bg-1 bs-2">
         <div className="flex-row align-c">
           <Icon
             url={MessageIcon}

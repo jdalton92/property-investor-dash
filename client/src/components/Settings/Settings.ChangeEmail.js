@@ -11,7 +11,6 @@ import {
 
 const ChangeEmail = ({ user, updateUser }) => {
   const userDetails = {
-    username: user.data.username,
     oldEmail: user.data.email,
     id: user.data.id,
   };

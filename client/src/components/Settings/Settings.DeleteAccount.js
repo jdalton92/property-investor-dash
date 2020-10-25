@@ -10,13 +10,12 @@ import {
 
 const DeleteAccount = ({ user, deleteUser }) => {
   const userDetails = {
-    username: user.data.username,
     oldEmail: user.data.email,
     id: user.data.id,
   };
 
   const handleSubmit = async ({ password }) => {
-    const confirm = window.confirm(`Delete ${userDetails.username}?`);
+    const confirm = window.confirm(`Delete ${userDetails.email}?`);
     if (confirm) {
       await deleteUser(password, user.id);
     }

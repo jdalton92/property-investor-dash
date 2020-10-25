@@ -14,6 +14,7 @@ const Button = ({
   onClick,
   ariaLabel,
   dataBalloonPos,
+  active = false,
 }) => {
   return (
     <button

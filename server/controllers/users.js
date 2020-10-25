@@ -6,26 +6,19 @@ const User = require("../models/user");
 
 usersRouter.post("/", async (request, response, next) => {
   try {
-    const { username, password, email, checkPassword } = request.body;
+    const { password, email, checkPassword } = request.body;
 
-    const existingUser = await User.find({ email: email });
-    const existingUsername = await User.find({ username: username });
-
-    if (!username || username.length < 3) {
+    if (!email) {
       return response.status(400).send({
-        error: "Username must be longer than 3 characters",
+        error: "Email required",
       });
     }
+
+    const existingUser = await User.find({ email: email });
 
     if (existingUser.length > 0) {
       return response.status(400).send({
         error: "Email already has existing account",
-      });
-    }
-
-    if (existingUsername.length > 0) {
-      return response.status(400).send({
-        error: "Username already in use",
       });
     }
 
@@ -41,17 +34,10 @@ usersRouter.post("/", async (request, response, next) => {
       });
     }
 
-    if (!username || !email) {
-      return response.status(400).send({
-        error: "Username and email required",
-      });
-    }
-
     const saltRounds = 10;
     const passwordHash = await bcrypt.hash(password, saltRounds);
 
     const user = new User({
-      username,
       email,
       passwordHash,
     });
@@ -182,7 +168,6 @@ usersRouter.put(
       response.status(200).send({
         token,
         email: newUser.email,
-        username: newUser.username,
         messagesRead: newUser.messagesRead,
         id: newUser._id,
       });

@@ -5,8 +5,6 @@ import { getDashboards } from "../reducers/dashboardReducer";
 
 // import ScrollToTopControlller from "./Shared/ScrollToTopControlller";
 import CustomRoute from "./Shared/CustomRoute";
-
-import Login from "./Login";
 import Contact from "./Contact";
 import PrivacyPolicy from "./PrivacyPolicy";
 import About from "./About";
@@ -32,7 +30,6 @@ const Main = ({ getDashboards }) => {
   return (
     <div className="main p8 w100 border-p">
       <Switch>
-        <Route path="/login" render={() => <Login />} />
         <CustomRoute path="/settings" render={() => <Settings />} />
         <CustomRoute
           path="/saved-dashboards"

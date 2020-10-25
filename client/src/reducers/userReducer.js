@@ -92,14 +92,13 @@ export const demoUser = () => {
   };
 };
 
-export const createUser = ({ username, email, password, checkPassword }) => {
+export const createUser = (email, password, checkPassword) => {
   return async (dispatch) => {
     dispatch({
       type: "USER_REQUEST",
     });
     try {
       await userService.create({
-        username,
         email,
         password,
         checkPassword,
@@ -126,7 +125,7 @@ export const createUser = ({ username, email, password, checkPassword }) => {
         type: "SET_NOTIFICATION",
         content: {
           id: uuid(),
-          message: `${username} created`,
+          message: `Account created`,
           type: CONSTANTS.NOTIFICATION.SUCCESS,
         },
       });
@@ -187,7 +186,7 @@ export const loginUser = (email, password) => {
         type: "SET_NOTIFICATION",
         content: {
           id: uuid(),
-          message: "wrong username or password",
+          message: "wrong email or password",
           type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });

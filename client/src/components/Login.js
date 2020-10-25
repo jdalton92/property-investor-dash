@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Form, Field } from "react-final-form";
 import { useHistory } from "react-router-dom";
-import { loginUser, demoUser } from "../reducers/userReducer";
+import { loginUser, createUser, demoUser } from "../reducers/userReducer";
 import { setNotification } from "../reducers/notificationReducer";
 import { setTab } from "../reducers/navigationReducer";
 import {
@@ -16,11 +16,19 @@ import { Icon } from "./Shared/Icon";
 import UserIcon from "../styles/svg/user.svg";
 import CreateUserIcon from "../styles/svg/create-user.svg";
 
-const Login = ({ loginUser, user, demoUser, setNotification, setTab, tab }) => {
+const Login = ({
+  loginUser,
+  createUser,
+  user,
+  demoUser,
+  setNotification,
+  setTab,
+  tab,
+}) => {
   const history = useHistory();
 
   useEffect(() => {
-    if (user.data.username) {
+    if (user.data.email) {
       history.push("/");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -34,8 +42,8 @@ const Login = ({ loginUser, user, demoUser, setNotification, setTab, tab }) => {
     setNotification("Forgot password clicked", CONSTANTS.NOTIFICATION.MESSAGE);
   };
 
-  const handleCreateUser = () => {
-    setNotification("Create account clicked", CONSTANTS.NOTIFICATION.MESSAGE);
+  const handleCreateUser = async ({ email, password, checkPassword }) => {
+    await createUser(email, password, checkPassword);
   };
 
   const handleDemo = () => {
@@ -46,7 +54,7 @@ const Login = ({ loginUser, user, demoUser, setNotification, setTab, tab }) => {
     <div className="vh100 w100 fade-in relative bg-blue-1">
       <div className="center login">
         <div className="h100 r p24 m8 bs-3 bg-1">
-          <h1 className="bold f24 mb40 mt32 text-center">
+          <h1 className="bold f24 mb16 mt16 text-center">
             PropertyInvestorDash
           </h1>
           <div className="flex-row mb16">
@@ -260,6 +268,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   loginUser,
+  createUser,
   demoUser,
   setNotification,
   setTab,
