@@ -2,7 +2,7 @@
 
 Simple open source tool for calculating your return for property investments
 
-[INSERT IMAGE](https://propertyinvestordash.com/)
+// INSERT IMAGE
 
 ## Prototype
 
