@@ -1,7 +1,21 @@
 .login {
-  height: 450px;
+  min-height: 450px;
   width: 100%;
   max-width: 500px;
+}
+
+.tab-opt {
+  width: 50%;
+  height: 65px;
+  padding: 20px 8px !important;
+}
+
+.tab-opt span {
+  text-align: center;
+}
+
+.tab-opt.active {
+  border-bottom: solid 1px black;
 }
 
 @media screen and (max-width: 500px) {

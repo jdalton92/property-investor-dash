@@ -1,3 +1,4 @@
+import { v4 as uuid } from "uuid";
 import loginService from "../services/login";
 import { CONSTANTS } from "../static/constants";
 import { setToken, destroyToken } from "../utils/tokenHelper";
@@ -51,8 +52,9 @@ export const initUser = () => {
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
+          id: uuid(),
           message: e.response.data.error,
-          type: "error",
+          type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });
     }
@@ -81,8 +83,9 @@ export const demoUser = () => {
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
+          id: uuid(),
           message: e,
-          type: "error",
+          type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });
     }
@@ -122,8 +125,9 @@ export const createUser = ({ username, email, password, checkPassword }) => {
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
+          id: uuid(),
           message: `${username} created`,
-          type: "success",
+          type: CONSTANTS.NOTIFICATION.SUCCESS,
         },
       });
     } catch (e) {
@@ -133,8 +137,9 @@ export const createUser = ({ username, email, password, checkPassword }) => {
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
+          id: uuid(),
           message: e.response.data.error,
-          type: "danger",
+          type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });
     }
@@ -181,8 +186,9 @@ export const loginUser = (email, password) => {
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
+          id: uuid(),
           message: "wrong username or password",
-          type: "error",
+          type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });
     }
@@ -224,8 +230,9 @@ export const updateUser = (
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
+          id: uuid(),
           message: e.response.data.error,
-          type: "error",
+          type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });
     }
@@ -253,8 +260,9 @@ export const deleteUser = (password, id) => {
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
+          id: uuid(),
           message: e.response.data.error,
-          type: "error",
+          type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });
     }

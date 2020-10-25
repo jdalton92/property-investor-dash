@@ -474,11 +474,11 @@ const DeveloperDashboard = ({
                   <th className="dash-desktop">TDC</th>
                   <th className="dash-desktop">NOI</th>
                   <th className="dash-desktop">Net Sale</th>
-                  <th className="dash-mobile">Funding Costs</th>
+                  <th className="dash-desktop">Funding Costs</th>
                   <th className="dash-mobile">Total Income</th>
                   <th className="dash-mobile">Total Costs</th>
                   <th className="dash-xs-mobile">Debt Source</th>
-                  <th>Net Annual Cashflow</th>
+                  <th className="dash-desktop">Net Annual Cashflow</th>
                 </tr>
               </thead>
               <tbody>
@@ -494,7 +494,7 @@ const DeveloperDashboard = ({
                     <td className="dash-desktop">
                       {currencyFormatter.format(c.NOI)}
                     </td>
-                    <td className="dash-mobile">
+                    <td className="dash-desktop">
                       {currencyFormatter.format(c.netSale)}
                     </td>
                     <td className="dash-desktop">
@@ -509,7 +509,7 @@ const DeveloperDashboard = ({
                     <td className="dash-xs-mobile">
                       {currencyFormatter.format(c.debtSource)}
                     </td>
-                    <td>{currencyFormatter.format(c.postFinanceCashflow)}</td>
+                    <td className="dash-desktop">{currencyFormatter.format(c.postFinanceCashflow)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -532,7 +532,7 @@ const DeveloperDashboard = ({
                       tableData.summaryCashflow[0].netSale
                     )}
                   </td>
-                  <td className="dash-mobile">
+                  <td className="dash-desktop">
                     {currencyFormatter.format(
                       tableData.summaryCashflow[0].loanCosts
                     )}
@@ -552,7 +552,7 @@ const DeveloperDashboard = ({
                       tableData.summaryCashflow[0].debtSource
                     )}
                   </td>
-                  <td>
+                  <td className="dash-desktop">
                     {currencyFormatter.format(
                       tableData.summaryCashflow[0].postFinanceCashflow
                     )}

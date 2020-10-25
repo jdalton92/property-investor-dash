@@ -4,6 +4,7 @@ import { Form, Field } from "react-final-form";
 import { useHistory } from "react-router-dom";
 import { loginUser, demoUser } from "../reducers/userReducer";
 import { setNotification } from "../reducers/notificationReducer";
+import { setTab } from "../reducers/navigationReducer";
 import {
   required,
   minLength,
@@ -11,8 +12,11 @@ import {
   composeValidators,
 } from "../utils/formValidatorHelper";
 import { CONSTANTS } from "../static/constants";
+import { Icon } from "./Shared/Icon";
+import UserIcon from "../styles/svg/user.svg";
+import CreateUserIcon from "../styles/svg/create-user.svg";
 
-const Login = ({ loginUser, user, demoUser, setNotification }) => {
+const Login = ({ loginUser, user, demoUser, setNotification, setTab, tab }) => {
   const history = useHistory();
 
   useEffect(() => {
@@ -22,7 +26,7 @@ const Login = ({ loginUser, user, demoUser, setNotification }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onSubmit = async ({ email, password }) => {
+  const handleLogin = async ({ email, password }) => {
     await loginUser(email, password);
   };
 
@@ -30,7 +34,7 @@ const Login = ({ loginUser, user, demoUser, setNotification }) => {
     setNotification("Forgot password clicked", CONSTANTS.NOTIFICATION.MESSAGE);
   };
 
-  const handleCreateAccount = () => {
+  const handleCreateUser = () => {
     setNotification("Create account clicked", CONSTANTS.NOTIFICATION.MESSAGE);
   };
 
@@ -42,71 +46,199 @@ const Login = ({ loginUser, user, demoUser, setNotification }) => {
     <div className="vh100 w100 fade-in relative bg-blue-1">
       <div className="center login">
         <div className="h100 r p24 m8 bs-3 bg-1">
-          <h1 className="bold f24 mb56 mt32 text-center">
+          <h1 className="bold f24 mb40 mt32 text-center">
             PropertyInvestorDash
           </h1>
-          <Form
-            onSubmit={onSubmit}
-            render={({ handleSubmit }) => (
-              <form onSubmit={handleSubmit}>
-                <h2 className="f16 mb8">Email</h2>
-                <Field
-                  name="email"
-                  validate={composeValidators(isEmail, required)}
-                >
-                  {({ input, meta }) => (
-                    <div className="relative">
-                      <input
-                        className="form-input mb28 w100"
-                        placeholder="example@email.com"
-                        type="email"
-                        {...input}
-                        required
-                      />
-                      {meta.error && meta.touched && (
-                        <div className="form-error">{meta.error}</div>
-                      )}
-                    </div>
-                  )}
-                </Field>
-                <h2 className="f16 mb8">Password</h2>
-                <Field
-                  name="password"
-                  validate={composeValidators(required, minLength(3))}
-                >
-                  {({ input, meta }) => (
-                    <div className="relative">
-                      <input
-                        className="form-input mb32 w100"
-                        placeholder="Password"
-                        type="password"
-                        {...input}
-                        required
-                      />
-                      {meta.error && meta.touched && (
-                        <span className="form-error">{meta.error}</span>
-                      )}
-                    </div>
-                  )}
-                </Field>
-                <button
-                  className="form-button-p font-white bs-2 w100 pt8 pb8 r"
-                  type="submit"
-                >
-                  Login
-                </button>
-              </form>
-            )}
-          />
+          <div className="flex-row mb16">
+            <button
+              type="button"
+              className={`tab-opt button-transp-s rt pl16 pr16 flex-row align-c justify-c jump ${
+                tab === CONSTANTS.TABS.LOGIN.LOGIN ? "active" : ""
+              }`}
+              onClick={() => setTab("login", CONSTANTS.TABS.LOGIN.LOGIN)}
+            >
+              <Icon
+                size={"20px"}
+                url={UserIcon}
+                color={"black"}
+                hover={false}
+                active={false}
+              />
+              <span className="ml8 f16 bold">Login</span>
+            </button>
+            <button
+              type="button"
+              className={`tab-opt button-transp-s rt pl16 pr16 flex-row align-c justify-c jump ${
+                tab === CONSTANTS.TABS.LOGIN.CREATEUSER ? "active" : ""
+              }`}
+              onClick={() => setTab("login", CONSTANTS.TABS.LOGIN.CREATEUSER)}
+            >
+              <Icon
+                size={"20px"}
+                url={CreateUserIcon}
+                color={"black"}
+                hover={false}
+                active={false}
+              />
+              <span className="ml8 f16 bold">Create User</span>
+            </button>
+          </div>
+          {tab === CONSTANTS.TABS.LOGIN.LOGIN && (
+            <Form
+              onSubmit={handleLogin}
+              render={({ handleSubmit }) => (
+                <form onSubmit={handleSubmit}>
+                  <label htmlFor="login-email" className="f16 mb8">
+                    Email
+                    <span className="font-red f12 bold ml4">*</span>
+                  </label>
+                  <Field
+                    name="email"
+                    validate={composeValidators(isEmail, required)}
+                  >
+                    {({ input, meta }) => (
+                      <div className="relative mb20">
+                        <input
+                          id="login-email"
+                          className="form-input bs-1 w100"
+                          placeholder="example@email.com"
+                          type="text"
+                          {...input}
+                        />
+                        {meta.error && meta.touched && (
+                          <span className="form-error f10">{meta.error}</span>
+                        )}
+                      </div>
+                    )}
+                  </Field>
+                  <label htmlFor="login-password" className="f16 mb8">
+                    Email
+                    <span className="font-red f12 bold ml4">*</span>
+                  </label>
+                  <Field
+                    name="password"
+                    validate={composeValidators(minLength(3), required)}
+                  >
+                    {({ input, meta }) => (
+                      <div className="relative mb20">
+                        <input
+                          id="login-password"
+                          className="form-input bs-1 w100"
+                          placeholder="Password"
+                          type="password"
+                          {...input}
+                        />
+                        {meta.error && meta.touched && (
+                          <span className="form-error f10">{meta.error}</span>
+                        )}
+                      </div>
+                    )}
+                  </Field>
+                  <button
+                    className="form-button-p font-white bs-2 w100 mt12 pt8 pb8 r"
+                    type="submit"
+                  >
+                    Login
+                  </button>
+                </form>
+              )}
+            />
+          )}
+          {tab === CONSTANTS.TABS.LOGIN.CREATEUSER && (
+            <Form
+              onSubmit={handleCreateUser}
+              validate={(values) => {
+                const errors = {};
+                if (!values.checkPassword) {
+                  errors.checkPassword = "Required";
+                }
+                if (values.password !== values.checkPassword) {
+                  errors.checkPassword = "Passwords must match";
+                }
+                return errors;
+              }}
+              render={({ handleSubmit }) => (
+                <form onSubmit={handleSubmit}>
+                  <label htmlFor="create-email" className="f16 mb8">
+                    Email
+                    <span className="font-red f12 bold ml4">*</span>
+                  </label>
+                  <Field
+                    name="email"
+                    validate={composeValidators(isEmail, required)}
+                  >
+                    {({ input, meta }) => (
+                      <div className="relative mb20">
+                        <input
+                          id="create-email"
+                          className="form-input bs-1 w100"
+                          placeholder="example@email.com"
+                          type="text"
+                          {...input}
+                        />
+                        {meta.error && meta.touched && (
+                          <span className="form-error f10">{meta.error}</span>
+                        )}
+                      </div>
+                    )}
+                  </Field>
+                  <label htmlFor="create-password" className="f16 mb8">
+                    Password
+                    <span className="font-red f12 bold ml4">*</span>
+                  </label>
+                  <Field
+                    name="password"
+                    validate={composeValidators(minLength(3), required)}
+                  >
+                    {({ input, meta }) => (
+                      <div className="relative mb20">
+                        <input
+                          id="create-password"
+                          className="form-input bs-1 w100"
+                          placeholder="Password"
+                          type="password"
+                          {...input}
+                        />
+                        {meta.error && meta.touched && (
+                          <span className="form-error f10">{meta.error}</span>
+                        )}
+                      </div>
+                    )}
+                  </Field>
+                  <label htmlFor="create-confirm" className="f16 mb8">
+                    Confirm Password
+                    <span className="font-red f12 bold ml4">*</span>
+                  </label>
+                  <Field name="checkPassword">
+                    {({ input, meta }) => (
+                      <div className="relative mb20">
+                        <input
+                          id="create-confirm"
+                          className="form-input bs-1 w100"
+                          placeholder="Confirm Password"
+                          type="password"
+                          {...input}
+                        />
+                        {meta.error && meta.touched && (
+                          <span className="form-error f10">{meta.error}</span>
+                        )}
+                      </div>
+                    )}
+                  </Field>
+                  <button
+                    className="form-button-p font-white bs-2 w100 mt12 pt8 pb8 r"
+                    type="submit"
+                  >
+                    Create User
+                  </button>
+                </form>
+              )}
+            />
+          )}
         </div>
         <div className="mb8 ml8 mr8">
           <span className="link font-n1" onClick={handleForgotPassword}>
             Forgot your password?
-          </span>
-        </div>
-        <div className="mb8 ml8 mr8">
-          <span className="link font-n1" onClick={handleCreateAccount}>
-            Create an account
           </span>
         </div>
         <div className="ml8 mr8">
@@ -122,6 +254,7 @@ const Login = ({ loginUser, user, demoUser, setNotification }) => {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
+    tab: state.navigation.tabs.login,
   };
 };
 
@@ -129,6 +262,7 @@ const mapDispatchToProps = {
   loginUser,
   demoUser,
   setNotification,
+  setTab,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

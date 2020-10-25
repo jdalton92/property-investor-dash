@@ -41,7 +41,7 @@ const App = ({
           <div className="w100 flex-row justify-c">
             <LeftMenu />
             <Main />
-            {/* <RightMenu /> */}
+            <RightMenu />
           </div>
         </Router>
       </div>

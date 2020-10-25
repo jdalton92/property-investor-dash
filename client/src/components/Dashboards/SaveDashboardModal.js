@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Form, Field } from "react-final-form";
-import { setModal } from "../../reducers/navigationReducer";
+import { setModal,setTab } from "../../reducers/navigationReducer";
 import {
   saveDashboard,
   updateDashboard,
@@ -28,8 +28,9 @@ const SaveDashboardModal = ({
   setModal,
   saveDashboard,
   updateDashboard,
+  setTab,
+  tab
 }) => {
-  const [saveNew, setSaveNew] = useState(true);
   const [selectedDashboard, setSelectedDashboard] = useState("");
 
   const handleSave = async (saveData) => {
@@ -71,9 +72,9 @@ const SaveDashboardModal = ({
         <button
           type="button"
           className={`save-opt button-transp-s rt pl16 pr16 flex-row align-c justify-c jump ${
-            saveNew ? "active" : ""
+            tab === CONSTANTS.TABS.SAVEDASHBOARD.SAVE ? "active" : ""
           }`}
-          onClick={() => setSaveNew(true)}
+          onClick={() => setTab('saveDashboard', CONSTANTS.TABS.SAVEDASHBOARD.SAVE)}
         >
           <Icon
             size={"20px"}
@@ -87,9 +88,9 @@ const SaveDashboardModal = ({
         <button
           type="button"
           className={`save-opt button-transp-s rt pl16 pr16 flex-row align-c justify-c jump ${
-            saveNew ? "" : "active"
+            tab === CONSTANTS.TABS.SAVEDASHBOARD.OVERWRITE ? "active" : ""
           }`}
-          onClick={() => setSaveNew(false)}
+          onClick={() => setTab('saveDashboard', CONSTANTS.TABS.SAVEDASHBOARD.OVERWRITE)}
         >
           <Icon
             size={"20px"}
@@ -102,7 +103,7 @@ const SaveDashboardModal = ({
         </button>
       </div>
       {isFetching && <Loader />}
-      {!isFetching && saveNew && (
+      {!isFetching && tab === CONSTANTS.TABS.SAVEDASHBOARD.SAVE  && (
         <Form
           onSubmit={handleSave}
           render={({ handleSubmit, form }) => (
@@ -177,10 +178,10 @@ const SaveDashboardModal = ({
           )}
         />
       )}
-      {!isFetching && !saveNew && savedDashboards.length === 0 && (
+      {!isFetching && tab === CONSTANTS.TABS.SAVEDASHBOARD.OVERWRITE && savedDashboards.length === 0 && (
         <div className="mt20 f16">No saved dashboards...</div>
       )}
-      {!isFetching && !saveNew && savedDashboards.length > 0 && (
+      {!isFetching && tab === CONSTANTS.TABS.SAVEDASHBOARD.OVERWRITE && savedDashboards.length > 0 && (
         <Form
           onSubmit={handleOverwrite}
           render={({ handleSubmit, form, values }) => (
@@ -273,11 +274,13 @@ const mapStateToProps = (state) => {
     currentDashboard: state.dashboards.currentDashboard.values,
     savedDashboards: state.dashboards.savedDashboards,
     saveDashboardModal: state.navigation.modal.saveDashboard,
+    tab: state.navigation.tabs.saveDashboard
   };
 };
 
 const mapDispatchToProps = {
   setModal,
+  setTab,
   saveDashboard,
   updateDashboard,
 };

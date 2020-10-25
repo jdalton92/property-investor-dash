@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Icon = styled.div`
   height: ${({ size }) => (size ? `${size}` : `32px`)};
-  width: ${({ size }) => (size ? `${size}` : `32px`)};
+  min-width: ${({ size }) => (size ? `${size}` : `32px`)};
   -webkit-mask: ${({ url }) => `url(${url}) no-repeat center`};
   mask: ${({ url }) => `url(${url}) no-repeat center`};
   background-color: ${({ color }) => color};

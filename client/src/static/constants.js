@@ -33,4 +33,14 @@ export const CONSTANTS = {
     INT: "INT",
     FLOAT: "FLOAT",
   },
+  TABS: {
+    SAVEDASHBOARD: {
+      SAVE: "SAVE",
+      OVERWRITE: "OVERWRITE"
+    },
+    LOGIN: {
+      LOGIN: "LOGIN",
+      CREATEUSER: "CREATEUSER"
+    }
+  }
 };

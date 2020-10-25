@@ -11,6 +11,10 @@ const initialState = {
   dropdown: {
     [CONSTANTS.DROPDOWNS.USERNAME]: false,
   },
+  tabs: {
+    login: CONSTANTS.TABS.LOGIN.LOGIN,
+    saveDashboard: CONSTANTS.TABS.SAVEDASHBOARD.SAVE,
+  },
   overlay: false,
 };
 
@@ -29,12 +33,16 @@ const navigationReducer = (state = initialState, action) => {
       return newState;
     case "SET_MODAL":
       newState = { ...state };
-      newState.modal[action.payload.modalType] = action.payload.status;
-      newState.overlay = action.payload.status;
+      newState.modal[action.payLoad.modalType] = action.payLoad.status;
+      newState.overlay = action.payLoad.status;
       return newState;
     case "SET_DROPDOWN":
       newState = { ...state };
       newState.dropdown[action.dropdown] = !newState.dropdown[action.dropdown];
+      return newState;
+    case "SET_TAB":
+      newState = { ...state };
+      newState.tabs[action.payLoad.type] = action.payLoad.tab;
       return newState;
     default:
       return state;
@@ -63,7 +71,7 @@ export const setModal = (modalType, status) => {
   return (dispatch) => {
     dispatch({
       type: "SET_MODAL",
-      payload: {
+      payLoad: {
         modalType,
         status,
       },
@@ -76,6 +84,18 @@ export const setDropdown = (dropdown) => {
     dispatch({
       type: "SET_DROPDOWN",
       dropdown,
+    });
+  };
+};
+
+export const setTab = (type, tab) => {
+  return (dispatch) => {
+    dispatch({
+      type: "SET_TAB",
+      payLoad: {
+        type,
+        tab
+      },
     });
   };
 };
