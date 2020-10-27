@@ -18,8 +18,8 @@ const About = () => {
         sophisticated and expensive. There are many free online tools to
         estimate mortgage repayments, but these do not provide estimates of your
         total investment, including rental income and sale value.
-        PropertyInvestorDash aims to provide a <i>simple</i> and <i>free</i>{" "}
-        tool for all type of investors
+        PropertyInvestorDash aims to provide a simple and free tool for all type
+        of investors
       </div>
       <h2 className="f20 bold mt16 mb16">How Does PropertyInvestorDash Work</h2>
       <div className="r bs-3 bg-1 p20 mb16">

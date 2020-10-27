@@ -40,7 +40,7 @@ const useOverlayOutsideAlerter = (ref) => {
       });
       store.dispatch({
         type: "SET_MODAL",
-        payload: {
+        payLoad: {
           modalType: CONSTANTS.MODALS.SAVEDASHBOARD,
           status: false,
         },

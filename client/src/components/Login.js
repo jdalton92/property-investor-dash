@@ -15,6 +15,7 @@ import { CONSTANTS } from "../static/constants";
 import { Icon } from "./Shared/Icon";
 import UserIcon from "../styles/svg/user.svg";
 import CreateUserIcon from "../styles/svg/create-user.svg";
+import hero from "../styles/images/hero.jpg";
 
 const Login = ({
   loginUser,
@@ -29,7 +30,7 @@ const Login = ({
 
   useEffect(() => {
     if (user.data.email) {
-      history.push("/");
+      history.push("/saved-dashboards");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -51,12 +52,18 @@ const Login = ({
   };
 
   return (
-    <div className="vh100 w100 fade-in relative bg-blue-1">
-      <div className="center login">
-        <div className="h100 r p24 m8 bs-3 bg-1">
-          <h1 className="bold f24 mb16 mt16 text-center">
-            PropertyInvestorDash
-          </h1>
+    <div className="vh100 w100 fade-in bg-blue-1 flex-row justify-c">
+      <div className="w100 vh100 h1080">
+        <div
+          className="h100 w100 img-cover opacity9"
+          style={{
+            backgroundImage: `url(${hero})`,
+          }}
+        />
+      </div>
+      <div className="login-container flex-col justify-c m8">
+        <div className="login r p20 m8 bs-3 bg-1 mw450 m-auto">
+          <h1 className="bold text-center ts-4">PropertyInvestorDash</h1>
           <div className="flex-row mb16">
             <button
               type="button"
@@ -88,7 +95,7 @@ const Login = ({
                 hover={false}
                 active={false}
               />
-              <span className="ml8 f16 bold">Create User</span>
+              <span className="ml8 f16 bold">Create Account</span>
             </button>
           </div>
           {tab === CONSTANTS.TABS.LOGIN.LOGIN && (
@@ -237,19 +244,19 @@ const Login = ({
                     className="form-button-p font-white bs-2 w100 mt12 pt8 pb8 r"
                     type="submit"
                   >
-                    Create User
+                    Create Account
                   </button>
                 </form>
               )}
             />
           )}
         </div>
-        <div className="mb8 ml8 mr8">
+        <div className="login mw450">
           <span className="link font-n1" onClick={handleForgotPassword}>
             Forgot your password?
           </span>
         </div>
-        <div className="ml8 mr8">
+        <div className="login mw450">
           <span className="link font-n1" onClick={handleDemo}>
             Try a demo account
           </span>

@@ -10,12 +10,12 @@ const MenuContainer = ({ title, menuItems, setLeftSidebar }) => {
   const [expand, setExpand] = useState(true);
   const history = useHistory();
 
-  const handleLink = (link) => {
+  const handleLink = ({ internal, url }) => {
     setLeftSidebar(false);
-    if (link.internal) {
-      history.push(link.url);
+    if (internal) {
+      history.push(url);
     } else {
-      const win = window.open(link, "_blank");
+      const win = window.open(url, "_blank");
       if (win !== null) {
         win.focus();
       }

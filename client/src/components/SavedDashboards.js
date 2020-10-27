@@ -42,6 +42,7 @@ const SavedDashboards = ({
                 <tr>
                   <th className="h768">Ref</th>
                   <th>Description</th>
+                  <th className="h400">Address</th>
                   <th className="h768">Type</th>
                   <th>Created</th>
                   <th>Action</th>
@@ -65,6 +66,7 @@ const SavedDashboards = ({
                     <tr key={i}>
                       <td className="h768">{i + 1}</td>
                       <td>{d.description}</td>
+                      <td className="h400">{d.address}</td>
                       <td className="h768">{type}</td>
                       <td>{formatDate(d.date)}</td>
                       <td>

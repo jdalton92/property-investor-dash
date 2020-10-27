@@ -16,6 +16,10 @@
   z-index: $overlay-z-index;
 }
 
+.bg-0 {
+  background-color: $n0;
+}
+
 .bg-1 {
   background-color: $n1;
 }
@@ -42,6 +46,26 @@
 
 .bg-black {
   background-color: black;
+}
+
+.opacity9 {
+  opacity: 0.9;
+}
+
+.opacity8 {
+  opacity: 0.8;
+}
+
+.opacity7 {
+  opacity: 0.7;
+}
+
+.opacity6 {
+  opacity: 0.6;
+}
+
+.opacity5 {
+  opacity: 0.5;
 }
 
 .f32 {
@@ -305,6 +329,50 @@
   width: 10%;
 }
 
+.mw50 {
+  max-width: 50px;
+}
+
+.mw100 {
+  max-width: 100px;
+}
+
+.mw150 {
+  max-width: 150px;
+}
+
+.mw200 {
+  max-width: 200px;
+}
+
+.mw250 {
+  max-width: 250px;
+}
+
+.mw300 {
+  max-width: 300px;
+}
+
+.mw350 {
+  max-width: 350px;
+}
+
+.mw400 {
+  max-width: 400px;
+}
+
+.mw450 {
+  max-width: 450px;
+}
+
+.mw700 {
+  max-width: 700px;
+}
+
+.mw800 {
+  max-width: 800px;
+}
+
 .h100 {
   height: 100%;
 }
@@ -426,9 +494,10 @@
 }
 
 .img-cover {
-  object-fit: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  object-fit: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
 }
 
 .center {
@@ -853,6 +922,10 @@
   padding: 32px !important;
 }
 
+.p60 {
+  padding: 60px !important;
+}
+
 .bs-1 {
   box-shadow: 0 3px 8px -4px rgba(0, 0, 0, 0.2);
 }
@@ -887,6 +960,10 @@
 
 .ts-3 {
   text-shadow: 2px 3px 5px rgba(0, 0, 0, 0.5);
+}
+
+.ts-4 {
+  text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.5);
 }
 
 .border-p {
@@ -1064,6 +1141,12 @@
 @media screen and (max-width: 1080px) {
   .s1080 {
     display: inherit;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .h400 {
+    display: none;
   }
 }
 

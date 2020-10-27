@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { getDashboards } from "../reducers/dashboardReducer";
 
-// import ScrollToTopControlller from "./Shared/ScrollToTopControlller";
 import CustomRoute from "./Shared/CustomRoute";
 import Contact from "./Contact";
 import PrivacyPolicy from "./PrivacyPolicy";
@@ -35,10 +34,6 @@ const Main = ({ getDashboards }) => {
           path="/saved-dashboards"
           render={() => <SavedDashboards />}
         />
-        {/*
-        <Route path="/create-user" render={() => <CreateUser />} />
-        <ScrollToTopControlller />
-        */}
         <Route path="/contact" render={() => <Contact />} />
         <Route
           path="/terms-and-conditions"

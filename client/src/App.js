@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { initUser } from "./reducers/userReducer";
 import { CONSTANTS } from "./static/constants";
 
+import ScrollToTopControlller from "./components/Shared/ScrollToTopControlller";
 import Loader from "./components/Shared/Loader";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 import LeftMenu from "./components/Menu/LeftMenu";
@@ -34,6 +35,7 @@ const App = ({
     return (
       <div className="w100 fade-in">
         <Router>
+          <ScrollToTopControlller />
           {overlay && <Overlay />}
           {saveDashboardModal && <SaveDashboardModal />}
           <Notifications />

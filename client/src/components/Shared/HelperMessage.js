@@ -30,7 +30,7 @@ const HelperMessage = ({
             active={false}
           />
           <div className="ml20">
-            <p>{body}</p>
+            <p className="f16">{body}</p>
             <button
               type="submit"
               className="form-button-p bs-3 font-white mt20 pt4 pb4 flex-row align-c justify-c"
