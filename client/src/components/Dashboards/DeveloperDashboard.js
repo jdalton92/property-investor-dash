@@ -82,7 +82,7 @@ const DeveloperDashboard = ({
     const tableData = tableParse(rawData);
     const fundingChart = fundingChartParse(rawData);
     return (
-      <>
+      <div className="fade-in">
         <div className="dash-row relative">
           <h2 className="f20 bold mt16 mb16">Developer Dashboard</h2>
           <div className="dash-btns flex-row">
@@ -509,7 +509,9 @@ const DeveloperDashboard = ({
                     <td className="dash-xs-mobile">
                       {currencyFormatter.format(c.debtSource)}
                     </td>
-                    <td className="dash-desktop">{currencyFormatter.format(c.postFinanceCashflow)}</td>
+                    <td className="dash-desktop">
+                      {currencyFormatter.format(c.postFinanceCashflow)}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -562,7 +564,7 @@ const DeveloperDashboard = ({
             </table>
           )}
         </div>
-      </>
+      </div>
     );
   }
 };

@@ -56,7 +56,7 @@ const OccupierDashboard = ({
       history.push("/owner-occupier/edit");
     }
     return (
-      <>
+      <div className="fade-in">
         <div className="dash-row relative">
           <h2 className="f20 bold mt16 mb16">Owner Occupier Dashboard</h2>
           <div className="dash-btns flex-row">
@@ -91,7 +91,7 @@ const OccupierDashboard = ({
           </div>
         </div>
         <OwnerOccupierInvestorDashboard />
-      </>
+      </div>
     );
   }
 };

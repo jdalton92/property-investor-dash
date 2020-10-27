@@ -42,16 +42,15 @@ const SaveDashboardModal = ({
     setModal(CONSTANTS.MODALS.SAVEDASHBOARD, false);
   };
 
-  const handleOverwrite = async (values) => {
-    // Original saved data
-    const dashboard = savedDashboards.filter(
-      (d) => d._id === selectedDashboard
-    );
-    // New data
-    dashboard.address = values.address;
-    dashboard.description = values.description;
-    dashboard.values = currentDashboard.values;
-    await updateDashboard(dashboard);
+  const handleOverwrite = async ({ address, description }) => {
+    // New dashboard
+    const newDashboard = {
+      _id: selectedDashboard,
+      address,
+      description,
+      values: currentDashboard.values,
+    };
+    await updateDashboard(newDashboard);
     setModal(CONSTANTS.MODALS.SAVEDASHBOARD, false);
   };
 
