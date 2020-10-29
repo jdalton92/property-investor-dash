@@ -56,14 +56,8 @@ const MenuContainer = ({ title, menuItems, setLeftSidebar }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    leftSidebarOpen: state.navigation.sidebarOpen.left,
-  };
-};
-
 const mapDispatchToProps = {
   setLeftSidebar,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MenuContainer);
+export default connect(null, mapDispatchToProps)(MenuContainer);

@@ -1,17 +1,15 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { useLocation } from "react-router-dom";
-import {
-  setLeftSidebar,
-  setRightSidebar,
-} from "../../reducers/navigationReducer";
+import { setLeftSidebar, setDropdown } from "../../reducers/navigationReducer";
+import { CONSTANTS } from "../../static/constants";
 
-const ScrollToTopControlller = (props) => {
+const ScrollToTopControlller = ({ setLeftSidebar, setDropdown }) => {
   const { pathname } = useLocation();
 
   useEffect(() => {
     setLeftSidebar(false);
-    setRightSidebar(false);
+    setDropdown(CONSTANTS.DROPDOWNS.USERNAME, false);
     try {
       window.scroll({
         top: 0,
@@ -30,7 +28,7 @@ const ScrollToTopControlller = (props) => {
 
 const mapDispatchToProps = {
   setLeftSidebar,
-  setRightSidebar,
+  setDropdown,
 };
 
 export default connect(null, mapDispatchToProps)(ScrollToTopControlller);

@@ -121,7 +121,7 @@ const Contact = ({ setMessage, isFetching }) => {
                 </>
               )}
             </div>
-            <div className="form-buttons">
+            <div className="form-buttons mb20">
               <button
                 type="submit"
                 className="form-button-p bs-3 font-white mt12 pt8 pb8"

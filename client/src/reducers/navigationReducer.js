@@ -2,7 +2,6 @@ import { CONSTANTS } from "../static/constants";
 
 const initialState = {
   sidebarOpen: {
-    right: false,
     left: false,
   },
   modal: {
@@ -21,11 +20,6 @@ const initialState = {
 const navigationReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
-    case "SET_RIGHT_SIDEBAR":
-      newState = { ...state };
-      newState.overlay = action.status;
-      newState.sidebarOpen.right = action.status;
-      return newState;
     case "SET_LEFT_SIDEBAR":
       newState = { ...state };
       newState.overlay = action.status;
@@ -38,7 +32,7 @@ const navigationReducer = (state = initialState, action) => {
       return newState;
     case "SET_DROPDOWN":
       newState = { ...state };
-      newState.dropdown[action.dropdown] = !newState.dropdown[action.dropdown];
+      newState.dropdown[action.payLoad.dropdown] = action.payLoad.status;
       return newState;
     case "SET_TAB":
       newState = { ...state };
@@ -47,15 +41,6 @@ const navigationReducer = (state = initialState, action) => {
     default:
       return state;
   }
-};
-
-export const setRightSidebar = (status) => {
-  return (dispatch) => {
-    dispatch({
-      type: "SET_RIGHT_SIDEBAR",
-      status: status,
-    });
-  };
 };
 
 export const setLeftSidebar = (status) => {
@@ -79,11 +64,14 @@ export const setModal = (modalType, status) => {
   };
 };
 
-export const setDropdown = (dropdown) => {
+export const setDropdown = (dropdown, status) => {
   return (dispatch) => {
     dispatch({
       type: "SET_DROPDOWN",
-      dropdown,
+      payLoad: {
+        dropdown,
+        status,
+      },
     });
   };
 };
@@ -94,7 +82,7 @@ export const setTab = (type, tab) => {
       type: "SET_TAB",
       payLoad: {
         type,
-        tab
+        tab,
       },
     });
   };

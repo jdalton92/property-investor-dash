@@ -49,7 +49,7 @@ API_KEY=<your_mailgun_api_key>
 DOMAIN=<your_mailgun_domain>
 ```
 
-Then navidate to the server directory and install dependencies, and run the backend
+Then navidate to the server directory and install dependencies, and run the backend with `nodemon`
 
 ```sh
 $ cd server

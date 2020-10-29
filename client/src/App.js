@@ -9,7 +9,6 @@ import Loader from "./components/Shared/Loader";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 import LeftMenu from "./components/Menu/LeftMenu";
 import Main from "./components/Main";
-import RightMenu from "./components/Menu/RightMenu";
 import Notifications from "./components/Shared/Notification/Notifications";
 import Overlay from "./components/Shared/Overlay";
 import Login from "./components/Login";
@@ -43,7 +42,6 @@ const App = ({
           <div className="w100 flex-row justify-c">
             <LeftMenu />
             <Main />
-            <RightMenu />
           </div>
         </Router>
       </div>

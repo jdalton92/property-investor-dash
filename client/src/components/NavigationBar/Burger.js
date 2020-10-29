@@ -1,19 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
 import { StyledBurger } from "./StyledBurger";
-import {
-  setLeftSidebar,
-  setRightSidebar,
-} from "../../reducers/navigationReducer";
+import { setLeftSidebar, setDropdown } from "../../reducers/navigationReducer";
+import { CONSTANTS } from "../../static/constants";
 
 const Burger = ({
   leftSidebarOpen,
-  setRightSidebar,
   setLeftSidebar,
+  setDropdown,
   customClass,
 }) => {
   const handleClick = () => {
-    setRightSidebar(false);
+    setDropdown(CONSTANTS.DROPDOWNS.USERNAME, false);
     setLeftSidebar(!leftSidebarOpen);
   };
   return (
@@ -35,7 +33,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   setLeftSidebar,
-  setRightSidebar,
+  setDropdown,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Burger);

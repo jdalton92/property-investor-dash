@@ -12,7 +12,11 @@ const useDropdownOutsideAlerter = (ref) => {
     ) {
       store.dispatch({
         type: "SET_DROPDOWN",
-        dropdown: CONSTANTS.DROPDOWNS.USERNAME,
+        payLoad: {
+          dropdown: CONSTANTS.DROPDOWNS.USERNAME,
+          status: false,
+          overlay: false,
+        },
       });
     }
   };

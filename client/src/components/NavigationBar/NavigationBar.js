@@ -3,39 +3,16 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { DropdownOutsideAlerter } from "../../utils/hooks";
 import { logoutUser } from "../../reducers/userReducer";
-import {
-  setDropdown,
-  setRightSidebar,
-  setLeftSidebar,
-} from "../../reducers/navigationReducer";
+import { setDropdown } from "../../reducers/navigationReducer";
 import { CONSTANTS } from "../../static/constants";
 import UserDropdown from "./UserDropdown";
 import Burger from "./Burger";
 import Button from "../Shared/Button";
 import UserIcon from "../../styles/svg/user.svg";
 import EmailIcon from "../../styles/svg/email.svg";
-import ExpandIcon from "../../styles/svg/expand.svg";
-import CollapseIcon from "../../styles/svg/collapse.svg";
 
-const NavigationBar = ({
-  setDropdown,
-  rightSidebarOpen,
-  setRightSidebar,
-  setLeftSidebar,
-}) => {
+const NavigationBar = ({ setDropdown, showDropdown }) => {
   let history = useHistory();
-
-  let RightMenuIcon;
-  if (rightSidebarOpen) {
-    RightMenuIcon = CollapseIcon;
-  } else {
-    RightMenuIcon = ExpandIcon;
-  }
-
-  const handleRightMenuClick = () => {
-    setLeftSidebar(false);
-    setRightSidebar(!rightSidebarOpen);
-  };
 
   const handleContactClick = (e) => {
     e.preventDefault();
@@ -44,7 +21,7 @@ const NavigationBar = ({
 
   const handleDropdownClick = (e) => {
     e.preventDefault();
-    setDropdown(CONSTANTS.DROPDOWNS.USERNAME);
+    setDropdown(CONSTANTS.DROPDOWNS.USERNAME, !showDropdown);
   };
 
   return (
@@ -53,7 +30,7 @@ const NavigationBar = ({
         <Burger customClass={"nav-burger s1080"} />
         <h1 className="w100 bold title">PropertyInvestorDash</h1>
         <Button
-          ariaLabel={"Contact Us"}
+          ariaLabel={"Contact"}
           dataBalloonPos={"left"}
           extraClass={"button-transp-p align-c justify-c"}
           onClick={handleContactClick}
@@ -73,16 +50,6 @@ const NavigationBar = ({
             <UserDropdown />
           </DropdownOutsideAlerter>
         </div>
-        <div className="s768">
-          <Button
-            ariaLabel={rightSidebarOpen ? "Close Menu" : "Open Menu"}
-            dataBalloonPos={"left"}
-            extraClass={"button-transp-p align-c justify-c"}
-            onClick={handleRightMenuClick}
-            iconUrl={RightMenuIcon}
-            iconColor={"white"}
-          />
-        </div>
       </div>
     </div>
   );
@@ -91,14 +58,12 @@ const NavigationBar = ({
 const mapStateToProps = (state) => {
   return {
     user: state.user,
-    rightSidebarOpen: state.navigation.sidebarOpen.right,
+    showDropdown: state.navigation.dropdown[CONSTANTS.DROPDOWNS.USERNAME],
   };
 };
 
 const mapDispatchToProps = {
   logoutUser,
-  setRightSidebar,
-  setLeftSidebar,
   setDropdown,
 };
 

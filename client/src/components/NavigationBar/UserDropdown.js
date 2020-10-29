@@ -13,13 +13,13 @@ const UserDropdown = ({ showDropdown, setDropdown, logoutUser, email }) => {
   const history = useHistory();
 
   const handleLink = (url) => {
-    setDropdown(CONSTANTS.DROPDOWNS.USERNAME);
+    setDropdown(CONSTANTS.DROPDOWNS.USERNAME, false);
     history.push(url);
   };
 
   const handleLogout = (e) => {
     e.preventDefault();
-    setDropdown(CONSTANTS.DROPDOWNS.USERNAME);
+    setDropdown(CONSTANTS.DROPDOWNS.USERNAME, false);
     logoutUser();
     history.push("/");
   };
