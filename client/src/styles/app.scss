@@ -16,6 +16,10 @@
   z-index: $overlay-z-index;
 }
 
+.bg-base {
+  background-color: $bg-color-base;
+}
+
 .bg-0 {
   background-color: $n0;
 }

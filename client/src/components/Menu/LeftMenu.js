@@ -147,12 +147,14 @@ const LeftMenu = ({ leftSidebarOpen, email, setTab, logoutUser }) => {
 
   return (
     <div
-      className={`left-menu-wrapper sticky flex-col ${
+      className={`left-menu-wrapper bg-base sticky flex-col ${
         leftSidebarOpen ? "open-left" : ""
       }`}
     >
-      <div className="navbar-side s1080 h100 p8 flex-row align-c justify-e">
-        <h1 className="w100 f16 bold text-start">PropertyInvestorDash</h1>
+      <div className="navbar-side bg-blue-1 s1080 h100 p8 flex-row align-c justify-e">
+        <h1 className="w100 f20 bold text-start font-white ts-3">
+          PropertyInvestorDash
+        </h1>
         <Burger customClass={"s1080"} />
       </div>
       <div className="left-menu sticky-below-nav flex-col">

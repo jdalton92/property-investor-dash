@@ -19,7 +19,7 @@ export const StyledBurger = styled.button`
   div {
     width: 32px;
     height: 3px;
-    background: #effffa;
+    background: ${({ color }) => color};
     transition: all 0.3s linear;
     position: relative;
     transform-origin: 1px;

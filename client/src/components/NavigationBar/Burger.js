@@ -9,6 +9,7 @@ const Burger = ({
   setLeftSidebar,
   setDropdown,
   customClass,
+  color = "#f7f8fb",
 }) => {
   const handleClick = () => {
     setDropdown(CONSTANTS.DROPDOWNS.USERNAME, false);
@@ -16,7 +17,7 @@ const Burger = ({
   };
   return (
     <div onClick={handleClick} className={customClass}>
-      <StyledBurger open={leftSidebarOpen}>
+      <StyledBurger open={leftSidebarOpen} color={color}>
         <div />
         <div />
         <div />

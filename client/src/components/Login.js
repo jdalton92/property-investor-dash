@@ -31,7 +31,6 @@ const Login = ({
   useEffect(() => {
     if (user.data.email) {
       history.push("/");
-      setNotification("User already logged in", CONSTANTS.NOTIFICATION.ERROR);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -43,7 +42,7 @@ const Login = ({
   const handleForgotPassword = () => {
     history.push("/contact");
     setNotification(
-      "Functionality coming soon, please contact us to reset your password",
+      "Password reset functionality coming soon, please contact us to reset your password",
       CONSTANTS.NOTIFICATION.MESSAGE
     );
   };
