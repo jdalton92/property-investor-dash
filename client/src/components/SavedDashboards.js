@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { getDashboards, deleteDashboard } from "../reducers/dashboardReducer";
 import Loader from "./Shared/Loader";
 import Button from "./Shared/Button";
-import { formatDate } from "../utils/dashboardHelper";
+import { formatDate, typeAndUrl } from "../utils/dashboardHelper";
 import OpenIcon from "../styles/svg/tick.svg";
 import CloseIcon from "../styles/svg/close.svg";
 
@@ -50,18 +50,7 @@ const SavedDashboards = ({
               </thead>
               <tbody>
                 {savedDashboards.map((d, i) => {
-                  let baseUrl;
-                  let type;
-                  if (d.values.type === "developer") {
-                    baseUrl = "developer/dash";
-                    type = "Developer";
-                  } else if (d.values?.investor) {
-                    baseUrl = "investor/dash";
-                    type = "Investor";
-                  } else {
-                    baseUrl = "owner-occupier/dash";
-                    type = "Owner-Occupier";
-                  }
+                  const { baseUrl, type } = typeAndUrl(d);
                   return (
                     <tr key={i}>
                       <td className="h768">{i + 1}</td>

@@ -21,7 +21,7 @@ import NotFound from "./NotFound";
 
 const Main = () => {
   return (
-    <div className="main p8 w100 border-p">
+    <div className="main p8 w100">
       <Switch>
         <Route exact path="/" render={() => <About />} />
         <CustomRoute path="/settings" render={() => <Settings />} />

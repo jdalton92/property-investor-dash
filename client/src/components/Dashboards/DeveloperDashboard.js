@@ -227,7 +227,7 @@ const DeveloperDashboard = ({
           <div className="relative">
             <div className="flex-row align-c mb16 mr100">
               <h3 className="f16">Cashflow Summary Before Funding</h3>
-              <Tooltip message={preFinanceMessage} />
+              <Tooltip message={preFinanceMessage} extraClass="mt8" />
             </div>
             <button
               type="submit"
@@ -444,7 +444,7 @@ const DeveloperDashboard = ({
           <div className="relative">
             <div className="flex-row align-c mb16 mr100">
               <h3 className="f16">Cashflow Summary After Funding</h3>
-              <Tooltip message={postFinanceMessage} />
+              <Tooltip message={postFinanceMessage} extraClass="mt8" />
             </div>
             <button
               type="submit"

@@ -10,7 +10,7 @@ const Button = ({
   iconPos = "left",
   caption,
   extraClass,
-  captionClass,
+  captionClass = "font-p",
   onClick,
   ariaLabel,
   dataBalloonPos,

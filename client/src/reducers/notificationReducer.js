@@ -62,10 +62,13 @@ export const clearNotification = (id) => {
 export const hideHelperMessage = (userId, type) => {
   return (dispatch) => {
     try {
-      userService.readMessage(userId, type);
-      let token = JSON.parse(window.localStorage.getItem("loggedUser"));
-      token.messagesRead = [...token.messagesRead, type];
-      window.localStorage.setItem("loggedUser", JSON.stringify(token));
+      // Only sync with api if user is logged in
+      if (userId) {
+        userService.readMessage(userId, type);
+        let token = JSON.parse(window.localStorage.getItem("loggedUser"));
+        token.messagesRead = [...token.messagesRead, type];
+        window.localStorage.setItem("loggedUser", JSON.stringify(token));
+      }
       dispatch({
         type: "SET_MESSAGE",
         message: type,

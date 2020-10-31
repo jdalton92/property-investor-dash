@@ -7,6 +7,7 @@ import { testDashboard, getDashboard } from "../../reducers/dashboardReducer";
 import { CONSTANTS } from "../../static/constants";
 import { helperMessage } from "../../static/helperMessageText";
 import { required, minValue, maxValue } from "../../utils/formValidatorHelper";
+import { typeAndUrl } from "../../utils/dashboardHelper";
 import { developerTooltip } from "../../static/tooltipText";
 import FinalFormField from "../Shared/FinalFormField";
 import HelperMessage from "../Shared/HelperMessage";
@@ -39,35 +40,13 @@ const DeveloperForm = ({
   if (isFetching) {
     return <Loader />;
   } else {
-    // const initialValues =
-    //   preSave || id ? currentDashboard.values : { overPayments: [{}] };
+    const { type } = typeAndUrl(currentDashboard);
 
-    const initialValues = {
-      acquisitionPrice: 100000,
-      acquisitionCosts: 5,
-      dwellings: 4,
-      constructionCostPerDwelling: 400000,
-      designFees: 10,
-      constructionContingency: 10,
-      statutoryFees: 3,
-      constructionDuration: 24,
-      planningAndDesign: 6,
+    let initialValues = { overPayments: [{}] };
+    if ((preSave || id) && type === "Developer") {
+      initialValues = currentDashboard.values;
+    }
 
-      revenuePerDwelling: 750000,
-      sellingCosts: 5,
-      investmentPeriod: 5,
-      recurringCosts: 30,
-      rentalYield: 4,
-
-      initialEquity: 400000,
-      loanType: "interestOnly",
-      interestRate: 3.5,
-      loanTerm: 30,
-      overPayments: [{}],
-
-      capitalGrowth: 3.5,
-      constructionCostGrowth: 2.5,
-    };
     return (
       <>
         <h1 className="f24 bold mt16 mb16">Developer Inputs</h1>

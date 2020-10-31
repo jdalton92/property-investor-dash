@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 
-const Tooltip = ({ message }) => {
+const Tooltip = ({ message, extraClass }) => {
   const [show, setShow] = useState(false);
 
   let timer;
@@ -16,7 +16,7 @@ const Tooltip = ({ message }) => {
   };
 
   return (
-    <div className="tooltip-container ml8 mb8">
+    <div className={`tooltip-container ml8 mb8 ${extraClass}`}>
       {show && (
         <div
           className="tooltip-msg absolute bg-black r p8 font-white white text-center fade-in"

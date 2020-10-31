@@ -93,9 +93,7 @@ const PrivacyPolicy = () => {
         <p className="mb16">
           When your Personal Information is no longer needed for the purpose for
           which it was obtained, we will take reasonable steps to destroy or
-          permanently de-identify your Personal Information. However, most of
-          the Personal Information is or will be stored in client files which
-          will be kept by us for a minimum of 7 years.
+          permanently de-identify your Personal Information.
         </p>
         <h2 className="bold mb16">Access to your Personal Information</h2>
         <p className="mb16">

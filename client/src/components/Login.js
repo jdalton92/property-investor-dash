@@ -41,7 +41,11 @@ const Login = ({
   };
 
   const handleForgotPassword = () => {
-    setNotification("Forgot password clicked", CONSTANTS.NOTIFICATION.MESSAGE);
+    history.push("/contact");
+    setNotification(
+      "Functionality coming soon, please contact us to reset your password",
+      CONSTANTS.NOTIFICATION.MESSAGE
+    );
   };
 
   const handleCreateUser = async ({ email, password, checkPassword }) => {

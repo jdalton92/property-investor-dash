@@ -4,10 +4,10 @@ $font-family-base: "Oxygen", sans-serif;
 $font-size-base: 12px;
 $weight-normal: normal; // TO DO;
 
-$color-base: rgb(39, 39, 39) !default;
-$bg-color-base: rgb(196, 196, 196) !default;
+$color-base: #352b48 !default;
+$bg-color-base: rgb(221, 227, 247) !default;
 
-$font-p: #0c0c0c;
+$font-p: #352b48;
 $font-s: #131313;
 
 $line-height-base: 1.5;
@@ -17,6 +17,7 @@ $weight-normal: 400;
 $weight-bold: 700;
 
 // Colours
+$primary-0: #0008a3 !default;
 $primary-1: rgba(82, 110, 255, 1) !default;
 $primary-2: rgba(82, 111, 255, 0.801) !default;
 $primary-3: rgba(82, 110, 255, 0.85) !default;
@@ -32,6 +33,7 @@ $n4: #757883 !default;
 $n5: #888ca6 !default;
 $n6: #545677 !default;
 $n7: #282a38 !default;
+$n8: #352b48 !default;
 $n1-transp: rgba(0, 21, 128, 0.03) !default;
 $n2-transp: rgba(4, 22, 110, 0.07) !default;
 $n3-transp: rgba(8, 22, 102, 0.13) !default;

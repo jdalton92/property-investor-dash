@@ -28,7 +28,7 @@ const MenuContainer = ({ title, menuItems, setLeftSidebar }) => {
   };
 
   return (
-    <div className="bg-2 r bs-1 mb12 flex-1 flex-col align-c">
+    <div className="bg-1 r bs-1 mb12 flex-1 flex-col align-c">
       <div className="flex-row w100">
         <Button
           iconSize={"20px"}

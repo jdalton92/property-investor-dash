@@ -8,15 +8,15 @@
 
 .notification {
   min-height: $nav-height;
-  background-color: $n5-transp;
+  background-color: $n6-transp;
 }
 
 .success {
-  color: green;
+  color: $g2;
 }
 
 .error {
-  color: red;
+  color: $r3;
 }
 
 .message {

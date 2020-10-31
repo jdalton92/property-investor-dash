@@ -17,13 +17,6 @@ const CalculatorTypes = () => {
   return (
     <>
       <h1 className="f24 bold mt16 mb8">Calculator Types</h1>
-      <div className="p20 r bs-3 bg-1 mb20">
-        <ul>
-          <li>INFO</li>
-          <li>INFO</li>
-          <li>INFO</li>
-        </ul>
-      </div>
       <h2 className="f16 bold mt8 mb16">
         <span
           className="link"

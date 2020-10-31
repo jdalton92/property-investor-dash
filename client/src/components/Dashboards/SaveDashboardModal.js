@@ -20,6 +20,7 @@ import Loader from "../Shared/Loader";
 import CloseIcon from "../../styles/svg/close.svg";
 import SaveIcon from "../../styles/svg/save.svg";
 import OverwriteIcon from "../../styles/svg/overwrite.svg";
+import { setNotification } from "../../reducers/notificationReducer";
 
 const SaveDashboardModal = ({
   isFetching,
@@ -28,12 +29,19 @@ const SaveDashboardModal = ({
   setModal,
   saveDashboard,
   updateDashboard,
+  setNotification,
+  email,
   setTab,
   tab,
 }) => {
   const [selectedDashboard, setSelectedDashboard] = useState(null);
 
   const handleSave = async (saveData) => {
+    if (!email) {
+      setNotification("Log in to save dashboard", CONSTANTS.NOTIFICATION.ERROR);
+      return;
+    }
+
     const dashObject = {
       values: currentDashboard.values,
       ...saveData,
@@ -43,6 +51,11 @@ const SaveDashboardModal = ({
   };
 
   const handleOverwrite = async ({ address, description }) => {
+    if (!email) {
+      setNotification("Log in to save dashboard", CONSTANTS.NOTIFICATION.ERROR);
+      return;
+    }
+
     // New dashboard
     const newDashboard = {
       _id: selectedDashboard,
@@ -360,6 +373,7 @@ const mapStateToProps = (state) => {
     savedDashboards: state.dashboards.savedDashboards,
     saveDashboardModal: state.navigation.modal.saveDashboard,
     tab: state.navigation.tabs.saveDashboard,
+    email: state.user.data?.email,
   };
 };
 
@@ -368,6 +382,7 @@ const mapDispatchToProps = {
   setTab,
   saveDashboard,
   updateDashboard,
+  setNotification,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SaveDashboardModal);

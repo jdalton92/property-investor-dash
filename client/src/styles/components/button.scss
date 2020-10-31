@@ -1,13 +1,27 @@
+.button-p {
+  display: flex;
+  height: 40px;
+  background-color: $n3-transp;
+  transition: background-color 0.2s ease;
+  &:hover {
+    background-color: $n4-transp;
+  }
+
+  &:active {
+    background-color: $n5-transp;
+  }
+}
+
 .button-transp-p {
   display: flex;
   height: 40px;
   transition: background-color 0.2s ease;
   &:hover {
-    background-color: $primary-3;
+    background-color: $n3-transp;
   }
 
   &:active {
-    background-color: $primary-2;
+    background-color: $n4-transp;
   }
 }
 
@@ -26,20 +40,6 @@
 
 .button-transp-s.active {
   background-color: $n2;
-}
-
-.button-p {
-  display: flex;
-  height: 40px;
-  background-color: $n4-transp;
-  transition: background-color 0.2s ease;
-  &:hover {
-    background-color: $n5-transp;
-  }
-
-  &:active {
-    background-color: $n6-transp;
-  }
 }
 
 // .active-link {

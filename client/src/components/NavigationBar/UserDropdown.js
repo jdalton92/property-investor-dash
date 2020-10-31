@@ -8,6 +8,8 @@ import Button from "../Shared/Button";
 import SettingsIcon from "../../styles/svg/settings.svg";
 import LogoutIcon from "../../styles/svg/logout.svg";
 import DashboardIcon from "../../styles/svg/dashboard.svg";
+import UserIcon from "../../styles/svg/user.svg";
+import CreateUserIcon from "../../styles/svg/create-user.svg";
 
 const UserDropdown = ({
   showDropdown,
@@ -80,7 +82,7 @@ const UserDropdown = ({
             captionClass={"ml8"}
             caption={"Login"}
             onClick={handleLogin}
-            iconUrl={DashboardIcon}
+            iconUrl={UserIcon}
             iconColor={"black"}
           />
           <Button
@@ -88,7 +90,7 @@ const UserDropdown = ({
             captionClass={"ml8"}
             caption={"Create Account"}
             onClick={handleCreate}
-            iconUrl={SettingsIcon}
+            iconUrl={CreateUserIcon}
             iconColor={"black"}
           />
         </div>

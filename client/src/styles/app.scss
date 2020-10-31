@@ -40,6 +40,14 @@
   background-color: $n5;
 }
 
+.bg-8 {
+  background-color: $n8;
+}
+
+.bg-blue-0 {
+  background-color: $primary-0;
+}
+
 .bg-blue-1 {
   background-color: $primary-1;
 }
@@ -120,6 +128,11 @@
     cursor: pointer;
     text-decoration: underline;
   }
+}
+
+.link-unstyled {
+  color: inherit;
+  text-decoration: inherit;
 }
 
 .block {

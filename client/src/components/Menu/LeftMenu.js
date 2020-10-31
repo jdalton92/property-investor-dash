@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import MenuContainer from "./MenuContainer";
 import Burger from "../NavigationBar/Burger";
 import { CONSTANTS } from "../../static/constants";
+import { setTab } from "../../reducers/navigationReducer";
+import { logoutUser } from "../../reducers/userReducer";
 
 import QuestionIcon from "../../styles/svg/question.svg";
 import MessageIcon from "../../styles/svg/message.svg";
@@ -16,13 +18,41 @@ import FinanceIcon from "../../styles/svg/finance.svg";
 import PrivacyIcon from "../../styles/svg/privacy.svg";
 import UserIcon from "../../styles/svg/user.svg";
 import CreateUserIcon from "../../styles/svg/create-user.svg";
-import { setTab } from "../../reducers/navigationReducer";
+import SettingsIcon from "../../styles/svg/settings.svg";
+import LogoutIcon from "../../styles/svg/logout.svg";
 
-const LeftMenu = ({ leftSidebarOpen, email, setTab }) => {
+const LeftMenu = ({ leftSidebarOpen, email, setTab, logoutUser }) => {
   let userMenuItems = [];
-
-  if (!email) {
-    userMenuItems = userMenuItems.concat(
+  if (email) {
+    userMenuItems = [
+      {
+        title: "Saved Dashboards",
+        link: {
+          url: "/saved-dashboards",
+          internal: true,
+        },
+        icon: DashboardIcon,
+      },
+      {
+        title: "Account Settings",
+        link: {
+          url: "/settings",
+          internal: true,
+        },
+        icon: SettingsIcon,
+      },
+      {
+        title: "Logout",
+        link: {
+          url: "/",
+          internal: true,
+          callBack: () => logoutUser(),
+        },
+        icon: LogoutIcon,
+      },
+    ];
+  } else {
+    userMenuItems = [
       {
         title: "Login",
         link: {
@@ -40,8 +70,8 @@ const LeftMenu = ({ leftSidebarOpen, email, setTab }) => {
           callBack: () => setTab("login", CONSTANTS.TABS.LOGIN.CREATEUSER),
         },
         icon: CreateUserIcon,
-      }
-    );
+      },
+    ];
   }
 
   let companyMenuItems = [
@@ -117,7 +147,7 @@ const LeftMenu = ({ leftSidebarOpen, email, setTab }) => {
 
   return (
     <div
-      className={`left-menu-wrapper sticky flex-col background-p ${
+      className={`left-menu-wrapper sticky flex-col ${
         leftSidebarOpen ? "open-left" : ""
       }`}
     >
@@ -125,7 +155,7 @@ const LeftMenu = ({ leftSidebarOpen, email, setTab }) => {
         <h1 className="w100 f16 bold text-start">PropertyInvestorDash</h1>
         <Burger customClass={"s1080"} />
       </div>
-      <div className="left-menu sticky-below-nav flex-col border-p">
+      <div className="left-menu sticky-below-nav flex-col">
         <div className="o-y-scroll o-x-hidden mt8 mb8 h100 scrollbar">
           <MenuContainer title={"User"} menuItems={userMenuItems} />
           <MenuContainer title={"Company"} menuItems={companyMenuItems} />
@@ -149,6 +179,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   setTab,
+  logoutUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeftMenu);

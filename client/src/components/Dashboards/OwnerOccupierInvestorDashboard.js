@@ -121,7 +121,7 @@ const OwnerOccupierInvestorDashboard = ({ currentDashboard }) => {
         <div className="relative">
           <div className="flex-row align-c mb16 mr100">
             <h3 className="f16">Cashflow Summary After Funding</h3>
-            <Tooltip message={message} />
+            <Tooltip message={message} extraClass="mt8" />
           </div>
           <button
             type="submit"
