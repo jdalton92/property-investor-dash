@@ -1,0 +1,143 @@
+.form-input {
+  color: $n6;
+  transition: background-color 0.2s ease;
+  display: block;
+  padding: 7px 12px;
+  font-size: 16px;
+  line-height: 1.5;
+  background-color: #e7e7e7;
+  border: none;
+  border-radius: $border-radius-base;
+  min-height: $form-input-height;
+  border: solid 2px transparent;
+  &:hover {
+    background-color: #ededed;
+  }
+  &:focus {
+    border: solid 2px $primary-1;
+    background-color: white;
+  }
+}
+
+#contact-wrapper {
+  min-height: 566px;
+}
+
+.contact-form #contact-message {
+  min-height: 160px;
+}
+
+.select {
+  min-height: 42px;
+}
+
+.prepend {
+  top: 0;
+  left: 0;
+  height: $form-input-height;
+  min-width: 32px;
+  color: $n6;
+}
+
+.append {
+  top: 0;
+  right: 0;
+  height: $form-input-height;
+  min-width: 32px;
+  color: $n6;
+}
+
+.form-error {
+  position: absolute;
+  bottom: -20px;
+  color: $r3;
+}
+
+.form-button-p,
+.form-button-s {
+  text-align: center;
+  padding: 7px 12px;
+  font-size: 16px;
+  line-height: 1.5;
+  border: none;
+  border-radius: 5px;
+  min-height: 40px;
+  transition: background-color 0.2s ease;
+  min-width: 100px;
+}
+
+.form-button-p {
+  background-color: $primary-1;
+  &:hover {
+    background-color: $primary-2;
+  }
+  &:active {
+    background-color: $secondary-3;
+  }
+}
+
+.form-button-s {
+  background-color: $n4;
+  &:hover {
+    background-color: $n5;
+  }
+  &:active {
+    background-color: $n6;
+  }
+}
+
+.form-buttons {
+  display: flex;
+}
+
+.form-buttons .form-button-p {
+  margin-right: 12px;
+}
+
+.form-row {
+  display: flex;
+}
+
+.form-item {
+  width: 50%;
+}
+
+.form-row .form-item:nth-child(1) {
+  margin-right: 8px;
+}
+
+.form-row .form-item:nth-child(2) {
+  margin-left: 8px;
+}
+
+@media screen and (max-width: 768px) {
+  .form-buttons {
+    flex-direction: column;
+  }
+
+  .form-buttons button {
+    width: 100%;
+  }
+
+  .form-buttons .form-button-p {
+    margin-right: 0px;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .form-button-p,
+  .form-button-s,
+  .form-item {
+    width: 100%;
+  }
+
+  .form-row .form-item:nth-child(1) {
+    margin-right: 0;
+  }
+
+  .form-row .form-item:nth-child(2) {
+    margin-left: 0;
+  }
+}

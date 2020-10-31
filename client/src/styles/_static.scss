@@ -1,0 +1,80 @@
+$nav-height: 56px;
+
+$font-family-base: "Oxygen", sans-serif;
+$font-size-base: 12px;
+$weight-normal: normal; // TO DO;
+
+$color-base: #352b48 !default;
+$bg-color-base: rgb(221, 227, 247) !default;
+
+$font-p: #352b48;
+$font-s: #131313;
+
+$line-height-base: 1.5;
+$letter-spacing-base: 0.2px;
+
+$weight-normal: 400;
+$weight-bold: 700;
+
+// Colours
+$primary-0: #0008a3 !default;
+$primary-1: rgba(82, 110, 255, 1) !default;
+$primary-2: rgba(82, 111, 255, 0.801) !default;
+$primary-3: rgba(82, 110, 255, 0.85) !default;
+$secondary-1: #485ef08a !default;
+$secondary-2: #485ef0d5 !default;
+$secondary-3: #485ef0 !default;
+
+$n0: rgb(248, 249, 250) !default;
+$n1: #f7f8fb !default;
+$n2: #edeff5 !default;
+$n3: #dfe1eb !default;
+$n4: #757883 !default;
+$n5: #888ca6 !default;
+$n6: #545677 !default;
+$n7: #282a38 !default;
+$n8: #352b48 !default;
+$n1-transp: rgba(0, 21, 128, 0.03) !default;
+$n2-transp: rgba(4, 22, 110, 0.07) !default;
+$n3-transp: rgba(8, 22, 102, 0.13) !default;
+$n4-transp: rgba(0, 12, 82, 0.26) !default;
+$n5-transp: rgba(3, 10, 66, 0.47) !default;
+$n6-transp: rgba(0, 4, 54, 0.67) !default;
+$n7-transp: rgba(2, 6, 36, 0.93) !default;
+$white: #ffff !default;
+
+$g1: #e6fae7 !default;
+$g2: #3eb066 !default;
+$g3: #168745 !default;
+$g4: #005925 !default;
+$r1: #fff1f0 !default;
+$r2: #f73b45 !default;
+$r3: #e62236 !default;
+$r4: #940f1c !default;
+$y1: #fff4e4 !default;
+$y2: #ffb54c !default;
+$y3: #a46000 !default;
+$gr1: rgba(200, 200, 200, 0.75) !default;
+$gr2: rgba(200, 200, 200, 0.5) !default;
+$gr3: rgba(200, 200, 200, 0.25) !default;
+$gr4: rgba(220, 220, 220, 0.75) !default;
+
+// Shadows
+$card-shadow: 0 1px 3px -1px $n2-transp, 0px 0px 1px 0 $n3-transp !default;
+$text-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+$dropdown-shadow: 0 16px 40px -20px $n4-transp, 0 2px 10px -7px $n4-transp,
+  0px 0px 2px -1px $n5-transp !default;
+
+// Borders
+$border-color-base: black !default;
+$border-radius-base: 5px !default;
+$border-width-base: 1px !default;
+
+// Forms
+$form-input-height: 40px;
+
+// z-index
+$menu-z-index: 5;
+$overlay-z-index: 4;
+$modal-z-index: 5;
+$tooltip-z-index: 2;

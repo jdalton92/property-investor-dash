@@ -1,0 +1,30 @@
+.notifications {
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  z-index: $overlay-z-index;
+  width: 350px;
+}
+
+.notification {
+  min-height: $nav-height;
+  background-color: $n6-transp;
+}
+
+.success {
+  color: $g2;
+}
+
+.error {
+  color: $r3;
+}
+
+.message {
+  color: white;
+}
+
+@media screen and (max-width: 550px) {
+  .notifications {
+    width: 100%;
+  }
+}
