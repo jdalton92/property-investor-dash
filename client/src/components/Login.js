@@ -30,7 +30,8 @@ const Login = ({
 
   useEffect(() => {
     if (user.data.email) {
-      history.push("/saved-dashboards");
+      history.push("/");
+      setNotification("User already logged in", CONSTANTS.NOTIFICATION.ERROR);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -49,6 +50,7 @@ const Login = ({
 
   const handleDemo = () => {
     demoUser();
+    history.push("/");
   };
 
   return (
@@ -63,7 +65,12 @@ const Login = ({
       </div>
       <div className="login-container flex-col justify-c m8">
         <div className="login r p20 m8 bs-3 bg-1 mw450 m-auto">
-          <h1 className="bold text-center ts-4">PropertyInvestorDash</h1>
+          <h1
+            className="bold text-center ts-4 link"
+            onClick={() => history.push("/")}
+          >
+            PropertyInvestorDash
+          </h1>
           <div className="flex-row mb16">
             <button
               type="button"

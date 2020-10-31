@@ -10,7 +10,12 @@ const MenuContainer = ({ title, menuItems, setLeftSidebar }) => {
   const [expand, setExpand] = useState(true);
   const history = useHistory();
 
-  const handleLink = ({ internal, url }) => {
+  const handleClick = (link) => {
+    if (link.callBack) link.callBack();
+    handleLink(link.internal, link.url);
+  };
+
+  const handleLink = (internal, url) => {
     setLeftSidebar(false);
     if (internal) {
       history.push(url);
@@ -47,7 +52,7 @@ const MenuContainer = ({ title, menuItems, setLeftSidebar }) => {
                 caption={item.title}
                 captionClass={"ml8"}
                 iconSize={"24px"}
-                onClick={() => handleLink(item.link)}
+                onClick={() => handleClick(item.link)}
               />
             );
           })}

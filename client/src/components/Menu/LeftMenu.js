@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import MenuContainer from "./MenuContainer";
 import Burger from "../NavigationBar/Burger";
+import { CONSTANTS } from "../../static/constants";
 
 import QuestionIcon from "../../styles/svg/question.svg";
 import MessageIcon from "../../styles/svg/message.svg";
@@ -13,12 +14,40 @@ import HomeOwnerIcon from "../../styles/svg/home-owner.svg";
 import UnitsIcon from "../../styles/svg/units.svg";
 import FinanceIcon from "../../styles/svg/finance.svg";
 import PrivacyIcon from "../../styles/svg/privacy.svg";
+import UserIcon from "../../styles/svg/user.svg";
+import CreateUserIcon from "../../styles/svg/create-user.svg";
+import { setTab } from "../../reducers/navigationReducer";
 
-const LeftMenu = ({ leftSidebarOpen }) => {
-  const companyMenuItems = [
+const LeftMenu = ({ leftSidebarOpen, email, setTab }) => {
+  let userMenuItems = [];
+
+  if (!email) {
+    userMenuItems = userMenuItems.concat(
+      {
+        title: "Login",
+        link: {
+          url: "/login",
+          internal: true,
+          callBack: () => setTab("login", CONSTANTS.TABS.LOGIN.LOGIN),
+        },
+        icon: UserIcon,
+      },
+      {
+        title: "Create Account",
+        link: {
+          url: "/login",
+          internal: true,
+          callBack: () => setTab("login", CONSTANTS.TABS.LOGIN.CREATEUSER),
+        },
+        icon: CreateUserIcon,
+      }
+    );
+  }
+
+  let companyMenuItems = [
     {
       title: "About",
-      link: { url: "/about", internal: true },
+      link: { url: "/", internal: true },
       icon: QuestionIcon,
     },
     {
@@ -98,6 +127,7 @@ const LeftMenu = ({ leftSidebarOpen }) => {
       </div>
       <div className="left-menu sticky-below-nav flex-col border-p">
         <div className="o-y-scroll o-x-hidden mt8 mb8 h100 scrollbar">
+          <MenuContainer title={"User"} menuItems={userMenuItems} />
           <MenuContainer title={"Company"} menuItems={companyMenuItems} />
           <MenuContainer
             title={"Calculators"}
@@ -113,9 +143,12 @@ const LeftMenu = ({ leftSidebarOpen }) => {
 const mapStateToProps = (state) => {
   return {
     leftSidebarOpen: state.navigation.sidebarOpen.left,
+    email: state.user.data?.email,
   };
 };
 
-const mapDispatchToProps = null;
+const mapDispatchToProps = {
+  setTab,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeftMenu);

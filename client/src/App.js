@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { initUser } from "./reducers/userReducer";
 import { CONSTANTS } from "./static/constants";
 
@@ -30,7 +30,7 @@ const App = ({
 
   if (isUserFetching) {
     return <Loader />;
-  } else if (user.data?.email) {
+  } else {
     return (
       <div className="w100 fade-in">
         <Router>
@@ -38,6 +38,7 @@ const App = ({
           {overlay && <Overlay />}
           {saveDashboardModal && <SaveDashboardModal />}
           <Notifications />
+          <Route exact path="/login" render={() => <Login />} />
           <NavigationBar />
           <div className="w100 flex-row justify-c">
             <LeftMenu />
@@ -45,13 +46,6 @@ const App = ({
           </div>
         </Router>
       </div>
-    );
-  } else {
-    return (
-      <>
-        <Login />
-        <Notifications />
-      </>
     );
   }
 };

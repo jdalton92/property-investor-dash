@@ -3,6 +3,7 @@ import loginService from "../services/login";
 import { CONSTANTS } from "../static/constants";
 import { setToken, destroyToken } from "../utils/tokenHelper";
 import userService from "../services/user";
+import dashboardService from "../services/dashboard";
 
 const initialState = { isFetching: true, data: {} };
 
@@ -43,6 +44,13 @@ export const initUser = () => {
           type: "SET_USER",
           data: user,
         });
+
+        const dashboards = await dashboardService.getAllDash();
+
+        dispatch({
+          type: "INIT_DASHBOARDS",
+          data: dashboards,
+        });
       } else {
         dispatch({
           type: "USER_REQUEST_FAIL",
@@ -77,6 +85,13 @@ export const demoUser = () => {
       dispatch({
         type: "SET_USER",
         data: user,
+      });
+
+      const dashboards = await dashboardService.getAllDash();
+
+      dispatch({
+        type: "INIT_DASHBOARDS",
+        data: dashboards,
       });
     } catch (e) {
       console.log(e);
@@ -121,6 +136,13 @@ export const createUser = (email, password, checkPassword) => {
         type: "SET_USER",
         data: user,
       });
+
+      const dashboards = await dashboardService.getAllDash();
+
+      dispatch({
+        type: "INIT_DASHBOARDS",
+        data: dashboards,
+      });
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
@@ -152,6 +174,14 @@ export const logoutUser = () => {
     dispatch({
       type: "CLEAR_USER",
     });
+    dispatch({
+      type: "SET_NOTIFICATION",
+      content: {
+        id: uuid(),
+        message: "Logged Out",
+        type: CONSTANTS.NOTIFICATION.SUCCESS,
+      },
+    });
   };
 };
 
@@ -176,6 +206,13 @@ export const loginUser = (email, password) => {
       dispatch({
         type: "SET_USER",
         data: user,
+      });
+
+      const dashboards = await dashboardService.getAllDash();
+
+      dispatch({
+        type: "INIT_DASHBOARDS",
+        data: dashboards,
       });
     } catch (e) {
       console.log(e);
@@ -221,6 +258,13 @@ export const updateUser = (
       dispatch({
         type: "SET_USER",
         data: user,
+      });
+
+      const dashboards = await dashboardService.getAllDash();
+
+      dispatch({
+        type: "INIT_DASHBOARDS",
+        data: dashboards,
       });
     } catch (e) {
       dispatch({

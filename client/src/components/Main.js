@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Route, Switch } from "react-router-dom";
-import { getDashboards } from "../reducers/dashboardReducer";
 
 import CustomRoute from "./Shared/CustomRoute";
 import Contact from "./Contact";
@@ -20,15 +19,11 @@ import DeveloperDashboard from "./Dashboards/DeveloperDashboard";
 import SavedDashboards from "./SavedDashboards";
 import NotFound from "./NotFound";
 
-const Main = ({ getDashboards }) => {
-  useEffect(() => {
-    getDashboards();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+const Main = () => {
   return (
     <div className="main p8 w100 border-p">
       <Switch>
+        <Route exact path="/" render={() => <About />} />
         <CustomRoute path="/settings" render={() => <Settings />} />
         <CustomRoute
           path="/saved-dashboards"
@@ -40,7 +35,6 @@ const Main = ({ getDashboards }) => {
           render={() => <TermsAndConditions />}
         />
         <Route path="/privacy-policy" render={() => <PrivacyPolicy />} />
-        <Route path="/about" render={() => <About />} />
         <Route
           exact
           path="/calculator-types"
@@ -54,18 +48,24 @@ const Main = ({ getDashboards }) => {
         />
         <Route exact path="/investor/edit" render={() => <InvestorForm />} />
         <Route exact path="/developer/edit" render={() => <DeveloperForm />} />
-        <Route
+        <CustomRoute
           path="/owner-occupier/edit/:id"
           render={() => <OccupierForm />}
         />
-        <Route path="/investor/edit/:id" render={() => <InvestorForm />} />
-        <Route path="/developer/edit/:id" render={() => <DeveloperForm />} />
+        <CustomRoute
+          path="/investor/edit/:id"
+          render={() => <InvestorForm />}
+        />
+        <CustomRoute
+          path="/developer/edit/:id"
+          render={() => <DeveloperForm />}
+        />
         <Route
           exact
           path="/owner-occupier/dash"
           render={() => <OccupierDashboard />}
         />
-        <Route
+        <CustomRoute
           path="/owner-occupier/dash/:id"
           render={() => <OccupierDashboard />}
         />
@@ -74,13 +74,16 @@ const Main = ({ getDashboards }) => {
           path="/investor/dash"
           render={() => <InvestorDashboard />}
         />
-        <Route path="/investor/dash/:id" render={() => <InvestorDashboard />} />
+        <CustomRoute
+          path="/investor/dash/:id"
+          render={() => <InvestorDashboard />}
+        />
         <Route
           exact
           path="/developer/dash"
           render={() => <DeveloperDashboard />}
         />
-        <Route
+        <CustomRoute
           path="/developer/dash/:id"
           render={() => <DeveloperDashboard />}
         />
@@ -97,8 +100,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = {
-  getDashboards,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default connect(mapStateToProps, null)(Main);

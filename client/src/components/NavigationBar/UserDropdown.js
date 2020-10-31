@@ -2,14 +2,20 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { CONSTANTS } from "../../static/constants";
-import { setDropdown } from "../../reducers/navigationReducer";
+import { setDropdown, setTab } from "../../reducers/navigationReducer";
 import { logoutUser } from "../../reducers/userReducer";
 import Button from "../Shared/Button";
 import SettingsIcon from "../../styles/svg/settings.svg";
 import LogoutIcon from "../../styles/svg/logout.svg";
 import DashboardIcon from "../../styles/svg/dashboard.svg";
 
-const UserDropdown = ({ showDropdown, setDropdown, logoutUser, email }) => {
+const UserDropdown = ({
+  showDropdown,
+  setDropdown,
+  logoutUser,
+  email,
+  setTab,
+}) => {
   const history = useHistory();
 
   const handleLink = (url) => {
@@ -24,15 +30,27 @@ const UserDropdown = ({ showDropdown, setDropdown, logoutUser, email }) => {
     history.push("/");
   };
 
+  const handleLogin = (e) => {
+    e.preventDefault();
+    setTab("login", CONSTANTS.TABS.LOGIN.LOGIN);
+    history.push("/login");
+  };
+
+  const handleCreate = (e) => {
+    e.preventDefault();
+    setTab("login", CONSTANTS.TABS.LOGIN.CREATEUSER);
+    history.push("/login");
+  };
+
   return (
     <>
-      {showDropdown ? (
+      {showDropdown && email && (
         <div className="user-dropdown flex-col pt8 pb8 fade-in r bs-3">
           <span className="bold ml8 f16">{email}</span>
           <Button
             extraClass={"button-transp-p align-c"}
             captionClass={"ml8"}
-            caption={"saved dashboards"}
+            caption={"Saved Dashboards"}
             onClick={() => handleLink("/saved-dashboards")}
             iconUrl={DashboardIcon}
             iconColor={"black"}
@@ -40,7 +58,7 @@ const UserDropdown = ({ showDropdown, setDropdown, logoutUser, email }) => {
           <Button
             extraClass={"button-transp-p align-c"}
             captionClass={"ml8"}
-            caption={"account settings"}
+            caption={"Account Settings"}
             onClick={() => handleLink("/settings")}
             iconUrl={SettingsIcon}
             iconColor={"black"}
@@ -48,13 +66,33 @@ const UserDropdown = ({ showDropdown, setDropdown, logoutUser, email }) => {
           <Button
             extraClass={"button-transp-p align-c"}
             captionClass={"ml8"}
-            caption={"logout"}
+            caption={"Logout"}
             onClick={handleLogout}
             iconUrl={LogoutIcon}
             iconColor={"black"}
           />
         </div>
-      ) : null}
+      )}
+      {showDropdown && !email && (
+        <div className="user-dropdown flex-col pt8 pb8 fade-in r bs-3">
+          <Button
+            extraClass={"button-transp-p align-c"}
+            captionClass={"ml8"}
+            caption={"Login"}
+            onClick={handleLogin}
+            iconUrl={DashboardIcon}
+            iconColor={"black"}
+          />
+          <Button
+            extraClass={"button-transp-p align-c"}
+            captionClass={"ml8"}
+            caption={"Create Account"}
+            onClick={handleCreate}
+            iconUrl={SettingsIcon}
+            iconColor={"black"}
+          />
+        </div>
+      )}
     </>
   );
 };
@@ -69,6 +107,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   logoutUser,
   setDropdown,
+  setTab,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserDropdown);
