@@ -29,7 +29,7 @@ const NavigationBar = ({ setDropdown, showDropdown }) => {
       <div className="navbar-main flex-row align-c justify-e h100 w100 p8 relative">
         <Burger customClass={"nav-burger s1080"} />
         <h1
-          className="w100 font-white bold title ts-3 link-underline"
+          className="w100 font-white bold title ts-3 link"
           onClick={() => history.push("/")}
         >
           PropertyInvestorDash

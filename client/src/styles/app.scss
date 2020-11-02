@@ -120,6 +120,10 @@
   text-align: start;
 }
 
+.underline {
+  text-decoration: underline;
+}
+
 .link-underline {
   text-decoration: underline;
   &:hover {
@@ -673,6 +677,12 @@
 
 .mt60 {
   margin-top: 80px !important;
+}
+
+@media screen and (max-width: 768px) {
+  .mt-md-48 {
+    margin-top: 48px !important;
+  }
 }
 
 .mb0 {

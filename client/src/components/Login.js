@@ -69,7 +69,7 @@ const Login = ({
       <div className="login-container flex-col justify-c m8">
         <div className="login r p20 m8 bs-3 bg-1 mw450 m-auto">
           <h1
-            className="bold text-center ts-4 link-underline"
+            className="bold text-center ts-4 link"
             onClick={() => history.push("/")}
           >
             PropertyInvestorDash
@@ -263,7 +263,7 @@ const Login = ({
         </div>
         <div className="login mw450">
           <span className="link font-n1" onClick={handleForgotPassword}>
-            Forgot your password?
+            Forgot your password
           </span>
         </div>
         <div className="login mw450">
