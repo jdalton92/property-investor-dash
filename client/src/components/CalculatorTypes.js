@@ -107,7 +107,7 @@ const CalculatorTypes = () => {
           <button
             type="submit"
             className="form-button-p bs-3 font-white mt20 pt4 pb4 flex-row align-c justify-c"
-            onClick={() => handleLink("/dashboard/edit")}
+            onClick={() => handleLink("/developer/edit")}
           >
             <Icon
               size={"20px"}
