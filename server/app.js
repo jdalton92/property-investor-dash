@@ -29,7 +29,7 @@ const databaseConnection = async () => {
     });
     logger.info("connected to MongoDB");
   } catch (e) {
-    logger.info("error connection to MongoDB:", e.message);
+    logger.info("error connecting to MongoDB:", e.message);
   }
 };
 databaseConnection();

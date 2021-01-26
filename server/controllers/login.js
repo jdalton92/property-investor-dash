@@ -35,4 +35,26 @@ loginRouter.post("/", async (request, response, next) => {
   }
 });
 
+loginRouter.post("/demo", async (request, response, next) => {
+  try {
+    const user = await User.findOne({ email: process.env.DEMO_ACCOUNT });
+
+    const userForToken = {
+      email: user.email,
+      id: user._id,
+    };
+
+    const token = jwt.sign(userForToken, process.env.SECRET);
+
+    response.status(200).send({
+      token,
+      email: user.email,
+      messagesRead: user.messagesRead,
+      id: user._id,
+    });
+  } catch (e) {
+    next(e);
+  }
+});
+
 module.exports = loginRouter;

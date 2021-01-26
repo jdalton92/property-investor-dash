@@ -75,9 +75,11 @@ export const demoUser = () => {
       type: "USER_REQUEST",
     });
     try {
-      const user = CONSTANTS.DEMOTOKEN;
+      const user = await loginService.demo();
+
       window.localStorage.setItem("loggedUser", JSON.stringify(user));
       setToken(user.token);
+
       dispatch({
         type: "SET_MESSAGES",
         messages: user.messagesRead,
@@ -94,7 +96,6 @@ export const demoUser = () => {
         data: dashboards,
       });
     } catch (e) {
-      console.log(e);
       dispatch({
         type: "SET_NOTIFICATION",
         content: {
