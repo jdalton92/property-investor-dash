@@ -1,4 +1,3 @@
-const bodyParser = require("body-parser");
 const config = require("./utils/config");
 const express = require("express");
 const path = require("path");
@@ -17,7 +16,7 @@ const emailRouter = require("./controllers/email");
 
 app.use(cors());
 app.use(express.static("build"));
-app.use(bodyParser.json());
+app.use(express.json());
 
 const databaseConnection = async () => {
   try {

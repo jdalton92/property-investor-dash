@@ -7,6 +7,12 @@ loginRouter.post("/", async (request, response, next) => {
   try {
     const { email, password } = request.body;
 
+    if (!email || !password) {
+      return response.status(401).json({
+        error: "provide both email and password",
+      });
+    }
+
     const user = await User.findOne({ email });
     const passwordCorrect =
       user === null ? false : await bcrypt.compare(password, user.passwordHash);

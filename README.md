@@ -57,6 +57,18 @@ $ npm install
 $ npm run watch
 ```
 
+## Testing
+
+```sh
+npm test
+```
+
+**Optionally:** specify a specific file to test with `-t` eg. to test `server/controllers/__tests__/dashboards.test.js` use the following command
+
+```sh
+npm test -t dashboards
+```
+
 ## Built with
 
 - [create-react-app](https://github.com/facebook/create-react-app) - Create React App is a comfortable environment for learning React, and is the best way to start building a new single-page application in React.

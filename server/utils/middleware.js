@@ -45,6 +45,8 @@ const errorHandler = (error, request, response, next) => {
     return response.status(401).json({ error: "invalid token" });
   } else if (error.name === "Error") {
     return response.status(400).json({ error: "invalid request" });
+  } else if (error.name === "MongooseError") {
+    return response.status(500).json({ error: "server error" });
   }
 
   logger.error(error.message);
