@@ -3,6 +3,7 @@ const middleware = require("../utils/middleware");
 const jwt = require("jsonwebtoken");
 const Dashboard = require("../models/dashboard");
 const User = require("../models/user");
+const ValidationError = require("../utils/error");
 
 dashboardRouter.get(
   "/",
@@ -17,7 +18,7 @@ dashboardRouter.get(
         user: user._id,
       }).populate("user", { email: 1 });
 
-      response.status(200).json(dashboards);
+      return response.status(200).json(dashboards);
     } catch (e) {
       next(e);
     }
@@ -33,7 +34,7 @@ dashboardRouter.get(
         request.params.id
       ).populate("user", { email: 1 });
 
-      response.status(200).json(dashboard);
+      return response.status(200).json(dashboard);
     } catch (e) {
       next(e);
     }
@@ -71,7 +72,7 @@ dashboardRouter.post(
         name: 1,
       });
 
-      response.status(201).json(result);
+      return response.status(201).json(result);
     } catch (e) {
       next(e);
     }
@@ -119,9 +120,9 @@ dashboardRouter.delete(
 
       if (dashboard.user.toString() === decodedToken.id) {
         await Dashboard.findByIdAndRemove(request.params.id);
-        response.status(204).end();
+        return response.status(204).end();
       } else {
-        response.status(404).end();
+        return next(new ValidationError(404, "Not found"));
       }
     } catch (e) {
       next(e);

@@ -1,6 +1,7 @@
 const emailRouter = require("express").Router();
 const nodemailer = require("nodemailer");
 const mailGun = require("nodemailer-mailgun-transport");
+const ValidationError = require("../utils/error");
 
 emailRouter.post("/", async (request, response, next) => {
   try {
@@ -8,9 +9,7 @@ emailRouter.post("/", async (request, response, next) => {
     const date = new Intl.DateTimeFormat("en-GB").format(Date.now());
 
     if (!fullName || !email || !message) {
-      return response.status(400).send({
-        error: "Full name, email, and message required",
-      });
+      return next(new ValidationError(400, "Full name, email, and message required"));
     }
 
     const auth = {
@@ -39,7 +38,7 @@ emailRouter.post("/", async (request, response, next) => {
 
     await transporter.sendMail(mailOptions);
 
-    response.status(200).send({
+    return response.status(200).send({
       message: "Email sent",
     });
   } catch (e) {

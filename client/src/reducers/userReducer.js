@@ -215,7 +215,6 @@ export const loginUser = (email, password) => {
         data: dashboards,
       });
     } catch (e) {
-      console.log(e);
       dispatch({
         type: "USER_REQUEST_FAIL",
       });
@@ -223,7 +222,7 @@ export const loginUser = (email, password) => {
         type: "SET_NOTIFICATION",
         content: {
           id: uuid(),
-          message: "wrong email or password",
+          message: e.response.data.message,
           type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });

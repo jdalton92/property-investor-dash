@@ -3,35 +3,30 @@ const middleware = require("../utils/middleware");
 const bcrypt = require("bcryptjs");
 const usersRouter = require("express").Router();
 const User = require("../models/user");
+const ValidationError = require("../utils/error");
 
 usersRouter.post("/", async (request, response, next) => {
   try {
     const { password, email, checkPassword } = request.body;
 
     if (!email) {
-      return response.status(400).send({
-        error: "Email required",
-      });
+      return next(new ValidationError(400, "Email required"));
     }
 
     const existingUser = await User.find({ email: email });
 
     if (existingUser.length > 0) {
-      return response.status(400).send({
-        error: "Email already has existing account",
-      });
+      return next(
+        new ValidationError(400, "Email already has existing account")
+      );
     }
 
     if (password !== checkPassword) {
-      return response.status(400).send({
-        error: "Passwords must match",
-      });
+      return next(new ValidationError(400, "Passwords must match"));
     }
 
     if (!password || password.length < 3) {
-      return response.status(400).send({
-        error: "Pasword minimum length 3",
-      });
+      return next(new ValidationError(400, "Pasword minimum length 3"));
     }
 
     const saltRounds = 10;
@@ -44,7 +39,7 @@ usersRouter.post("/", async (request, response, next) => {
 
     const savedUser = await user.save();
 
-    response.json(savedUser);
+    return response.json(savedUser);
   } catch (e) {
     next(e);
   }
@@ -54,28 +49,22 @@ usersRouter.put(
   "/:id/helper-messages",
   middleware.tokenValidate,
   async (request, response, next) => {
-    const user = await User.findByIdAndUpdate(request.params.id);
+    let user = await User.findById(request.params.id);
     try {
       const readMessage = request.body.type;
 
       if (user.messagesRead.indexOf(readMessage) === -1) {
         messagesRead = [...user.messagesRead, readMessage];
-        const newUser = await User.findByIdAndUpdate(
+        user = await User.findByIdAndUpdate(
           request.params.id,
           { messagesRead },
-          {
-            new: true,
-          }
+          { new: true }
         );
-
-        response.status(200).send({
-          newUser,
-        });
-      } else {
-        response.status(200).send({
-          user,
-        });
       }
+
+      return response.status(200).send({
+        user,
+      });
     } catch (e) {
       next(e);
     }
@@ -98,15 +87,11 @@ usersRouter.put(
       const existingEmail = await User.find({ email: newEmail });
 
       if (existingEmail.length > 0) {
-        return response.status(401).json({
-          error: "Email already in use",
-        });
+        return next(new ValidationError(400, "Email already in use"));
       }
 
       if (!user) {
-        return response.status(401).json({
-          error: "invalid user id",
-        });
+        return next(new ValidationError(400, "Invalid user id"));
       }
 
       // Update password or email depending on
@@ -121,21 +106,15 @@ usersRouter.put(
             : await bcrypt.compare(oldPassword, user.passwordHash);
 
         if (!(user && passwordCorrect)) {
-          return response.status(401).json({
-            error: "invalid user or password",
-          });
+          return next(new ValidationError(401, "Invalid user or password"));
         }
 
         if (newPassword !== checkPassword) {
-          return response.status(400).send({
-            error: "Passwords must match",
-          });
+          return next(new ValidationError(400, "Passwords must match"));
         }
 
         if (!newPassword || newPassword.length < 3) {
-          return response.status(400).send({
-            error: "Pasword minimum length 3",
-          });
+          return next(new ValidationError(400, "Pasword minimum length 3"));
         }
         const saltRounds = 10;
         passwordHash = await bcrypt.hash(newPassword, saltRounds);
@@ -189,9 +168,7 @@ usersRouter.delete("/:id", async (request, response, next) => {
       await User.findByIdAndDelete(request.params.id);
       response.status(204).end();
     } else {
-      return response.status(401).json({
-        error: "invalid user or password",
-      });
+      return next(new ValidationError(401, "Invalid user or password"));
     }
   } catch (e) {
     next(e);

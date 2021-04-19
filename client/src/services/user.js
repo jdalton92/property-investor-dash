@@ -32,4 +32,5 @@ const deleteUser = async (password, id) => {
   return response.data;
 };
 
+// eslint-disable-next-line
 export default { create, update, readMessage, deleteUser };

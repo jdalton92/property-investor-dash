@@ -11,7 +11,6 @@ describe("/api/dashboards", () => {
         email: "test@email.com",
         password: "test",
       });
-
       token = res.body.token;
       done();
     } catch (e) {
@@ -33,7 +32,7 @@ describe("/api/dashboards", () => {
     const res = await request(app).get("/api/dashboards");
 
     expect(res.statusCode).toEqual(401);
-    expect(res.body.error).toEqual("Login required");
+    expect(res.body.message).toEqual("Login required");
   });
 
   it("Authorized GET / ", async () => {

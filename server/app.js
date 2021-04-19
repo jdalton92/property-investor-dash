@@ -28,14 +28,15 @@ const databaseConnection = async () => {
     });
     logger.info("connected to MongoDB");
   } catch (e) {
-    logger.info("error connection to MongoDB:", e.message);
+    logger.error("error connection to MongoDB:", e.message);
   }
 };
 databaseConnection();
 
-app.use(middleware.errorHandler);
+if (process.env.NODE_ENV !== "production") {
+  app.use(middleware.requestLogger);
+}
 app.use(middleware.tokenExtractor);
-app.use(middleware.requestLogger);
 
 app.use("/api/login", loginRouter);
 app.use("/api/dashboards", dashboardsRouter);
@@ -44,5 +45,7 @@ app.use("/api/email", emailRouter);
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "build", "index.html"));
 });
+
+app.use(middleware.errorHandler);
 
 module.exports = app;

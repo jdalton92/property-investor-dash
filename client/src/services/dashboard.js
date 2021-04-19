@@ -31,10 +31,5 @@ const removeDash = async (id) => {
   return response.data;
 };
 
-export default {
-  getAllDash,
-  getDash,
-  saveDash,
-  updateDash,
-  removeDash,
-};
+// eslint-disable-next-line
+export default { getAllDash, getDash, saveDash, updateDash, removeDash };

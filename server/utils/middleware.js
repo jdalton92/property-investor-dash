@@ -1,5 +1,6 @@
 const logger = require("./logger");
 const jwt = require("jsonwebtoken");
+const ValidationError = require("../utils/error");
 
 const requestLogger = (request, response, next) => {
   logger.info("Method:", request.method);
@@ -24,32 +25,31 @@ const tokenExtractor = (request, response, next) => {
 
 const tokenValidate = async (request, response, next) => {
   if (!request.token) {
-    return response.status(401).json({ error: "Login required" });
+    return next(new ValidationError(401, "Login required"));
   }
 
   const decodedToken = jwt.verify(request.token, process.env.SECRET);
 
   if (!decodedToken.id) {
-    return response.status(401).json({ error: "Token missing or invalid" });
+    return next(new ValidationError(401, "Token missing or invalid"));
   }
 
   next();
 };
 
 const errorHandler = (error, request, response, next) => {
-  if (error.name === "CastError" && error.kind === "ObjectId") {
-    return response.status(400).send({ error: "malformatted id" });
-  } else if (error.name === "ValidationError" || "ValidatorError") {
-    return response.status(400).json({ error: error.message });
-  } else if (error.name === "JsonWebTokenError") {
-    return response.status(401).json({ error: "invalid token" });
-  } else if (error.name === "Error") {
-    return response.status(400).json({ error: "invalid request" });
-  } else if (error.name === "MongooseError") {
-    return response.status(500).json({ error: "server error" });
+  if (error) {
+    logger.error(error.message);
+    const status = error.status || error.statusCode || 500;
+    const message =
+      error.message || error.statusMessage || "Internal Server Error";
+
+    return response.status(status).send({
+      status,
+      message,
+    });
   }
 
-  logger.error(error.message);
   next(error);
 };
 

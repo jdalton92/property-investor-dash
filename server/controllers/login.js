@@ -2,15 +2,14 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const loginRouter = require("express").Router();
 const User = require("../models/user");
+const ValidationError = require("../utils/error");
 
 loginRouter.post("/", async (request, response, next) => {
   try {
     const { email, password } = request.body;
 
     if (!email || !password) {
-      return response.status(401).json({
-        error: "provide both email and password",
-      });
+      return next(new ValidationError(400, "Provide both email and password"));
     }
 
     const user = await User.findOne({ email });
@@ -18,9 +17,7 @@ loginRouter.post("/", async (request, response, next) => {
       user === null ? false : await bcrypt.compare(password, user.passwordHash);
 
     if (!(user && passwordCorrect)) {
-      return response.status(401).json({
-        error: "invalid email or password",
-      });
+      return next(new ValidationError(400, "Invalid email or password"));
     }
 
     const userForToken = {
@@ -30,7 +27,7 @@ loginRouter.post("/", async (request, response, next) => {
 
     const token = jwt.sign(userForToken, process.env.SECRET);
 
-    response.status(200).send({
+    return response.status(200).send({
       token,
       email: user.email,
       messagesRead: user.messagesRead,
