@@ -1,5 +1,6 @@
 import { v4 as uuid } from "uuid";
 import userService from "../services/user";
+import { CONSTANTS } from "../static/constants";
 
 const initialState = {
   messagesRead: [],
@@ -11,24 +12,27 @@ const notificationReducer = (state = initialState, action) => {
   switch (action.type) {
     case "SET_MESSAGE":
       newState = { ...state };
-      newState.messagesRead = [...state.messagesRead, action.message];
+      newState.messagesRead = [...state.messagesRead, action.payLoad.message];
       return newState;
     case "SET_MESSAGES":
       if (action.messages && action.messages.length) {
         newState = { ...state };
-        newState.messagesRead = [...state.messagesRead, ...action.messages];
+        newState.messagesRead = [
+          ...state.messagesRead,
+          ...action.payLoad.messages,
+        ];
         return newState;
       } else {
         return state;
       }
     case "SET_NOTIFICATION":
       newState = { ...state };
-      newState.notifications = [...state.notifications, action.content];
+      newState.notifications = [...state.notifications, action.payLoad];
       return newState;
     case "CLEAR_NOTIFICATION":
       newState = { ...state };
       newState.notifications = state.notifications.filter(
-        (n) => n.id !== action.id
+        (n) => n.id !== action.payLoad.id
       );
       return newState;
     default:
@@ -41,7 +45,7 @@ export const setNotification = (message, type) => {
     const id = uuid();
     dispatch({
       type: "SET_NOTIFICATION",
-      content: {
+      payLoad: {
         id,
         message,
         type,
@@ -54,32 +58,31 @@ export const clearNotification = (id) => {
   return (dispatch) => {
     dispatch({
       type: "CLEAR_NOTIFICATION",
-      id,
+      payLoad: { id },
     });
   };
 };
 
-export const hideHelperMessage = (userId, type) => {
+export const hideHelperMessage = (userId, message) => {
   return (dispatch) => {
     try {
-      // Only sync with api if user is logged in
       if (userId) {
-        userService.readMessage(userId, type);
+        userService.update(userId, { messagesRead: [message] });
         let token = JSON.parse(window.localStorage.getItem("loggedUser"));
-        token.messagesRead = [...token.messagesRead, type];
+        token.messagesRead = [...token.messagesRead, message];
         window.localStorage.setItem("loggedUser", JSON.stringify(token));
       }
       dispatch({
         type: "SET_MESSAGE",
-        message: type,
+        payLoad: { message },
       });
     } catch (e) {
       console.log(e);
       dispatch({
         type: "SET_NOTIFICATION",
-        content: {
+        payLoad: {
           message: e.response.data.error,
-          type: "error",
+          type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });
     }

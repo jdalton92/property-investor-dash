@@ -97,9 +97,7 @@ dashboardRouter.put(
       const result = await Dashboard.findByIdAndUpdate(
         request.params.id,
         updatedDashboard,
-        {
-          new: true,
-        }
+        { new: true }
       );
 
       response.status(200).json(result);

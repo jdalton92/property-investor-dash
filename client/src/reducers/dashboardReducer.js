@@ -73,7 +73,7 @@ const dashboardReducer = (state = initialState, action) => {
       newState = { ...state };
       newState.isFetching = false;
       newState.currentDashboard.preSave = true;
-      newState.currentDashboard.data.values = action.data;
+      newState.currentDashboard.data.values = action.payLoad.dashboard;
       return newState;
     case "PRE_SAVE_DASHBOARD":
       newState = { ...state };
@@ -82,7 +82,7 @@ const dashboardReducer = (state = initialState, action) => {
     case "INIT_DASHBOARDS":
       return {
         isFetching: false,
-        savedDashboards: action.data,
+        savedDashboards: action.payLoad.dashboards,
         currentDashboard: {
           preSave: false,
           data: {
@@ -94,17 +94,20 @@ const dashboardReducer = (state = initialState, action) => {
       newState = { ...state };
       newState.isFetching = false;
       newState.currentDashboard.preSave = false;
-      newState.currentDashboard.data = action.data;
+      newState.currentDashboard.data = action.payLoad.dashboard;
       return newState;
     case "SAVE_DASHBOARD":
       newState = { ...state };
       newState.isFetching = false;
       newState.currentDashboard.preSave = false;
-      newState.savedDashboards = [...state.savedDashboards, action.data];
+      newState.savedDashboards = [
+        ...state.savedDashboards,
+        action.payLoad.dashboard,
+      ];
       return newState;
     case "UPDATE_DASHBOARDS":
       const dashboardList = state.savedDashboards.filter(
-        (d) => d._id !== action.data._id
+        (d) => d._id !== action.payLoad.dashboard._id
       );
       return {
         isFetching: false,
@@ -120,7 +123,7 @@ const dashboardReducer = (state = initialState, action) => {
       return {
         isFetching: false,
         savedDashboards: [
-          ...state.savedDashboards.filter((d) => d._id !== action.id),
+          ...state.savedDashboards.filter((d) => d._id !== action.payLoad.id),
         ],
         currentDashboard: {
           preSave: false,
@@ -144,7 +147,7 @@ export const getDashboards = () => {
 
       dispatch({
         type: "INIT_DASHBOARDS",
-        data: dashboards,
+        payLoad: { dashboards },
       });
     } catch (e) {
       dispatch({
@@ -152,7 +155,7 @@ export const getDashboards = () => {
       });
       dispatch({
         type: "SET_NOTIFICATION",
-        content: {
+        payLoad: {
           id: uuid(),
           message: e.response.data.error,
           type: CONSTANTS.NOTIFICATION.ERROR,
@@ -172,7 +175,7 @@ export const getDashboard = (id) => {
 
       dispatch({
         type: "GET_DASHBOARD",
-        data: dashboard,
+        payLoad: { dashboard },
       });
     } catch (e) {
       dispatch({
@@ -180,7 +183,7 @@ export const getDashboard = (id) => {
       });
       dispatch({
         type: "SET_NOTIFICATION",
-        content: {
+        payLoad: {
           id: uuid(),
           message: e.response.data.error,
           type: CONSTANTS.NOTIFICATION.ERROR,
@@ -194,7 +197,7 @@ export const testDashboard = (dashboard) => {
   return (dispatch) => {
     dispatch({
       type: "TEST_DASHBOARD",
-      data: dashboard,
+      payLoad: { dashboard },
     });
   };
 };
@@ -217,11 +220,13 @@ export const saveDashboard = (dashboardObject) => {
 
       dispatch({
         type: "SAVE_DASHBOARD",
-        data: newDash,
+        payLoad: {
+          dashboard: newDash,
+        },
       });
       dispatch({
         type: "SET_NOTIFICATION",
-        content: {
+        payLoad: {
           id: uuid(),
           message: `${newDash.description} saved`,
           type: CONSTANTS.NOTIFICATION.SUCCESS,
@@ -233,7 +238,7 @@ export const saveDashboard = (dashboardObject) => {
       });
       dispatch({
         type: "SET_NOTIFICATION",
-        content: {
+        payLoad: {
           id: uuid(),
           message: e.response.data.error,
           type: CONSTANTS.NOTIFICATION.ERROR,
@@ -253,11 +258,13 @@ export const updateDashboard = (dashboardObject) => {
 
       dispatch({
         type: "UPDATE_DASHBOARDS",
-        data: newDash,
+        payLoad: {
+          dashboard: newDash,
+        },
       });
       dispatch({
         type: "SET_NOTIFICATION",
-        content: {
+        payLoad: {
           id: uuid(),
           message: `${newDash.description} saved`,
           type: CONSTANTS.NOTIFICATION.SUCCESS,
@@ -269,7 +276,7 @@ export const updateDashboard = (dashboardObject) => {
       });
       dispatch({
         type: "SET_NOTIFICATION",
-        content: {
+        payLoad: {
           id: uuid(),
           message: e.response.data.error,
           type: CONSTANTS.NOTIFICATION.ERROR,
@@ -289,11 +296,13 @@ export const deleteDashboard = (id) => {
 
       dispatch({
         type: "DELETE_DASHBOARD",
-        id,
+        payLoad: {
+          id,
+        },
       });
       dispatch({
         type: "SET_NOTIFICATION",
-        content: {
+        payLoad: {
           id: uuid(),
           message: "Dashboard delected",
           type: CONSTANTS.NOTIFICATION.SUCCESS,
@@ -306,7 +315,7 @@ export const deleteDashboard = (id) => {
       });
       dispatch({
         type: "SET_NOTIFICATION",
-        content: {
+        payLoad: {
           id: uuid(),
           message: e.response.data.error,
           type: CONSTANTS.NOTIFICATION.ERROR,

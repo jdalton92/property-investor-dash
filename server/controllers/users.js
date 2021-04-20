@@ -16,9 +16,7 @@ usersRouter.post("/", async (request, response, next) => {
     const existingUser = await User.find({ email: email });
 
     if (existingUser.length > 0) {
-      return next(
-        new ValidationError(400, "Email already has existing account")
-      );
+      return next(new ValidationError(400, "Email in use"));
     }
 
     if (password !== checkPassword) {
@@ -31,124 +29,100 @@ usersRouter.post("/", async (request, response, next) => {
 
     const saltRounds = 10;
     const passwordHash = await bcrypt.hash(password, saltRounds);
-
-    const user = new User({
-      email,
-      passwordHash,
-    });
-
+    const user = new User({ email, passwordHash });
     const savedUser = await user.save();
 
-    return response.json(savedUser);
+    return response.status(201).json(savedUser);
   } catch (e) {
+    console.log(e);
     next(e);
   }
 });
-
-usersRouter.put(
-  "/:id/helper-messages",
-  middleware.tokenValidate,
-  async (request, response, next) => {
-    let user = await User.findById(request.params.id);
-    try {
-      const readMessage = request.body.type;
-
-      if (user.messagesRead.indexOf(readMessage) === -1) {
-        messagesRead = [...user.messagesRead, readMessage];
-        user = await User.findByIdAndUpdate(
-          request.params.id,
-          { messagesRead },
-          { new: true }
-        );
-      }
-
-      return response.status(200).send({
-        user,
-      });
-    } catch (e) {
-      next(e);
-    }
-  }
-);
 
 usersRouter.put(
   "/:id",
   middleware.tokenValidate,
   async (request, response, next) => {
     try {
-      const {
-        newEmail,
-        oldPassword,
-        newPassword,
-        checkPassword,
-      } = request.body;
+      const userData = request.body;
+      let updatedUserData = {};
 
       const user = await User.findById(request.params.id);
-      const existingEmail = await User.find({ email: newEmail });
-
-      if (existingEmail.length > 0) {
-        return next(new ValidationError(400, "Email already in use"));
-      }
-
       if (!user) {
         return next(new ValidationError(400, "Invalid user id"));
       }
 
-      // Update password or email depending on
-      // what is specified by user
-      let passwordHash = user.passwordHash;
-      let email = user.email;
+      // Update Email
+      let token;
+      if (userData.newEmail) {
+        const existingEmail = await User.find({ email: userData.newEmail });
 
-      if (newPassword) {
+        if (existingEmail.length > 0) {
+          return next(new ValidationError(400, "Email already in use"));
+        }
+
+        const userForToken = {
+          email: userData.newEmail,
+          id: user._id,
+        };
+
+        token = jwt.sign(userForToken, process.env.SECRET);
+
+        updatedUserData.email = userData.newEmail;
+      }
+
+      // Update Password
+      if (
+        userData.oldPassword &&
+        (!userData.newPassword || userData.newPassword.length < 3)
+      ) {
+        return next(new ValidationError(400, "Pasword minimum length 3"));
+      }
+
+      if (userData.newPassword) {
+        if (!userData.oldPassword) {
+          return next(new ValidationError(400, "Old password is required"));
+        }
+
         const passwordCorrect =
           user === null
             ? false
-            : await bcrypt.compare(oldPassword, user.passwordHash);
+            : await bcrypt.compare(userData.oldPassword, user.passwordHash);
 
         if (!(user && passwordCorrect)) {
           return next(new ValidationError(401, "Invalid user or password"));
         }
 
-        if (newPassword !== checkPassword) {
+        if (userData.newPassword !== userData.checkPassword) {
           return next(new ValidationError(400, "Passwords must match"));
         }
 
-        if (!newPassword || newPassword.length < 3) {
-          return next(new ValidationError(400, "Pasword minimum length 3"));
-        }
         const saltRounds = 10;
-        passwordHash = await bcrypt.hash(newPassword, saltRounds);
+        updatedUserData.passwordHash = await bcrypt.hash(
+          newPassword,
+          saltRounds
+        );
       }
 
-      if (newEmail) {
-        email = newEmail;
+      // Messages read
+      if (userData.messagesRead) {
+        updatedUserData.messagesRead = user.messagesRead;
+        userData.messagesRead.forEach((message) => {
+          if (user.messagesRead.indexOf(message) === -1) {
+            updatedUserData.messagesRead.concat(message);
+          }
+        });
       }
-
-      const updatedUser = {
-        email,
-        passwordHash,
-      };
 
       const newUser = await User.findByIdAndUpdate(
         request.params.id,
-        updatedUser,
-        {
-          new: true,
-        }
+        updatedUserData,
+        { new: true }
       );
 
-      const userForToken = {
-        email: newUser.email,
-        id: newUser._id,
-      };
-
-      const token = jwt.sign(userForToken, process.env.SECRET);
-
-      response.status(200).send({
+      return response.status(200).send({
         token,
-        email: newUser.email,
-        messagesRead: newUser.messagesRead,
-        id: newUser._id,
+        ...newUser,
       });
     } catch (e) {
       next(e);

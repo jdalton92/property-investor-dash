@@ -16,7 +16,7 @@ const userReducer = (state = initialState, action) => {
     case "SET_USER":
       return {
         isFetching: false,
-        data: action.data,
+        data: action.payLoad.user,
       };
     case "CLEAR_USER":
       return { isFetching: false, data: {} };
@@ -38,18 +38,18 @@ export const initUser = () => {
         setToken(user.token);
         dispatch({
           type: "SET_MESSAGES",
-          messages: user.messagesRead,
+          payLoad: { messages: user.messagesRead },
         });
         dispatch({
           type: "SET_USER",
-          data: user,
+          payLoad: { user },
         });
 
         const dashboards = await dashboardService.getAllDash();
 
         dispatch({
           type: "INIT_DASHBOARDS",
-          data: dashboards,
+          payLoad: { dashboards },
         });
       } else {
         dispatch({
@@ -59,7 +59,7 @@ export const initUser = () => {
     } catch (e) {
       dispatch({
         type: "SET_NOTIFICATION",
-        content: {
+        payLoad: {
           id: uuid(),
           message: e.response.data.error,
           type: CONSTANTS.NOTIFICATION.ERROR,
@@ -75,23 +75,34 @@ export const demoUser = () => {
       type: "USER_REQUEST",
     });
     try {
-      const user = CONSTANTS.DEMOTOKEN;
+      const user = await loginService.demo();
+
       window.localStorage.setItem("loggedUser", JSON.stringify(user));
+
       setToken(user.token);
+
       dispatch({
         type: "SET_MESSAGES",
-        messages: user.messagesRead,
+        payLoad: { messages: user.messagesRead },
       });
       dispatch({
         type: "SET_USER",
-        data: user,
+        payLoad: { user },
       });
 
       const dashboards = await dashboardService.getAllDash();
 
       dispatch({
         type: "INIT_DASHBOARDS",
-        data: dashboards,
+        payLoad: { dashboards },
+      });
+      dispatch({
+        type: "SET_NOTIFICATION",
+        payLoad: {
+          id: uuid(),
+          message: `Account created`,
+          type: CONSTANTS.NOTIFICATION.SUCCESS,
+        },
       });
     } catch (e) {
       console.log(e);
@@ -130,36 +141,37 @@ export const createUser = (email, password, checkPassword) => {
 
       dispatch({
         type: "SET_MESSAGES",
-        messages: user.messagesRead,
+        payLoad: { messages: user.messagesRead },
       });
       dispatch({
         type: "SET_USER",
-        data: user,
+        payLoad: { user },
       });
 
       const dashboards = await dashboardService.getAllDash();
 
       dispatch({
         type: "INIT_DASHBOARDS",
-        data: dashboards,
+        payLoad: { dashboards },
       });
       dispatch({
         type: "SET_NOTIFICATION",
-        content: {
+        payLoad: {
           id: uuid(),
           message: `Account created`,
           type: CONSTANTS.NOTIFICATION.SUCCESS,
         },
       });
     } catch (e) {
+      console.log(e);
       dispatch({
         type: "USER_REQUEST_FAIL",
       });
       dispatch({
         type: "SET_NOTIFICATION",
-        content: {
+        payLoad: {
           id: uuid(),
-          message: e.response.data.error,
+          message: e.response.data.message,
           type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });
@@ -176,7 +188,7 @@ export const logoutUser = () => {
     });
     dispatch({
       type: "SET_NOTIFICATION",
-      content: {
+      payLoad: {
         id: uuid(),
         message: "Logged Out",
         type: CONSTANTS.NOTIFICATION.SUCCESS,
@@ -201,18 +213,18 @@ export const loginUser = (email, password) => {
 
       dispatch({
         type: "SET_MESSAGES",
-        messages: user.messagesRead,
+        payLoad: { messages: user.messagesRead },
       });
       dispatch({
         type: "SET_USER",
-        data: user,
+        payLoad: { user },
       });
 
       const dashboards = await dashboardService.getAllDash();
 
       dispatch({
         type: "INIT_DASHBOARDS",
-        data: dashboards,
+        payLoad: { dashboards },
       });
     } catch (e) {
       dispatch({
@@ -220,7 +232,7 @@ export const loginUser = (email, password) => {
       });
       dispatch({
         type: "SET_NOTIFICATION",
-        content: {
+        payLoad: {
           id: uuid(),
           message: e.response.data.message,
           type: CONSTANTS.NOTIFICATION.ERROR,
@@ -230,40 +242,30 @@ export const loginUser = (email, password) => {
   };
 };
 
-export const updateUser = (
-  newEmail,
-  oldPassword,
-  newPassword,
-  confirmNewPassword,
-  id
-) => {
+export const updateUser = (id, userData) => {
   return async (dispatch) => {
     dispatch({
       type: "USER_REQUEST",
     });
     try {
-      const user = await userService.update(
-        newEmail,
-        oldPassword,
-        newPassword,
-        confirmNewPassword,
-        id
-      );
+      const user = await userService.update(id, userData);
 
-      window.localStorage.setItem("loggedUser", JSON.stringify(user));
-      destroyToken();
-      setToken(user.token);
+      if (user.token) {
+        window.localStorage.setItem("loggedUser", JSON.stringify(user));
+        destroyToken();
+        setToken(user.token);
+      }
 
       dispatch({
         type: "SET_USER",
-        data: user,
+        payLoad: { user },
       });
 
       const dashboards = await dashboardService.getAllDash();
 
       dispatch({
         type: "INIT_DASHBOARDS",
-        data: dashboards,
+        payLoad: { dashboards },
       });
     } catch (e) {
       dispatch({
@@ -271,7 +273,7 @@ export const updateUser = (
       });
       dispatch({
         type: "SET_NOTIFICATION",
-        content: {
+        payLoad: {
           id: uuid(),
           message: e.response.data.error,
           type: CONSTANTS.NOTIFICATION.ERROR,
@@ -301,7 +303,7 @@ export const deleteUser = (password, id) => {
       });
       dispatch({
         type: "SET_NOTIFICATION",
-        content: {
+        payLoad: {
           id: uuid(),
           message: e.response.data.error,
           type: CONSTANTS.NOTIFICATION.ERROR,

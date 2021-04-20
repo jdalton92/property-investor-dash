@@ -157,7 +157,7 @@ const SaveDashboardModal = ({
                 )}
               </Field>
               <div className="flex-row align-c relative">
-                <label htmlFor="save-description" className="f16 mb8">
+                <label htmlFor="save-address" className="f16 mb8">
                   Address
                   <span className="font-red f12 bold ml4">*</span>
                 </label>
@@ -322,7 +322,7 @@ const SaveDashboardModal = ({
                   )}
                 </Field>
                 <div className="flex-row align-c relative">
-                  <label htmlFor="overwrite-description" className="f16 mb8">
+                  <label htmlFor="overwrite-address" className="f16 mb8">
                     Address
                     <span className="font-red f12 bold ml4">*</span>
                   </label>

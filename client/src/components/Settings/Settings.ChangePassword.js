@@ -17,12 +17,13 @@ const ChangePassword = ({ user, updateUser }) => {
   const handleSubmit = async (values) => {
     // React final form handles e.preventDefault()
     const { oldPassword, newPassword, checkPassword } = values;
-    await updateUser({
+    const userData = {
       oldPassword,
       newPassword,
       checkPassword,
       ...userDetails,
-    });
+    };
+    updateUser(user.data.id, userData);
   };
 
   return (

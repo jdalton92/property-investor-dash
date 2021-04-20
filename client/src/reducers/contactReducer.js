@@ -27,7 +27,7 @@ export const setMessage = (values) => {
       });
       dispatch({
         type: "SET_NOTIFICATION",
-        content: {
+        payLoad: {
           id: uuid(),
           message: response.message,
           type: CONSTANTS.NOTIFICATION.SUCCES,
@@ -40,7 +40,7 @@ export const setMessage = (values) => {
       });
       dispatch({
         type: "SET_NOTIFICATION",
-        content: {
+        payLoad: {
           id: uuid(),
           message: e.response.data.error,
           type: CONSTANTS.NOTIFICATION.ERROR,

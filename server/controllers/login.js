@@ -38,4 +38,26 @@ loginRouter.post("/", async (request, response, next) => {
   }
 });
 
+loginRouter.post("/demo", async (request, response, next) => {
+  try {
+    const demoUser = await User.find({ email: process.env.DEMO_USER_EMAIL });
+
+    const userForToken = {
+      email: demoUser.email,
+      id: demoUser._id,
+    };
+
+    const token = jwt.sign(userForToken, process.env.SECRET);
+
+    return response.status(200).send({
+      token,
+      email: demoUser.email,
+      messagesRead: [], // Show all messages for demo user
+      id: demoUser._id,
+    });
+  } catch (e) {
+    next(e);
+  }
+});
+
 module.exports = loginRouter;

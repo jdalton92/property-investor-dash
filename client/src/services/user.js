@@ -7,21 +7,8 @@ const create = async (userDetails) => {
   return response.data;
 };
 
-const update = async (userDetails) => {
-  const response = await axios.put(
-    `${baseUrl}/${userDetails.id}`,
-    userDetails,
-    getConfig()
-  );
-  return response.data;
-};
-
-const readMessage = async (userId, type) => {
-  const response = await axios.put(
-    `${baseUrl}/${userId}/helper-messages`,
-    { type },
-    getConfig()
-  );
+const update = async (id, userData) => {
+  const response = await axios.put(`${baseUrl}/${id}`, userData, getConfig());
   return response.data;
 };
 
@@ -33,4 +20,4 @@ const deleteUser = async (password, id) => {
 };
 
 // eslint-disable-next-line
-export default { create, update, readMessage, deleteUser };
+export default { create, update, deleteUser };

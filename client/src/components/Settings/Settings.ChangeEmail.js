@@ -20,10 +20,11 @@ const ChangeEmail = ({ user, updateUser }) => {
       `Change email from ${userDetails.oldEmail} to ${values.newEmail}?`
     );
     if (confirm) {
-      await updateUser({
+      const userData = {
         newEmail: values.newEmail,
         ...userDetails,
-      });
+      };
+      updateUser(user.data.id, userData);
     }
   };
 

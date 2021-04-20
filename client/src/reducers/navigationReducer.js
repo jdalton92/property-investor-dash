@@ -22,7 +22,7 @@ const navigationReducer = (state = initialState, action) => {
   switch (action.type) {
     case "SET_LEFT_SIDEBAR":
       newState = { ...state };
-      newState.overlay = action.status;
+      newState.overlay = action.payLoad.status;
       newState.sidebarOpen.left = action.status;
       return newState;
     case "SET_MODAL":
@@ -47,7 +47,7 @@ export const setLeftSidebar = (status) => {
   return (dispatch) => {
     dispatch({
       type: "SET_LEFT_SIDEBAR",
-      status: status,
+      payLoad: { status },
     });
   };
 };
