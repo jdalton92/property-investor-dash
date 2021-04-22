@@ -34,7 +34,6 @@ usersRouter.post("/", async (request, response, next) => {
 
     return response.status(201).json(savedUser);
   } catch (e) {
-    console.log(e);
     next(e);
   }
 });
@@ -109,12 +108,12 @@ usersRouter.put(
         updatedUserData.messagesRead = user.messagesRead;
         userData.messagesRead.forEach((message) => {
           if (user.messagesRead.indexOf(message) === -1) {
-            updatedUserData.messagesRead.concat(message);
+            updatedUserData.messagesRead.push(message);
           }
         });
       }
 
-      const newUser = await User.findByIdAndUpdate(
+      const updatedUser = await User.findByIdAndUpdate(
         request.params.id,
         updatedUserData,
         { new: true }
@@ -122,7 +121,9 @@ usersRouter.put(
 
       return response.status(200).send({
         token,
-        ...newUser,
+        id: updatedUser._id,
+        email: updatedUser.email,
+        messagesRead: updatedUser.messagesRead,
       });
     } catch (e) {
       next(e);

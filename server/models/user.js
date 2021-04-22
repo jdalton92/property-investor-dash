@@ -16,7 +16,7 @@ const userSchema = mongoose.Schema({
   messagesRead: [
     {
       type: String,
-      unique: true,
+      sparse: true,
     },
   ],
   dashboards: [

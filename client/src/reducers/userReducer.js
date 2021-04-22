@@ -61,7 +61,7 @@ export const initUser = () => {
         type: "SET_NOTIFICATION",
         payLoad: {
           id: uuid(),
-          message: e.response.data.error,
+          message: e.response.data.message,
           type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });
@@ -100,7 +100,7 @@ export const demoUser = () => {
         type: "SET_NOTIFICATION",
         payLoad: {
           id: uuid(),
-          message: `Account created`,
+          message: `Logged into demo account`,
           type: CONSTANTS.NOTIFICATION.SUCCESS,
         },
       });
@@ -110,7 +110,7 @@ export const demoUser = () => {
         type: "SET_NOTIFICATION",
         content: {
           id: uuid(),
-          message: e,
+          message: e.response.data.message,
           type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });

@@ -29,9 +29,9 @@ loginRouter.post("/", async (request, response, next) => {
 
     return response.status(200).send({
       token,
+      id: user._id,
       email: user.email,
       messagesRead: user.messagesRead,
-      id: user._id,
     });
   } catch (e) {
     next(e);
@@ -40,7 +40,7 @@ loginRouter.post("/", async (request, response, next) => {
 
 loginRouter.post("/demo", async (request, response, next) => {
   try {
-    const demoUser = await User.find({ email: process.env.DEMO_USER_EMAIL });
+    const demoUser = await User.findOne({ email: process.env.DEMO_USER_EMAIL });
 
     const userForToken = {
       email: demoUser.email,
