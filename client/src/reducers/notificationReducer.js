@@ -81,7 +81,7 @@ export const hideHelperMessage = (userId, message) => {
       dispatch({
         type: "SET_NOTIFICATION",
         payLoad: {
-          message: e.response.data.error,
+          message: e.response.data.message,
           type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });

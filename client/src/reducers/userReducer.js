@@ -45,7 +45,7 @@ export const initUser = () => {
           payLoad: { user },
         });
 
-        const dashboards = await dashboardService.getAllDash();
+        const dashboards = await dashboardService.getAllDashboards();
 
         dispatch({
           type: "INIT_DASHBOARDS",
@@ -57,6 +57,7 @@ export const initUser = () => {
         });
       }
     } catch (e) {
+      console.log(e);
       dispatch({
         type: "SET_NOTIFICATION",
         payLoad: {
@@ -90,7 +91,7 @@ export const demoUser = () => {
         payLoad: { user },
       });
 
-      const dashboards = await dashboardService.getAllDash();
+      const dashboards = await dashboardService.getAllDashboards();
 
       dispatch({
         type: "INIT_DASHBOARDS",
@@ -148,7 +149,7 @@ export const createUser = (email, password, checkPassword) => {
         payLoad: { user },
       });
 
-      const dashboards = await dashboardService.getAllDash();
+      const dashboards = await dashboardService.getAllDashoards();
 
       dispatch({
         type: "INIT_DASHBOARDS",
@@ -220,7 +221,7 @@ export const loginUser = (email, password) => {
         payLoad: { user },
       });
 
-      const dashboards = await dashboardService.getAllDash();
+      const dashboards = await dashboardService.getAllDashboards();
 
       dispatch({
         type: "INIT_DASHBOARDS",
@@ -261,11 +262,13 @@ export const updateUser = (id, userData) => {
         payLoad: { user },
       });
 
-      const dashboards = await dashboardService.getAllDash();
-
       dispatch({
-        type: "INIT_DASHBOARDS",
-        payLoad: { dashboards },
+        type: "SET_NOTIFICATION",
+        payLoad: {
+          id: uuid(),
+          message: "User details updated",
+          type: CONSTANTS.NOTIFICATION.MESSAGE,
+        },
       });
     } catch (e) {
       dispatch({
@@ -275,7 +278,7 @@ export const updateUser = (id, userData) => {
         type: "SET_NOTIFICATION",
         payLoad: {
           id: uuid(),
-          message: e.response.data.error,
+          message: e.response.data.message,
           type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });
@@ -283,7 +286,7 @@ export const updateUser = (id, userData) => {
   };
 };
 
-export const deleteUser = (password, id) => {
+export const deleteUser = (id, password) => {
   return async (dispatch) => {
     dispatch({
       type: "USER_REQUEST",
@@ -305,7 +308,7 @@ export const deleteUser = (password, id) => {
         type: "SET_NOTIFICATION",
         payLoad: {
           id: uuid(),
-          message: e.response.data.error,
+          message: e.response.data.message,
           type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });

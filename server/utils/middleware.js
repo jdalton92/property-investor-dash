@@ -39,15 +39,16 @@ const tokenValidate = async (request, response, next) => {
 
 const errorHandler = (error, request, response, next) => {
   if (error) {
-    logger.error(error.message);
     const status = error.status || error.statusCode || 500;
     const message =
       error.message || error.statusMessage || "Internal Server Error";
-
-    return response.status(status).send({
+    const errorMessage = {
       status,
       message,
-    });
+    };
+    logger.error(errorMessage);
+
+    return response.status(status).send(errorMessage);
   }
 
   next(error);

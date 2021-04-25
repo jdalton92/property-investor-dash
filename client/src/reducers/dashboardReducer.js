@@ -143,7 +143,7 @@ export const getDashboards = () => {
       type: "DASHBOARD_REQUEST",
     });
     try {
-      const dashboards = await dashboardService.getAllDash();
+      const dashboards = await dashboardService.getAllDashboards();
 
       dispatch({
         type: "INIT_DASHBOARDS",
@@ -157,7 +157,7 @@ export const getDashboards = () => {
         type: "SET_NOTIFICATION",
         payLoad: {
           id: uuid(),
-          message: e.response.data.error,
+          message: e.response.data.message,
           type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });
@@ -171,7 +171,7 @@ export const getDashboard = (id) => {
       type: "DASHBOARD_REQUEST",
     });
     try {
-      const dashboard = await dashboardService.getDash(id);
+      const dashboard = await dashboardService.getDashboard(id);
 
       dispatch({
         type: "GET_DASHBOARD",
@@ -185,7 +185,7 @@ export const getDashboard = (id) => {
         type: "SET_NOTIFICATION",
         payLoad: {
           id: uuid(),
-          message: e.response.data.error,
+          message: e.response.data.message,
           type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });
@@ -216,7 +216,7 @@ export const saveDashboard = (dashboardObject) => {
       type: "DASHBOARD_REQUEST",
     });
     try {
-      const newDash = await dashboardService.saveDash(dashboardObject);
+      const newDash = await dashboardService.saveDashboard(dashboardObject);
 
       dispatch({
         type: "SAVE_DASHBOARD",
@@ -240,7 +240,7 @@ export const saveDashboard = (dashboardObject) => {
         type: "SET_NOTIFICATION",
         payLoad: {
           id: uuid(),
-          message: e.response.data.error,
+          message: e.response.data.message,
           type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });
@@ -254,7 +254,7 @@ export const updateDashboard = (dashboardObject) => {
       type: "DASHBOARD_REQUEST",
     });
     try {
-      const newDash = await dashboardService.updateDash(dashboardObject);
+      const newDash = await dashboardService.updateDashboard(dashboardObject);
 
       dispatch({
         type: "UPDATE_DASHBOARDS",
@@ -278,7 +278,7 @@ export const updateDashboard = (dashboardObject) => {
         type: "SET_NOTIFICATION",
         payLoad: {
           id: uuid(),
-          message: e.response.data.error,
+          message: e.response.data.message,
           type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });
@@ -292,7 +292,7 @@ export const deleteDashboard = (id) => {
       type: "DASHBOARD_REQUEST",
     });
     try {
-      await dashboardService.removeDash(id);
+      await dashboardService.removeDashboard(id);
 
       dispatch({
         type: "DELETE_DASHBOARD",
@@ -317,7 +317,7 @@ export const deleteDashboard = (id) => {
         type: "SET_NOTIFICATION",
         payLoad: {
           id: uuid(),
-          message: e.response.data.error,
+          message: e.response.data.message,
           type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });

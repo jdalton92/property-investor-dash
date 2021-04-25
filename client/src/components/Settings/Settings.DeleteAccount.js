@@ -9,15 +9,10 @@ import {
 } from "../../utils/formValidatorHelper";
 
 const DeleteAccount = ({ user, deleteUser }) => {
-  const userDetails = {
-    oldEmail: user.data.email,
-    id: user.data.id,
-  };
-
   const handleSubmit = async ({ password }) => {
-    const confirm = window.confirm(`Delete ${userDetails.email}?`);
+    const confirm = window.confirm(`Delete ${user.data.email}?`);
     if (confirm) {
-      await deleteUser(password, user.id);
+      deleteUser(user.id, password);
     }
   };
 

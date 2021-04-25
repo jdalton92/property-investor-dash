@@ -42,7 +42,7 @@ export const setMessage = (values) => {
         type: "SET_NOTIFICATION",
         payLoad: {
           id: uuid(),
-          message: e.response.data.error,
+          message: e.response.data.message,
           type: CONSTANTS.NOTIFICATION.ERROR,
         },
       });

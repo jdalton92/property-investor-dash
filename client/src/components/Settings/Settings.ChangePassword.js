@@ -9,11 +9,6 @@ import {
 } from "../../utils/formValidatorHelper";
 
 const ChangePassword = ({ user, updateUser }) => {
-  const userDetails = {
-    oldEmail: user.data.email,
-    id: user.data.id,
-  };
-
   const handleSubmit = async (values) => {
     // React final form handles e.preventDefault()
     const { oldPassword, newPassword, checkPassword } = values;
@@ -21,7 +16,6 @@ const ChangePassword = ({ user, updateUser }) => {
       oldPassword,
       newPassword,
       checkPassword,
-      ...userDetails,
     };
     updateUser(user.data.id, userData);
   };

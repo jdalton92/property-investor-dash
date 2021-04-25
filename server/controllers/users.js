@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const usersRouter = require("express").Router();
 const User = require("../models/user");
 const ValidationError = require("../utils/error");
+const userTokenParser = require("../utils/parsers");
 
 usersRouter.post("/", async (request, response, next) => {
   try {
@@ -31,8 +32,9 @@ usersRouter.post("/", async (request, response, next) => {
     const passwordHash = await bcrypt.hash(password, saltRounds);
     const user = new User({ email, passwordHash });
     const savedUser = await user.save();
+    const userInfo = parsers.userTokenParser(savedUser);
 
-    return response.status(201).json(savedUser);
+    return response.status(201).json(userInfo);
   } catch (e) {
     next(e);
   }
@@ -83,22 +85,22 @@ usersRouter.put(
           return next(new ValidationError(400, "Old password is required"));
         }
 
+        if (userData.newPassword !== userData.checkPassword) {
+          return next(new ValidationError(400, "New passwords must match"));
+        }
+
         const passwordCorrect =
           user === null
             ? false
             : await bcrypt.compare(userData.oldPassword, user.passwordHash);
 
-        if (!(user && passwordCorrect)) {
-          return next(new ValidationError(401, "Invalid user or password"));
-        }
-
-        if (userData.newPassword !== userData.checkPassword) {
-          return next(new ValidationError(400, "Passwords must match"));
+        if (!passwordCorrect) {
+          return next(new ValidationError(401, "Invalid password"));
         }
 
         const saltRounds = 10;
         updatedUserData.passwordHash = await bcrypt.hash(
-          newPassword,
+          userData.newPassword,
           saltRounds
         );
       }
@@ -119,12 +121,9 @@ usersRouter.put(
         { new: true }
       );
 
-      return response.status(200).send({
-        token,
-        id: updatedUser._id,
-        email: updatedUser.email,
-        messagesRead: updatedUser.messagesRead,
-      });
+      const userInfo = parsers.userTokenParser(updatedUser);
+
+      return response.status(200).send(userInfo);
     } catch (e) {
       next(e);
     }

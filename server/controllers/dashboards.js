@@ -12,11 +12,7 @@ dashboardRouter.get(
     try {
       const decodedToken = jwt.verify(request.token, process.env.SECRET);
 
-      const user = await User.findById(decodedToken.id);
-
-      const dashboards = await Dashboard.find({
-        user: user._id,
-      }).populate("user", { email: 1 });
+      const dashboards = await Dashboard.find({ user: decodedToken.id });
 
       return response.status(200).json(dashboards);
     } catch (e) {
@@ -25,14 +21,69 @@ dashboardRouter.get(
   }
 );
 
+// dashboardRouter.get(
+//   "/occupier",
+//   middleware.tokenValidate,
+//   async (request, response, next) => {
+//     try {
+//       const decodedToken = jwt.verify(request.token, process.env.SECRET);
+
+//       const dashboards = await Dashboard.find({
+//         user: decodedToken.id,
+//         "dashboard.values.type": "occupier",
+//       })
+
+//       return response.status(200).json(dashboards);
+//     } catch (e) {
+//       next(e);
+//     }
+//   }
+// );
+
+// dashboardRouter.get(
+//   "/investor",
+//   middleware.tokenValidate,
+//   async (request, response, next) => {
+//     try {
+//       const decodedToken = jwt.verify(request.token, process.env.SECRET);
+
+//       const dashboards = await Dashboard.find({
+//         user: decodedToken.id,
+//         "dashboard.values.type": "investor",
+//       })
+
+//       return response.status(200).json(dashboards);
+//     } catch (e) {
+//       next(e);
+//     }
+//   }
+// );
+
+// dashboardRouter.get(
+//   "/developer",
+//   middleware.tokenValidate,
+//   async (request, response, next) => {
+//     try {
+//       const decodedToken = jwt.verify(request.token, process.env.SECRET);
+
+//       const dashboards = await Dashboard.find({
+//         user: decodedToken.id,
+//         "dashboard.values.type": "developer",
+//       })
+
+//       return response.status(200).json(dashboards);
+//     } catch (e) {
+//       next(e);
+//     }
+//   }
+// );
+
 dashboardRouter.get(
   "/:id",
   middleware.tokenValidate,
   async (request, response, next) => {
     try {
-      const dashboard = await Dashboard.findById(
-        request.params.id
-      ).populate("user", { email: 1 });
+      const dashboard = await Dashboard.findById(request.params.id);
 
       return response.status(200).json(dashboard);
     } catch (e) {
@@ -49,28 +100,20 @@ dashboardRouter.post(
     try {
       const { description, address, type, values } = request.body;
 
+      const decodedToken = jwt.verify(request.token, process.env.SECRET);
       const dashboard = new Dashboard({
         description,
         address,
         date: Date.now(),
         values: { type, ...values },
+        user: decodedToken.id,
       });
+      const result = await dashboard.save();
 
-      const decodedToken = jwt.verify(request.token, process.env.SECRET);
-
-      const user = await User.findById(decodedToken.id);
-
-      dashboard.user = user._id;
-
-      await dashboard.save();
-
-      user.dashboards = user.dashboards.concat(dashboard);
-
-      await user.save();
-
-      const result = await Dashboard.findById(dashboard._id).populate("user", {
-        name: 1,
-      });
+      await User.findOneAndUpdate(
+        { _id: decodedToken.id },
+        { $push: { dashboards: result._id } }
+      );
 
       return response.status(201).json(result);
     } catch (e) {
@@ -112,12 +155,17 @@ dashboardRouter.delete(
   middleware.tokenValidate,
   async (request, response, next) => {
     try {
+      const dashboardId = request.params.id;
       const decodedToken = jwt.verify(request.token, process.env.SECRET);
 
-      const dashboard = await Dashboard.findById(request.params.id);
+      const dashboard = await Dashboard.findById(dashboardId);
 
       if (dashboard.user.toString() === decodedToken.id) {
-        await Dashboard.findByIdAndRemove(request.params.id);
+        await Dashboard.findByIdAndRemove(dashboardId);
+        await User.findOneAndUpdate(
+          { _id: decodedToken.id },
+          { $pull: { dashboards: dashboardId } }
+        );
         return response.status(204).end();
       } else {
         return next(new ValidationError(404, "Not found"));

@@ -9,7 +9,9 @@ emailRouter.post("/", async (request, response, next) => {
     const date = new Intl.DateTimeFormat("en-GB").format(Date.now());
 
     if (!fullName || !email || !message) {
-      return next(new ValidationError(400, "Full name, email, and message required"));
+      return next(
+        new ValidationError(400, "Full name, email, and message required")
+      );
     }
 
     const auth = {
@@ -31,7 +33,6 @@ emailRouter.post("/", async (request, response, next) => {
       Email: ${email}
       Company: ${company}
 
-      Message:
       ${message}
       `,
     };

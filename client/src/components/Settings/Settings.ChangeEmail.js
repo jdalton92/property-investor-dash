@@ -10,19 +10,13 @@ import {
 } from "../../utils/formValidatorHelper";
 
 const ChangeEmail = ({ user, updateUser }) => {
-  const userDetails = {
-    oldEmail: user.data.email,
-    id: user.data.id,
-  };
-
   const handleEmailChange = async (values) => {
     const confirm = window.confirm(
-      `Change email from ${userDetails.oldEmail} to ${values.newEmail}?`
+      `Change email from ${user.data.email} to ${values.newEmail}?`
     );
     if (confirm) {
       const userData = {
         newEmail: values.newEmail,
-        ...userDetails,
       };
       updateUser(user.data.id, userData);
     }

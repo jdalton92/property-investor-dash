@@ -36,11 +36,15 @@ const useOverlayOutsideAlerter = (ref) => {
     if (ref.current && ref.current.contains(e.target)) {
       store.dispatch({
         type: "SET_RIGHT_SIDEBAR",
-        status: false,
+        payLoad: {
+          status: false,
+        },
       });
       store.dispatch({
         type: "SET_LEFT_SIDEBAR",
-        status: false,
+        payLoad: {
+          status: false,
+        },
       });
       store.dispatch({
         type: "SET_MODAL",
