@@ -235,10 +235,13 @@ const dashboardSchema = new mongoose.Schema(
       required: true,
       minlength: 3,
     },
-    date: {
+    created: {
       type: Date,
       required: true,
       default: Date.now(),
+    },
+    updated: {
+      type: Date,
     },
   },
   { discriminatorKey: "type" }

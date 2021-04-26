@@ -1,3 +1,5 @@
+import { CONSTANTS } from "../static/constants";
+
 export const reducerHelper = (data) => {
   return data.reduce((accumulator, item) => {
     Object.keys(item).forEach((key) => {
@@ -10,16 +12,16 @@ export const reducerHelper = (data) => {
 export const typeAndUrl = (dashboard) => {
   let baseUrl;
   let type;
-  switch (dashboard.assumptions.type) {
-    case "developer":
+  switch (dashboard.type) {
+    case CONSTANTS.TYPES.DEVELOPER:
       baseUrl = "developer/dash";
       type = "Developer";
       break;
-    case "investor":
+    case CONSTANTS.TYPES.INVESTOR:
       baseUrl = "investor/dash";
       type = "Investor";
       break;
-    case "occupier":
+    case CONSTANTS.TYPES.OCCUPIER:
       baseUrl = "owner-occupier/dash";
       type = "Owner-Occupier";
       break;

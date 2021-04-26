@@ -2,27 +2,27 @@ import dashboardService from "../services/dashboard";
 import { v4 as uuid } from "uuid";
 import { CONSTANTS } from "../static/constants";
 
-const occupierData = {
-  capitalGrowth: 3.5,
-  opexGrowth: 3,
-  purchasePrice: 1000000,
-  ownershipLength: 15,
-  upfrontCosts: 3,
-  sellingCosts: 3,
-  opex: 1000,
-  deposit: 200000,
-  homeloanTerm: 30,
-  loanType: "principalAndInterest",
-  interestRate: 3.5,
-  overPayments: 200,
-};
+// const occupierAsssumptions = {
+//   capitalGrowth: 3.5,
+//   opexGrowth: 3,
+//   purchasePrice: 1000000,
+//   ownershipLength: 15,
+//   upfrontCosts: 3,
+//   sellingCosts: 3,
+//   opex: 1000,
+//   deposit: 200000,
+//   homeloanTerm: 30,
+//   loanType: "principalAndInterest",
+//   interestRate: 3.5,
+//   overPayments: 200,
+// };
 
-const investorData = {
-  ...occupierData,
-  rentalYield: 3,
-};
+// const investorAsssumptions = {
+//   ...occupierData,
+//   rentalYield: 3,
+// };
 
-// const initialDeveloperData = {
+// const developerAsssumptions = {
 //   acquisitionPrice: 100000,
 //   acquisitionCosts: 5,
 //   dwellings: 4,
@@ -88,7 +88,7 @@ const dashboardReducer = (state = initialState, action) => {
     case "INIT_DASHBOARDS":
       newState = { ...initialState };
       newState.isFetching = false;
-      newState.savedDashboard = action.payLoad.dashboards;
+      newState.savedDashboards = action.payLoad.dashboards;
       return newState;
     case "GET_DASHBOARD":
       newState = { ...state };
@@ -123,17 +123,17 @@ const dashboardReducer = (state = initialState, action) => {
   }
 };
 
-export const getDashboards = () => {
+export const getDashboards = (params) => {
   return async (dispatch) => {
     dispatch({
       type: "DASHBOARD_REQUEST",
     });
     try {
-      const dashboards = await dashboardService.getAllDashboards();
-
+      const { results } = await dashboardService.getAllDashboards(params);
+      console.log(results);
       dispatch({
         type: "INIT_DASHBOARDS",
-        payLoad: { dashboards },
+        payLoad: { dashboards: results },
       });
     } catch (e) {
       dispatch({

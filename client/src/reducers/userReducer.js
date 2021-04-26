@@ -3,7 +3,7 @@ import loginService from "../services/login";
 import { CONSTANTS } from "../static/constants";
 import { setToken, destroyToken } from "../utils/tokenHelper";
 import userService from "../services/user";
-import dashboardService from "../services/dashboard";
+import { setNotification } from "./notificationReducer";
 
 const initialState = { isFetching: true, data: {} };
 
@@ -44,13 +44,6 @@ export const initUser = () => {
           type: "SET_USER",
           payLoad: { user },
         });
-
-        const dashboards = await dashboardService.getAllDashboards();
-
-        dispatch({
-          type: "INIT_DASHBOARDS",
-          payLoad: { dashboards },
-        });
       } else {
         dispatch({
           type: "USER_REQUEST_FAIL",
@@ -90,21 +83,29 @@ export const demoUser = () => {
         type: "SET_USER",
         payLoad: { user },
       });
-
-      const dashboards = await dashboardService.getAllDashboards();
-
-      dispatch({
-        type: "INIT_DASHBOARDS",
-        payLoad: { dashboards },
-      });
-      dispatch({
-        type: "SET_NOTIFICATION",
-        payLoad: {
-          id: uuid(),
-          message: `Logged into demo account`,
-          type: CONSTANTS.NOTIFICATION.SUCCESS,
-        },
-      });
+      dispatch(
+        setNotification(
+          `Logged into demo account2`,
+          CONSTANTS.NOTIFICATION.SUCCESS
+        )
+      );
+      // const id = uuid();
+      // dispatch({
+      //   type: "SET_NOTIFICATION",
+      //   payLoad: {
+      //     id,
+      //     message: `Logged into demo account`,
+      //     type: CONSTANTS.NOTIFICATION.SUCCESS,
+      //   },
+      // });
+      // setTimeout(
+      //   () =>
+      //     dispatch({
+      //       type: "CLEAR_NOTIFICATION",
+      //       payLoad: { id },
+      //     }),
+      //   5000
+      // );
     } catch (e) {
       console.log(e);
       dispatch({
@@ -147,13 +148,6 @@ export const createUser = (email, password, checkPassword) => {
       dispatch({
         type: "SET_USER",
         payLoad: { user },
-      });
-
-      const dashboards = await dashboardService.getAllDashoards();
-
-      dispatch({
-        type: "INIT_DASHBOARDS",
-        payLoad: { dashboards },
       });
       dispatch({
         type: "SET_NOTIFICATION",
@@ -219,13 +213,6 @@ export const loginUser = (email, password) => {
       dispatch({
         type: "SET_USER",
         payLoad: { user },
-      });
-
-      const dashboards = await dashboardService.getAllDashboards();
-
-      dispatch({
-        type: "INIT_DASHBOARDS",
-        payLoad: { dashboards },
       });
     } catch (e) {
       dispatch({

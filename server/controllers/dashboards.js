@@ -26,7 +26,7 @@ dashboardRouter.get(
       const options = {
         page: request.query.page,
         limit: request.query.limit,
-        sort: "-date",
+        sort: "-created",
       };
       if (type) {
         query.type = type;
@@ -104,7 +104,7 @@ dashboardRouter.put(
       const { type, address, description, assumptions } = request.body;
 
       const updatedDashboard = {
-        date: Date.now(),
+        updated: Date.now(),
         address,
         description,
         type,

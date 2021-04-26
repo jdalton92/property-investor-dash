@@ -41,15 +41,24 @@ const notificationReducer = (state = initialState, action) => {
 };
 
 export const setNotification = (message, type) => {
+  const id = uuid();
   return (dispatch) => {
     dispatch({
       type: "SET_NOTIFICATION",
       payLoad: {
-        id: uuid(),
+        id,
         message,
         type,
       },
     });
+    setTimeout(
+      () =>
+        dispatch({
+          type: "CLEAR_NOTIFICATION",
+          payLoad: { id },
+        }),
+      5000
+    );
   };
 };
 

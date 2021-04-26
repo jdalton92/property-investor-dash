@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getConfig } from "../utils/tokenHelper";
+import { getAuthHeader } from "../utils/tokenHelper";
 const baseUrl = "/api/users";
 
 const create = async (userDetails) => {
@@ -8,7 +8,11 @@ const create = async (userDetails) => {
 };
 
 const update = async (id, userData) => {
-  const response = await axios.put(`${baseUrl}/${id}`, userData, getConfig());
+  const response = await axios.put(
+    `${baseUrl}/${id}`,
+    userData,
+    getAuthHeader()
+  );
   return response.data;
 };
 

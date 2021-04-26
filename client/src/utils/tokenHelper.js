@@ -1,6 +1,6 @@
 let token = null;
 
-export const getConfig = () => {
+export const getAuthHeader = () => {
   return {
     headers: { Authorization: token },
   };

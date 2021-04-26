@@ -57,7 +57,7 @@ const SavedDashboards = ({
                       <td>{d.description}</td>
                       <td className="h400">{d.address}</td>
                       <td className="h768">{type}</td>
-                      <td>{formatDate(d.date)}</td>
+                      <td>{formatDate(d.created)}</td>
                       <td>
                         <Button
                           ariaLabel={"Open"}

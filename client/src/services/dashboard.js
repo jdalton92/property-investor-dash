@@ -1,19 +1,21 @@
 import axios from "axios";
-import { getConfig } from "../utils/tokenHelper";
+import { getAuthHeader } from "../utils/tokenHelper";
 const baseUrl = "/api/dashboards";
 
-const getAllDashboards = async () => {
-  const response = await axios.get(baseUrl, getConfig());
+const getAllDashboards = async (params = {}) => {
+  const config = getAuthHeader();
+  config.params = params;
+  const response = await axios.get(baseUrl, config);
   return response.data;
 };
 
 const getDashboard = async (id) => {
-  const response = await axios.get(`${baseUrl}/${id}`, getConfig());
+  const response = await axios.get(`${baseUrl}/${id}`, getAuthHeader());
   return response.data;
 };
 
 const saveDashboard = async (newObject) => {
-  const response = await axios.post(baseUrl, newObject, getConfig());
+  const response = await axios.post(baseUrl, newObject, getAuthHeader());
   return response.data;
 };
 
@@ -21,13 +23,13 @@ const updateDashboard = async (newObject) => {
   const response = await axios.put(
     `${baseUrl}/${newObject._id}`,
     newObject,
-    getConfig()
+    getAuthHeader()
   );
   return response.data;
 };
 
 const removeDashboard = async (id) => {
-  const response = await axios.delete(`${baseUrl}/${id}`, getConfig());
+  const response = await axios.delete(`${baseUrl}/${id}`, getAuthHeader());
   return response.data;
 };
 
