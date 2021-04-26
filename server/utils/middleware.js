@@ -42,13 +42,12 @@ const errorHandler = (error, request, response, next) => {
     const status = error.status || error.statusCode || 500;
     const message =
       error.message || error.statusMessage || "Internal Server Error";
-    const errorMessage = {
+    logger.error(error);
+
+    return response.status(status).send({
       status,
       message,
-    };
-    logger.error(errorMessage);
-
-    return response.status(status).send(errorMessage);
+    });
   }
 
   next(error);

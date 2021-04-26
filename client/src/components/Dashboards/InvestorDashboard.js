@@ -49,10 +49,10 @@ const InvestorDashboard = ({
   const isEmpty = (obj) =>
     Object.keys(obj).length === 0 && obj.constructor === Object;
 
-  if (isFetching || (isEmpty(currentDashboard.values) && id)) {
+  if (isFetching || (isEmpty(currentDashboard.assumptions) && id)) {
     return <Loader />;
   } else {
-    if (isEmpty(currentDashboard.values)) {
+    if (isEmpty(currentDashboard.assumptions)) {
       history.push("/investor/edit");
     }
     return (
@@ -98,7 +98,7 @@ const InvestorDashboard = ({
 
 const mapStateToProps = (state) => {
   return {
-    currentDashboard: state.dashboards.currentDashboard.data,
+    currentDashboard: state.dashboards.currentDashboard,
     preSave: state.dashboards.currentDashboard.preSave,
     isFetching: state.dashboards.isFetching,
   };

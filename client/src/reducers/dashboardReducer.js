@@ -2,22 +2,25 @@ import dashboardService from "../services/dashboard";
 import { v4 as uuid } from "uuid";
 import { CONSTANTS } from "../static/constants";
 
-// const initialOwnerData = {
-//   housePrice: 1000000,
-//   deposit: 200000,
-//   loanType: "principalAndInterest",
-//   interestRate: 3.5,
-//   homeloanTerm: 30,
-//   overPayments: [{}],
-//   investmentPeriod: 15,
-//   sellingCosts: 3,
-//   capitalGrowth: 3.5,
-//   upfrontCosts: 3,
-//   recurringCosts: 1000,
-//   rentalYield: 3,
-//   investor: false,
-//   inflation: 3,
-// };
+const occupierData = {
+  capitalGrowth: 3.5,
+  opexGrowth: 3,
+  purchasePrice: 1000000,
+  ownershipLength: 15,
+  upfrontCosts: 3,
+  sellingCosts: 3,
+  opex: 1000,
+  deposit: 200000,
+  homeloanTerm: 30,
+  loanType: "principalAndInterest",
+  interestRate: 3.5,
+  overPayments: 200,
+};
+
+const investorData = {
+  ...occupierData,
+  rentalYield: 3,
+};
 
 // const initialDeveloperData = {
 //   acquisitionPrice: 100000,
@@ -51,9 +54,10 @@ let initialState = {
   savedDashboards: [],
   currentDashboard: {
     preSave: false,
-    data: {
-      values: {},
-    },
+    name: "",
+    description: "",
+    date: "",
+    assumptions: {},
   },
 };
 
@@ -72,29 +76,25 @@ const dashboardReducer = (state = initialState, action) => {
     case "TEST_DASHBOARD":
       newState = { ...state };
       newState.isFetching = false;
-      newState.currentDashboard.preSave = true;
-      newState.currentDashboard.data.values = action.payLoad.dashboard;
+      newState.currentDashboard = {
+        preSave: true,
+        assumptions: action.payLoad.assumptions,
+      };
       return newState;
     case "PRE_SAVE_DASHBOARD":
       newState = { ...state };
       newState.currentDashboard.preSave = true;
       return newState;
     case "INIT_DASHBOARDS":
-      return {
-        isFetching: false,
-        savedDashboards: action.payLoad.dashboards,
-        currentDashboard: {
-          preSave: false,
-          data: {
-            values: {},
-          },
-        },
-      };
+      newState = { ...initialState };
+      newState.isFetching = false;
+      newState.savedDashboard = action.payLoad.dashboards;
+      return newState;
     case "GET_DASHBOARD":
       newState = { ...state };
       newState.isFetching = false;
       newState.currentDashboard.preSave = false;
-      newState.currentDashboard.data = action.payLoad.dashboard;
+      newState.currentDashboard = action.payLoad.dashboard;
       return newState;
     case "SAVE_DASHBOARD":
       newState = { ...state };
@@ -106,32 +106,18 @@ const dashboardReducer = (state = initialState, action) => {
       ];
       return newState;
     case "UPDATE_DASHBOARDS":
-      const dashboardList = state.savedDashboards.filter(
-        (d) => d._id !== action.payLoad.dashboard._id
-      );
-      return {
-        isFetching: false,
-        savedDashboards: [...dashboardList, action.data],
-        currentDashboard: {
-          preSave: false,
-          data: {
-            values: {},
-          },
-        },
-      };
+      newState = { ...initialState };
+      const dashboards = state.savedDashboards
+        .filter((d) => d._id !== action.payLoad.dashboard._id)
+        .concat(action.payLoad.dashboard);
+      newState.savedDashboards = dashboards;
+      return newState;
     case "DELETE_DASHBOARD":
-      return {
-        isFetching: false,
-        savedDashboards: [
-          ...state.savedDashboards.filter((d) => d._id !== action.payLoad.id),
-        ],
-        currentDashboard: {
-          preSave: false,
-          data: {
-            values: {},
-          },
-        },
-      };
+      newState = { ...state };
+      newState.savedDashboards = [
+        ...state.savedDashboards.filter((d) => d._id !== action.payLoad.id),
+      ];
+      return newState;
     default:
       return state;
   }
@@ -193,11 +179,11 @@ export const getDashboard = (id) => {
   };
 };
 
-export const testDashboard = (dashboard) => {
+export const testDashboard = (assumptions) => {
   return (dispatch) => {
     dispatch({
       type: "TEST_DASHBOARD",
-      payLoad: { dashboard },
+      payLoad: { assumptions },
     });
   };
 };
@@ -254,19 +240,17 @@ export const updateDashboard = (dashboardObject) => {
       type: "DASHBOARD_REQUEST",
     });
     try {
-      const newDash = await dashboardService.updateDashboard(dashboardObject);
+      const dashboard = await dashboardService.updateDashboard(dashboardObject);
 
       dispatch({
         type: "UPDATE_DASHBOARDS",
-        payLoad: {
-          dashboard: newDash,
-        },
+        payLoad: { dashboard },
       });
       dispatch({
         type: "SET_NOTIFICATION",
         payLoad: {
           id: uuid(),
-          message: `${newDash.description} saved`,
+          message: `${dashboard.description} saved`,
           type: CONSTANTS.NOTIFICATION.SUCCESS,
         },
       });

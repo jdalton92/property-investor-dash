@@ -27,8 +27,7 @@ const OccupierForm = ({
   }, [id]);
 
   const onSubmit = (values) => {
-    values.investor = false;
-    values.type = "occupierInvestor";
+    values.type = "occupier";
     testDashboard(values);
     history.push("/owner-occupier/dash");
   };
@@ -38,9 +37,9 @@ const OccupierForm = ({
   } else {
     const { type } = typeAndUrl(currentDashboard);
 
-    let initialValues = { overPayments: [{}] };
+    let initialValues = {};
     if ((preSave || id) && type === "Owner-Occupier") {
-      initialValues = currentDashboard.values;
+      initialValues = currentDashboard.assumptions;
     }
 
     return (
@@ -62,7 +61,7 @@ const OccupierForm = ({
 
 const mapStateToProps = (state) => {
   return {
-    currentDashboard: state.dashboards.currentDashboard.data,
+    currentDashboard: state.dashboards.currentDashboard,
     preSave: state.dashboards.currentDashboard.preSave,
     isFetching: state.dashboards.isFetching,
   };

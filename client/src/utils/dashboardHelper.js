@@ -7,19 +7,26 @@ export const reducerHelper = (data) => {
   }, []);
 };
 
-export const typeAndUrl = (d) => {
+export const typeAndUrl = (dashboard) => {
   let baseUrl;
   let type;
-  if (d.values?.type === "developer") {
-    baseUrl = "developer/dash";
-    type = "Developer";
-  } else if (d.values?.investor) {
-    baseUrl = "investor/dash";
-    type = "Investor";
-  } else if (d.values.investor === false) {
-    baseUrl = "owner-occupier/dash";
-    type = "Owner-Occupier";
+  switch (dashboard.assumptions.type) {
+    case "developer":
+      baseUrl = "developer/dash";
+      type = "Developer";
+      break;
+    case "investor":
+      baseUrl = "investor/dash";
+      type = "Investor";
+      break;
+    case "occupier":
+      baseUrl = "owner-occupier/dash";
+      type = "Owner-Occupier";
+      break;
+    default:
+      break;
   }
+
   return { type, baseUrl };
 };
 

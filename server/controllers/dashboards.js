@@ -10,73 +10,36 @@ dashboardRouter.get(
   middleware.tokenValidate,
   async (request, response, next) => {
     try {
+      const type = request.query.type;
+      const types = ["developer", "investor", "occupier"];
+      if (type && !types.includes(type)) {
+        return next(
+          new ValidationError(
+            400,
+            "`type` must be 'occupier', 'investor', or 'developer'"
+          )
+        );
+      }
+
       const decodedToken = jwt.verify(request.token, process.env.SECRET);
+      const query = { user: decodedToken.id };
+      const options = {
+        page: request.query.page,
+        limit: request.query.limit,
+        sort: "-date",
+      };
+      if (type) {
+        query.type = type;
+      }
 
-      const dashboards = await Dashboard.find({ user: decodedToken.id });
-
-      return response.status(200).json(dashboards);
+      await Dashboard.paginate(query, options, (err, res) => {
+        return response.status(200).json(res);
+      });
     } catch (e) {
       next(e);
     }
   }
 );
-
-// dashboardRouter.get(
-//   "/occupier",
-//   middleware.tokenValidate,
-//   async (request, response, next) => {
-//     try {
-//       const decodedToken = jwt.verify(request.token, process.env.SECRET);
-
-//       const dashboards = await Dashboard.find({
-//         user: decodedToken.id,
-//         "dashboard.values.type": "occupier",
-//       })
-
-//       return response.status(200).json(dashboards);
-//     } catch (e) {
-//       next(e);
-//     }
-//   }
-// );
-
-// dashboardRouter.get(
-//   "/investor",
-//   middleware.tokenValidate,
-//   async (request, response, next) => {
-//     try {
-//       const decodedToken = jwt.verify(request.token, process.env.SECRET);
-
-//       const dashboards = await Dashboard.find({
-//         user: decodedToken.id,
-//         "dashboard.values.type": "investor",
-//       })
-
-//       return response.status(200).json(dashboards);
-//     } catch (e) {
-//       next(e);
-//     }
-//   }
-// );
-
-// dashboardRouter.get(
-//   "/developer",
-//   middleware.tokenValidate,
-//   async (request, response, next) => {
-//     try {
-//       const decodedToken = jwt.verify(request.token, process.env.SECRET);
-
-//       const dashboards = await Dashboard.find({
-//         user: decodedToken.id,
-//         "dashboard.values.type": "developer",
-//       })
-
-//       return response.status(200).json(dashboards);
-//     } catch (e) {
-//       next(e);
-//     }
-//   }
-// );
 
 dashboardRouter.get(
   "/:id",
@@ -94,19 +57,29 @@ dashboardRouter.get(
 
 dashboardRouter.post(
   "/",
-  middleware.dashboardValidate,
+  // middleware.dashboardValidate,
   middleware.tokenValidate,
   async (request, response, next) => {
     try {
-      const { description, address, type, values } = request.body;
+      const { description, address, type, assumptions } = request.body;
+
+      const types = ["developer", "investor", "occupier"];
+      if (!type || !types.includes(type)) {
+        return next(
+          new ValidationError(
+            400,
+            "`type` must be 'occupier', 'investor', or 'developer'"
+          )
+        );
+      }
 
       const decodedToken = jwt.verify(request.token, process.env.SECRET);
       const dashboard = new Dashboard({
+        user: decodedToken.id,
         description,
         address,
-        date: Date.now(),
-        values: { type, ...values },
-        user: decodedToken.id,
+        type,
+        assumptions,
       });
       const result = await dashboard.save();
 
@@ -124,17 +97,18 @@ dashboardRouter.post(
 
 dashboardRouter.put(
   "/:id",
-  middleware.dashboardValidate,
+  // middleware.dashboardValidate,
   middleware.tokenValidate,
   async (request, response, next) => {
     try {
-      const { type, address, description, values } = request.body;
+      const { type, address, description, assumptions } = request.body;
 
       const updatedDashboard = {
+        date: Date.now(),
         address,
         description,
-        date: Date.now(),
-        values: { type, ...values },
+        type,
+        assumptions,
       };
 
       const result = await Dashboard.findByIdAndUpdate(
@@ -160,7 +134,7 @@ dashboardRouter.delete(
 
       const dashboard = await Dashboard.findById(dashboardId);
 
-      if (dashboard.user.toString() === decodedToken.id) {
+      if (dashboard?.user.toString() === decodedToken.id) {
         await Dashboard.findByIdAndRemove(dashboardId);
         await User.findOneAndUpdate(
           { _id: decodedToken.id },

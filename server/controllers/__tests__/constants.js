@@ -1,6 +1,6 @@
 const constants = {
-  ownerData: {
-    housePrice: 1000000,
+  occupierAssumptions: {
+    purchasePrice: 1000000,
     deposit: 200000,
     loanType: "principalAndInterest",
     interestRate: 3.5,
@@ -12,10 +12,9 @@ const constants = {
     upfrontCosts: 3,
     recurringCosts: 1000,
     rentalYield: 3,
-    investor: false,
-    inflation: 3,
+    opexGrowth: 3,
   },
-  developerData: {
+  developerAssumptions: {
     acquisitionPrice: 100000,
     acquisitionCosts: 5,
     dwellings: 4,

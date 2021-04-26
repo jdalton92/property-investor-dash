@@ -15,7 +15,7 @@ const notificationReducer = (state = initialState, action) => {
       newState.messagesRead = [...state.messagesRead, action.payLoad.message];
       return newState;
     case "SET_MESSAGES":
-      if (action.messages && action.messages.length) {
+      if (action.payLoad.messages && action.payLoad.messages.length) {
         newState = { ...state };
         newState.messagesRead = [
           ...state.messagesRead,
@@ -42,11 +42,10 @@ const notificationReducer = (state = initialState, action) => {
 
 export const setNotification = (message, type) => {
   return (dispatch) => {
-    const id = uuid();
     dispatch({
       type: "SET_NOTIFICATION",
       payLoad: {
-        id,
+        id: uuid(),
         message,
         type,
       },
@@ -81,6 +80,7 @@ export const hideHelperMessage = (userId, message) => {
       dispatch({
         type: "SET_NOTIFICATION",
         payLoad: {
+          id: uuid(),
           message: e.response.data.message,
           type: CONSTANTS.NOTIFICATION.ERROR,
         },

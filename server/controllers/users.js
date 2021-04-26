@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const usersRouter = require("express").Router();
 const User = require("../models/user");
 const ValidationError = require("../utils/error");
-const userTokenParser = require("../utils/parsers");
+const parsers = require("../utils/parsers");
 
 usersRouter.post("/", async (request, response, next) => {
   try {
@@ -130,23 +130,29 @@ usersRouter.put(
   }
 );
 
-usersRouter.delete("/:id", async (request, response, next) => {
-  try {
-    const { password } = request.body;
+usersRouter.delete(
+  "/:id",
+  middleware.tokenValidate,
+  async (request, response, next) => {
+    try {
+      const { password } = request.body;
 
-    const user = await User.findById(request.params.id);
-    const passwordCorrect =
-      user === null ? false : await bcrypt.compare(password, user.passwordHash);
+      const user = await User.findById(request.params.id);
+      const passwordCorrect =
+        user === null
+          ? false
+          : await bcrypt.compare(password, user.passwordHash);
 
-    if (user && passwordCorrect) {
-      await User.findByIdAndDelete(request.params.id);
-      response.status(204).end();
-    } else {
-      return next(new ValidationError(401, "Invalid user or password"));
+      if (user && passwordCorrect) {
+        await User.findByIdAndDelete(request.params.id);
+        response.status(204).end();
+      } else {
+        return next(new ValidationError(401, "Invalid user or password"));
+      }
+    } catch (e) {
+      next(e);
     }
-  } catch (e) {
-    next(e);
   }
-});
+);
 
 module.exports = usersRouter;

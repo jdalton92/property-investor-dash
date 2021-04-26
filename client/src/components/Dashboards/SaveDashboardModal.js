@@ -21,6 +21,7 @@ import CloseIcon from "../../styles/svg/close.svg";
 import SaveIcon from "../../styles/svg/save.svg";
 import OverwriteIcon from "../../styles/svg/overwrite.svg";
 import { setNotification } from "../../reducers/notificationReducer";
+import { typeAndUrl } from "../../utils/dashboardHelper";
 
 const SaveDashboardModal = ({
   isFetching,
@@ -43,7 +44,7 @@ const SaveDashboardModal = ({
     }
 
     const dashObject = {
-      values: currentDashboard.values,
+      assumptions: currentDashboard.assumptions,
       ...saveData,
     };
     await saveDashboard(dashObject);
@@ -61,7 +62,7 @@ const SaveDashboardModal = ({
       _id: selectedDashboard,
       address,
       description,
-      values: currentDashboard.values,
+      assumptions: currentDashboard.assumptions,
     };
     await updateDashboard(newDashboard);
     setModal(CONSTANTS.MODALS.SAVEDASHBOARD, false);
@@ -241,14 +242,7 @@ const SaveDashboardModal = ({
                           </thead>
                           <tbody>
                             {savedDashboards.map((d, i) => {
-                              let type;
-                              if (d.values?.type === "developer") {
-                                type = "Developer";
-                              } else if (d.values?.investor) {
-                                type = "Investor";
-                              } else {
-                                type = "Owner Occupier";
-                              }
+                              const { type } = typeAndUrl(d);
                               return (
                                 <tr
                                   key={i}
@@ -369,7 +363,7 @@ const SaveDashboardModal = ({
 const mapStateToProps = (state) => {
   return {
     isFetching: state.dashboards.isFetching,
-    currentDashboard: state.dashboards.currentDashboard.data,
+    currentDashboard: state.dashboards.currentDashboard,
     savedDashboards: state.dashboards.savedDashboards,
     saveDashboardModal: state.navigation.modal.saveDashboard,
     tab: state.navigation.tabs.saveDashboard,

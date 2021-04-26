@@ -44,7 +44,7 @@ describe("/api/dashboards", () => {
         description: "Test Dashboard",
         address: "Test Address",
         type: "developer",
-        values: constants.developerData,
+        assumptions: constants.developerAssumptions,
       });
 
     const res = await request(app)

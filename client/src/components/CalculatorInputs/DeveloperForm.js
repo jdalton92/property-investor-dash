@@ -33,7 +33,8 @@ const DeveloperForm = ({
   }, [id]);
 
   const onSubmit = (values) => {
-    testDashboard({ ...values, type: "developer" });
+    values.type = "developer";
+    testDashboard(values);
     history.push("/developer/dash");
   };
 
@@ -42,9 +43,9 @@ const DeveloperForm = ({
   } else {
     const { type } = typeAndUrl(currentDashboard);
 
-    let initialValues = { overPayments: [{}] };
+    let initialValues = {};
     if ((preSave || id) && type === "Developer") {
-      initialValues = currentDashboard.values;
+      initialValues = currentDashboard.assumptions;
     }
 
     return (
@@ -397,7 +398,7 @@ const DeveloperForm = ({
 
 const mapStateToProps = (state) => {
   return {
-    currentDashboard: state.dashboards.currentDashboard.data,
+    currentDashboard: state.dashboards.currentDashboard,
     preSave: state.dashboards.currentDashboard.preSave,
     isFetching: state.dashboards.isFetching,
   };
