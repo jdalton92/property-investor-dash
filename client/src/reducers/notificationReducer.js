@@ -87,14 +87,6 @@ export const setNotification = (message, type) => {
         type,
       },
     });
-    setTimeout(
-      () =>
-        dispatch({
-          type: "CLEAR_NOTIFICATION",
-          payLoad: { id },
-        }),
-      5000
-    );
   };
 };
 

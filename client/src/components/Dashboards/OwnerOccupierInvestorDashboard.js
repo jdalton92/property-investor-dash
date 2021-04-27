@@ -8,7 +8,7 @@ import {
   occupierInvestorCalculation,
   cardParse,
   occupierInvestorMOCCalculation,
-} from "../../utils/occupierAndInvestorDataParser";
+} from "../../utils/occupierAndInvestorCalculations";
 import {
   currencyFormatter,
   percentageFormatter,

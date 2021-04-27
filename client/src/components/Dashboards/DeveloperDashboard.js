@@ -15,7 +15,7 @@ import {
   developerCalculation,
   developerMOCCalculation,
   fundingChartParse,
-} from "../../utils/developerDashboardDataParser";
+} from "../../utils/developerCalculations";
 import {
   currencyFormatter,
   percentageFormatter,

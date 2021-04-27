@@ -3,7 +3,7 @@ const uniqueValidator = require("mongoose-unique-validator");
 const { paginate } = require("../utils/paginate");
 
 const occupierSchema = {
-  // Growth rates/yields
+  // Growth rates
   capitalGrowth: {
     type: Number,
     required: true,
