@@ -43,7 +43,7 @@ const Login = ({
     history.push("/contact");
     setNotification(
       "Password reset functionality coming soon, please contact us to reset your password",
-      CONSTANTS.NOTIFICATION.MESSAGE
+      CONSTANTS.NOTIFICATION.INFO
     );
   };
 

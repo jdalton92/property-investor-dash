@@ -1,6 +1,5 @@
 import dashboardService from "../services/dashboard";
-import { v4 as uuid } from "uuid";
-import { CONSTANTS } from "../static/constants";
+import { successNotification, errorNotification } from "./notificationReducer";
 
 // const occupierAsssumptions = {
 //   capitalGrowth: 3.5,
@@ -130,7 +129,7 @@ export const getDashboards = (params) => {
     });
     try {
       const { results } = await dashboardService.getAllDashboards(params);
-      console.log(results);
+
       dispatch({
         type: "INIT_DASHBOARDS",
         payLoad: { dashboards: results },
@@ -139,14 +138,7 @@ export const getDashboards = (params) => {
       dispatch({
         type: "DASHBOARD_REQUEST_FAIL",
       });
-      dispatch({
-        type: "SET_NOTIFICATION",
-        payLoad: {
-          id: uuid(),
-          message: e.response.data.message,
-          type: CONSTANTS.NOTIFICATION.ERROR,
-        },
-      });
+      dispatch(errorNotification(e.response.data.message));
     }
   };
 };
@@ -167,14 +159,7 @@ export const getDashboard = (id) => {
       dispatch({
         type: "DASHBOARD_REQUEST_FAIL",
       });
-      dispatch({
-        type: "SET_NOTIFICATION",
-        payLoad: {
-          id: uuid(),
-          message: e.response.data.message,
-          type: CONSTANTS.NOTIFICATION.ERROR,
-        },
-      });
+      dispatch(errorNotification(e.response.data.message));
     }
   };
 };
@@ -210,26 +195,12 @@ export const saveDashboard = (dashboardObject) => {
           dashboard: newDash,
         },
       });
-      dispatch({
-        type: "SET_NOTIFICATION",
-        payLoad: {
-          id: uuid(),
-          message: `${newDash.description} saved`,
-          type: CONSTANTS.NOTIFICATION.SUCCESS,
-        },
-      });
+      dispatch(successNotification(`${newDash.description} saved`));
     } catch (e) {
       dispatch({
         type: "DASHBOARD_REQUEST_FAIL",
       });
-      dispatch({
-        type: "SET_NOTIFICATION",
-        payLoad: {
-          id: uuid(),
-          message: e.response.data.message,
-          type: CONSTANTS.NOTIFICATION.ERROR,
-        },
-      });
+      dispatch(errorNotification(e.response.data.message));
     }
   };
 };
@@ -246,26 +217,12 @@ export const updateDashboard = (dashboardObject) => {
         type: "UPDATE_DASHBOARDS",
         payLoad: { dashboard },
       });
-      dispatch({
-        type: "SET_NOTIFICATION",
-        payLoad: {
-          id: uuid(),
-          message: `${dashboard.description} saved`,
-          type: CONSTANTS.NOTIFICATION.SUCCESS,
-        },
-      });
+      dispatch(successNotification(`${dashboard.description} saved`));
     } catch (e) {
       dispatch({
         type: "DASHBOARD_REQUEST_FAIL",
       });
-      dispatch({
-        type: "SET_NOTIFICATION",
-        payLoad: {
-          id: uuid(),
-          message: e.response.data.message,
-          type: CONSTANTS.NOTIFICATION.ERROR,
-        },
-      });
+      dispatch(errorNotification(e.response.data.message));
     }
   };
 };
@@ -284,27 +241,13 @@ export const deleteDashboard = (id) => {
           id,
         },
       });
-      dispatch({
-        type: "SET_NOTIFICATION",
-        payLoad: {
-          id: uuid(),
-          message: "Dashboard delected",
-          type: CONSTANTS.NOTIFICATION.SUCCESS,
-        },
-      });
+      dispatch(successNotification("Dashboard deleted"));
     } catch (e) {
       console.log(e);
       dispatch({
         type: "DASHBOARD_REQUEST_FAIL",
       });
-      dispatch({
-        type: "SET_NOTIFICATION",
-        payLoad: {
-          id: uuid(),
-          message: e.response.data.message,
-          type: CONSTANTS.NOTIFICATION.ERROR,
-        },
-      });
+      dispatch(errorNotification(e.response.data.message));
     }
   };
 };

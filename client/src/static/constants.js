@@ -1,6 +1,6 @@
 export const CONSTANTS = {
   NOTIFICATION: {
-    MESSAGE: "MESSAGE",
+    INFO: "INFO",
     SUCCESS: "SUCCESS",
     ERROR: "ERROR",
   },

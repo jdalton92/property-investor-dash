@@ -1,9 +1,11 @@
-import { v4 as uuid } from "uuid";
 import loginService from "../services/login";
-import { CONSTANTS } from "../static/constants";
 import { setToken, destroyToken } from "../utils/tokenHelper";
 import userService from "../services/user";
-import { setNotification } from "./notificationReducer";
+import {
+  successNotification,
+  errorNotification,
+  infoNotification,
+} from "./notificationReducer";
 
 const initialState = { isFetching: true, data: {} };
 
@@ -50,15 +52,7 @@ export const initUser = () => {
         });
       }
     } catch (e) {
-      console.log(e);
-      dispatch({
-        type: "SET_NOTIFICATION",
-        payLoad: {
-          id: uuid(),
-          message: e.response.data.message,
-          type: CONSTANTS.NOTIFICATION.ERROR,
-        },
-      });
+      dispatch(errorNotification(e.response.data.message));
     }
   };
 };
@@ -83,39 +77,9 @@ export const demoUser = () => {
         type: "SET_USER",
         payLoad: { user },
       });
-      dispatch(
-        setNotification(
-          `Logged into demo account2`,
-          CONSTANTS.NOTIFICATION.SUCCESS
-        )
-      );
-      // const id = uuid();
-      // dispatch({
-      //   type: "SET_NOTIFICATION",
-      //   payLoad: {
-      //     id,
-      //     message: `Logged into demo account`,
-      //     type: CONSTANTS.NOTIFICATION.SUCCESS,
-      //   },
-      // });
-      // setTimeout(
-      //   () =>
-      //     dispatch({
-      //       type: "CLEAR_NOTIFICATION",
-      //       payLoad: { id },
-      //     }),
-      //   5000
-      // );
+      dispatch(successNotification("Logged into demo account"));
     } catch (e) {
-      console.log(e);
-      dispatch({
-        type: "SET_NOTIFICATION",
-        content: {
-          id: uuid(),
-          message: e.response.data.message,
-          type: CONSTANTS.NOTIFICATION.ERROR,
-        },
-      });
+      dispatch(errorNotification(e.response.data.message));
     }
   };
 };
@@ -149,27 +113,13 @@ export const createUser = (email, password, checkPassword) => {
         type: "SET_USER",
         payLoad: { user },
       });
-      dispatch({
-        type: "SET_NOTIFICATION",
-        payLoad: {
-          id: uuid(),
-          message: `Account created`,
-          type: CONSTANTS.NOTIFICATION.SUCCESS,
-        },
-      });
+      dispatch(successNotification("User account created"));
     } catch (e) {
       console.log(e);
       dispatch({
         type: "USER_REQUEST_FAIL",
       });
-      dispatch({
-        type: "SET_NOTIFICATION",
-        payLoad: {
-          id: uuid(),
-          message: e.response.data.message,
-          type: CONSTANTS.NOTIFICATION.ERROR,
-        },
-      });
+      dispatch(errorNotification(e.response.data.message));
     }
   };
 };
@@ -181,14 +131,7 @@ export const logoutUser = () => {
     dispatch({
       type: "CLEAR_USER",
     });
-    dispatch({
-      type: "SET_NOTIFICATION",
-      payLoad: {
-        id: uuid(),
-        message: "Logged Out",
-        type: CONSTANTS.NOTIFICATION.SUCCESS,
-      },
-    });
+    dispatch(successNotification("Logged out"));
   };
 };
 
@@ -218,14 +161,7 @@ export const loginUser = (email, password) => {
       dispatch({
         type: "USER_REQUEST_FAIL",
       });
-      dispatch({
-        type: "SET_NOTIFICATION",
-        payLoad: {
-          id: uuid(),
-          message: e.response.data.message,
-          type: CONSTANTS.NOTIFICATION.ERROR,
-        },
-      });
+      dispatch(errorNotification(e.response.data.message));
     }
   };
 };
@@ -248,27 +184,12 @@ export const updateUser = (id, userData) => {
         type: "SET_USER",
         payLoad: { user },
       });
-
-      dispatch({
-        type: "SET_NOTIFICATION",
-        payLoad: {
-          id: uuid(),
-          message: "User details updated",
-          type: CONSTANTS.NOTIFICATION.MESSAGE,
-        },
-      });
+      dispatch(infoNotification("User details updated"));
     } catch (e) {
       dispatch({
         type: "USER_REQUEST_FAIL",
       });
-      dispatch({
-        type: "SET_NOTIFICATION",
-        payLoad: {
-          id: uuid(),
-          message: e.response.data.message,
-          type: CONSTANTS.NOTIFICATION.ERROR,
-        },
-      });
+      dispatch(errorNotification(e.response.data.message));
     }
   };
 };
@@ -291,14 +212,7 @@ export const deleteUser = (id, password) => {
       dispatch({
         type: "USER_REQUEST_FAIL",
       });
-      dispatch({
-        type: "SET_NOTIFICATION",
-        payLoad: {
-          id: uuid(),
-          message: e.response.data.message,
-          type: CONSTANTS.NOTIFICATION.ERROR,
-        },
-      });
+      dispatch(errorNotification(e.response.data.message));
     }
   };
 };

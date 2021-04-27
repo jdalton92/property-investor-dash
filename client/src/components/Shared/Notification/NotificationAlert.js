@@ -15,23 +15,20 @@ const NotificationAlert = ({ notification, clearNotification, key }) => {
     clearNotification(notification.id);
   };
 
-  let notificationType;
+  let notificationType = notification.type.toLowerCase();
   let iconUrl;
   switch (notification.type) {
-    case CONSTANTS.NOTIFICATION.MESSAGE:
-      notificationType = "message";
+    case CONSTANTS.NOTIFICATION.INFO:
       iconUrl = MessageIcon;
       break;
     case CONSTANTS.NOTIFICATION.SUCCESS:
-      notificationType = "success";
       iconUrl = TickIcon;
       break;
     case CONSTANTS.NOTIFICATION.ERROR:
-      notificationType = "error";
       iconUrl = ErrorIcon;
       break;
     default:
-      notificationType = "message";
+      notificationType = "info";
       iconUrl = MessageIcon;
   }
 

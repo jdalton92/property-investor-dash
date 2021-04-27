@@ -40,6 +40,42 @@ const notificationReducer = (state = initialState, action) => {
   }
 };
 
+export const errorNotification = (message) => {
+  const id = uuid();
+  return {
+    type: "SET_NOTIFICATION",
+    payLoad: {
+      id,
+      message,
+      type: CONSTANTS.NOTIFICATION.ERROR,
+    },
+  };
+};
+
+export const successNotification = (message) => {
+  const id = uuid();
+  return {
+    type: "SET_NOTIFICATION",
+    payLoad: {
+      id,
+      message,
+      type: CONSTANTS.NOTIFICATION.SUCCESS,
+    },
+  };
+};
+
+export const infoNotification = (message) => {
+  const id = uuid();
+  return {
+    type: "SET_NOTIFICATION",
+    payLoad: {
+      id,
+      message,
+      type: CONSTANTS.NOTIFICATION.INFO,
+    },
+  };
+};
+
 export const setNotification = (message, type) => {
   const id = uuid();
   return (dispatch) => {
@@ -86,14 +122,7 @@ export const hideHelperMessage = (userId, message) => {
       });
     } catch (e) {
       console.log(e);
-      dispatch({
-        type: "SET_NOTIFICATION",
-        payLoad: {
-          id: uuid(),
-          message: e.response.data.message,
-          type: CONSTANTS.NOTIFICATION.ERROR,
-        },
-      });
+      dispatch(errorNotification(e.response.data.message));
     }
   };
 };

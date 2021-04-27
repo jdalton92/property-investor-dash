@@ -1,14 +1,13 @@
 import contactService from "../services/contact";
-import { v4 as uuid } from "uuid";
-import { CONSTANTS } from "../static/constants";
+import { successNotification, errorNotification } from "./notificationReducer";
 
 const initialState = { isFetching: false };
 
 const contactReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "CONTACT_REQUEST":
+    case "SEND_REQUEST":
       return { isFetching: true };
-    case "MESSAGE_SENT":
+    case "END_REQUEST":
       return { isFetching: false };
     default:
       return state;
@@ -18,34 +17,20 @@ const contactReducer = (state = initialState, action) => {
 export const setMessage = (values) => {
   return async (dispatch) => {
     dispatch({
-      type: "CONTACT_REQUEST",
+      type: "END_REQUEST",
     });
     try {
       const response = await contactService.sendEmail(values);
       dispatch({
-        type: "MESSAGE_SENT",
+        type: "END_REQUEST",
       });
-      dispatch({
-        type: "SET_NOTIFICATION",
-        payLoad: {
-          id: uuid(),
-          message: response.message,
-          type: CONSTANTS.NOTIFICATION.SUCCES,
-        },
-      });
+      dispatch(successNotification(response.message));
     } catch (e) {
       console.log(e);
       dispatch({
-        type: "MESSAGE_SENT",
+        type: "END_REQUEST",
       });
-      dispatch({
-        type: "SET_NOTIFICATION",
-        payLoad: {
-          id: uuid(),
-          message: e.response.data.message,
-          type: CONSTANTS.NOTIFICATION.ERROR,
-        },
-      });
+      dispatch(errorNotification(e.response.data.message));
     }
   };
 };
