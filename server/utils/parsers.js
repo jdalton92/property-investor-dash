@@ -35,24 +35,29 @@ const occupierInvestorCashflow = ({
   // Initalise loan variables
   const t = ownershipLength * 12;
   const r = interestRate / 100;
+  opexGrowth = opexGrowth / 100;
+  capitalGrowth = capitalGrowth / 100;
+  rentalYield = rentalYield / 100;
   let openingBalance = 0;
   let closingBalance = 0;
   let monthSummary = [];
 
   // Master Loop over investment period
   for (let i = 0; i < t; i++) {
+    const year = Math.ceil((i + 1) / 12);
+    const annualIndex = year - 1;
     const acquisition = i === 0 ? purchasePrice : null;
-    const initialCosts = i === 0 ? (purchasePrice * upfrontCosts) / 100 : null;
+    const upfrontCost = i === 0 ? (purchasePrice * upfrontCosts) / 100 : null;
 
     const grossRealisation =
       i === t - 1
-        ? purchasePrice * Math.pow(1 + capitalGrowth / 100 / 12, i)
+        ? purchasePrice * Math.pow(1 + capitalGrowth, annualIndex)
         : null;
 
     const sellingCost = (grossRealisation * sellingCosts) / 100;
 
     // Finance calculations
-    const debtUse = i === 0 ? purchasePrice - deposit + initialCosts : null;
+    const debtUse = i === 0 ? purchasePrice - deposit + upfrontCost : null;
     const equityUse = i === 0 ? parseInt(deposit) : null;
 
     openingBalance = closingBalance + debtUse;
@@ -84,17 +89,14 @@ const occupierInvestorCashflow = ({
 
     // Rental income
     const rentalIncome =
-      (purchasePrice *
-        Math.pow(1 + capitalGrowth / 100 / 12, i) *
-        rentalYield) /
-      100 /
+      (purchasePrice * Math.pow(1 + capitalGrowth, annualIndex) * rentalYield) /
       12;
 
-    opex = (opex / 12) * Math.pow(1 + opexGrowth / 100 / 12, i);
+    opexCosts = (opex / 12) * Math.pow(1 + opexGrowth, annualIndex);
 
     const preFinanceCashflow =
       -acquisition -
-      initialCosts -
+      upfrontCost -
       opex +
       rentalIncome +
       grossRealisation -
@@ -105,11 +107,12 @@ const occupierInvestorCashflow = ({
 
     monthSummary.push({
       month: i + 1,
-      year: Math.ceil((i + 1) / 12),
+      year,
+      annualIndex,
       acquisition,
-      initialCosts,
+      upfrontCost,
       rentalIncome,
-      opex,
+      opex: opexCosts,
       grossRealisation,
       sellingCost,
       preFinanceCashflow,
