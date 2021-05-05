@@ -8,11 +8,13 @@ import notificationReducer from "./reducers/notificationReducer";
 import dashboardReducer from "./reducers/dashboardReducer";
 import navigationReducer from "./reducers/navigationReducer";
 import contactReducer from "./reducers/contactReducer";
+import cashflowReducer from "./reducers/cashflowReducer";
 
 const reducer = combineReducers({
   user: userReducer,
   notification: notificationReducer,
   dashboards: dashboardReducer,
+  cashflow: cashflowReducer,
   navigation: navigationReducer,
   contact: contactReducer,
 });

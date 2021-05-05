@@ -90,7 +90,7 @@ export const tableParse = (data) => {
 
     tableData.annualCashflow.push({
       year: i,
-      acquisitionCosts: -annualData.purchasePrice - annualData.initialCosts,
+      acquisitionCosts: -annualData.acquisition - annualData.upfrontCost,
       rentalIncome: annualData.rentalIncome,
       opex: -annualData.opex,
       netSale: annualData.grossRealisation - annualData.sellingCost,
@@ -114,7 +114,7 @@ export const tableParse = (data) => {
 
   tableData.summaryCashflow.push({
     year: null,
-    acquisitionCosts: -summaryData.purchasePrice - summaryData.initialCosts,
+    acquisitionCosts: -summaryData.acquisition - summaryData.initialCosts,
     rentalIncome: summaryData.rentalIncome,
     opex: -summaryData.opex,
     netSale: summaryData.grossRealisation - summaryData.sellingCost,
@@ -145,7 +145,7 @@ export const occupierInvestorMOCCalculation = (data) => {
 
   const netProfit = summaryData.postFinanceCashflow;
   const cost =
-    summaryData.purchasePrice +
+    summaryData.acquisition +
     summaryData.initialCosts +
     summaryData.opex +
     summaryData.loanInstallment +

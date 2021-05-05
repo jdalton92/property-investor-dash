@@ -5,7 +5,6 @@ import { Icon } from "../Shared/Icon";
 import {
   cumulativeChartParse,
   tableParse,
-  occupierInvestorCalculation,
   cardParse,
   occupierInvestorMOCCalculation,
 } from "../../utils/occupierAndInvestorCalculations";
@@ -23,7 +22,8 @@ const OwnerOccupierInvestorDashboard = ({ currentDashboard }) => {
   const [showCashflow, setShowCashflow] = useState(true);
 
   const message = occupierInvestorTooltip.cashflowAfterFunding.message;
-  const rawData = occupierInvestorCalculation(currentDashboard.assumptions);
+  // TODO: fetch cashflow output from server
+  const rawData = {};
   const chartData = cumulativeChartParse(rawData);
   const tableData = tableParse(rawData);
   const cardData = cardParse(rawData);

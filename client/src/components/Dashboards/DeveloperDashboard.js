@@ -12,7 +12,6 @@ import {
   cumulativeChartParse,
   annualChartParse,
   tableParse,
-  developerCalculation,
   developerMOCCalculation,
   fundingChartParse,
 } from "../../utils/developerCalculations";
@@ -75,7 +74,8 @@ const DeveloperDashboard = ({
     }
     const preFinanceMessage = developerTooltip.cashflowBeforeFunding.message;
     const postFinanceMessage = developerTooltip.cashflowAfterFunding.message;
-    const rawData = developerCalculation(currentDashboard.assumptions);
+    // TODO: fetch cashflow output from server
+    const rawData = {};
     const annualChart = annualChartParse(rawData);
     const cumulativeChart = cumulativeChartParse(rawData);
     const tableData = tableParse(rawData);

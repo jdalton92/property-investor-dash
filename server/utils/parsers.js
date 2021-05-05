@@ -57,12 +57,12 @@ const occupierInvestorCashflow = ({
     const sellingCost = (grossRealisation * sellingCosts) / 100;
 
     // Finance calculations
-    const debtUse = i === 0 ? purchasePrice - deposit + upfrontCost : null;
-    const equityUse = i === 0 ? parseInt(deposit) : null;
+    const debtUse = i === 0 ? purchasePrice - deposit : null;
+    const equityUse = i === 0 ? deposit + upfrontCost : null;
 
     openingBalance = closingBalance + debtUse;
 
-    const openingBalanceInterest = openingBalance * (1 + r / 12);
+    const openingBalanceAndInterest = openingBalance * (1 + r / 12);
 
     const n = homeloanTerm * 12 - i;
     const monthlyRepayment =
@@ -74,18 +74,18 @@ const occupierInvestorCashflow = ({
     let loanInstallment = 0;
     if (i <= homeloanTerm * 12 - 1) {
       loanInstallment =
-        monthlyRepayment + overPayment > openingBalanceInterest
-          ? openingBalanceInterest
+        monthlyRepayment + overPayment > openingBalanceAndInterest
+          ? openingBalanceAndInterest
           : monthlyRepayment + overPayment;
     }
 
     const principalRepayment =
       i === homeloanTerm * 12 - 1 || i === t - 1
-        ? openingBalanceInterest - loanInstallment
+        ? openingBalanceAndInterest - loanInstallment
         : null;
 
     closingBalance =
-      openingBalanceInterest - loanInstallment - principalRepayment;
+      openingBalanceAndInterest - loanInstallment - principalRepayment;
 
     // Rental income
     const rentalIncome =
@@ -97,7 +97,7 @@ const occupierInvestorCashflow = ({
     const preFinanceCashflow =
       -acquisition -
       upfrontCost -
-      opex +
+      opexCosts +
       rentalIncome +
       grossRealisation -
       sellingCost;
@@ -119,7 +119,7 @@ const occupierInvestorCashflow = ({
       openingBalance,
       equityUse,
       debtUse,
-      interest: openingBalanceInterest - openingBalance,
+      interest: openingBalanceAndInterest - openingBalance,
       loanInstallment,
       principalRepayment,
       closingBalance,
