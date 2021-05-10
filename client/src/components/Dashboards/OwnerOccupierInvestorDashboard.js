@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import Tooltip from "../Shared/Tooltip";
 import { Icon } from "../Shared/Icon";
@@ -18,7 +18,7 @@ import { occupierInvestorTooltip } from "../../static/tooltipText";
 import ExpandIcon from "../../styles/svg/expand.svg";
 import CollapseIcon from "../../styles/svg/collapse.svg";
 
-const OwnerOccupierInvestorDashboard = ({ currentDashboard }) => {
+const OwnerOccupierInvestorDashboard = ({ currentDashboard, cashflow }) => {
   const [showCashflow, setShowCashflow] = useState(true);
 
   const message = occupierInvestorTooltip.cashflowAfterFunding.message;

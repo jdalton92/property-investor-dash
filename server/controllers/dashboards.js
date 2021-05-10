@@ -23,14 +23,14 @@ dashboardRouter.get(
 
       const decodedToken = jwt.verify(request.token, process.env.SECRET);
       const query = { user: decodedToken.id };
+      if (type) {
+        query.type = type;
+      }
       const options = {
         page: request.query.page,
         limit: request.query.limit,
         sort: "-created",
       };
-      if (type) {
-        query.type = type;
-      }
 
       await Dashboard.paginate(query, options, (err, res) => {
         return response.status(200).json(res);
@@ -57,7 +57,7 @@ dashboardRouter.get(
 
 dashboardRouter.post(
   "/",
-  // middleware.dashboardValidate,
+  middleware.assumptionsValidate,
   middleware.tokenValidate,
   async (request, response, next) => {
     try {
@@ -97,7 +97,7 @@ dashboardRouter.post(
 
 dashboardRouter.put(
   "/:id",
-  // middleware.dashboardValidate,
+  middleware.assumptionsValidate,
   middleware.tokenValidate,
   async (request, response, next) => {
     try {

@@ -37,7 +37,7 @@ describe("/api/dashboards", () => {
   });
 
   it("Authorized GET / ", async () => {
-    await request(app)
+    const res = await request(app)
       .post("/api/dashboards")
       .set("authorization", `bearer ${token}`)
       .send({
@@ -46,12 +46,6 @@ describe("/api/dashboards", () => {
         type: "developer",
         assumptions: constants.developerAssumptions,
       });
-
-    const res = await request(app)
-      .get("/api/dashboards")
-      .set("authorization", `bearer ${token}`);
-
-    console.log(res.body);
 
     expect(res.statusCode).toEqual(200);
     expect(res.body.length).toEqual(1);

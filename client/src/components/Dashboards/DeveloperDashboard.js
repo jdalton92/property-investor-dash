@@ -19,6 +19,7 @@ import {
   currencyFormatter,
   percentageFormatter,
   IRRCalculation,
+  isEmpty,
 } from "../../utils/dashboardHelper";
 import { developerTooltip } from "../../static/tooltipText";
 import { Line, Bar } from "react-chartjs-2";
@@ -62,9 +63,6 @@ const DeveloperDashboard = ({
       history.push(`/developer/edit`);
     }
   };
-
-  const isEmpty = (obj) =>
-    Object.keys(obj).length === 0 && obj.constructor === Object;
 
   if (isFetching || (isEmpty(currentDashboard.assumptions) && id)) {
     return <Loader />;

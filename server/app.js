@@ -11,6 +11,7 @@ const middleware = require("./utils/middleware");
 
 const loginRouter = require("./controllers/login");
 const dashboardsRouter = require("./controllers/dashboards");
+const cashflowRouter = require("./controllers/cashflow");
 const usersRouter = require("./controllers/users");
 const emailRouter = require("./controllers/email");
 
@@ -40,6 +41,7 @@ app.use(middleware.tokenExtractor);
 
 app.use("/api/login", loginRouter);
 app.use("/api/dashboards", dashboardsRouter);
+app.use("/api/cashflow", cashflowRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/email", emailRouter);
 app.get("*", (req, res) => {

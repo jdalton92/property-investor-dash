@@ -1,5 +1,8 @@
 import { CONSTANTS } from "../static/constants";
 
+export const isEmpty = (obj) =>
+  Object.keys(obj).length === 0 && obj.constructor === Object;
+
 export const reducerHelper = (data) => {
   return data.reduce((accumulator, item) => {
     Object.keys(item).forEach((key) => {

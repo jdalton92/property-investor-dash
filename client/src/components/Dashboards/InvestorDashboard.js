@@ -12,6 +12,7 @@ import SaveIcon from "../../styles/svg/save.svg";
 import EditIcon from "../../styles/svg/edit.svg";
 import OwnerOccupierInvestorDashboard from "./OwnerOccupierInvestorDashboard";
 import { CONSTANTS } from "../../static/constants";
+import { isEmpty } from "../../utils/dashboardHelper";
 
 const InvestorDashboard = ({
   isFetching,
@@ -45,9 +46,6 @@ const InvestorDashboard = ({
       history.replace("/investor/edit");
     }
   };
-
-  const isEmpty = (obj) =>
-    Object.keys(obj).length === 0 && obj.constructor === Object;
 
   if (isFetching || (isEmpty(currentDashboard.assumptions) && id)) {
     return <Loader />;

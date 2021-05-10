@@ -53,43 +53,55 @@ const errorHandler = (error, request, response, next) => {
   next(error);
 };
 
-const dashboardValidate = (request, response, next) => {
-  let { type, values } = request.body;
+const assumptionsValidate = (request, response, next) => {
+  let { type, assumptions } = request.body;
+  const fields = Object.keys(assumptions);
 
-  // Non-required fields default to zero
-  const nonRequiredDeveloperInputs = [
-    "acquisitionCosts",
-    "designFees",
-    "statutoryFees",
-    "investmentPeriod",
-    "sellingCosts",
-    "recurringCosts",
+  const occupierFields = [
     "capitalGrowth",
-    "constructionCostGrowth",
-  ];
-
-  const nonRequiredOccupierInvestorInputs = [
-    "sellingCosts",
-    "capitalGrowth",
+    "opexGrowth",
+    "purchasePrice",
+    "ownershipLength",
     "upfrontCosts",
-    "recurringCosts",
-    "inflation",
+    "sellingCosts",
+    "opex",
+    "deposit",
+    "homeloanTerm",
+    "repaymentType",
+    "interestRate",
+    "overPayment",
+  ];
+  const investorFields = occupierFields.concat("rentalYield");
+  const developerFields = [
+    // TODO
   ];
 
-  if (type === "developer") {
-    nonRequiredDeveloperInputs.forEach((i) => {
-      if (!values[i]) {
-        values[i] = 0;
-      }
-    });
-  } else {
-    nonRequiredOccupierInvestorInputs.forEach((i) => {
-      if (!values[i]) {
-        values[i] = 0;
-      }
-    });
+  let templateFields;
+  switch (type) {
+    case "occupier":
+      templateFields = occupierFields;
+      break;
+    case "investor":
+      templateFields = investorFields;
+      break;
+    case "developer":
+      templateFields = developerFields;
+      break;
+    default:
+      return next(
+        new ValidationError(
+          400,
+          "`type` must be 'occupier', 'investor', or 'developer'"
+        )
+      );
   }
-  request.body.values = values;
+
+  fields.forEach((f) => {
+    if (!templateFields.includes(f)) {
+      return next(new ValidationError(400, `invalid field: ${f}`));
+    }
+  });
+
   next();
 };
 
@@ -98,5 +110,5 @@ module.exports = {
   tokenExtractor,
   tokenValidate,
   requestLogger,
-  dashboardValidate,
+  assumptionsValidate,
 };
