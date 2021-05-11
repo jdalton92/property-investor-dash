@@ -3,15 +3,14 @@ const middleware = require("../utils/middleware");
 const ValidationError = require("../utils/error");
 const parsers = require("../utils/parsers");
 
-cashflowRouter.get(
+cashflowRouter.post(
   "/",
   middleware.assumptionsValidate,
-  middleware.tokenValidate,
   async (request, response, next) => {
     try {
       const { type, assumptions } = request.body;
 
-      if (!type || !assumptions.length) {
+      if (!type || !assumptions) {
         return next(
           new ValidationError(400, "fields are required: `type`, `assumptions`")
         );

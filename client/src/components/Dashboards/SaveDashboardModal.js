@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Form, Field } from "react-final-form";
 import { setModal, setTab } from "../../reducers/navigationReducer";
 import {
+  getDashboards,
   saveDashboard,
   updateDashboard,
 } from "../../reducers/dashboardReducer";
@@ -21,10 +22,11 @@ import CloseIcon from "../../styles/svg/close.svg";
 import SaveIcon from "../../styles/svg/save.svg";
 import OverwriteIcon from "../../styles/svg/overwrite.svg";
 import { setNotification } from "../../reducers/notificationReducer";
-import { typeAndUrl } from "../../utils/dashboardHelper";
+import { getDashboardTypeAndBaseUrl } from "../../utils/dashboardHelper";
 
 const SaveDashboardModal = ({
   isFetching,
+  getDashboards,
   currentDashboard,
   savedDashboards,
   setModal,
@@ -35,6 +37,10 @@ const SaveDashboardModal = ({
   setTab,
   tab,
 }) => {
+  useEffect(() => {
+    getDashboards();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const [selectedDashboard, setSelectedDashboard] = useState(null);
 
   const handleSave = async (saveData) => {
@@ -242,7 +248,7 @@ const SaveDashboardModal = ({
                           </thead>
                           <tbody>
                             {savedDashboards.map((d, i) => {
-                              const { type } = typeAndUrl(d);
+                              const { type } = getDashboardTypeAndBaseUrl(d);
                               return (
                                 <tr
                                   key={i}
@@ -373,6 +379,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   setModal,
+  getDashboards,
   setTab,
   saveDashboard,
   updateDashboard,

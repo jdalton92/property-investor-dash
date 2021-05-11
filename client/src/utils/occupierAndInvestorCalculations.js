@@ -1,4 +1,4 @@
-import { currencyFormatter, reducerHelper } from "./dashboardHelper";
+import { currencyFormatter, sumFields } from "./dashboardHelper";
 
 export const cumulativeChartParse = (data) => {
   const labels = data.map((c) => c.month);
@@ -65,7 +65,7 @@ export const cumulativeChartParse = (data) => {
 };
 
 export const cardParse = (data) => {
-  const summaryData = reducerHelper(data);
+  const summaryData = sumFields(data);
 
   const dataObject = {
     months: data.length,
@@ -86,7 +86,7 @@ export const tableParse = (data) => {
   };
 
   for (let i = 1; i <= Math.ceil(data.length / 12); i++) {
-    const annualData = reducerHelper(data.filter((d) => d.year === i));
+    const annualData = sumFields(data.filter((d) => d.year === i));
 
     tableData.annualCashflow.push({
       year: i,
@@ -102,7 +102,7 @@ export const tableParse = (data) => {
       totalIncome: annualData.rentalIncome + annualData.grossRealisation,
       totalCost:
         -annualData.equityUse -
-        annualData.initialCosts -
+        annualData.upfrontCost -
         annualData.opex -
         annualData.sellingCost -
         annualData.loanInstallment -
@@ -110,11 +110,11 @@ export const tableParse = (data) => {
     });
   }
 
-  const summaryData = reducerHelper(data);
+  const summaryData = sumFields(data);
 
   tableData.summaryCashflow.push({
     year: null,
-    acquisitionCosts: -summaryData.acquisition - summaryData.initialCosts,
+    acquisitionCosts: -summaryData.acquisition - summaryData.upfrontCost,
     rentalIncome: summaryData.rentalIncome,
     opex: -summaryData.opex,
     netSale: summaryData.grossRealisation - summaryData.sellingCost,
@@ -126,7 +126,7 @@ export const tableParse = (data) => {
     totalIncome: summaryData.rentalIncome + summaryData.grossRealisation,
     totalCost:
       -summaryData.equityUse -
-      summaryData.initialCosts -
+      summaryData.upfrontCost -
       summaryData.opex -
       summaryData.sellingCost -
       summaryData.loanInstallment -
@@ -136,17 +136,11 @@ export const tableParse = (data) => {
 };
 
 export const occupierInvestorMOCCalculation = (data) => {
-  const summaryData = data.reduce((accumulator, item) => {
-    Object.keys(item).forEach((key) => {
-      accumulator[key] = (accumulator[key] || 0) + item[key];
-    });
-    return accumulator;
-  }, []);
-
+  const summaryData = sumFields(data);
   const netProfit = summaryData.postFinanceCashflow;
   const cost =
     summaryData.acquisition +
-    summaryData.initialCosts +
+    summaryData.upfrontCost +
     summaryData.opex +
     summaryData.loanInstallment +
     summaryData.sellingCost;

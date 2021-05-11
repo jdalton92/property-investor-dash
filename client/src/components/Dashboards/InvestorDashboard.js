@@ -7,6 +7,7 @@ import {
   getDashboard,
   preSaveDashboard,
 } from "../../reducers/dashboardReducer";
+import { getCashflow } from "../../reducers/cashflowReducer";
 import { setModal } from "../../reducers/navigationReducer";
 import SaveIcon from "../../styles/svg/save.svg";
 import EditIcon from "../../styles/svg/edit.svg";
@@ -18,7 +19,8 @@ const InvestorDashboard = ({
   isFetching,
   preSave,
   currentDashboard,
-  getDashboard,
+  getCashflow,
+  getDashboardAndCashflow,
   preSaveDashboard,
   setModal,
 }) => {
@@ -27,7 +29,9 @@ const InvestorDashboard = ({
 
   useEffect(() => {
     if (id && !preSave) {
-      getDashboard(id);
+      getDashboardAndCashflow(id);
+    } else if (currentDashboard.type && currentDashboard.assumptions) {
+      getCashflow(currentDashboard.type, currentDashboard.assumptions);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
@@ -106,6 +110,7 @@ const mapDispatchToProps = {
   setModal,
   getDashboard,
   preSaveDashboard,
+  getCashflow,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(InvestorDashboard);

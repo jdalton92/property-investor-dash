@@ -2,17 +2,15 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { Form, Field } from "react-final-form";
-import arrayMutators from "final-form-arrays";
 import { testDashboard, getDashboard } from "../../reducers/dashboardReducer";
 import { CONSTANTS } from "../../static/constants";
 import { helperMessage } from "../../static/helperMessageText";
 import { required, minValue, maxValue } from "../../utils/formValidatorHelper";
-import { typeAndUrl } from "../../utils/dashboardHelper";
+import { getDashboardTypeAndBaseUrl } from "../../utils/dashboardHelper";
 import { developerTooltip } from "../../static/tooltipText";
 import FinalFormField from "../Shared/FinalFormField";
 import HelperMessage from "../Shared/HelperMessage";
 import Loader from "../Shared/Loader";
-import MortgageOverpayments from "./MortgageOverpayments";
 import Tooltip from "../Shared/Tooltip";
 
 const DeveloperForm = ({
@@ -33,15 +31,14 @@ const DeveloperForm = ({
   }, [id]);
 
   const onSubmit = (values) => {
-    values.type = "developer";
-    testDashboard(values);
+    testDashboard(CONSTANTS.TYPES.DEVELOPER, values);
     history.push("/developer/dash");
   };
 
   if (isFetching) {
     return <Loader />;
   } else {
-    const { type } = typeAndUrl(currentDashboard);
+    const { type } = getDashboardTypeAndBaseUrl(currentDashboard);
 
     let initialValues = {};
     if ((preSave || id) && type === "Developer") {
@@ -57,20 +54,10 @@ const DeveloperForm = ({
         />
         <Form
           onSubmit={onSubmit}
-          mutators={{
-            ...arrayMutators,
-          }}
           initialValues={{
             ...initialValues,
           }}
-          render={({
-            handleSubmit,
-            values,
-            form,
-            form: {
-              mutators: { push, pop },
-            },
-          }) => (
+          render={({ handleSubmit, values, form }) => (
             <form onSubmit={handleSubmit}>
               <h2 className="f20 bold mt16 mb16">Timing Assumptions</h2>
               <div className="r bs-3 bg-1 p20 mb20">
@@ -102,17 +89,21 @@ const DeveloperForm = ({
                     />
                   </div>
                 </div>
-                <FinalFormField
-                  label={"Investment Period"}
-                  fieldName={"investmentPeriod"}
-                  type={CONSTANTS.TYPES.DEVELOPER}
-                  validators={[minValue(0), maxValue(30)]}
-                  placeholder={"Investment Period"}
-                  fieldType={"number"}
-                  step={1}
-                  append={"yrs"}
-                  parseType={CONSTANTS.PARSETYPE.INT}
-                />
+                <div className="form-row">
+                  <div className="form-item">
+                    <FinalFormField
+                      label={"Investment Period"}
+                      fieldName={"investmentPeriod"}
+                      type={CONSTANTS.TYPES.DEVELOPER}
+                      validators={[minValue(0), maxValue(30)]}
+                      placeholder={"Investment Period"}
+                      fieldType={"number"}
+                      step={1}
+                      append={"yrs"}
+                      parseType={CONSTANTS.PARSETYPE.INT}
+                    />
+                  </div>
+                </div>
               </div>
               <h2 className="f20 bold mt16 mb16">Cost Assumptions</h2>
               <div className="r bs-3 bg-1 p20 mb20">
@@ -197,16 +188,20 @@ const DeveloperForm = ({
                     />
                   </div>
                 </div>
-                <FinalFormField
-                  label={"Construction Cost Growth"}
-                  fieldName={"constructionCostGrowth"}
-                  type={CONSTANTS.TYPES.DEVELOPER}
-                  validators={[minValue(0), maxValue(100)]}
-                  placeholder={"Construction Cost Growth"}
-                  fieldType={"number"}
-                  step={0.01}
-                  append={"% pa"}
-                />
+                <div className="form-row">
+                  <div className="form-item">
+                    <FinalFormField
+                      label={"Construction Cost Growth"}
+                      fieldName={"constructionCostGrowth"}
+                      type={CONSTANTS.TYPES.DEVELOPER}
+                      validators={[minValue(0), maxValue(100)]}
+                      placeholder={"Construction Cost Growth"}
+                      fieldType={"number"}
+                      step={0.01}
+                      append={"% pa"}
+                    />
+                  </div>
+                </div>
               </div>
               <h2 className="f20 bold mt16 mb16">Revenue Assumptions</h2>
               <div className="r bs-3 bg-1 p20 mb20">
@@ -320,14 +315,19 @@ const DeveloperForm = ({
                 <div className="form-row">
                   <div className="form-item">
                     <div className="flex-row align-c relative">
-                      <label htmlFor="developer-loantype" className="f16 mb8">
+                      <label
+                        htmlFor="developer-repaymenttype"
+                        className="f16 mb8"
+                      >
                         Repayment Type
                         <span className="font-red f12 bold ml4">*</span>
                       </label>
-                      <Tooltip message={developerTooltip.loanType.message} />
+                      <Tooltip
+                        message={developerTooltip.repaymentType.message}
+                      />
                     </div>
                     <Field
-                      name="loanType"
+                      name="repaymentType"
                       component="select"
                       validate={required}
                       defaultValue=""
@@ -336,7 +336,7 @@ const DeveloperForm = ({
                         <div className="relative mb20">
                           <select
                             className="form-input select w100 bs-1"
-                            id="developer-loantype"
+                            id="developer-repaymenttype"
                             {...input}
                           >
                             <option value="" disabled hidden>
@@ -368,10 +368,22 @@ const DeveloperForm = ({
                     />
                   </div>
                 </div>
-                <MortgageOverpayments
-                  type={CONSTANTS.TYPES.DEVELOPER}
-                  push={push}
-                />
+                <div className="form-row">
+                  <div className="form-item">
+                    <FinalFormField
+                      label={"Mortgage Overpayment"}
+                      fieldName={"overPayment"}
+                      type={CONSTANTS.TYPES.DEVELOPER}
+                      validators={[minValue(0)]}
+                      placeholder={"Mortgage Overpayment"}
+                      maxLength={3}
+                      fieldType={"number"}
+                      step={"0.01"}
+                      prepend={"$"}
+                      append={"pm"}
+                    />
+                  </div>
+                </div>
               </div>
               <div className="form-buttons mb20">
                 <button

@@ -4,7 +4,10 @@ import { useHistory } from "react-router-dom";
 import { getDashboards, deleteDashboard } from "../reducers/dashboardReducer";
 import Loader from "./Shared/Loader";
 import Button from "./Shared/Button";
-import { formatDate, typeAndUrl } from "../utils/dashboardHelper";
+import {
+  formatDate,
+  getDashboardTypeAndBaseUrl,
+} from "../utils/dashboardHelper";
 import OpenIcon from "../styles/svg/tick.svg";
 import CloseIcon from "../styles/svg/close.svg";
 
@@ -50,7 +53,7 @@ const SavedDashboards = ({
               </thead>
               <tbody>
                 {savedDashboards.map((d, i) => {
-                  const { baseUrl, type } = typeAndUrl(d);
+                  const { baseUrl, type } = getDashboardTypeAndBaseUrl(d);
                   return (
                     <tr key={i}>
                       <td className="h768">{i + 1}</td>

@@ -3,7 +3,7 @@ import { errorNotification } from "./notificationReducer";
 
 const initialState = {
   isFetching: false,
-  cashflow: [],
+  monthlyCashflow: [],
 };
 
 const cashflowReducer = (state = initialState, action) => {
@@ -15,8 +15,8 @@ const cashflowReducer = (state = initialState, action) => {
       return newState;
     case "GET_CASHFLOW":
       newState = { ...state };
-      newState.isFetching = true;
-      newState.cashflow = action.payLoad.cashflow;
+      newState.isFetching = false;
+      newState.monthlyCashflow = action.payLoad.monthlyCashflow;
       return newState;
     case "CASHFLOW_REQUEST_FAIL":
       newState = { ...state };
@@ -33,11 +33,14 @@ export const getCashflow = (type, assumptions) => {
       type: "CASHFLOW_REQUEST",
     });
     try {
-      const cashflow = cashflowService.getCashflow(type, assumptions);
+      const monthlyCashflow = await cashflowService.getCashflow(
+        type,
+        assumptions
+      );
       dispatch({
         type: "GET_CASHFLOW",
         payLoad: {
-          cashflow,
+          monthlyCashflow,
         },
       });
     } catch (e) {

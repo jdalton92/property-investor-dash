@@ -1,25 +1,26 @@
 import dashboardService from "../services/dashboard";
+import cashflowService from "../services/cashflow";
 import { successNotification, errorNotification } from "./notificationReducer";
 
-// const occupierAsssumptions = {
-//   capitalGrowth: 3.5,
-//   opexGrowth: 3,
-//   purchasePrice: 1000000,
-//   ownershipLength: 15,
-//   upfrontCosts: 3,
-//   sellingCosts: 3,
-//   opex: 1000,
-//   deposit: 200000,
-//   homeloanTerm: 30,
-//   loanType: "principalAndInterest",
-//   interestRate: 3.5,
-//   overPayments: 200,
-// };
+const occupierAsssumptions = {
+  capitalGrowth: 3.5,
+  opexGrowth: 3,
+  purchasePrice: 1000000,
+  ownershipLength: 15,
+  upfrontCosts: 3,
+  sellingCosts: 3,
+  opex: 1000,
+  deposit: 200000,
+  homeloanTerm: 30,
+  repaymentType: "principalAndInterest",
+  interestRate: 3.5,
+  overPayment: 200,
+};
 
-// const investorAsssumptions = {
-//   ...occupierData,
-//   rentalYield: 3,
-// };
+const investorAsssumptions = {
+  ...occupierAsssumptions,
+  rentalYield: 3,
+};
 
 // const developerAsssumptions = {
 //   acquisitionPrice: 100000,
@@ -39,10 +40,10 @@ import { successNotification, errorNotification } from "./notificationReducer";
 //   rentalYield: 4,
 
 //   initialEquity: 400000,
-//   loanType: "interestOnly",
+//   repaymentType: "interestOnly",
 //   interestRate: 3.5,
 //   loanTerm: 30,
-//   overPayments: [{}],
+//   overPayment: 200,
 
 //   capitalGrowth: 3.5,
 //   constructionCostGrowth: 2.5,
@@ -51,12 +52,21 @@ import { successNotification, errorNotification } from "./notificationReducer";
 let initialState = {
   isFetching: false,
   savedDashboards: [],
+  // currentDashboard: {
+  //   preSave: false,
+  //   name: "",
+  //   description: "",
+  //   date: "",
+  //   type: "",
+  //   assumptions: {},
+  // },
   currentDashboard: {
-    preSave: false,
+    preSave: true,
     name: "",
     description: "",
     date: "",
-    assumptions: {},
+    type: "investor",
+    assumptions: investorAsssumptions,
   },
 };
 
@@ -77,6 +87,7 @@ const dashboardReducer = (state = initialState, action) => {
       newState.isFetching = false;
       newState.currentDashboard = {
         preSave: true,
+        type: action.payLoad.type,
         assumptions: action.payLoad.assumptions,
       };
       return newState;
@@ -164,11 +175,41 @@ export const getDashboard = (id) => {
   };
 };
 
-export const testDashboard = (assumptions) => {
+export const getDashboardAndCashflow = (id) => {
+  return async (dispatch) => {
+    dispatch({
+      type: "DASHBOARD_REQUEST",
+    });
+    try {
+      const dashboard = await dashboardService.getDashboard(id);
+      const monthlyCashflow = await cashflowService.getCashflow(
+        dashboard.type,
+        dashboard.assumptions
+      );
+      dispatch({
+        type: "GET_CASHFLOW",
+        payLoad: {
+          monthlyCashflow,
+        },
+      });
+      dispatch({
+        type: "GET_DASHBOARD",
+        payLoad: { dashboard },
+      });
+    } catch (e) {
+      dispatch({
+        type: "DASHBOARD_REQUEST_FAIL",
+      });
+      dispatch(errorNotification(e.response.data.message));
+    }
+  };
+};
+
+export const testDashboard = (type, assumptions) => {
   return (dispatch) => {
     dispatch({
       type: "TEST_DASHBOARD",
-      payLoad: { assumptions },
+      payLoad: { type, assumptions },
     });
   };
 };

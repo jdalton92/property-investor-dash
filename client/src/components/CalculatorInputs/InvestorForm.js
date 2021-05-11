@@ -4,7 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { testDashboard, getDashboard } from "../../reducers/dashboardReducer";
 import { CONSTANTS } from "../../static/constants";
 import { helperMessage } from "../../static/helperMessageText";
-import { typeAndUrl } from "../../utils/dashboardHelper";
+import { getDashboardTypeAndBaseUrl } from "../../utils/dashboardHelper";
 import HelperMessage from "../Shared/HelperMessage";
 import Loader from "../Shared/Loader";
 import OwnerOccupierInvestorInputs from "./OwnerOccupierInvestorInputs";
@@ -27,8 +27,7 @@ const InvestorForm = ({
   }, [id]);
 
   const onSubmit = (values) => {
-    values.type = "investor";
-    testDashboard(values);
+    testDashboard(CONSTANTS.TYPES.INVESTOR, values);
     history.push("/investor/dash");
   };
 
@@ -39,7 +38,7 @@ const InvestorForm = ({
       </div>
     );
   } else {
-    const { type } = typeAndUrl(currentDashboard);
+    const { type } = getDashboardTypeAndBaseUrl(currentDashboard);
 
     let initialValues = {};
     if ((preSave || id) && type === "Investor") {

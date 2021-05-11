@@ -19,6 +19,14 @@ const userSchema = mongoose.Schema({
       sparse: true,
     },
   ],
+  roles: [
+    {
+      type: String,
+      required: true,
+      enum: ["demo", "user", "admin"],
+      default: "user",
+    },
+  ],
   dashboards: [
     {
       type: mongoose.Schema.Types.ObjectId,

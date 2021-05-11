@@ -52,6 +52,11 @@ usersRouter.put(
       if (!user) {
         return next(new ValidationError(400, "Invalid user id"));
       }
+      if (user.roles.includes("demo")) {
+        return next(
+          new ValidationError(403, "Unauthorised to update demo user")
+        );
+      }
 
       // Update Email
       let token;

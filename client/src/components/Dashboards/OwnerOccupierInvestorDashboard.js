@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import Tooltip from "../Shared/Tooltip";
 import { Icon } from "../Shared/Icon";
@@ -13,21 +13,19 @@ import {
   percentageFormatter,
   IRRCalculation,
 } from "../../utils/dashboardHelper";
+import { getCashflow } from "../../reducers/cashflowReducer";
 import { Line } from "react-chartjs-2";
 import { occupierInvestorTooltip } from "../../static/tooltipText";
 import ExpandIcon from "../../styles/svg/expand.svg";
 import CollapseIcon from "../../styles/svg/collapse.svg";
 
-const OwnerOccupierInvestorDashboard = ({ currentDashboard, cashflow }) => {
+const OwnerOccupierInvestorDashboard = ({ monthlyCashflow }) => {
   const [showCashflow, setShowCashflow] = useState(true);
 
   const message = occupierInvestorTooltip.cashflowAfterFunding.message;
-  // TODO: fetch cashflow output from server
-  const rawData = {};
-  const chartData = cumulativeChartParse(rawData);
-  const tableData = tableParse(rawData);
-  const cardData = cardParse(rawData);
-
+  const chartData = cumulativeChartParse(monthlyCashflow);
+  const tableData = tableParse(monthlyCashflow);
+  const cardData = cardParse(monthlyCashflow);
   return (
     <>
       <h2 className="f16 bold mt16 mb16">Post Funding Metrics</h2>
@@ -98,7 +96,7 @@ const OwnerOccupierInvestorDashboard = ({ currentDashboard, cashflow }) => {
               <td>IRR:</td>
               <td>
                 {percentageFormatter.format(
-                  IRRCalculation(rawData).postFinance
+                  IRRCalculation(monthlyCashflow).postFinance
                 )}
               </td>
             </tr>
@@ -106,7 +104,7 @@ const OwnerOccupierInvestorDashboard = ({ currentDashboard, cashflow }) => {
               <td>Margin On Cost:</td>
               <td>
                 {percentageFormatter.format(
-                  occupierInvestorMOCCalculation(rawData)
+                  occupierInvestorMOCCalculation(monthlyCashflow)
                 )}
               </td>
             </tr>
@@ -236,7 +234,16 @@ const mapStateToProps = (state) => {
   return {
     currentDashboard: state.dashboards.currentDashboard,
     cashflowTable: state.navigation.cashflowTable,
+    monthlyCashflow: state.cashflow.monthlyCashflow,
+    isFetching: state.cashflow.isFetching,
   };
 };
 
-export default connect(mapStateToProps, null)(OwnerOccupierInvestorDashboard);
+const mapDispatchToProps = {
+  getCashflow,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(OwnerOccupierInvestorDashboard);

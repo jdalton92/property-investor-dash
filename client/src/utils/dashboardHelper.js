@@ -3,16 +3,16 @@ import { CONSTANTS } from "../static/constants";
 export const isEmpty = (obj) =>
   Object.keys(obj).length === 0 && obj.constructor === Object;
 
-export const reducerHelper = (data) => {
-  return data.reduce((accumulator, item) => {
+export const sumFields = (data) => {
+  return data.reduce((acc, item) => {
     Object.keys(item).forEach((key) => {
-      accumulator[key] = (accumulator[key] || 0) + item[key];
+      acc[key] = (acc[key] || 0) + item[key];
     });
-    return accumulator;
+    return acc;
   }, []);
 };
 
-export const typeAndUrl = (dashboard) => {
+export const getDashboardTypeAndBaseUrl = (dashboard) => {
   let baseUrl;
   let type;
   switch (dashboard.type) {
@@ -29,7 +29,7 @@ export const typeAndUrl = (dashboard) => {
       type = "Owner-Occupier";
       break;
     default:
-      break;
+      throw new Error("Invalid dashboard type");
   }
 
   return { type, baseUrl };
@@ -56,25 +56,31 @@ export const percentageFormatter = new Intl.NumberFormat("en-US", {
 const IRRHelper = (cashflow) => {
   let min = -1.0;
   let max = 1.0;
-  let j = 1;
-  let guess = 0;
-  let NPV = 0;
+  let guessCount = 1;
+  let guess;
+  let NPV;
+
   do {
     guess = (min + max) / 2;
     NPV = 0;
+
     for (let i = 0; i < cashflow.length; i++) {
       NPV += cashflow[i] / Math.pow(1 + guess / 12, i);
     }
+
     if (NPV > 0) {
       min = guess;
     } else {
       max = guess;
     }
-    if (j > 100) {
+
+    if (guessCount > 100) {
       return undefined;
     }
-    j++;
+
+    guessCount++;
   } while (Math.abs(NPV) > 0.01);
+
   return guess;
 };
 

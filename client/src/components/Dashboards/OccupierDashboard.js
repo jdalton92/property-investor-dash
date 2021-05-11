@@ -4,9 +4,10 @@ import { useHistory, useParams } from "react-router-dom";
 import Loader from "../Shared/Loader";
 import { Icon } from "../Shared/Icon";
 import {
-  getDashboard,
+  getDashboardAndCashflow,
   preSaveDashboard,
 } from "../../reducers/dashboardReducer";
+import { getCashflow } from "../../reducers/cashflowReducer";
 import { setModal } from "../../reducers/navigationReducer";
 import SaveIcon from "../../styles/svg/save.svg";
 import EditIcon from "../../styles/svg/edit.svg";
@@ -18,7 +19,8 @@ const OccupierDashboard = ({
   isFetching,
   preSave,
   currentDashboard,
-  getDashboard,
+  getDashboardAndCashflow,
+  getCashflow,
   preSaveDashboard,
   setModal,
 }) => {
@@ -27,7 +29,9 @@ const OccupierDashboard = ({
 
   useEffect(() => {
     if (id && !preSave) {
-      getDashboard(id);
+      getDashboardAndCashflow(id);
+    } else if (currentDashboard.type && currentDashboard.assumptions) {
+      getCashflow(currentDashboard.type, currentDashboard.assumptions);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
@@ -104,7 +108,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   setModal,
-  getDashboard,
+  getDashboardAndCashflow,
+  getCashflow,
   preSaveDashboard,
 };
 

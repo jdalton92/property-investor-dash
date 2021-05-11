@@ -73,8 +73,8 @@ export const developerTooltip = {
     message:
       "Cash you will use for the design and construction period. All remaining costs above the initial equity limit are assumed to be funded by debt",
   },
-  loanType: {
-    header: "Loan Type",
+  repaymentType: {
+    header: "Repayment Type",
     message:
       "Repayment structure over the investment period. 100% of the outstanding loan is repaid when the asset is sold",
   },
@@ -88,20 +88,20 @@ export const developerTooltip = {
     message:
       "Number of years the loan repayment is paid over. This will only impact repayments if you choose a 'Principal and Interest' repayment structure. Any amount outstanding on the loan will be repaid on sale of the development, so you can choose a loan term that exceeds your investment period duration",
   },
-  overPayments: {
-    header: "Over Payments",
+  overPayment: {
+    header: "Over Payment",
     message:
-      "Any payments towards the loan that exceed the minimum required. Calculator assumes a one-off lump sum overpayment for each specified year. Year counter starts from begining of design period.",
+      "Any payments towards the loan that exceed the minimum required. The calculator assumes a recurring monthly overpayment of the specified value over the life of the mortgage.",
   },
   capitalGrowth: {
     header: "Dwelling Capital Growth",
     message:
-      "Percentage growth rate of development site acquisition price, rental income, and development sale value. Compounded monthly",
+      "Percentage growth rate of development site acquisition price, rental income, and development sale value. Compounded annually",
   },
   constructionCostGrowth: {
     header: "Construction Price Growth",
     message:
-      "Growth rate of construction costs, design costs, contingency, and statutory fees. Compounded monthly.",
+      "Growth rate of construction costs, design costs, contingency, and statutory fees. Compounded annually.",
   },
   cashflowBeforeFunding: {
     header: "Cashflow Before Funding",
@@ -122,9 +122,9 @@ export const developerTooltip = {
 };
 
 export const occupierInvestorTooltip = {
-  housePrice: {
-    header: "House Price",
-    message: "Purchase price of the property",
+  purchasePrice: {
+    header: "Purchase Price",
+    message: "Acquisition price of the property",
   },
   homeloan: {
     header: "Homeloan",
@@ -135,8 +135,8 @@ export const occupierInvestorTooltip = {
     header: "Deposit",
     message: "Amount of cash/equity used to purchase the property",
   },
-  loanType: {
-    header: "Loan Type",
+  repaymentType: {
+    header: "Repayment Type",
     message:
       "Repayment structure over the ownership period. 100% of the outstanding loan is repaid when the property is sold",
   },
@@ -150,12 +150,12 @@ export const occupierInvestorTooltip = {
     message:
       "Number of years the loan repayment is paid over. This will only impact repayments if you choose a 'Principal and Interest' repayment structure. Any amount outstanding on the loan will be repaid on sale of the property, so you can choose a loan term that exceeds your ownership length of the property",
   },
-  overPayments: {
-    header: "Over Payments",
+  overPayment: {
+    header: "Over Payment",
     message:
-      "Any payments towards the loan that exceed the minimum required. Calculator assumes one-off lump sum overpayment for each specified year.",
+      "Any payments towards the loan that exceed the minimum required. The calculator assumes a recurring monthly overpayment of the specified value over the life of the mortgage.",
   },
-  investmentPeriod: {
+  ownershipLength: {
     header: "Ownership Length",
     message:
       "Number of years after purchasing the property you will hold before selling.",
@@ -168,20 +168,20 @@ export const occupierInvestorTooltip = {
   capitalGrowth: {
     header: "Capital Growth",
     message:
-      "Percentage growth rate of property value, and rental income (if investor). Compounded monthly",
+      "Percentage growth rate of property value, and rental income (if investor). Compounded annually",
   },
-  inflation: {
-    header: "Inflation",
+  opexGrowth: {
+    header: "Operating Cost Growth",
     message:
-      "Inflation rate used to calculate increases in the operating costs. Compounded monthly",
+      "Inflation rate used to calculate increases in the operating costs. Compounded annually",
   },
   upfrontCosts: {
     header: "Upfront Costs",
     message:
       "Indirect costs associated with acquisition of the property ie. taxes/lawyer/agents fees",
   },
-  recurringCosts: {
-    header: "Recurring Costs",
+  opex: {
+    header: "Operating Costs",
     message:
       "Cost of holding the property such as taxes/insurance/bills & utilities",
   },

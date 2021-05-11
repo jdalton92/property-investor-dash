@@ -1,9 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Form, Field } from "react-final-form";
-import arrayMutators from "final-form-arrays";
-import { testDashboard } from "../../reducers/dashboardReducer";
-import MortgageOverpayments from "./MortgageOverpayments";
 import FinalFormField from "../Shared/FinalFormField";
 import { required, minValue, maxValue } from "../../utils/formValidatorHelper";
 import { occupierInvestorTooltip } from "../../static/tooltipText";
@@ -15,90 +12,123 @@ const OwnerOccupierInvestorInputs = ({ initialValues, investor, onSubmit }) => {
     <>
       <Form
         onSubmit={onSubmit}
-        mutators={{
-          ...arrayMutators,
-        }}
         initialValues={{
           ...initialValues,
         }}
-        render={({
-          handleSubmit,
-          values,
-          form,
-          form: {
-            mutators: { push, pop },
-          },
-        }) => (
+        render={({ handleSubmit, values, form }) => (
           <form onSubmit={handleSubmit}>
             <h2 className="f20 bold mt16 mb16">Base Assumptions</h2>
             <div className="r bs-3 bg-1 p20 mb20">
               {investor ? (
-                <div className="form-row">
-                  <div className="form-item">
-                    <FinalFormField
-                      label={"House Price"}
-                      placeholder={"House Price"}
-                      fieldName={"housePrice"}
-                      type={CONSTANTS.TYPES.OWNEROCCUPIER}
-                      validators={[required, minValue(0), maxValue(100000000)]}
-                      fieldType={"number"}
-                      step={"1"}
-                      prepend={"$"}
-                    />
+                <>
+                  <div className="form-row">
+                    <div className="form-item">
+                      <FinalFormField
+                        label={"Purchase Price"}
+                        placeholder={"Purchase Price"}
+                        fieldName={"purchasePrice"}
+                        type={CONSTANTS.TYPES.OWNEROCCUPIER}
+                        validators={[
+                          required,
+                          minValue(0),
+                          maxValue(100000000),
+                        ]}
+                        fieldType={"number"}
+                        step={"1"}
+                        prepend={"$"}
+                      />
+                    </div>
+                    <div className="form-item">
+                      <FinalFormField
+                        label={"Rental Yield"}
+                        fieldName={"rentalYield"}
+                        type={CONSTANTS.TYPES.OWNEROCCUPIER}
+                        validators={[required, minValue(0), maxValue(100)]}
+                        placeholder={"Rental Yield"}
+                        fieldType={"number"}
+                        maxLength={3}
+                        step={0.1}
+                        append={"% pa"}
+                      />
+                    </div>
                   </div>
-                  <div className="form-item">
-                    <FinalFormField
-                      label={"Rental Yield"}
-                      fieldName={"rentalYield"}
-                      type={CONSTANTS.TYPES.OWNEROCCUPIER}
-                      validators={[required, minValue(0), maxValue(100)]}
-                      placeholder={"Rental Yield"}
-                      fieldType={"number"}
-                      maxLength={3}
-                      step={0.1}
-                      append={"% pa"}
-                    />
+                  <div className="form-row">
+                    <div className="form-item">
+                      <FinalFormField
+                        label={"Ownership Length"}
+                        fieldName={"ownershipLength"}
+                        type={CONSTANTS.TYPES.OWNEROCCUPIER}
+                        validators={[required, minValue(0), maxValue(30)]}
+                        placeholder={"Ownership Length"}
+                        fieldType={"number"}
+                        step={1}
+                        append={"years"}
+                        parseType={CONSTANTS.PARSETYPE.INT}
+                      />
+                    </div>
+                    <div className="form-item">
+                      <FinalFormField
+                        label={"Home Capital Growth"}
+                        fieldName={"capitalGrowth"}
+                        type={CONSTANTS.TYPES.OWNEROCCUPIER}
+                        validators={[minValue(0), maxValue(100)]}
+                        placeholder={"Home Capital Growth"}
+                        fieldType={"number"}
+                        step={0.01}
+                        append={"% pa"}
+                      />
+                    </div>
                   </div>
-                </div>
+                </>
               ) : (
-                <FinalFormField
-                  label={"House Price"}
-                  placeholder={"House Price"}
-                  fieldName={"housePrice"}
-                  type={CONSTANTS.TYPES.OWNEROCCUPIER}
-                  validators={[required, minValue(0), maxValue(100000000)]}
-                  fieldType={"number"}
-                  step={"1"}
-                  prepend={"$"}
-                />
+                <>
+                  <div className="form-row">
+                    <div className="form-item">
+                      <FinalFormField
+                        label={"Purchase Price"}
+                        placeholder={"Purchase Price"}
+                        fieldName={"purchasePrice"}
+                        type={CONSTANTS.TYPES.OWNEROCCUPIER}
+                        validators={[
+                          required,
+                          minValue(0),
+                          maxValue(100000000),
+                        ]}
+                        fieldType={"number"}
+                        step={"1"}
+                        prepend={"$"}
+                      />
+                    </div>
+                    <div className="form-item">
+                      <FinalFormField
+                        label={"Ownership Length"}
+                        fieldName={"ownershipLength"}
+                        type={CONSTANTS.TYPES.OWNEROCCUPIER}
+                        validators={[required, minValue(0), maxValue(30)]}
+                        placeholder={"Ownership Length"}
+                        fieldType={"number"}
+                        step={1}
+                        append={"years"}
+                        parseType={CONSTANTS.PARSETYPE.INT}
+                      />
+                    </div>
+                  </div>
+                  <div className="form-row">
+                    <div className="form-item">
+                      <FinalFormField
+                        label={"Home Capital Growth"}
+                        fieldName={"capitalGrowth"}
+                        type={CONSTANTS.TYPES.OWNEROCCUPIER}
+                        validators={[minValue(0), maxValue(100)]}
+                        placeholder={"Home Capital Growth"}
+                        fieldType={"number"}
+                        step={0.01}
+                        append={"% pa"}
+                      />
+                    </div>
+                  </div>
+                </>
               )}
-              <div className="form-row">
-                <div className="form-item">
-                  <FinalFormField
-                    label={"Ownership Length"}
-                    fieldName={"investmentPeriod"}
-                    type={CONSTANTS.TYPES.OWNEROCCUPIER}
-                    validators={[required, minValue(0), maxValue(30)]}
-                    placeholder={"Ownership Length"}
-                    fieldType={"number"}
-                    step={1}
-                    append={"years"}
-                    parseType={CONSTANTS.PARSETYPE.INT}
-                  />
-                </div>
-                <div className="form-item">
-                  <FinalFormField
-                    label={"Home Capital Growth"}
-                    fieldName={"capitalGrowth"}
-                    type={CONSTANTS.TYPES.OWNEROCCUPIER}
-                    validators={[minValue(0), maxValue(100)]}
-                    placeholder={"Home Capital Growth"}
-                    fieldType={"number"}
-                    step={0.01}
-                    append={"% pa"}
-                  />
-                </div>
-              </div>
             </div>
             <h2 className="f20 bold mb16">Costs</h2>
             <div className="r bs-3 bg-1 p20 mb20">
@@ -128,46 +158,33 @@ const OwnerOccupierInvestorInputs = ({ initialValues, investor, onSubmit }) => {
                   />
                 </div>
               </div>
-              {investor ? (
-                <FinalFormField
-                  label={"Operating Costs"}
-                  fieldName={"recurringCosts"}
-                  type={CONSTANTS.TYPES.INVESTOR}
-                  validators={[minValue(0), maxValue(100)]}
-                  placeholder={"Water, electricity, insurance etc"}
-                  fieldType={"number"}
-                  step={0.01}
-                  append={"% of rent"}
-                />
-              ) : (
-                <div className="form-row">
-                  <div className="form-item">
-                    <FinalFormField
-                      label={"Operating Costs"}
-                      fieldName={"recurringCosts"}
-                      type={CONSTANTS.TYPES.OWNEROCCUPIER}
-                      validators={[minValue(0)]}
-                      placeholder={"Water, electricity, insurance etc"}
-                      fieldType={"number"}
-                      step={1}
-                      prepend={"$"}
-                      append={"pa"}
-                    />
-                  </div>
-                  <div className="form-item">
-                    <FinalFormField
-                      label={"Inflation"}
-                      fieldName={"inflation"}
-                      type={CONSTANTS.TYPES.OWNEROCCUPIER}
-                      validators={[minValue(0), maxValue(100)]}
-                      placeholder={"Inflation"}
-                      fieldType={"number"}
-                      step={0.01}
-                      append={"% pa"}
-                    />
-                  </div>
+              <div className="form-row">
+                <div className="form-item">
+                  <FinalFormField
+                    label={"Operating Costs"}
+                    fieldName={"opex"}
+                    type={CONSTANTS.TYPES.OWNEROCCUPIER}
+                    validators={[minValue(0)]}
+                    placeholder={"Water, electricity, insurance etc"}
+                    fieldType={"number"}
+                    step={1}
+                    prepend={"$"}
+                    append={"pa"}
+                  />
                 </div>
-              )}
+                <div className="form-item">
+                  <FinalFormField
+                    label={"Operating Cost Growth"}
+                    fieldName={"opexGrowth"}
+                    type={CONSTANTS.TYPES.OWNEROCCUPIER}
+                    validators={[minValue(0), maxValue(100)]}
+                    placeholder={"Operating Cost Growth"}
+                    fieldType={"number"}
+                    step={0.01}
+                    append={"% pa"}
+                  />
+                </div>
+              </div>
             </div>
             <h2 className="f20 bold mb16">Funding</h2>
             <div className="r bs-3 bg-1 p20 mb20">
@@ -180,7 +197,7 @@ const OwnerOccupierInvestorInputs = ({ initialValues, investor, onSubmit }) => {
                     validators={[
                       required,
                       minValue(0),
-                      maxValue(values.housePrice),
+                      maxValue(values.purchasePrice),
                     ]}
                     placeholder={"Deposit"}
                     fieldType={"number"}
@@ -205,16 +222,19 @@ const OwnerOccupierInvestorInputs = ({ initialValues, investor, onSubmit }) => {
               <div className="form-row">
                 <div className="form-item">
                   <div className="flex-row align-c relative">
-                    <label htmlFor="owneroccupier-loantype" className="f16 mb8">
+                    <label
+                      htmlFor="owneroccupier-repaymenttype"
+                      className="f16 mb8"
+                    >
                       Repayment Type
                       <span className="font-red f12 bold ml4">*</span>
                     </label>
                     <Tooltip
-                      message={occupierInvestorTooltip.loanType.message}
+                      message={occupierInvestorTooltip.repaymentType.message}
                     />
                   </div>
                   <Field
-                    name="loanType"
+                    name="repaymentType"
                     component="select"
                     validate={required}
                     defaultValue=""
@@ -223,7 +243,7 @@ const OwnerOccupierInvestorInputs = ({ initialValues, investor, onSubmit }) => {
                       <div className="relative mb20">
                         <select
                           className="form-input select w100 bs-1"
-                          id="owneroccupier-loantype"
+                          id="owneroccupier-repaymenttype"
                           {...input}
                         >
                           <option value="" disabled hidden>
@@ -255,10 +275,22 @@ const OwnerOccupierInvestorInputs = ({ initialValues, investor, onSubmit }) => {
                   />
                 </div>
               </div>
-              <MortgageOverpayments
-                type={CONSTANTS.TYPES.OWNEROCCUPIER}
-                push={push}
-              />
+              <div className="form-row">
+                <div className="form-item">
+                  <FinalFormField
+                    label={"Mortgage Overpayment"}
+                    fieldName={"overPayment"}
+                    type={CONSTANTS.TYPES.OWNEROCCUPIER}
+                    validators={[minValue(0)]}
+                    placeholder={"Mortgage Overpayment"}
+                    maxLength={3}
+                    fieldType={"number"}
+                    step={"0.01"}
+                    prepend={"$"}
+                    append={"pm"}
+                  />
+                </div>
+              </div>
             </div>
             <div className="form-buttons mb20">
               <button
@@ -282,8 +314,4 @@ const OwnerOccupierInvestorInputs = ({ initialValues, investor, onSubmit }) => {
   );
 };
 
-const mapDispatchToProps = {
-  testDashboard,
-};
-
-export default connect(null, mapDispatchToProps)(OwnerOccupierInvestorInputs);
+export default connect(null, null)(OwnerOccupierInvestorInputs);

@@ -1,4 +1,4 @@
-import { currencyFormatter, reducerHelper } from "./dashboardHelper";
+import { currencyFormatter, sumFields } from "./dashboardHelper";
 
 export const cumulativeChartParse = (data) => {
   const labels = data.map((c) => c.month);
@@ -181,7 +181,7 @@ export const annualChartParse = (data) => {
 };
 
 export const pieChartParse = (data) => {
-  const totalData = reducerHelper(data);
+  const totalData = sumFields(data);
 
   const preFinanceDataset = [
     Math.round(totalData.acquisition),
@@ -247,7 +247,7 @@ export const tableParse = (data) => {
   };
 
   for (let i = 1; i <= Math.ceil(data.length / 12); i++) {
-    const annualData = reducerHelper(data.filter((d) => d.year === i));
+    const annualData = sumFields(data.filter((d) => d.year === i));
     tableData.annualCashflow.push({
       year: i,
       acquisitionCosts: -annualData.acquisition - annualData.initialCosts,
@@ -286,7 +286,7 @@ export const tableParse = (data) => {
     });
   }
 
-  const summaryData = reducerHelper(data);
+  const summaryData = sumFields(data);
 
   tableData.summaryCashflow.push({
     year: null,
@@ -348,7 +348,7 @@ export const tableParse = (data) => {
 };
 
 export const developerMOCCalculation = (data) => {
-  const summaryData = reducerHelper(data);
+  const summaryData = sumFields(data);
 
   const preProfit = summaryData.preFinanceCashflow;
   const postProfit = summaryData.postFinanceCashflow;
