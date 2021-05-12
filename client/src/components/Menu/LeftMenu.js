@@ -74,7 +74,7 @@ const LeftMenu = ({ leftSidebarOpen, email, setTab, logoutUser }) => {
     ];
   }
 
-  let companyMenuItems = [
+  let aboutMenuItems = [
     {
       title: "About",
       link: { url: "/", internal: true },
@@ -160,7 +160,7 @@ const LeftMenu = ({ leftSidebarOpen, email, setTab, logoutUser }) => {
       <div className="left-menu sticky-below-nav flex-col">
         <div className="o-y-scroll o-x-hidden mt8 mb8 h100 scrollbar">
           <MenuContainer title={"User"} menuItems={userMenuItems} />
-          <MenuContainer title={"Company"} menuItems={companyMenuItems} />
+          <MenuContainer title={"About"} menuItems={aboutMenuItems} />
           <MenuContainer
             title={"Calculators"}
             menuItems={calculatorMenuItems}
