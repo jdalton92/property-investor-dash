@@ -242,7 +242,7 @@ export const pieChartParse = (data) => {
 
 export const tableParse = (data) => {
   let tableData = {
-    summaryCashflow: [],
+    totalCashflow: {},
     annualCashflow: [],
   };
 
@@ -286,64 +286,64 @@ export const tableParse = (data) => {
     });
   }
 
-  const summaryData = sumFields(data);
+  const totalData = sumFields(data);
 
-  tableData.summaryCashflow.push({
+  tableData.totalCashflow = {
     year: null,
-    totalRevenue: summaryData.grossRealisation + summaryData.rentalIncome,
+    totalRevenue: totalData.grossRealisation + totalData.rentalIncome,
     totalCostsPreFinance:
-      summaryData.acquisition +
-      summaryData.initialCosts +
-      summaryData.constructionCost +
-      summaryData.professionalFees +
-      summaryData.statutoryCosts +
-      summaryData.contingency +
-      summaryData.opex +
-      summaryData.sellingCost,
+      totalData.acquisition +
+      totalData.initialCosts +
+      totalData.constructionCost +
+      totalData.professionalFees +
+      totalData.statutoryCosts +
+      totalData.contingency +
+      totalData.opex +
+      totalData.sellingCost,
     totalCostsPostFinance:
-      summaryData.acquisition +
-      summaryData.initialCosts +
-      summaryData.constructionCost +
-      summaryData.professionalFees +
-      summaryData.statutoryCosts +
-      summaryData.contingency +
-      summaryData.opex +
-      summaryData.sellingCost +
-      summaryData.loanInstallment,
-    acquisitionCosts: -summaryData.acquisition - summaryData.initialCosts,
+      totalData.acquisition +
+      totalData.initialCosts +
+      totalData.constructionCost +
+      totalData.professionalFees +
+      totalData.statutoryCosts +
+      totalData.contingency +
+      totalData.opex +
+      totalData.sellingCost +
+      totalData.loanInstallment,
+    acquisitionCosts: -totalData.acquisition - totalData.initialCosts,
     TDC:
-      -summaryData.constructionCost -
-      summaryData.professionalFees -
-      summaryData.statutoryCosts -
-      summaryData.contingency,
-    NOI: summaryData.rentalIncome - summaryData.opex,
-    netSale: summaryData.grossRealisation - summaryData.sellingCost,
-    preFinanceCashflow: summaryData.preFinanceCashflow,
-    loanCosts: -summaryData.loanInstallment - summaryData.principalRepayment,
-    postFinanceCashflow: summaryData.postFinanceCashflow,
-    totalIncome: summaryData.rentalIncome + summaryData.grossRealisation,
+      -totalData.constructionCost -
+      totalData.professionalFees -
+      totalData.statutoryCosts -
+      totalData.contingency,
+    NOI: totalData.rentalIncome - totalData.opex,
+    netSale: totalData.grossRealisation - totalData.sellingCost,
+    preFinanceCashflow: totalData.preFinanceCashflow,
+    loanCosts: -totalData.loanInstallment - totalData.principalRepayment,
+    postFinanceCashflow: totalData.postFinanceCashflow,
+    totalIncome: totalData.rentalIncome + totalData.grossRealisation,
     preFinanceTotalCost:
-      -summaryData.acquisition -
-      summaryData.initialCosts -
-      summaryData.constructionCost -
-      summaryData.professionalFees -
-      summaryData.statutoryCosts -
-      summaryData.contingency -
-      summaryData.opex -
-      summaryData.sellingCost,
-    debtSource: summaryData.debtSource,
+      -totalData.acquisition -
+      totalData.initialCosts -
+      totalData.constructionCost -
+      totalData.professionalFees -
+      totalData.statutoryCosts -
+      totalData.contingency -
+      totalData.opex -
+      totalData.sellingCost,
+    debtSource: totalData.debtSource,
     postFinanceTotalCost:
-      -summaryData.acquisition -
-      summaryData.initialCosts -
-      summaryData.constructionCost -
-      summaryData.professionalFees -
-      summaryData.statutoryCosts -
-      summaryData.contingency -
-      summaryData.opex -
-      summaryData.sellingCost -
-      summaryData.loanInstallment -
-      summaryData.principalRepayment,
-  });
+      -totalData.acquisition -
+      totalData.initialCosts -
+      totalData.constructionCost -
+      totalData.professionalFees -
+      totalData.statutoryCosts -
+      totalData.contingency -
+      totalData.opex -
+      totalData.sellingCost -
+      totalData.loanInstallment -
+      totalData.principalRepayment,
+  };
   return tableData;
 };
 

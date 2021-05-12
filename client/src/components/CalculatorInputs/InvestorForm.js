@@ -4,14 +4,13 @@ import { useHistory, useParams } from "react-router-dom";
 import { testDashboard, getDashboard } from "../../reducers/dashboardReducer";
 import { CONSTANTS } from "../../static/constants";
 import { helperMessage } from "../../static/helperMessageText";
-import { getDashboardTypeAndBaseUrl } from "../../utils/dashboardHelper";
 import HelperMessage from "../Shared/HelperMessage";
 import Loader from "../Shared/Loader";
 import OwnerOccupierInvestorInputs from "./OwnerOccupierInvestorInputs";
 
 const InvestorForm = ({
   testDashboard,
-  preSave,
+  isEditing,
   currentDashboard,
   isFetching,
   getDashboard,
@@ -20,15 +19,15 @@ const InvestorForm = ({
   const history = useHistory();
 
   useEffect(() => {
-    if (id && !preSave) {
+    if (id) {
       getDashboard(id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  const onSubmit = (values) => {
-    testDashboard(CONSTANTS.TYPES.INVESTOR, values);
-    history.push("/investor/dash");
+  const onSubmit = (assumptions) => {
+    testDashboard(CONSTANTS.TYPES.INVESTOR, assumptions);
+    history.push("/investor/dashboard");
   };
 
   if (isFetching) {
@@ -38,10 +37,11 @@ const InvestorForm = ({
       </div>
     );
   } else {
-    const { type } = getDashboardTypeAndBaseUrl(currentDashboard);
-
     let initialValues = {};
-    if ((preSave || id) && type === "Investor") {
+    if (
+      (id || isEditing) &&
+      currentDashboard.type === CONSTANTS.TYPES.INVESTOR
+    ) {
       initialValues = currentDashboard.assumptions;
     }
 
@@ -65,7 +65,7 @@ const InvestorForm = ({
 const mapStateToProps = (state) => {
   return {
     currentDashboard: state.dashboards.currentDashboard,
-    preSave: state.dashboards.currentDashboard.preSave,
+    isEditing: state.dashboards.isEditing,
     isFetching: state.dashboards.isFetching,
   };
 };

@@ -6,7 +6,6 @@ import { testDashboard, getDashboard } from "../../reducers/dashboardReducer";
 import { CONSTANTS } from "../../static/constants";
 import { helperMessage } from "../../static/helperMessageText";
 import { required, minValue, maxValue } from "../../utils/formValidatorHelper";
-import { getDashboardTypeAndBaseUrl } from "../../utils/dashboardHelper";
 import { developerTooltip } from "../../static/tooltipText";
 import FinalFormField from "../Shared/FinalFormField";
 import HelperMessage from "../Shared/HelperMessage";
@@ -17,31 +16,36 @@ const DeveloperForm = ({
   testDashboard,
   currentDashboard,
   isFetching,
-  preSave,
+  isEditing,
   getDashboard,
 }) => {
   const id = useParams().id;
   const history = useHistory();
 
   useEffect(() => {
-    if (id && !preSave) {
+    if (id) {
       getDashboard(id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  const onSubmit = (values) => {
-    testDashboard(CONSTANTS.TYPES.DEVELOPER, values);
-    history.push("/developer/dash");
+  const onSubmit = (assumptions) => {
+    testDashboard(CONSTANTS.TYPES.DEVELOPER, assumptions);
+    history.push("/developer/dashboard");
   };
 
   if (isFetching) {
-    return <Loader />;
+    return (
+      <div className="w100 flex-row justify-c">
+        <Loader />
+      </div>
+    );
   } else {
-    const { type } = getDashboardTypeAndBaseUrl(currentDashboard);
-
     let initialValues = {};
-    if ((preSave || id) && type === "Developer") {
+    if (
+      (id || isEditing) &&
+      currentDashboard.type === CONSTANTS.TYPES.DEVELOPER
+    ) {
       initialValues = currentDashboard.assumptions;
     }
 
@@ -411,7 +415,7 @@ const DeveloperForm = ({
 const mapStateToProps = (state) => {
   return {
     currentDashboard: state.dashboards.currentDashboard,
-    preSave: state.dashboards.currentDashboard.preSave,
+    isEditing: state.dashboards.isEditing,
     isFetching: state.dashboards.isFetching,
   };
 };

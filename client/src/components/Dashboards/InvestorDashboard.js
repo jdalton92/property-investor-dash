@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import Loader from "../Shared/Loader";
 import { Icon } from "../Shared/Icon";
+import { getDashboard, editDashboard } from "../../reducers/dashboardReducer";
 import {
-  getDashboard,
-  preSaveDashboard,
-} from "../../reducers/dashboardReducer";
-import { getCashflow } from "../../reducers/cashflowReducer";
+  getCashflow,
+  getDashboardCashflow,
+} from "../../reducers/cashflowReducer";
 import { setModal } from "../../reducers/navigationReducer";
 import SaveIcon from "../../styles/svg/save.svg";
 import EditIcon from "../../styles/svg/edit.svg";
@@ -17,19 +17,19 @@ import { isEmpty } from "../../utils/dashboardHelper";
 
 const InvestorDashboard = ({
   isFetching,
-  preSave,
+  isEditing,
   currentDashboard,
   getCashflow,
-  getDashboardAndCashflow,
-  preSaveDashboard,
+  getDashboardCashflow,
+  editDashboard,
   setModal,
 }) => {
   const id = useParams().id;
   const history = useHistory();
 
   useEffect(() => {
-    if (id && !preSave) {
-      getDashboardAndCashflow(id);
+    if (id && !isEditing) {
+      getDashboardCashflow(id);
     } else if (currentDashboard.type && currentDashboard.assumptions) {
       getCashflow(currentDashboard.type, currentDashboard.assumptions);
     }
@@ -43,15 +43,11 @@ const InvestorDashboard = ({
 
   const handleEdit = (e) => {
     e.preventDefault();
-    preSaveDashboard();
-    if (id) {
-      history.push(`/investor/edit/${id}`);
-    } else {
-      history.replace("/investor/edit");
-    }
+    editDashboard();
+    history.replace("/investor/edit");
   };
 
-  if (isFetching || (isEmpty(currentDashboard.assumptions) && id)) {
+  if (isFetching) {
     return <Loader />;
   } else {
     if (isEmpty(currentDashboard.assumptions)) {
@@ -63,7 +59,7 @@ const InvestorDashboard = ({
           <h2 className="f20 bold mt16 mb16">Investor Dashboard</h2>
           <div className="dash-btns flex-row">
             <button
-              type="submit"
+              type="button"
               className="form-button-p bs-3 font-white pt4 pb4 flex-row align-c justify-c"
               onClick={handleSave}
             >
@@ -77,7 +73,7 @@ const InvestorDashboard = ({
               <span className="ml8">Save</span>
             </button>
             <button
-              type="submit"
+              type="button"
               className="form-button-s bs-3 font-white pt4 pb4 flex-row align-c justify-c"
               onClick={handleEdit}
             >
@@ -101,7 +97,7 @@ const InvestorDashboard = ({
 const mapStateToProps = (state) => {
   return {
     currentDashboard: state.dashboards.currentDashboard,
-    preSave: state.dashboards.currentDashboard.preSave,
+    isEditing: state.dashboards.isEditing,
     isFetching: state.dashboards.isFetching,
   };
 };
@@ -109,8 +105,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   setModal,
   getDashboard,
-  preSaveDashboard,
+  editDashboard,
   getCashflow,
+  getDashboardCashflow,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(InvestorDashboard);

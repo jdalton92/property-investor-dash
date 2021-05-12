@@ -1,5 +1,4 @@
 import dashboardService from "../services/dashboard";
-import cashflowService from "../services/cashflow";
 import { successNotification, errorNotification } from "./notificationReducer";
 
 const occupierAsssumptions = {
@@ -51,22 +50,22 @@ const investorAsssumptions = {
 
 let initialState = {
   isFetching: false,
+  // isEditing: false,
   savedDashboards: [],
   // currentDashboard: {
-  //   preSave: false,
   //   name: "",
   //   description: "",
   //   date: "",
   //   type: "",
   //   assumptions: {},
   // },
+  isEditing: true,
   currentDashboard: {
-    preSave: true,
     name: "",
     description: "",
     date: "",
-    type: "investor",
-    assumptions: investorAsssumptions,
+    type: "occupier",
+    assumptions: occupierAsssumptions,
   },
 };
 
@@ -80,20 +79,20 @@ const dashboardReducer = (state = initialState, action) => {
     case "DASHBOARD_REQUEST_FAIL":
       newState = { ...state };
       newState.isFetching = false;
-      newState.currentDashboard.preSave = false;
+      newState.isEditing = false;
       return newState;
     case "TEST_DASHBOARD":
       newState = { ...state };
       newState.isFetching = false;
+      newState.isEditing = true;
       newState.currentDashboard = {
-        preSave: true,
         type: action.payLoad.type,
         assumptions: action.payLoad.assumptions,
       };
       return newState;
     case "PRE_SAVE_DASHBOARD":
       newState = { ...state };
-      newState.currentDashboard.preSave = true;
+      newState.isEditing = true;
       return newState;
     case "INIT_DASHBOARDS":
       newState = { ...initialState };
@@ -103,13 +102,13 @@ const dashboardReducer = (state = initialState, action) => {
     case "GET_DASHBOARD":
       newState = { ...state };
       newState.isFetching = false;
-      newState.currentDashboard.preSave = false;
+      newState.isEditing = false;
       newState.currentDashboard = action.payLoad.dashboard;
       return newState;
     case "SAVE_DASHBOARD":
       newState = { ...state };
       newState.isFetching = false;
-      newState.currentDashboard.preSave = false;
+      newState.isEditing = false;
       newState.savedDashboards = [
         ...state.savedDashboards,
         action.payLoad.dashboard,
@@ -175,36 +174,6 @@ export const getDashboard = (id) => {
   };
 };
 
-export const getDashboardAndCashflow = (id) => {
-  return async (dispatch) => {
-    dispatch({
-      type: "DASHBOARD_REQUEST",
-    });
-    try {
-      const dashboard = await dashboardService.getDashboard(id);
-      const monthlyCashflow = await cashflowService.getCashflow(
-        dashboard.type,
-        dashboard.assumptions
-      );
-      dispatch({
-        type: "GET_CASHFLOW",
-        payLoad: {
-          monthlyCashflow,
-        },
-      });
-      dispatch({
-        type: "GET_DASHBOARD",
-        payLoad: { dashboard },
-      });
-    } catch (e) {
-      dispatch({
-        type: "DASHBOARD_REQUEST_FAIL",
-      });
-      dispatch(errorNotification(e.response.data.message));
-    }
-  };
-};
-
 export const testDashboard = (type, assumptions) => {
   return (dispatch) => {
     dispatch({
@@ -214,7 +183,7 @@ export const testDashboard = (type, assumptions) => {
   };
 };
 
-export const preSaveDashboard = () => {
+export const editDashboard = () => {
   return (dispatch) => {
     dispatch({
       type: "PRE_SAVE_DASHBOARD",

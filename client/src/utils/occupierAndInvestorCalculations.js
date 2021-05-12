@@ -2,9 +2,9 @@ import { currencyFormatter, sumFields } from "./dashboardHelper";
 
 export const cumulativeChartParse = (data) => {
   const labels = data.map((c) => c.month);
-  const cumulativeCashflow = data.reduce((acc, c) => {
+  const cumulativeCashflow = data.reduce((acc, curr) => {
     acc.push(
-      c.postFinanceCashflow + (acc.length > 0 ? acc[acc.length - 1] : 0)
+      curr.postFinanceCashflow + (acc.length > 0 ? acc[acc.length - 1] : 0)
     );
     return acc;
   }, []);
@@ -81,7 +81,7 @@ export const cardParse = (data) => {
 
 export const tableParse = (data) => {
   let tableData = {
-    summaryCashflow: [],
+    totalCashflow: {},
     annualCashflow: [],
   };
 
@@ -110,28 +110,28 @@ export const tableParse = (data) => {
     });
   }
 
-  const summaryData = sumFields(data);
+  const totalData = sumFields(data);
 
-  tableData.summaryCashflow.push({
+  tableData.totalCashflow = {
     year: null,
-    acquisitionCosts: -summaryData.acquisition - summaryData.upfrontCost,
-    rentalIncome: summaryData.rentalIncome,
-    opex: -summaryData.opex,
-    netSale: summaryData.grossRealisation - summaryData.sellingCost,
-    preFinanceCashflow: summaryData.preFinanceCashflow,
-    debtUse: summaryData.debtUse,
-    equityUse: -summaryData.equityUse,
-    fundingCost: -summaryData.loanInstallment - summaryData.principalRepayment,
-    postFinanceCashflow: summaryData.postFinanceCashflow,
-    totalIncome: summaryData.rentalIncome + summaryData.grossRealisation,
+    acquisitionCosts: -totalData.acquisition - totalData.upfrontCost,
+    rentalIncome: totalData.rentalIncome,
+    opex: -totalData.opex,
+    netSale: totalData.grossRealisation - totalData.sellingCost,
+    preFinanceCashflow: totalData.preFinanceCashflow,
+    debtUse: totalData.debtUse,
+    equityUse: -totalData.equityUse,
+    fundingCost: -totalData.loanInstallment - totalData.principalRepayment,
+    postFinanceCashflow: totalData.postFinanceCashflow,
+    totalIncome: totalData.rentalIncome + totalData.grossRealisation,
     totalCost:
-      -summaryData.equityUse -
-      summaryData.upfrontCost -
-      summaryData.opex -
-      summaryData.sellingCost -
-      summaryData.loanInstallment -
-      summaryData.principalRepayment,
-  });
+      -totalData.equityUse -
+      totalData.upfrontCost -
+      totalData.opex -
+      totalData.sellingCost -
+      totalData.loanInstallment -
+      totalData.principalRepayment,
+  };
   return tableData;
 };
 

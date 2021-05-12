@@ -88,9 +88,12 @@ const occupierInvestorCashflow = ({
       openingBalanceAndInterest - loanInstallment - principalRepayment;
 
     // Rental income
-    const rentalIncome =
-      (purchasePrice * Math.pow(1 + capitalGrowth, annualIndex) * rentalYield) /
-      12;
+    const rentalIncome = rentalYield
+      ? (purchasePrice *
+          Math.pow(1 + capitalGrowth, annualIndex) *
+          rentalYield) /
+        12
+      : null;
 
     opexCosts = (opex / 12) * Math.pow(1 + opexGrowth, annualIndex);
 

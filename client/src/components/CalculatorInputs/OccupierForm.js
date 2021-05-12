@@ -4,14 +4,13 @@ import { useHistory, useParams } from "react-router-dom";
 import { testDashboard, getDashboard } from "../../reducers/dashboardReducer";
 import { CONSTANTS } from "../../static/constants";
 import { helperMessage } from "../../static/helperMessageText";
-import { getDashboardTypeAndBaseUrl } from "../../utils/dashboardHelper";
 import HelperMessage from "../Shared/HelperMessage";
 import Loader from "../Shared/Loader";
 import OwnerOccupierInvestorInputs from "./OwnerOccupierInvestorInputs";
 
 const OccupierForm = ({
   testDashboard,
-  preSave,
+  isEditing,
   currentDashboard,
   isFetching,
   getDashboard,
@@ -20,24 +19,29 @@ const OccupierForm = ({
   const history = useHistory();
 
   useEffect(() => {
-    if (id && !preSave) {
+    if (id) {
       getDashboard(id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  const onSubmit = (values) => {
-    testDashboard(CONSTANTS.TYPES.OCCUPIER, values);
-    history.push("/owner-occupier/dash");
+  const onSubmit = (assumptions) => {
+    testDashboard(CONSTANTS.TYPES.OCCUPIER, assumptions);
+    history.push("/owner-occupier/dashboard");
   };
 
   if (isFetching) {
-    return <Loader />;
+    return (
+      <div className="w100 flex-row justify-c">
+        <Loader />
+      </div>
+    );
   } else {
-    const { type } = getDashboardTypeAndBaseUrl(currentDashboard);
-
     let initialValues = {};
-    if ((preSave || id) && type === "Owner-Occupier") {
+    if (
+      (id || isEditing) &&
+      currentDashboard.type === CONSTANTS.TYPES.OCCUPIER
+    ) {
       initialValues = currentDashboard.assumptions;
     }
 
@@ -61,7 +65,7 @@ const OccupierForm = ({
 const mapStateToProps = (state) => {
   return {
     currentDashboard: state.dashboards.currentDashboard,
-    preSave: state.dashboards.currentDashboard.preSave,
+    isEditing: state.dashboards.isEditing,
     isFetching: state.dashboards.isFetching,
   };
 };

@@ -52,4 +52,28 @@ export const getCashflow = (type, assumptions) => {
   };
 };
 
+export const getDashboardCashflow = (dashboardId) => {
+  return async (dispatch) => {
+    dispatch({
+      type: "CASHFLOW_REQUEST",
+    });
+    try {
+      const monthlyCashflow = await cashflowService.getDashboardCashflow(
+        dashboardId
+      );
+      dispatch({
+        type: "GET_CASHFLOW",
+        payLoad: {
+          monthlyCashflow,
+        },
+      });
+    } catch (e) {
+      dispatch({
+        type: "CASHFLOW_REQUEST_FAIL",
+      });
+      dispatch(errorNotification(e.response.data.message));
+    }
+  };
+};
+
 export default cashflowReducer;

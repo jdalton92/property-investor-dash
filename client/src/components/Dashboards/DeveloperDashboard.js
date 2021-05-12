@@ -3,10 +3,7 @@ import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { setModal } from "../../reducers/navigationReducer";
 import { CONSTANTS } from "../../static/constants";
-import {
-  getDashboard,
-  preSaveDashboard,
-} from "../../reducers/dashboardReducer";
+import { getDashboard, editDashboard } from "../../reducers/dashboardReducer";
 import Tooltip from "../Shared/Tooltip";
 import {
   cumulativeChartParse,
@@ -34,7 +31,7 @@ const DeveloperDashboard = ({
   isFetching,
   currentDashboard,
   getDashboard,
-  preSaveDashboard,
+  editDashboard,
   setModal,
 }) => {
   const [showPreFinanceCashflow, setShowPreFinanceCashflow] = useState(true);
@@ -56,15 +53,11 @@ const DeveloperDashboard = ({
 
   const handleEdit = (e) => {
     e.preventDefault();
-    preSaveDashboard();
-    if (id) {
-      history.push(`/developer/edit/${id}`);
-    } else {
-      history.push(`/developer/edit`);
-    }
+    editDashboard();
+    history.push("/developer/edit");
   };
 
-  if (isFetching || (isEmpty(currentDashboard.assumptions) && id)) {
+  if (isFetching) {
     return <Loader />;
   } else {
     if (isEmpty(currentDashboard.assumptions)) {
@@ -78,6 +71,7 @@ const DeveloperDashboard = ({
     const cumulativeChart = cumulativeChartParse(rawData);
     const tableData = tableParse(rawData);
     const fundingChart = fundingChartParse(rawData);
+    const total = tableData?.totalCashflow;
     return (
       <div className="fade-in">
         <div className="dash-row relative">
@@ -125,27 +119,15 @@ const DeveloperDashboard = ({
             <tbody>
               <tr>
                 <td>Revenue:</td>
-                <td>
-                  {currencyFormatter.format(
-                    tableData.summaryCashflow[0].totalRevenue
-                  )}
-                </td>
+                <td>{currencyFormatter.format(total?.totalRevenue)}</td>
               </tr>
               <tr>
                 <td>Costs:</td>
-                <td>
-                  {currencyFormatter.format(
-                    tableData.summaryCashflow[0].totalCostsPreFinance
-                  )}
-                </td>
+                <td>{currencyFormatter.format(total?.totalCostsPreFinance)}</td>
               </tr>
               <tr>
                 <td>Profit:</td>
-                <td>
-                  {currencyFormatter.format(
-                    tableData.summaryCashflow[0].preFinanceCashflow
-                  )}
-                </td>
+                <td>{currencyFormatter.format(total?.preFinanceCashflow)}</td>
               </tr>
             </tbody>
           </table>
@@ -161,8 +143,7 @@ const DeveloperDashboard = ({
                 <td>Revenue:</td>
                 <td>
                   {currencyFormatter.format(
-                    tableData.summaryCashflow[0].totalRevenue /
-                      currentDashboard.assumptions.dwellings
+                    total?.totalRevenue / currentDashboard.assumptions.dwellings
                   )}
                 </td>
               </tr>
@@ -170,7 +151,7 @@ const DeveloperDashboard = ({
                 <td>Costs:</td>
                 <td>
                   {currencyFormatter.format(
-                    tableData.summaryCashflow[0].totalCostsPreFinance /
+                    total?.totalCostsPreFinance /
                       currentDashboard.assumptions.dwellings
                   )}
                 </td>
@@ -179,7 +160,7 @@ const DeveloperDashboard = ({
                 <td>Profit:</td>
                 <td>
                   {currencyFormatter.format(
-                    tableData.summaryCashflow[0].preFinanceCashflow /
+                    total?.preFinanceCashflow /
                       currentDashboard.assumptions.dwellings
                   )}
                 </td>
@@ -287,36 +268,24 @@ const DeveloperDashboard = ({
                 <tr>
                   <th>Total</th>
                   <td className="dash-desktop">
-                    {currencyFormatter.format(
-                      tableData.summaryCashflow[0].acquisitionCosts
-                    )}
+                    {currencyFormatter.format(total?.acquisitionCosts)}
                   </td>
                   <td className="dash-desktop">
-                    {currencyFormatter.format(tableData.summaryCashflow[0].TDC)}
+                    {currencyFormatter.format(total?.TDC)}
                   </td>
                   <td className="dash-desktop">
-                    {currencyFormatter.format(tableData.summaryCashflow[0].NOI)}
+                    {currencyFormatter.format(total?.NOI)}
                   </td>
                   <td className="dash-desktop">
-                    {currencyFormatter.format(
-                      tableData.summaryCashflow[0].netSale
-                    )}
+                    {currencyFormatter.format(total?.netSale)}
                   </td>
                   <td className="dash-mobile">
-                    {currencyFormatter.format(
-                      tableData.summaryCashflow[0].totalIncome
-                    )}
+                    {currencyFormatter.format(total?.totalIncome)}
                   </td>
                   <td className="dash-mobile">
-                    {currencyFormatter.format(
-                      tableData.summaryCashflow[0].preFinanceTotalCost
-                    )}
+                    {currencyFormatter.format(total?.preFinanceTotalCost)}
                   </td>
-                  <td>
-                    {currencyFormatter.format(
-                      tableData.summaryCashflow[0].preFinanceCashflow
-                    )}
-                  </td>
+                  <td>{currencyFormatter.format(total?.preFinanceCashflow)}</td>
                 </tr>
               </tfoot>
             </table>
@@ -334,27 +303,17 @@ const DeveloperDashboard = ({
             <tbody>
               <tr>
                 <td>Revenue:</td>
-                <td>
-                  {currencyFormatter.format(
-                    tableData.summaryCashflow[0].totalRevenue
-                  )}
-                </td>
+                <td>{currencyFormatter.format(total?.totalRevenue)}</td>
               </tr>
               <tr>
                 <td>Costs:</td>
                 <td>
-                  {currencyFormatter.format(
-                    tableData.summaryCashflow[0].totalCostsPostFinance
-                  )}
+                  {currencyFormatter.format(total?.totalCostsPostFinance)}
                 </td>
               </tr>
               <tr>
                 <td>Profit:</td>
-                <td>
-                  {currencyFormatter.format(
-                    tableData.summaryCashflow[0].postFinanceCashflow
-                  )}
-                </td>
+                <td>{currencyFormatter.format(total?.postFinanceCashflow)}</td>
               </tr>
             </tbody>
           </table>
@@ -370,8 +329,7 @@ const DeveloperDashboard = ({
                 <td>Revenue:</td>
                 <td>
                   {currencyFormatter.format(
-                    tableData.summaryCashflow[0].totalRevenue /
-                      currentDashboard.assumptions.dwellings
+                    total?.totalRevenue / currentDashboard.assumptions.dwellings
                   )}
                 </td>
               </tr>
@@ -379,7 +337,7 @@ const DeveloperDashboard = ({
                 <td>Costs:</td>
                 <td>
                   {currencyFormatter.format(
-                    tableData.summaryCashflow[0].totalCostsPostFinance /
+                    total?.totalCostsPostFinance /
                       currentDashboard.assumptions.dwellings
                   )}
                 </td>
@@ -388,7 +346,7 @@ const DeveloperDashboard = ({
                 <td>Profit:</td>
                 <td>
                   {currencyFormatter.format(
-                    tableData.summaryCashflow[0].postFinanceCashflow /
+                    total?.postFinanceCashflow /
                       currentDashboard.assumptions.dwellings
                   )}
                 </td>
@@ -516,45 +474,31 @@ const DeveloperDashboard = ({
                 <tr>
                   <th>Total</th>
                   <td className="dash-desktop">
-                    {currencyFormatter.format(
-                      tableData.summaryCashflow[0].acquisitionCosts
-                    )}
+                    {currencyFormatter.format(total?.acquisitionCosts)}
                   </td>
                   <td className="dash-desktop">
-                    {currencyFormatter.format(tableData.summaryCashflow[0].TDC)}
+                    {currencyFormatter.format(total?.TDC)}
                   </td>
                   <td className="dash-desktop">
-                    {currencyFormatter.format(tableData.summaryCashflow[0].NOI)}
+                    {currencyFormatter.format(total?.NOI)}
                   </td>
                   <td className="dash-desktop">
-                    {currencyFormatter.format(
-                      tableData.summaryCashflow[0].netSale
-                    )}
+                    {currencyFormatter.format(total?.netSale)}
                   </td>
                   <td className="dash-desktop">
-                    {currencyFormatter.format(
-                      tableData.summaryCashflow[0].loanCosts
-                    )}
+                    {currencyFormatter.format(total?.loanCosts)}
                   </td>
                   <td className="dash-mobile">
-                    {currencyFormatter.format(
-                      tableData.summaryCashflow[0].totalIncome
-                    )}
+                    {currencyFormatter.format(total?.totalIncome)}
                   </td>
                   <td className="dash-mobile">
-                    {currencyFormatter.format(
-                      tableData.summaryCashflow[0].postFinanceTotalCost
-                    )}
+                    {currencyFormatter.format(total?.postFinanceTotalCost)}
                   </td>
                   <td className="dash-xs-mobile">
-                    {currencyFormatter.format(
-                      tableData.summaryCashflow[0].debtSource
-                    )}
+                    {currencyFormatter.format(total?.debtSource)}
                   </td>
                   <td className="dash-desktop">
-                    {currencyFormatter.format(
-                      tableData.summaryCashflow[0].postFinanceCashflow
-                    )}
+                    {currencyFormatter.format(total?.postFinanceCashflow)}
                   </td>
                 </tr>
               </tfoot>
@@ -576,7 +520,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   setModal,
   getDashboard,
-  preSaveDashboard,
+  editDashboard,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeveloperDashboard);

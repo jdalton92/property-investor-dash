@@ -3,12 +3,13 @@ import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import Loader from "../Shared/Loader";
 import { Icon } from "../Shared/Icon";
+import { editDashboard } from "../../reducers/dashboardReducer";
 import {
-  getDashboardAndCashflow,
-  preSaveDashboard,
-} from "../../reducers/dashboardReducer";
-import { getCashflow } from "../../reducers/cashflowReducer";
+  getCashflow,
+  getDashboardCashflow,
+} from "../../reducers/cashflowReducer";
 import { setModal } from "../../reducers/navigationReducer";
+import { setNotification } from "../../reducers/notificationReducer";
 import SaveIcon from "../../styles/svg/save.svg";
 import EditIcon from "../../styles/svg/edit.svg";
 import OwnerOccupierInvestorDashboard from "./OwnerOccupierInvestorDashboard";
@@ -16,22 +17,25 @@ import { CONSTANTS } from "../../static/constants";
 import { isEmpty } from "../../utils/dashboardHelper";
 
 const OccupierDashboard = ({
-  isFetching,
-  preSave,
+  isFetchingDashboard,
+  isFetchingCashflow,
   currentDashboard,
-  getDashboardAndCashflow,
+  getDashboardCashflow,
   getCashflow,
-  preSaveDashboard,
+  editDashboard,
   setModal,
+  setNotification,
 }) => {
   const id = useParams().id;
   const history = useHistory();
 
   useEffect(() => {
-    if (id && !preSave) {
-      getDashboardAndCashflow(id);
+    if (id) {
+      getDashboardCashflow(id);
     } else if (currentDashboard.type && currentDashboard.assumptions) {
       getCashflow(currentDashboard.type, currentDashboard.assumptions);
+    } else {
+      setNotification("Error loading dashboard", CONSTANTS.NOTIFICATION.ERROR);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
@@ -43,15 +47,11 @@ const OccupierDashboard = ({
 
   const handleEdit = (e) => {
     e.preventDefault();
-    preSaveDashboard();
-    if (id) {
-      history.push(`/owner-occupier/edit/${id}`);
-    } else {
-      history.replace("/owner-occupier/edit");
-    }
+    editDashboard();
+    history.replace("/owner-occupier/edit");
   };
 
-  if (isFetching || (isEmpty(currentDashboard.assumptions) && id)) {
+  if (isFetchingDashboard || isFetchingCashflow) {
     return <Loader />;
   } else {
     if (isEmpty(currentDashboard.assumptions)) {
@@ -63,7 +63,7 @@ const OccupierDashboard = ({
           <h2 className="f20 bold mt16 mb16">Owner Occupier Dashboard</h2>
           <div className="dash-btns flex-row">
             <button
-              type="submit"
+              type="button"
               className="form-button-p bs-3 font-white pt4 pb4 flex-row align-c justify-c"
               onClick={handleSave}
             >
@@ -77,7 +77,7 @@ const OccupierDashboard = ({
               <span className="ml8">Save</span>
             </button>
             <button
-              type="submit"
+              type="button"
               className="form-button-s bs-3 font-white pt4 pb4 flex-row align-c justify-c"
               onClick={handleEdit}
             >
@@ -101,16 +101,17 @@ const OccupierDashboard = ({
 const mapStateToProps = (state) => {
   return {
     currentDashboard: state.dashboards.currentDashboard,
-    preSave: state.dashboards.currentDashboard.preSave,
-    isFetching: state.dashboards.isFetching,
+    isFetchingDashboard: state.dashboards.isFetching,
+    isFetchingCashflow: state.dashboards.isFetching,
   };
 };
 
 const mapDispatchToProps = {
   setModal,
-  getDashboardAndCashflow,
+  getDashboardCashflow,
   getCashflow,
-  preSaveDashboard,
+  editDashboard,
+  setNotification,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(OccupierDashboard);

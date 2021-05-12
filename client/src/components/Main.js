@@ -75,29 +75,29 @@ const Main = () => {
             />
             <Route
               exact
-              path="/owner-occupier/dash"
+              path="/owner-occupier/dashboard"
               render={() => <OccupierDashboard />}
             />
             <CustomRoute
-              path="/owner-occupier/dash/:id"
+              path="/owner-occupier/dashboard/:id"
               render={() => <OccupierDashboard />}
             />
             <Route
               exact
-              path="/investor/dash"
+              path="/investor/dashboard"
               render={() => <InvestorDashboard />}
             />
             <CustomRoute
-              path="/investor/dash/:id"
+              path="/investor/dashboard/:id"
               render={() => <InvestorDashboard />}
             />
             <Route
               exact
-              path="/developer/dash"
+              path="/developer/dashboard"
               render={() => <DeveloperDashboard />}
             />
             <CustomRoute
-              path="/developer/dash/:id"
+              path="/developer/dashboard/:id"
               render={() => <DeveloperDashboard />}
             />
             <Route render={() => <NotFound />} />

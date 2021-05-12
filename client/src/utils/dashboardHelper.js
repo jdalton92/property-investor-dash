@@ -17,21 +17,20 @@ export const getDashboardTypeAndBaseUrl = (dashboard) => {
   let type;
   switch (dashboard.type) {
     case CONSTANTS.TYPES.DEVELOPER:
-      baseUrl = "developer/dash";
+      baseUrl = "developer/dashboard";
       type = "Developer";
       break;
     case CONSTANTS.TYPES.INVESTOR:
-      baseUrl = "investor/dash";
+      baseUrl = "investor/dashboard";
       type = "Investor";
       break;
     case CONSTANTS.TYPES.OCCUPIER:
-      baseUrl = "owner-occupier/dash";
+      baseUrl = "owner-occupier/dashboard";
       type = "Owner-Occupier";
       break;
     default:
       throw new Error("Invalid dashboard type");
   }
-
   return { type, baseUrl };
 };
 

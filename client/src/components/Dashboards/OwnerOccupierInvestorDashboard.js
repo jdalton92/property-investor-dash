@@ -26,6 +26,7 @@ const OwnerOccupierInvestorDashboard = ({ monthlyCashflow }) => {
   const chartData = cumulativeChartParse(monthlyCashflow);
   const tableData = tableParse(monthlyCashflow);
   const cardData = cardParse(monthlyCashflow);
+  const total = tableData?.totalCashflow;
   return (
     <>
       <h2 className="f16 bold mt16 mb16">Post Funding Metrics</h2>
@@ -184,43 +185,27 @@ const OwnerOccupierInvestorDashboard = ({ monthlyCashflow }) => {
               <tr>
                 <th>Total</th>
                 <td className="dash-desktop">
-                  {currencyFormatter.format(
-                    tableData?.summaryCashflow[0].equityUse
-                  )}
+                  {currencyFormatter.format(total?.equityUse)}
                 </td>
                 <td className="dash-desktop">
-                  {currencyFormatter.format(
-                    tableData?.summaryCashflow[0].rentalIncome
-                  )}
+                  {currencyFormatter.format(total?.rentalIncome)}
                 </td>
                 <td className="dash-desktop">
-                  {currencyFormatter.format(tableData?.summaryCashflow[0].opex)}
+                  {currencyFormatter.format(total?.opex)}
                 </td>
                 <td className="dash-desktop">
-                  {currencyFormatter.format(
-                    tableData?.summaryCashflow[0].netSale
-                  )}
+                  {currencyFormatter.format(total?.netSale)}
                 </td>
                 <td className="dash-desktop">
-                  {currencyFormatter.format(
-                    tableData?.summaryCashflow[0].fundingCost
-                  )}
+                  {currencyFormatter.format(total?.fundingCost)}
                 </td>
                 <td className="dash-mobile">
-                  {currencyFormatter.format(
-                    tableData?.summaryCashflow[0].totalIncome
-                  )}
+                  {currencyFormatter.format(total?.totalIncome)}
                 </td>
                 <td className="dash-mobile">
-                  {currencyFormatter.format(
-                    tableData?.summaryCashflow[0].totalCost
-                  )}
+                  {currencyFormatter.format(total?.totalCost)}
                 </td>
-                <td>
-                  {currencyFormatter.format(
-                    tableData?.summaryCashflow[0].postFinanceCashflow
-                  )}
-                </td>
+                <td>{currencyFormatter.format(total?.postFinanceCashflow)}</td>
               </tr>
             </tfoot>
           </table>
