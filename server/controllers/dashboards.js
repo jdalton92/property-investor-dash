@@ -142,7 +142,7 @@ dashboardRouter.delete(
 
       const dashboard = await Dashboard.findById(dashboardId);
 
-      if (dashboard?.user.toString() === decodedToken.id) {
+      if (dashboard.user.toString() === decodedToken.id) {
         await Dashboard.findByIdAndRemove(dashboardId);
         await User.findOneAndUpdate(
           { _id: decodedToken.id },

@@ -1,13 +1,13 @@
 const ValidationError = require("./error");
 
 function paginate(query, options, callback) {
-  if (options?.limit && options?.limit <= 0) {
+  if (options.limit && options.limit <= 0) {
     return callback(
       new ValidationError(400, "limit must be greater than 0"),
       null
     );
   }
-  if (options?.page && options?.page < 0) {
+  if (options.page && options.page < 0) {
     return callback(
       new ValidationError(400, "page must be greater than 0"),
       null
@@ -15,10 +15,10 @@ function paginate(query, options, callback) {
   }
 
   query = query || {};
-  const limit = parseInt(options?.limit) || 10;
-  const page = parseInt(options?.page) || 1;
-  const sort = options?.sort || "";
-  const exclude = options?.exclude || "";
+  const limit = parseInt(options.limit) || 10;
+  const page = parseInt(options.page) || 1;
+  const sort = options.sort || "";
+  const exclude = options.exclude || "";
 
   const skip = (page - 1) * (limit - 1);
   let resultsCount;
