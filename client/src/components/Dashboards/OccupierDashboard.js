@@ -19,7 +19,6 @@ import { isEmpty } from "../../utils/dashboardHelper";
 const OccupierDashboard = ({
   isFetchingDashboard,
   isFetchingCashflow,
-  isEditing,
   currentDashboard,
   getDashboardAndCashflow,
   getCashflow,
@@ -31,7 +30,7 @@ const OccupierDashboard = ({
   const history = useHistory();
 
   useEffect(() => {
-    if (id && !isEditing) {
+    if (id) {
       getDashboardAndCashflow(id);
     } else if (currentDashboard.type && currentDashboard.assumptions) {
       getCashflow(currentDashboard.type, currentDashboard.assumptions);
@@ -106,7 +105,6 @@ const OccupierDashboard = ({
 const mapStateToProps = (state) => {
   return {
     currentDashboard: state.dashboards.currentDashboard,
-    isEditing: state.dashboards.isEditing,
     isFetchingDashboard: state.dashboards.isFetching,
     isFetchingCashflow: state.cashflow.isFetching,
   };

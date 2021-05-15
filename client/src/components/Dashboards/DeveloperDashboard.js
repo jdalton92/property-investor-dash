@@ -34,7 +34,6 @@ import CollapseIcon from "../../styles/svg/collapse.svg";
 const DeveloperDashboard = ({
   isFetchingDashboard,
   isFetchingCashflow,
-  isEditing,
   getCashflow,
   getDashboardAndCashflow,
   currentDashboard,
@@ -48,7 +47,7 @@ const DeveloperDashboard = ({
   const history = useHistory();
 
   useEffect(() => {
-    if (id && !isEditing) {
+    if (id) {
       getDashboardAndCashflow(id);
     } else if (currentDashboard.type && currentDashboard.assumptions) {
       getCashflow(currentDashboard.type, currentDashboard.assumptions);
@@ -479,7 +478,6 @@ const DeveloperDashboard = ({
 const mapStateToProps = (state) => {
   return {
     currentDashboard: state.dashboards.currentDashboard,
-    isEditing: state.dashboards.isEditing,
     isFetchingDashboard: state.dashboards.isFetching,
     isFetchingCashflow: state.cashflow.isFetching,
     monthlyCashflow: state.cashflow.monthlyCashflow,

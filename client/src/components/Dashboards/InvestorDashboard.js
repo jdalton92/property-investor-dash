@@ -18,7 +18,6 @@ import { isEmpty } from "../../utils/dashboardHelper";
 const InvestorDashboard = ({
   isFetchingDashboard,
   isFetchingCashflow,
-  isEditing,
   currentDashboard,
   getCashflow,
   getDashboardAndCashflow,
@@ -29,7 +28,7 @@ const InvestorDashboard = ({
   const history = useHistory();
 
   useEffect(() => {
-    if (id && !isEditing) {
+    if (id) {
       getDashboardAndCashflow(id);
     } else if (currentDashboard.type && currentDashboard.assumptions) {
       getCashflow(currentDashboard.type, currentDashboard.assumptions);
@@ -102,7 +101,6 @@ const InvestorDashboard = ({
 const mapStateToProps = (state) => {
   return {
     currentDashboard: state.dashboards.currentDashboard,
-    isEditing: state.dashboards.isEditing,
     isFetchingDashboard: state.dashboards.isFetching,
     isFetchingCashflow: state.cashflow.isFetching,
   };
