@@ -20,7 +20,7 @@ Simple open source tool for calculating your return for property investments
 
 ## Instructions
 
-1. Clone app, install dependencies, and run frontend
+1. Clone app, install dependencies, and run the frontend locally
 
 ```sh
 $ git clone https://github.com/jdalton92/property-investor-dash.git
@@ -29,7 +29,7 @@ $ npm install
 $ npm start
 ```
 
-2. **Optional:** Integrate Backend to allow user creation, login, save dashboard, and contact form.
+2. Run the backend locally
 
 Create `.env` file in backend root directory with environment variables for the following uses;
 
@@ -38,7 +38,7 @@ Create `.env` file in backend root directory with environment variables for the 
 - **jwt:** SECRET
 - **Mailgun:** API_KEY, DOMAIN, EMAIL
 
-Example `.env` file:
+Example `.env` file in the `server` directory:
 
 ```sh
 MONGODB_URI=mongodb+srv://<username>:<id>@<url>.mongodb.net/<collection-name>
@@ -47,6 +47,7 @@ SECRET=<your_secret_key>
 EMAIL=<your_email>
 API_KEY=<your_mailgun_api_key>
 DOMAIN=<your_mailgun_domain>
+DEMO_USER_EMAIL=demo@email.com
 ```
 
 Then navidate to the server directory and install dependencies, and run the backend with `nodemon`
