@@ -24,7 +24,7 @@ const App = ({ initUser, isUserFetching, overlay, saveDashboardModal }) => {
     return <Loader />;
   } else {
     return (
-      <div className="w100 fade-in">
+      <div className="app bg-base w100 fade-in">
         <Router>
           <ScrollToTopControlller />
           {overlay && <Overlay />}
