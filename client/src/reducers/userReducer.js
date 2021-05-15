@@ -200,7 +200,7 @@ export const deleteUser = (id, password) => {
       type: "USER_REQUEST",
     });
     try {
-      await userService.deleteUser(password, id);
+      await userService.deleteUser(id, password);
 
       window.localStorage.removeItem("loggedUser");
       destroyToken();

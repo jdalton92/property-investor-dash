@@ -52,6 +52,7 @@ const ChangePassword = ({ user, updateUser }) => {
                     className="form-input bs-1 w100"
                     placeholder="Password"
                     type="password"
+                    autoComplete="off"
                     {...input}
                   />
                   {meta.error && meta.touched && (
@@ -75,6 +76,7 @@ const ChangePassword = ({ user, updateUser }) => {
                     className="form-input bs-1 w100"
                     placeholder="Password"
                     type="password"
+                    autoComplete="off"
                     {...input}
                   />
                   {meta.error && meta.touched && (
@@ -98,6 +100,7 @@ const ChangePassword = ({ user, updateUser }) => {
                     className="form-input bs-1 w100"
                     placeholder="Password"
                     type="password"
+                    autoComplete="off"
                     {...input}
                   />
                   {meta.error && meta.touched && (

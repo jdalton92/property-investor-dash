@@ -16,10 +16,10 @@ const update = async (id, userData) => {
   return response.data;
 };
 
-const deleteUser = async (password, id) => {
-  const response = await axios.delete(`${baseUrl}/${id}`, {
-    data: { password },
-  });
+const deleteUser = async (id, password) => {
+  const options = getAuthHeader();
+  options.data = { password };
+  const response = await axios.delete(`${baseUrl}/${id}`, options);
   return response.data;
 };
 

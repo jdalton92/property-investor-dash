@@ -3,7 +3,11 @@ import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { setModal } from "../../reducers/navigationReducer";
 import { CONSTANTS } from "../../static/constants";
-import { getDashboard, editDashboard } from "../../reducers/dashboardReducer";
+import { editDashboard } from "../../reducers/dashboardReducer";
+import {
+  getCashflow,
+  getDashboardAndCashflow,
+} from "../../reducers/cashflowReducer";
 import Tooltip from "../Shared/Tooltip";
 import {
   cumulativeChartParse,
@@ -28,11 +32,15 @@ import ExpandIcon from "../../styles/svg/expand.svg";
 import CollapseIcon from "../../styles/svg/collapse.svg";
 
 const DeveloperDashboard = ({
-  isFetching,
+  isFetchingDashboard,
+  isFetchingCashflow,
+  isEditing,
+  getCashflow,
+  getDashboardAndCashflow,
   currentDashboard,
-  getDashboard,
   editDashboard,
   setModal,
+  monthlyCashflow,
 }) => {
   const [showPreFinanceCashflow, setShowPreFinanceCashflow] = useState(true);
   const [showPostFinanceCashflow, setShowPostFinanceCashflow] = useState(true);
@@ -40,8 +48,10 @@ const DeveloperDashboard = ({
   const history = useHistory();
 
   useEffect(() => {
-    if (id) {
-      getDashboard(id);
+    if (id && !isEditing) {
+      getDashboardAndCashflow(id);
+    } else if (currentDashboard.type && currentDashboard.assumptions) {
+      getCashflow(currentDashboard.type, currentDashboard.assumptions);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
@@ -57,20 +67,22 @@ const DeveloperDashboard = ({
     history.push("/developer/edit");
   };
 
-  if (isFetching) {
+  if (
+    isFetchingDashboard ||
+    isFetchingCashflow ||
+    isEmpty(currentDashboard.assumptions)
+  ) {
     return <Loader />;
   } else {
-    if (isEmpty(currentDashboard.assumptions)) {
-      history.push("/developer/edit");
-    }
+    // if (isEmpty(currentDashboard.assumptions)) {
+    //   history.push("/developer/edit");
+    // }
     const preFinanceMessage = developerTooltip.cashflowBeforeFunding.message;
     const postFinanceMessage = developerTooltip.cashflowAfterFunding.message;
-    // TODO: fetch cashflow output from server
-    const rawData = {};
-    const annualChart = annualChartParse(rawData);
-    const cumulativeChart = cumulativeChartParse(rawData);
-    const tableData = tableParse(rawData);
-    const fundingChart = fundingChartParse(rawData);
+    const annualChart = annualChartParse(monthlyCashflow);
+    const cumulativeChart = cumulativeChartParse(monthlyCashflow);
+    const tableData = tableParse(monthlyCashflow);
+    const fundingChart = fundingChartParse(monthlyCashflow);
     const total = tableData?.totalCashflow;
     return (
       <div className="fade-in">
@@ -179,7 +191,7 @@ const DeveloperDashboard = ({
                 <td>IRR:</td>
                 <td>
                   {percentageFormatter.format(
-                    IRRCalculation(rawData).preFinance
+                    IRRCalculation(monthlyCashflow).preFinance
                   )}
                 </td>
               </tr>
@@ -187,7 +199,7 @@ const DeveloperDashboard = ({
                 <td>Margin On Cost:</td>
                 <td>
                   {percentageFormatter.format(
-                    developerMOCCalculation(rawData).preFinance
+                    developerMOCCalculation(monthlyCashflow).preFinance
                   )}
                 </td>
               </tr>
@@ -225,70 +237,52 @@ const DeveloperDashboard = ({
             </button>
           </div>
           {showPreFinanceCashflow && (
-            <table className="w100 bg-1 p20 mb16 o-hidden">
-              <thead>
-                <tr>
-                  <th>Year</th>
-                  <th className="dash-desktop">Acquisition Costs</th>
-                  <th className="dash-desktop">TDC</th>
-                  <th className="dash-desktop">NOI</th>
-                  <th className="dash-desktop">Net Sale</th>
-                  <th className="dash-mobile">Total Income</th>
-                  <th className="dash-mobile">Total Costs</th>
-                  <th>Net Annual Cashflow</th>
-                </tr>
-              </thead>
-              <tbody>
-                {tableData?.annualCashflow.map((c) => (
-                  <tr key={c.year}>
-                    <td>{c.year}</td>
-                    <td className="dash-desktop">
-                      {currencyFormatter.format(c.acquisitionCosts)}
-                    </td>
-                    <td className="dash-desktop">
-                      {currencyFormatter.format(c.TDC)}
-                    </td>
-                    <td className="dash-desktop">
-                      {currencyFormatter.format(c.NOI)}
-                    </td>
-                    <td className="dash-desktop">
-                      {currencyFormatter.format(c.netSale)}
-                    </td>
-                    <td className="dash-mobile">
-                      {currencyFormatter.format(c.totalIncome)}
-                    </td>
-                    <td className="dash-mobile">
-                      {currencyFormatter.format(c.preFinanceTotalCost)}
-                    </td>
-                    <td>{currencyFormatter.format(c.preFinanceCashflow)}</td>
+            <div className="o-x-auto">
+              <table className="w100 bg-1 p20 mb16 o-hidden">
+                <thead>
+                  <tr>
+                    <th>Year</th>
+                    <th>Acquisition Costs</th>
+                    <th>TDC</th>
+                    <th>NOI</th>
+                    <th>Net Sale</th>
+                    <th>Total Income</th>
+                    <th>Total Costs</th>
+                    <th>Net Annual Cashflow</th>
                   </tr>
-                ))}
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Total</th>
-                  <td className="dash-desktop">
-                    {currencyFormatter.format(total?.acquisitionCosts)}
-                  </td>
-                  <td className="dash-desktop">
-                    {currencyFormatter.format(total?.TDC)}
-                  </td>
-                  <td className="dash-desktop">
-                    {currencyFormatter.format(total?.NOI)}
-                  </td>
-                  <td className="dash-desktop">
-                    {currencyFormatter.format(total?.netSale)}
-                  </td>
-                  <td className="dash-mobile">
-                    {currencyFormatter.format(total?.totalIncome)}
-                  </td>
-                  <td className="dash-mobile">
-                    {currencyFormatter.format(total?.preFinanceTotalCost)}
-                  </td>
-                  <td>{currencyFormatter.format(total?.preFinanceCashflow)}</td>
-                </tr>
-              </tfoot>
-            </table>
+                </thead>
+                <tbody>
+                  {tableData?.annualCashflow.map((c) => (
+                    <tr key={c.year}>
+                      <td>{c.year}</td>
+                      <td>{currencyFormatter.format(c.acquisitionCosts)}</td>
+                      <td>{currencyFormatter.format(c.TDC)}</td>
+                      <td>{currencyFormatter.format(c.NOI)}</td>
+                      <td>{currencyFormatter.format(c.netSale)}</td>
+                      <td>{currencyFormatter.format(c.totalIncome)}</td>
+                      <td>{currencyFormatter.format(c.preFinanceTotalCost)}</td>
+                      <td>{currencyFormatter.format(c.preFinanceCashflow)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th>Total</th>
+                    <td>{currencyFormatter.format(total?.acquisitionCosts)}</td>
+                    <td>{currencyFormatter.format(total?.TDC)}</td>
+                    <td>{currencyFormatter.format(total?.NOI)}</td>
+                    <td>{currencyFormatter.format(total?.netSale)}</td>
+                    <td>{currencyFormatter.format(total?.totalIncome)}</td>
+                    <td>
+                      {currencyFormatter.format(total?.preFinanceTotalCost)}
+                    </td>
+                    <td>
+                      {currencyFormatter.format(total?.preFinanceCashflow)}
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
           )}
         </div>
         <h2 className="f16 bold mt16 mb16">Post Funding Metrics</h2>
@@ -365,7 +359,7 @@ const DeveloperDashboard = ({
                 <td>IRR:</td>
                 <td>
                   {percentageFormatter.format(
-                    IRRCalculation(rawData).postFinance
+                    IRRCalculation(monthlyCashflow).postFinance
                   )}
                 </td>
               </tr>
@@ -373,7 +367,7 @@ const DeveloperDashboard = ({
                 <td>Margin On Cost:</td>
                 <td>
                   {percentageFormatter.format(
-                    developerMOCCalculation(rawData).postFinance
+                    developerMOCCalculation(monthlyCashflow).postFinance
                   )}
                 </td>
               </tr>
@@ -421,88 +415,60 @@ const DeveloperDashboard = ({
             </button>
           </div>
           {showPostFinanceCashflow && (
-            <table className="w100 bg-1 p20 mb16 o-hidden">
-              <thead>
-                <tr>
-                  <th>Year</th>
-                  <th className="dash-desktop">Acquisition Costs</th>
-                  <th className="dash-desktop">TDC</th>
-                  <th className="dash-desktop">NOI</th>
-                  <th className="dash-desktop">Net Sale</th>
-                  <th className="dash-desktop">Funding Costs</th>
-                  <th className="dash-mobile">Total Income</th>
-                  <th className="dash-mobile">Total Costs</th>
-                  <th className="dash-xs-mobile">Debt Source</th>
-                  <th className="dash-desktop">Net Annual Cashflow</th>
-                </tr>
-              </thead>
-              <tbody>
-                {tableData?.annualCashflow.map((c) => (
-                  <tr key={c.year}>
-                    <td>{c.year}</td>
-                    <td className="dash-desktop">
-                      {currencyFormatter.format(c.acquisitionCosts)}
+            <div className="o-x-auto">
+              <table className="w100 bg-1 p20 mb16 o-hidden">
+                <thead>
+                  <tr>
+                    <th>Year</th>
+                    <th>Acquisition Costs</th>
+                    <th>TDC</th>
+                    <th>NOI</th>
+                    <th>Net Sale</th>
+                    <th>Funding Costs</th>
+                    <th>Total Income</th>
+                    <th>Total Costs</th>
+                    <th>Debt Source</th>
+                    <th>Net Annual Cashflow</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {tableData?.annualCashflow.map((c) => (
+                    <tr key={c.year}>
+                      <td>{c.year}</td>
+                      <td>{currencyFormatter.format(c.acquisitionCosts)}</td>
+                      <td>{currencyFormatter.format(c.TDC)}</td>
+                      <td>{currencyFormatter.format(c.NOI)}</td>
+                      <td>{currencyFormatter.format(c.netSale)}</td>
+                      <td>{currencyFormatter.format(c.loanCosts)}</td>
+                      <td>{currencyFormatter.format(c.totalIncome)}</td>
+                      <td>
+                        {currencyFormatter.format(c.postFinanceTotalCost)}
+                      </td>
+                      <td>{currencyFormatter.format(c.debtSource)}</td>
+                      <td>{currencyFormatter.format(c.postFinanceCashflow)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th>Total</th>
+                    <td>{currencyFormatter.format(total?.acquisitionCosts)}</td>
+                    <td>{currencyFormatter.format(total?.TDC)}</td>
+                    <td>{currencyFormatter.format(total?.NOI)}</td>
+                    <td>{currencyFormatter.format(total?.netSale)}</td>
+                    <td>{currencyFormatter.format(total?.loanCosts)}</td>
+                    <td>{currencyFormatter.format(total?.totalIncome)}</td>
+                    <td>
+                      {currencyFormatter.format(total?.postFinanceTotalCost)}
                     </td>
-                    <td className="dash-desktop">
-                      {currencyFormatter.format(c.TDC)}
-                    </td>
-                    <td className="dash-desktop">
-                      {currencyFormatter.format(c.NOI)}
-                    </td>
-                    <td className="dash-desktop">
-                      {currencyFormatter.format(c.netSale)}
-                    </td>
-                    <td className="dash-desktop">
-                      {currencyFormatter.format(c.loanCosts)}
-                    </td>
-                    <td className="dash-mobile">
-                      {currencyFormatter.format(c.totalIncome)}
-                    </td>
-                    <td className="dash-mobile">
-                      {currencyFormatter.format(c.postFinanceTotalCost)}
-                    </td>
-                    <td className="dash-xs-mobile">
-                      {currencyFormatter.format(c.debtSource)}
-                    </td>
-                    <td className="dash-desktop">
-                      {currencyFormatter.format(c.postFinanceCashflow)}
+                    <td>{currencyFormatter.format(total?.debtSource)}</td>
+                    <td>
+                      {currencyFormatter.format(total?.postFinanceCashflow)}
                     </td>
                   </tr>
-                ))}
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Total</th>
-                  <td className="dash-desktop">
-                    {currencyFormatter.format(total?.acquisitionCosts)}
-                  </td>
-                  <td className="dash-desktop">
-                    {currencyFormatter.format(total?.TDC)}
-                  </td>
-                  <td className="dash-desktop">
-                    {currencyFormatter.format(total?.NOI)}
-                  </td>
-                  <td className="dash-desktop">
-                    {currencyFormatter.format(total?.netSale)}
-                  </td>
-                  <td className="dash-desktop">
-                    {currencyFormatter.format(total?.loanCosts)}
-                  </td>
-                  <td className="dash-mobile">
-                    {currencyFormatter.format(total?.totalIncome)}
-                  </td>
-                  <td className="dash-mobile">
-                    {currencyFormatter.format(total?.postFinanceTotalCost)}
-                  </td>
-                  <td className="dash-xs-mobile">
-                    {currencyFormatter.format(total?.debtSource)}
-                  </td>
-                  <td className="dash-desktop">
-                    {currencyFormatter.format(total?.postFinanceCashflow)}
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
+                </tfoot>
+              </table>
+            </div>
           )}
         </div>
       </div>
@@ -513,13 +479,17 @@ const DeveloperDashboard = ({
 const mapStateToProps = (state) => {
   return {
     currentDashboard: state.dashboards.currentDashboard,
-    isFetching: state.dashboards.isFetching,
+    isEditing: state.dashboards.isEditing,
+    isFetchingDashboard: state.dashboards.isFetching,
+    isFetchingCashflow: state.cashflow.isFetching,
+    monthlyCashflow: state.cashflow.monthlyCashflow,
   };
 };
 
 const mapDispatchToProps = {
   setModal,
-  getDashboard,
+  getCashflow,
+  getDashboardAndCashflow,
   editDashboard,
 };
 

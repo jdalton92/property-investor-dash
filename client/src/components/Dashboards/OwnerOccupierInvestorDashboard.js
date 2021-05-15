@@ -138,77 +138,53 @@ const OwnerOccupierInvestorDashboard = ({ monthlyCashflow }) => {
           </button>
         </div>
         {showCashflow && (
-          <table className="w100 r bg-1 p20 mb16 o-hidden">
-            <thead>
-              <tr>
-                <th>Year</th>
-                <th className="dash-desktop">Deposit</th>
-                <th className="dash-desktop">Rent</th>
-                <th className="dash-desktop">Opex</th>
-                <th className="dash-desktop">Net Sale</th>
-                <th className="dash-desktop">Mortgage</th>
-                <th className="dash-mobile">Total Income</th>
-                <th className="dash-mobile">Total Costs</th>
-                <th>Net Annual Cashflow</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tableData?.annualCashflow.map((c) => (
-                <tr key={c.year}>
-                  <td>{c.year}</td>
-                  <td className="dash-desktop">
-                    {currencyFormatter.format(c.equityUse)}
-                  </td>
-                  <td className="dash-desktop">
-                    {currencyFormatter.format(c.rentalIncome)}
-                  </td>
-                  <td className="dash-desktop">
-                    {currencyFormatter.format(c.opex)}
-                  </td>
-                  <td className="dash-desktop">
-                    {currencyFormatter.format(c.netSale)}
-                  </td>
-                  <td className="dash-desktop">
-                    {currencyFormatter.format(c.fundingCost)}
-                  </td>
-                  <td className="dash-mobile">
-                    {currencyFormatter.format(c.totalIncome)}
-                  </td>
-                  <td className="dash-mobile">
-                    {currencyFormatter.format(c.totalCost)}
-                  </td>
-                  <td>{currencyFormatter.format(c.postFinanceCashflow)}</td>
+          <div className="o-x-auto">
+            <table className="w100 r bg-1 p20 mb16 o-hidden">
+              <thead>
+                <tr>
+                  <th>Year</th>
+                  <th>Deposit</th>
+                  <th>Rent</th>
+                  <th>Opex</th>
+                  <th>Net Sale</th>
+                  <th>Mortgage</th>
+                  <th>Total Income</th>
+                  <th>Total Costs</th>
+                  <th>Net Annual Cashflow</th>
                 </tr>
-              ))}
-            </tbody>
-            <tfoot>
-              <tr>
-                <th>Total</th>
-                <td className="dash-desktop">
-                  {currencyFormatter.format(total?.equityUse)}
-                </td>
-                <td className="dash-desktop">
-                  {currencyFormatter.format(total?.rentalIncome)}
-                </td>
-                <td className="dash-desktop">
-                  {currencyFormatter.format(total?.opex)}
-                </td>
-                <td className="dash-desktop">
-                  {currencyFormatter.format(total?.netSale)}
-                </td>
-                <td className="dash-desktop">
-                  {currencyFormatter.format(total?.fundingCost)}
-                </td>
-                <td className="dash-mobile">
-                  {currencyFormatter.format(total?.totalIncome)}
-                </td>
-                <td className="dash-mobile">
-                  {currencyFormatter.format(total?.totalCost)}
-                </td>
-                <td>{currencyFormatter.format(total?.postFinanceCashflow)}</td>
-              </tr>
-            </tfoot>
-          </table>
+              </thead>
+              <tbody>
+                {tableData?.annualCashflow.map((c) => (
+                  <tr key={c.year}>
+                    <td>{c.year}</td>
+                    <td>{currencyFormatter.format(c.equityUse)}</td>
+                    <td>{currencyFormatter.format(c.rentalIncome)}</td>
+                    <td>{currencyFormatter.format(c.opex)}</td>
+                    <td>{currencyFormatter.format(c.netSale)}</td>
+                    <td>{currencyFormatter.format(c.fundingCost)}</td>
+                    <td>{currencyFormatter.format(c.totalIncome)}</td>
+                    <td>{currencyFormatter.format(c.totalCost)}</td>
+                    <td>{currencyFormatter.format(c.postFinanceCashflow)}</td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Total</th>
+                  <td>{currencyFormatter.format(total?.equityUse)}</td>
+                  <td>{currencyFormatter.format(total?.rentalIncome)}</td>
+                  <td>{currencyFormatter.format(total?.opex)}</td>
+                  <td>{currencyFormatter.format(total?.netSale)}</td>
+                  <td>{currencyFormatter.format(total?.fundingCost)}</td>
+                  <td>{currencyFormatter.format(total?.totalIncome)}</td>
+                  <td>{currencyFormatter.format(total?.totalCost)}</td>
+                  <td>
+                    {currencyFormatter.format(total?.postFinanceCashflow)}
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
         )}
       </div>
     </>
@@ -216,12 +192,7 @@ const OwnerOccupierInvestorDashboard = ({ monthlyCashflow }) => {
 };
 
 const mapStateToProps = (state) => {
-  return {
-    currentDashboard: state.dashboards.currentDashboard,
-    cashflowTable: state.navigation.cashflowTable,
-    monthlyCashflow: state.cashflow.monthlyCashflow,
-    isFetching: state.cashflow.isFetching,
-  };
+  return { monthlyCashflow: state.cashflow.monthlyCashflow };
 };
 
 const mapDispatchToProps = {

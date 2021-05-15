@@ -29,7 +29,7 @@ cashflowRouter.get(
           );
       }
 
-      return response.status(200).json(cashflow);
+      return response.status(200).json({ dashboard, cashflow });
     } catch (e) {
       next(e);
     }

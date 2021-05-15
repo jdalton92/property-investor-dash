@@ -37,11 +37,18 @@ const SaveDashboardModal = ({
   setTab,
   tab,
 }) => {
+  const limit = 5;
+  const [params, setParams] = useState({ limit });
   useEffect(() => {
-    getDashboards();
+    getDashboards(params);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  const [selectedDashboard, setSelectedDashboard] = useState(null);
+  }, [params]);
+  const [selectedDashboardId, setSelectedDashboardId] = useState(null);
+
+  const handleChangePage = (page) => {
+    setSelectedDashboardId(null);
+    setParams({ limit, page });
+  };
 
   const handleSave = async (saveData) => {
     if (!email) {
@@ -49,11 +56,12 @@ const SaveDashboardModal = ({
       return;
     }
 
-    const dashObject = {
+    const dashboard = {
+      type: currentDashboard.type,
       assumptions: currentDashboard.assumptions,
       ...saveData,
     };
-    await saveDashboard(dashObject);
+    await saveDashboard(dashboard);
     setModal(CONSTANTS.MODALS.SAVEDASHBOARD, false);
   };
 
@@ -65,12 +73,12 @@ const SaveDashboardModal = ({
 
     // New dashboard
     const newDashboard = {
-      _id: selectedDashboard,
+      type: currentDashboard.type,
       address,
       description,
       assumptions: currentDashboard.assumptions,
     };
-    await updateDashboard(newDashboard);
+    await updateDashboard(selectedDashboardId, newDashboard);
     setModal(CONSTANTS.MODALS.SAVEDASHBOARD, false);
   };
 
@@ -128,8 +136,7 @@ const SaveDashboardModal = ({
           <span className="ml8 f16 bold">Overwrite Existing</span>
         </button>
       </div>
-      {isFetching && <Loader />}
-      {!isFetching && tab === CONSTANTS.TABS.SAVEDASHBOARD.SAVE && (
+      {tab === CONSTANTS.TABS.SAVEDASHBOARD.SAVE && (
         <Form
           onSubmit={handleSave}
           render={({ handleSubmit, form }) => (
@@ -204,164 +211,206 @@ const SaveDashboardModal = ({
           )}
         />
       )}
-      {!isFetching &&
-        tab === CONSTANTS.TABS.SAVEDASHBOARD.OVERWRITE &&
-        savedDashboards.length === 0 && (
-          <div className="mt20 f16">No saved dashboards...</div>
-        )}
-      {!isFetching &&
-        tab === CONSTANTS.TABS.SAVEDASHBOARD.OVERWRITE &&
-        savedDashboards.length > 0 && (
-          <Form
-            onSubmit={handleOverwrite}
-            validate={(values) => {
-              const errors = {};
-              if (!selectedDashboard) {
-                errors.dashboard = "Required";
-              }
-              return errors;
-            }}
-            render={({ handleSubmit, form, values }) => (
-              <form className="save-form mt20 mb20" onSubmit={handleSubmit}>
-                <div className="flex-row align-c relative">
-                  <label htmlFor="overwrite-dashboard" className="f16 mb8">
-                    Dashboard
-                    <span className="font-red f12 bold ml4">*</span>
-                  </label>
-                </div>
-                <Field name="dashboard">
-                  {({ input, meta }) => (
-                    <div className="relative mb20">
-                      <div className="mh300 o-y-auto">
-                        <table
-                          id="overwrite-dashboard"
-                          className="overpayments w100"
-                        >
-                          <thead>
-                            <tr>
-                              <th className="h768">Ref</th>
-                              <th>Description</th>
-                              <th className="h768">Type</th>
-                              <th>Created</th>
-                              <th>Overwrite</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {savedDashboards.map((d, i) => {
-                              const { type } = getDashboardTypeAndBaseUrl(d);
-                              return (
-                                <tr
-                                  key={i}
-                                  onClick={() =>
-                                    selectedDashboard === d._id
-                                      ? setSelectedDashboard(null)
-                                      : setSelectedDashboard(d._id)
-                                  }
-                                  className={`${
-                                    d._id === selectedDashboard
-                                      ? "selected"
-                                      : ""
-                                  }`}
-                                >
-                                  <td className="h768">{i + 1}</td>
-                                  <td>{d.description}</td>
-                                  <td className="h768">{type}</td>
-                                  <td>{formatDate(d.date)}</td>
-                                  <td>
-                                    <input
-                                      className="ml16"
-                                      type="checkbox"
-                                      checked={d._id === selectedDashboard}
-                                      value={d._id}
-                                      onChange={() =>
-                                        selectedDashboard === d._id
-                                          ? setSelectedDashboard(null)
-                                          : setSelectedDashboard(d._id)
-                                      }
-                                    />
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
+      {tab === CONSTANTS.TABS.SAVEDASHBOARD.OVERWRITE && (
+        <Form
+          onSubmit={handleOverwrite}
+          validate={(values) => {
+            const errors = {};
+            if (!selectedDashboardId) {
+              errors.dashboard = "Required";
+            }
+            return errors;
+          }}
+          render={({ handleSubmit, form, values }) => (
+            <form className="save-form mt20 mb20" onSubmit={handleSubmit}>
+              <div className="flex-row align-c relative">
+                <label htmlFor="overwrite-dashboard" className="f16 mb8">
+                  Dashboard
+                  <span className="font-red f12 bold ml4">*</span>
+                </label>
+              </div>
+              {isFetching && <Loader />}
+              {!isFetching && savedDashboards.resultsCount === 0 && (
+                <div className="mt20 f16">No saved dashboards...</div>
+              )}
+              {!isFetching && savedDashboards.resultsCount > 0 && (
+                <>
+                  <div className="mb16 flex-row align-c">
+                    <button
+                      onClick={() =>
+                        handleChangePage(savedDashboards.previousPage)
+                      }
+                      type="button"
+                      disabled={!savedDashboards.previousPage}
+                      className={`${
+                        savedDashboards.previousPage ? "bg-blue-1" : "bg-4"
+                      } mr12 r bs-3 font-white flex-row align-c justify-c`}
+                    >
+                      Prev
+                    </button>
+                    <span className="mr4">Page</span>
+                    <span className="bold mr4">
+                      {savedDashboards.nextPage
+                        ? savedDashboards.nextPage - 1
+                        : savedDashboards.pagesCount}
+                    </span>
+                    <span className="mr4">of</span>
+                    <span className="bold mr12">
+                      {savedDashboards.pagesCount}
+                    </span>
+                    <button
+                      onClick={() => handleChangePage(savedDashboards.nextPage)}
+                      type="button"
+                      disabled={!savedDashboards.nextPage}
+                      className={`${
+                        savedDashboards.nextPage ? "bg-blue-1" : "bg-4"
+                      } r bs-3 font-white flex-row align-c justify-c`}
+                    >
+                      Next
+                    </button>
+                  </div>
+                  <Field name="dashboard">
+                    {({ input, meta }) => (
+                      <div className="relative mb20">
+                        <div className="mh300 o-y-auto o-x-auto">
+                          <table
+                            id="overwrite-dashboard"
+                            className="overpayments w100"
+                          >
+                            <thead>
+                              <tr>
+                                <th>Ref</th>
+                                <th>Description</th>
+                                <th>Type</th>
+                                <th>Created</th>
+                                <th>Updated</th>
+                                <th>Overwrite</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {savedDashboards.results.map((d, i) => {
+                                const { type } = getDashboardTypeAndBaseUrl(d);
+                                const currentPage = savedDashboards.nextPage
+                                  ? savedDashboards.nextPage - 1
+                                  : savedDashboards.pagesCount;
+                                return (
+                                  <tr
+                                    key={i}
+                                    onClick={() =>
+                                      selectedDashboardId === d._id
+                                        ? setSelectedDashboardId(null)
+                                        : setSelectedDashboardId(d._id)
+                                    }
+                                    className={`${
+                                      d._id === selectedDashboardId
+                                        ? "selected"
+                                        : ""
+                                    }`}
+                                  >
+                                    <td>{(currentPage - 1) * limit + i + 1}</td>
+                                    <td>{d.description}</td>
+                                    <td>{type}</td>
+                                    <td>{formatDate(d.created)}</td>
+                                    <td>
+                                      {d.updated ? formatDate(d.updated) : "-"}
+                                    </td>
+                                    <td>
+                                      <input
+                                        className="ml16"
+                                        type="checkbox"
+                                        checked={d._id === selectedDashboardId}
+                                        value={d._id}
+                                        onChange={() =>
+                                          selectedDashboardId === d._id
+                                            ? setSelectedDashboardId(null)
+                                            : setSelectedDashboardId(d._id)
+                                        }
+                                      />
+                                    </td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          </table>
+                        </div>
+                        {meta.error && meta.touched && (
+                          <span className="form-error f10">{meta.error}</span>
+                        )}
                       </div>
-                      {meta.error && meta.touched && (
-                        <span className="form-error f10">{meta.error}</span>
-                      )}
-                    </div>
-                  )}
-                </Field>
-                <div className="flex-row align-c relative">
-                  <label htmlFor="overwrite-description" className="f16 mb8">
-                    Description
-                    <span className="font-red f12 bold ml4">*</span>
-                  </label>
-                </div>
-                <Field
-                  name="description"
-                  validate={composeValidators(
-                    required,
-                    minLength(3),
-                    maxLength(200)
-                  )}
+                    )}
+                  </Field>
+                </>
+              )}
+              <div className="flex-row align-c relative">
+                <label htmlFor="overwrite-description" className="f16 mb8">
+                  Description
+                  <span className="font-red f12 bold ml4">*</span>
+                </label>
+              </div>
+              <Field
+                name="description"
+                validate={composeValidators(
+                  required,
+                  minLength(3),
+                  maxLength(200)
+                )}
+              >
+                {({ input, meta }) => (
+                  <div className="relative mb20">
+                    <input
+                      id="overwrite-description"
+                      className="form-input bs-1 w100"
+                      placeholder="Description"
+                      type="text"
+                      {...input}
+                    />
+                    {meta.error && meta.touched && (
+                      <span className="form-error f10">{meta.error}</span>
+                    )}
+                  </div>
+                )}
+              </Field>
+              <div className="flex-row align-c relative">
+                <label htmlFor="overwrite-address" className="f16 mb8">
+                  Address
+                  <span className="font-red f12 bold ml4">*</span>
+                </label>
+              </div>
+              <Field
+                name="address"
+                validate={composeValidators(
+                  required,
+                  minLength(3),
+                  maxLength(200)
+                )}
+              >
+                {({ input, meta }) => (
+                  <div className="relative mb20">
+                    <input
+                      id="overwrite-address"
+                      className="form-input bs-1 w100"
+                      placeholder="Address"
+                      type="text"
+                      {...input}
+                    />
+                    {meta.error && meta.touched && (
+                      <span className="form-error f10">{meta.error}</span>
+                    )}
+                  </div>
+                )}
+              </Field>
+              <div className="form-buttons">
+                <button
+                  type="submit"
+                  className="form-button-p bs-3 font-white mt12 pt8 pb8"
                 >
-                  {({ input, meta }) => (
-                    <div className="relative mb20">
-                      <input
-                        id="overwrite-description"
-                        className="form-input bs-1 w100"
-                        placeholder="Description"
-                        type="text"
-                        {...input}
-                      />
-                      {meta.error && meta.touched && (
-                        <span className="form-error f10">{meta.error}</span>
-                      )}
-                    </div>
-                  )}
-                </Field>
-                <div className="flex-row align-c relative">
-                  <label htmlFor="overwrite-address" className="f16 mb8">
-                    Address
-                    <span className="font-red f12 bold ml4">*</span>
-                  </label>
-                </div>
-                <Field
-                  name="address"
-                  validate={composeValidators(
-                    required,
-                    minLength(3),
-                    maxLength(200)
-                  )}
-                >
-                  {({ input, meta }) => (
-                    <div className="relative mb20">
-                      <input
-                        id="overwrite-address"
-                        className="form-input bs-1 w100"
-                        placeholder="Address"
-                        type="text"
-                        {...input}
-                      />
-                      {meta.error && meta.touched && (
-                        <span className="form-error f10">{meta.error}</span>
-                      )}
-                    </div>
-                  )}
-                </Field>
-                <div className="form-buttons">
-                  <button
-                    type="submit"
-                    className="form-button-p bs-3 font-white mt12 pt8 pb8"
-                  >
-                    Save
-                  </button>
-                </div>
-              </form>
-            )}
-          />
-        )}
+                  Save
+                </button>
+              </div>
+            </form>
+          )}
+        />
+      )}
     </div>
   );
 };

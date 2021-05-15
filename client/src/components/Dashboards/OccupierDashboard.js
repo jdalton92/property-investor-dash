@@ -6,7 +6,7 @@ import { Icon } from "../Shared/Icon";
 import { editDashboard } from "../../reducers/dashboardReducer";
 import {
   getCashflow,
-  getDashboardCashflow,
+  getDashboardAndCashflow,
 } from "../../reducers/cashflowReducer";
 import { setModal } from "../../reducers/navigationReducer";
 import { setNotification } from "../../reducers/notificationReducer";
@@ -19,8 +19,9 @@ import { isEmpty } from "../../utils/dashboardHelper";
 const OccupierDashboard = ({
   isFetchingDashboard,
   isFetchingCashflow,
+  isEditing,
   currentDashboard,
-  getDashboardCashflow,
+  getDashboardAndCashflow,
   getCashflow,
   editDashboard,
   setModal,
@@ -30,8 +31,8 @@ const OccupierDashboard = ({
   const history = useHistory();
 
   useEffect(() => {
-    if (id) {
-      getDashboardCashflow(id);
+    if (id && !isEditing) {
+      getDashboardAndCashflow(id);
     } else if (currentDashboard.type && currentDashboard.assumptions) {
       getCashflow(currentDashboard.type, currentDashboard.assumptions);
     } else {
@@ -48,15 +49,19 @@ const OccupierDashboard = ({
   const handleEdit = (e) => {
     e.preventDefault();
     editDashboard();
-    history.replace("/owner-occupier/edit");
+    history.push("/owner-occupier/edit");
   };
 
-  if (isFetchingDashboard || isFetchingCashflow) {
+  if (
+    isFetchingDashboard ||
+    isFetchingCashflow ||
+    isEmpty(currentDashboard.assumptions)
+  ) {
     return <Loader />;
   } else {
-    if (isEmpty(currentDashboard.assumptions)) {
-      history.push("/owner-occupier/edit");
-    }
+    // if (isEmpty(currentDashboard.assumptions)) {
+    //   history.push("/owner-occupier/edit");
+    // }
     return (
       <div className="fade-in">
         <div className="dash-row relative">
@@ -101,14 +106,15 @@ const OccupierDashboard = ({
 const mapStateToProps = (state) => {
   return {
     currentDashboard: state.dashboards.currentDashboard,
+    isEditing: state.dashboards.isEditing,
     isFetchingDashboard: state.dashboards.isFetching,
-    isFetchingCashflow: state.dashboards.isFetching,
+    isFetchingCashflow: state.cashflow.isFetching,
   };
 };
 
 const mapDispatchToProps = {
   setModal,
-  getDashboardCashflow,
+  getDashboardAndCashflow,
   getCashflow,
   editDashboard,
   setNotification,

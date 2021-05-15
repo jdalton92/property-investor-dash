@@ -12,7 +12,7 @@ const DeleteAccount = ({ user, deleteUser }) => {
   const handleSubmit = async ({ password }) => {
     const confirm = window.confirm(`Delete ${user.data.email}?`);
     if (confirm) {
-      deleteUser(user.id, password);
+      deleteUser(user.data.id, password);
     }
   };
 
@@ -38,6 +38,7 @@ const DeleteAccount = ({ user, deleteUser }) => {
                     className="form-input bs-1 w100"
                     placeholder="Password"
                     type="password"
+                    autoComplete="off"
                     {...input}
                   />
                   {meta.error && meta.touched && (

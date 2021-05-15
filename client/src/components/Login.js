@@ -151,6 +151,7 @@ const Login = ({
                           className="form-input bs-1 w100"
                           placeholder="Password"
                           type="password"
+                          autoComplete="off"
                           {...input}
                         />
                         {meta.error && meta.touched && (
@@ -222,6 +223,7 @@ const Login = ({
                           className="form-input bs-1 w100"
                           placeholder="Password"
                           type="password"
+                          autoComplete="off"
                           {...input}
                         />
                         {meta.error && meta.touched && (
@@ -242,6 +244,7 @@ const Login = ({
                           className="form-input bs-1 w100"
                           placeholder="Confirm Password"
                           type="password"
+                          autoComplete="off"
                           {...input}
                         />
                         {meta.error && meta.touched && (

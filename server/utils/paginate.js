@@ -18,6 +18,7 @@ function paginate(query, options, callback) {
   const limit = parseInt(options?.limit) || 10;
   const page = parseInt(options?.page) || 1;
   const sort = options?.sort || "";
+  const exclude = options?.exclude || "";
 
   const skip = (page - 1) * (limit - 1);
   let resultsCount;
@@ -43,6 +44,7 @@ function paginate(query, options, callback) {
     }
 
     this.find(query)
+      .select(exclude)
       .sort(sort)
       .skip(skip)
       .limit(limit)

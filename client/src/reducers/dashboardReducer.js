@@ -1,6 +1,8 @@
 import dashboardService from "../services/dashboard";
 import { successNotification, errorNotification } from "./notificationReducer";
+import { paginatedResults } from "../utils/dashboardHelper";
 
+// eslint-disable-next-line
 const occupierAsssumptions = {
   capitalGrowth: 3.5,
   opexGrowth: 3,
@@ -15,58 +17,60 @@ const occupierAsssumptions = {
   interestRate: 3.5,
   overPayment: 200,
 };
-
+// eslint-disable-next-line
 const investorAsssumptions = {
   ...occupierAsssumptions,
   rentalYield: 3,
 };
+// eslint-disable-next-line
+const developerAsssumptions = {
+  acquisitionPrice: 100000,
+  acquisitionCosts: 5,
+  dwellings: 4,
+  constructionCostPerDwelling: 400000,
+  designFees: 10,
+  constructionContingency: 10,
+  statutoryFees: 3,
+  constructionDuration: 24,
+  planningAndDesign: 6,
 
-// const developerAsssumptions = {
-//   acquisitionPrice: 100000,
-//   acquisitionCosts: 5,
-//   dwellings: 4,
-//   constructionCostPerDwelling: 400000,
-//   designFees: 10,
-//   constructionContingency: 10,
-//   statutoryFees: 3,
-//   constructionDuration: 24,
-//   planningAndDesign: 6,
+  revenuePerDwelling: 750000,
+  sellingCosts: 5,
+  investmentPeriod: 5,
+  recurringCosts: 30,
+  rentalYield: 4,
 
-//   revenuePerDwelling: 750000,
-//   sellingCosts: 5,
-//   investmentPeriod: 5,
-//   recurringCosts: 30,
-//   rentalYield: 4,
+  initialEquity: 400000,
+  repaymentType: "interestOnly",
+  interestRate: 3.5,
+  loanTerm: 30,
+  overPayment: 200,
 
-//   initialEquity: 400000,
-//   repaymentType: "interestOnly",
-//   interestRate: 3.5,
-//   loanTerm: 30,
-//   overPayment: 200,
-
-//   capitalGrowth: 3.5,
-//   constructionCostGrowth: 2.5,
-// };
+  capitalGrowth: 3.5,
+  constructionCostGrowth: 2.5,
+};
 
 let initialState = {
   isFetching: false,
-  // isEditing: false,
-  savedDashboards: [],
-  // currentDashboard: {
-  //   name: "",
-  //   description: "",
-  //   date: "",
-  //   type: "",
-  //   assumptions: {},
-  // },
-  isEditing: true,
+  isEditing: false,
+  savedDashboards: paginatedResults,
   currentDashboard: {
     name: "",
     description: "",
     date: "",
-    type: "occupier",
-    assumptions: occupierAsssumptions,
+    type: "",
+    assumptions: {},
   },
+  // isFetching: false,
+  // isEditing: true,
+  // savedDashboards: paginatedResults,
+  // currentDashboard: {
+  //   name: "",
+  //   description: "",
+  //   date: "",
+  //   type: "investor",
+  //   assumptions: investorAsssumptions,
+  // },
 };
 
 const dashboardReducer = (state = initialState, action) => {
@@ -95,9 +99,9 @@ const dashboardReducer = (state = initialState, action) => {
       newState.isEditing = true;
       return newState;
     case "INIT_DASHBOARDS":
-      newState = { ...initialState };
+      newState = { ...state };
       newState.isFetching = false;
-      newState.savedDashboards = action.payLoad.dashboards;
+      newState.savedDashboards = action.payLoad.response;
       return newState;
     case "GET_DASHBOARD":
       newState = { ...state };
@@ -109,22 +113,27 @@ const dashboardReducer = (state = initialState, action) => {
       newState = { ...state };
       newState.isFetching = false;
       newState.isEditing = false;
-      newState.savedDashboards = [
-        ...state.savedDashboards,
+      // TODO: update pagination count etc.
+      newState.savedDashboards.results = [
+        ...state.savedDashboards.results,
         action.payLoad.dashboard,
       ];
       return newState;
     case "UPDATE_DASHBOARDS":
-      newState = { ...initialState };
-      const dashboards = state.savedDashboards
-        .filter((d) => d._id !== action.payLoad.dashboard._id)
+      newState = { ...state };
+      const dashboards = state.savedDashboards.results
+        .filter((d) => d._id !== action.payLoad.id)
         .concat(action.payLoad.dashboard);
       newState.savedDashboards = dashboards;
+      newState.isFetching = false;
       return newState;
     case "DELETE_DASHBOARD":
       newState = { ...state };
-      newState.savedDashboards = [
-        ...state.savedDashboards.filter((d) => d._id !== action.payLoad.id),
+      // TODO: update pagination count etc.
+      newState.savedDashboards.results = [
+        ...state.savedDashboards.results.filter(
+          (d) => d._id !== action.payLoad.id
+        ),
       ];
       return newState;
     default:
@@ -138,11 +147,10 @@ export const getDashboards = (params) => {
       type: "DASHBOARD_REQUEST",
     });
     try {
-      const { results } = await dashboardService.getAllDashboards(params);
-
+      const response = await dashboardService.getAllDashboards(params);
       dispatch({
         type: "INIT_DASHBOARDS",
-        payLoad: { dashboards: results },
+        payLoad: { response },
       });
     } catch (e) {
       dispatch({
@@ -191,22 +199,23 @@ export const editDashboard = () => {
   };
 };
 
-export const saveDashboard = (dashboardObject) => {
+export const saveDashboard = (dashboard) => {
   return async (dispatch) => {
     dispatch({
       type: "DASHBOARD_REQUEST",
     });
     try {
-      const newDash = await dashboardService.saveDashboard(dashboardObject);
+      const newDashboard = await dashboardService.saveDashboard(dashboard);
 
       dispatch({
         type: "SAVE_DASHBOARD",
         payLoad: {
-          dashboard: newDash,
+          dashboard: newDashboard,
         },
       });
-      dispatch(successNotification(`${newDash.description} saved`));
+      dispatch(successNotification(`${newDashboard.description} saved`));
     } catch (e) {
+      console.log(e);
       dispatch({
         type: "DASHBOARD_REQUEST_FAIL",
       });
@@ -215,20 +224,24 @@ export const saveDashboard = (dashboardObject) => {
   };
 };
 
-export const updateDashboard = (dashboardObject) => {
+export const updateDashboard = (id, dashboardData) => {
   return async (dispatch) => {
     dispatch({
       type: "DASHBOARD_REQUEST",
     });
     try {
-      const dashboard = await dashboardService.updateDashboard(dashboardObject);
+      const updatedDashboard = await dashboardService.updateDashboard(
+        id,
+        dashboardData
+      );
 
       dispatch({
         type: "UPDATE_DASHBOARDS",
-        payLoad: { dashboard },
+        payLoad: { id, updatedDashboard },
       });
-      dispatch(successNotification(`${dashboard.description} saved`));
+      dispatch(successNotification(`${updatedDashboard.description} saved`));
     } catch (e) {
+      console.log(e);
       dispatch({
         type: "DASHBOARD_REQUEST_FAIL",
       });

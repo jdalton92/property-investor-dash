@@ -181,7 +181,7 @@ const developerSchema = {
     required: true,
     min: 0,
   },
-  loanType: {
+  repaymentType: {
     type: String,
     required: true,
     enum: ["interestOnly", "principalAndInterest"],
@@ -198,7 +198,7 @@ const developerSchema = {
     min: 0,
     max: [30, "Maximum 30 year term"],
   },
-  overPayments: {
+  overPayment: {
     type: Number,
     default: 0,
     min: 0,

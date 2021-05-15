@@ -53,9 +53,7 @@ usersRouter.put(
         return next(new ValidationError(400, "Invalid user id"));
       }
       if (user.roles.includes("demo")) {
-        return next(
-          new ValidationError(403, "Unauthorised to update demo user")
-        );
+        return next(new ValidationError(403, "Demo user can not be updated"));
       }
 
       // Update Email
@@ -143,6 +141,9 @@ usersRouter.delete(
       const { password } = request.body;
 
       const user = await User.findById(request.params.id);
+      if (user.roles.includes("demo")) {
+        return next(new ValidationError(403, "Demo user can not be deleted"));
+      }
       const passwordCorrect =
         user === null
           ? false

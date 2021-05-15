@@ -49,7 +49,7 @@ const constants = {
     loanType: "interestOnly",
     interestRate: 3.5,
     loanTerm: 30,
-    overPayments: [{}],
+    overPayment: 0,
 
     capitalGrowth: 3.5,
     constructionCostGrowth: 2.5,

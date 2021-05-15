@@ -73,7 +73,27 @@ const assumptionsValidate = (request, response, next) => {
   ];
   const investorFields = occupierFields.concat("rentalYield");
   const developerFields = [
-    // TODO
+    "acquisitionPrice",
+    "acquisitionCosts",
+    "dwellings",
+    "constructionCostPerDwelling",
+    "designFees",
+    "constructionContingency",
+    "statutoryFees",
+    "constructionDuration",
+    "planningAndDesign",
+    "revenuePerDwelling",
+    "sellingCosts",
+    "investmentPeriod",
+    "recurringCosts",
+    "rentalYield",
+    "initialEquity",
+    "repaymentType",
+    "interestRate",
+    "loanTerm",
+    "overPayment",
+    "capitalGrowth",
+    "constructionCostGrowth",
   ];
 
   let templateFields;

@@ -153,71 +153,36 @@ const developerCashflow = ({
   loanType,
   interestRate,
   loanTerm,
-  overPayments,
+  overPayment,
 
   capitalGrowth,
   constructionCostGrowth,
 }) => {
-  // If value undefined then default to zero
-  // All other inputs are required
-  if (!designFees) {
-    designFees = 0;
-  }
-  if (!investmentPeriod) {
-    investmentPeriod = 0;
-  }
-  if (!statutoryFees) {
-    statutoryFees = 0;
-  }
-  if (!sellingCosts) {
-    sellingCosts = 0;
-  }
-  if (!recurringCosts) {
-    recurringCosts = 0;
-  }
-  if (!capitalGrowth) {
-    capitalGrowth = 0;
-  }
-  if (!constructionCostGrowth) {
-    constructionCostGrowth = 0;
-  }
-  if (!overPayments) {
-    overPayments = [{}];
-  }
-  if (!acquisitionCosts) {
-    acquisitionCosts = 0;
-  }
-  // Initialise constant variables
+  constructionCostGrowth = constructionCostGrowth / 100;
+  capitalGrowth = capitalGrowth / 100;
   const deliveryPhase = planningAndDesign + constructionDuration;
   const investmentEnd =
     planningAndDesign + constructionDuration + investmentPeriod * 12;
   const loanEnd = planningAndDesign + constructionDuration + loanTerm * 12;
-  const sCurveRef = constructionDuration - 1;
   const totalConstructionCost =
     dwellings *
     constructionCostPerDwelling *
+    // Escalate construction costs to middle of construction period
     Math.pow(
-      1 + constructionCostGrowth / 100 / 12,
-      planningAndDesign + Math.ceil(constructionDuration / 2) - 1 //escalate construction costs to middle of construction period
+      1 + constructionCostGrowth / 12,
+      planningAndDesign + Math.ceil(constructionDuration / 2) - 1
     );
   const grossSale =
     dwellings *
     revenuePerDwelling *
-    Math.pow(
-      1 + capitalGrowth / 100 / 12,
-      deliveryPhase + investmentPeriod * 12 - 1
-    );
-
-  //Initalise finance variables
+    Math.pow(1 + capitalGrowth / 12, deliveryPhase + investmentPeriod * 12 - 1);
   let cumulativeFundableCosts = 0;
   const t = investmentEnd;
   const r = interestRate / 100;
   let closingBalance = 0;
 
-  // Initialise summary output
-  let monthSummary = [];
-
   // Master Loop over investment period
+  let monthSummary = [];
   for (let i = 0; i < t; i++) {
     // Initialise Flags
     const constFlag = i > planningAndDesign - 1 && i < deliveryPhase;
@@ -227,21 +192,17 @@ const developerCashflow = ({
     // Acquisition Costs
     const acquisition =
       i === planningAndDesign
-        ? acquisitionPrice *
-          Math.pow(1 + capitalGrowth / 100 / 12, planningAndDesign)
+        ? acquisitionPrice * Math.pow(1 + capitalGrowth / 12, planningAndDesign)
         : null;
 
     const initialCosts =
       i === planningAndDesign ? (acquisitionCosts / 100) * acquisition : null;
 
     // Delivery Period Costs
-    const sCurve = !constFlag
-      ? null
-      : constructionDuration > 50
-      ? 1 / constructionDuration
-      : sCurveData.default[sCurveRef][constructionDuration.toString()][
-          i - planningAndDesign
-        ];
+    const sCurve =
+      constructionDuration > 50
+        ? 1 / constructionDuration // Amortised if duration if greater than 50
+        : sCurveData[constructionDuration][i - planningAndDesign];
 
     const constructionCost = constFlag
       ? totalConstructionCost * parseFloat(sCurve)
@@ -268,7 +229,7 @@ const developerCashflow = ({
     const rentalIncome = investFlag
       ? (dwellings *
           revenuePerDwelling *
-          Math.pow(1 + capitalGrowth / 100 / 12, i) *
+          Math.pow(1 + capitalGrowth / 12, i) *
           rentalYield) /
         100 /
         12
@@ -320,11 +281,7 @@ const developerCashflow = ({
             );
     }
 
-    const annualOverPayment = overPayments
-      .filter((p) => parseInt(p?.year) * 12 === i + 1)
-      .reduce((a, b) => a + b?.payment, 0);
-
-    const loanInstallment = loanPayment + annualOverPayment;
+    const loanInstallment = loanPayment + overPayment;
 
     const principalRepayment =
       i === loanEnd - 1 || i === investmentEnd - 1
@@ -337,7 +294,6 @@ const developerCashflow = ({
       loanInstallment -
       principalRepayment;
 
-    //Summary cashflow items
     const preFinanceCashflow =
       -acquisition -
       initialCosts -
@@ -353,7 +309,6 @@ const developerCashflow = ({
     const postFinanceCashflow =
       preFinanceCashflow + debtSource - loanInstallment - principalRepayment;
 
-    //Add month summary object to summary array
     monthSummary.push({
       month: i + 1,
       year: Math.ceil((i + 1) / 12),

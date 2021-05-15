@@ -14,15 +14,15 @@ const getDashboard = async (id) => {
   return response.data;
 };
 
-const saveDashboard = async (newObject) => {
-  const response = await axios.post(baseUrl, newObject, getAuthHeader());
+const saveDashboard = async (dashboardData) => {
+  const response = await axios.post(baseUrl, dashboardData, getAuthHeader());
   return response.data;
 };
 
-const updateDashboard = async (newObject) => {
+const updateDashboard = async (id, dashboardData) => {
   const response = await axios.put(
-    `${baseUrl}/${newObject._id}`,
-    newObject,
+    `${baseUrl}/${id}`,
+    dashboardData,
     getAuthHeader()
   );
   return response.data;

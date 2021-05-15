@@ -6,7 +6,7 @@ import { Icon } from "../Shared/Icon";
 import { getDashboard, editDashboard } from "../../reducers/dashboardReducer";
 import {
   getCashflow,
-  getDashboardCashflow,
+  getDashboardAndCashflow,
 } from "../../reducers/cashflowReducer";
 import { setModal } from "../../reducers/navigationReducer";
 import SaveIcon from "../../styles/svg/save.svg";
@@ -16,11 +16,12 @@ import { CONSTANTS } from "../../static/constants";
 import { isEmpty } from "../../utils/dashboardHelper";
 
 const InvestorDashboard = ({
-  isFetching,
+  isFetchingDashboard,
+  isFetchingCashflow,
   isEditing,
   currentDashboard,
   getCashflow,
-  getDashboardCashflow,
+  getDashboardAndCashflow,
   editDashboard,
   setModal,
 }) => {
@@ -29,7 +30,7 @@ const InvestorDashboard = ({
 
   useEffect(() => {
     if (id && !isEditing) {
-      getDashboardCashflow(id);
+      getDashboardAndCashflow(id);
     } else if (currentDashboard.type && currentDashboard.assumptions) {
       getCashflow(currentDashboard.type, currentDashboard.assumptions);
     }
@@ -44,15 +45,19 @@ const InvestorDashboard = ({
   const handleEdit = (e) => {
     e.preventDefault();
     editDashboard();
-    history.replace("/investor/edit");
+    history.push("/investor/edit");
   };
 
-  if (isFetching) {
+  if (
+    isFetchingDashboard ||
+    isFetchingCashflow ||
+    isEmpty(currentDashboard.assumptions)
+  ) {
     return <Loader />;
   } else {
-    if (isEmpty(currentDashboard.assumptions)) {
-      history.push("/investor/edit");
-    }
+    // if (isEmpty(currentDashboard.assumptions)) {
+    //   history.push("/investor/edit");
+    // }
     return (
       <div className="fade-in">
         <div className="dash-row relative">
@@ -98,7 +103,8 @@ const mapStateToProps = (state) => {
   return {
     currentDashboard: state.dashboards.currentDashboard,
     isEditing: state.dashboards.isEditing,
-    isFetching: state.dashboards.isFetching,
+    isFetchingDashboard: state.dashboards.isFetching,
+    isFetchingCashflow: state.cashflow.isFetching,
   };
 };
 
@@ -107,7 +113,7 @@ const mapDispatchToProps = {
   getDashboard,
   editDashboard,
   getCashflow,
-  getDashboardCashflow,
+  getDashboardAndCashflow,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(InvestorDashboard);

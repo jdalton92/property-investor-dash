@@ -18,6 +18,7 @@ const Button = ({
 }) => {
   return (
     <button
+      type="button"
       aria-label={ariaLabel}
       data-balloon-pos={dataBalloonPos}
       className={`${extraClass} r pt12 pb12 pl4 pr4 flex-row`}

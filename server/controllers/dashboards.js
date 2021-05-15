@@ -27,6 +27,7 @@ dashboardRouter.get(
         query.type = type;
       }
       const options = {
+        exclude: "-assumptions",
         page: request.query.page,
         limit: request.query.limit,
         sort: "-created",
@@ -103,7 +104,11 @@ dashboardRouter.put(
     try {
       const { type, address, description, assumptions } = request.body;
 
+      const dashboard = await Dashboard.findById(request.params.id);
       const updatedDashboard = {
+        __v: dashboard.__v,
+        user: dashboard.user,
+        created: dashboard.created,
         updated: Date.now(),
         address,
         description,
@@ -111,10 +116,13 @@ dashboardRouter.put(
         assumptions,
       };
 
+      // TODO: Update without fetching dashboard first, as updating nested
+      // object `assumptions` merges new/old assumptions if not including
+      // `overwrite: true`
       const result = await Dashboard.findByIdAndUpdate(
         request.params.id,
         updatedDashboard,
-        { new: true }
+        { new: true, overwrite: true }
       );
 
       response.status(200).json(result);

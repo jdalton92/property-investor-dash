@@ -1,5 +1,13 @@
 import { CONSTANTS } from "../static/constants";
 
+export const paginatedResults = {
+  nextPage: null,
+  pagesCount: null,
+  previousPage: null,
+  resultsCount: 0,
+  results: [],
+};
+
 export const isEmpty = (obj) =>
   Object.keys(obj).length === 0 && obj.constructor === Object;
 

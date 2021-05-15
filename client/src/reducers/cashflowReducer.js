@@ -52,20 +52,23 @@ export const getCashflow = (type, assumptions) => {
   };
 };
 
-export const getDashboardCashflow = (dashboardId) => {
+export const getDashboardAndCashflow = (dashboardId) => {
   return async (dispatch) => {
     dispatch({
       type: "CASHFLOW_REQUEST",
     });
     try {
-      const monthlyCashflow = await cashflowService.getDashboardCashflow(
-        dashboardId
-      );
+      const { dashboard, cashflow } =
+        await cashflowService.getDashboardAndCashflow(dashboardId);
       dispatch({
         type: "GET_CASHFLOW",
         payLoad: {
-          monthlyCashflow,
+          monthlyCashflow: cashflow,
         },
+      });
+      dispatch({
+        type: "GET_DASHBOARD",
+        payLoad: { dashboard },
       });
     } catch (e) {
       dispatch({
