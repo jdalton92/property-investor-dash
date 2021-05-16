@@ -35,8 +35,8 @@ const Login = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleLogin = async ({ email, password }) => {
-    await loginUser(email, password);
+  const handleLogin = ({ email, password }) => {
+    loginUser(email, password);
   };
 
   const handleForgotPassword = () => {
@@ -47,8 +47,13 @@ const Login = ({
     );
   };
 
-  const handleCreateUser = async ({ email, password, checkPassword }) => {
-    await createUser(email, password, checkPassword);
+  const handleCreateUser = ({
+    email,
+    password,
+    checkPassword,
+    hasAcceptedTCs,
+  }) => {
+    createUser(email, password, checkPassword, hasAcceptedTCs);
   };
 
   const handleDemo = () => {
@@ -137,7 +142,7 @@ const Login = ({
                     )}
                   </Field>
                   <label htmlFor="login-password" className="f16 mb8">
-                    Email
+                    Password
                     <span className="font-red f12 bold ml4">*</span>
                   </label>
                   <Field
@@ -253,6 +258,43 @@ const Login = ({
                       </div>
                     )}
                   </Field>
+                  <div className="flex-row align-c mb12">
+                    <Field
+                      name="hasAcceptedTCs"
+                      validate={required}
+                      type="checkbox"
+                    >
+                      {({ input, meta }) => (
+                        <div className="flex-row align-c relative">
+                          <input
+                            id="terms-and-conditions"
+                            type="checkbox"
+                            {...input}
+                          />
+                          {meta.error && meta.touched && (
+                            <span className="form-error f10">{meta.error}</span>
+                          )}
+                        </div>
+                      )}
+                    </Field>
+                    <label htmlFor="terms-and-conditions" className="ml8 f12">
+                      Accept{" "}
+                      <span
+                        onClick={() => history.push("/terms-and-conditions")}
+                        className="link-underline"
+                      >
+                        Terms and Conditions
+                      </span>{" "}
+                      and{" "}
+                      <span
+                        onClick={() => history.push("/privacy-policy")}
+                        className="link-underline"
+                      >
+                        Privacy Policy
+                      </span>
+                      <span className="font-red f12 bold ml4">*</span>
+                    </label>
+                  </div>
                   <button
                     className="form-button-p font-white bs-2 w100 mt12 pt8 pb8 r"
                     type="submit"

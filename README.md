@@ -48,6 +48,8 @@ EMAIL=<your_email>
 API_KEY=<your_mailgun_api_key>
 DOMAIN=<your_mailgun_domain>
 DEMO_USER_EMAIL=demo@email.com
+TEST_USER_EMAIL=test@email.com
+TEST_USER_PASSWORD=test
 ```
 
 Then navidate to the server directory and install dependencies, and run the backend with `nodemon`
@@ -60,11 +62,13 @@ $ npm run watch
 
 ## Testing
 
+Testing occurs locally using an in-memory mongo database. By default jest runs with `--silent` supressing the console when testing. This is configurable via `package.json`
+
 ```sh
 npm test
 ```
 
-**Optionally:** specify a specific file to test with `-t` eg. to test `server/controllers/__tests__/dashboards.test.js` use the following command
+**Optionally:** specify a specific file to test with `-t` eg. to test `server/__tests__/controllers/dashboards.test.js` use the following command
 
 ```sh
 npm test -t dashboards

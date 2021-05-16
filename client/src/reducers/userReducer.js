@@ -84,21 +84,17 @@ export const demoUser = () => {
   };
 };
 
-export const createUser = (email, password, checkPassword) => {
+export const createUser = (email, password, checkPassword, hasAcceptedTCs) => {
   return async (dispatch) => {
     dispatch({
       type: "USER_REQUEST",
     });
     try {
-      await userService.create({
+      const user = await userService.create({
         email,
         password,
         checkPassword,
-      });
-
-      const user = await loginService.login({
-        email,
-        password,
+        hasAcceptedTCs,
       });
 
       window.localStorage.setItem("loggedUser", JSON.stringify(user));

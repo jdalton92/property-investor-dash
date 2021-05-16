@@ -8,10 +8,14 @@ const parsers = require("../utils/parsers");
 
 usersRouter.post("/", async (request, response, next) => {
   try {
-    const { password, email, checkPassword } = request.body;
+    const { password, email, checkPassword, hasAcceptedTCs } = request.body;
 
     if (!email) {
       return next(new ValidationError(400, "Email required"));
+    }
+
+    if (!hasAcceptedTCs) {
+      return next(new ValidationError(400, "Must accept terms and conditions"));
     }
 
     const existingUser = await User.find({ email: email });
@@ -30,7 +34,7 @@ usersRouter.post("/", async (request, response, next) => {
 
     const saltRounds = 10;
     const passwordHash = await bcrypt.hash(password, saltRounds);
-    const user = new User({ email, passwordHash });
+    const user = new User({ email, passwordHash, hasAcceptedTCs });
     const savedUser = await user.save();
     const userInfo = parsers.userTokenParser(savedUser);
 

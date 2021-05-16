@@ -13,20 +13,22 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  hasAcceptedTCs: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
   messagesRead: [
     {
       type: String,
       sparse: true,
     },
   ],
-  roles: [
-    {
-      type: String,
-      required: true,
-      enum: ["demo", "user", "admin"],
-      default: "user",
-    },
-  ],
+  roles: {
+    type: [{ type: String, enum: ["demo", "user", "admin"] }],
+    required: true,
+    default: ["user"],
+  },
   dashboards: [
     {
       type: mongoose.Schema.Types.ObjectId,

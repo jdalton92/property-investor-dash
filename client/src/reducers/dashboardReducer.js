@@ -68,8 +68,8 @@ let initialState = {
   //   name: "",
   //   description: "",
   //   date: "",
-  //   type: "investor",
-  //   assumptions: investorAsssumptions,
+  //   type: "developer",
+  //   assumptions: developerAsssumptions,
   // },
 };
 

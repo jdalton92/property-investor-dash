@@ -32,7 +32,9 @@ const databaseConnection = async () => {
     logger.error("error connection to MongoDB:", e.message);
   }
 };
-databaseConnection();
+if (process.env.NODE_ENV !== "test") {
+  databaseConnection();
+}
 
 if (process.env.NODE_ENV !== "production") {
   app.use(middleware.requestLogger);

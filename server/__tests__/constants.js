@@ -46,7 +46,7 @@ const constants = {
     rentalYield: 4,
 
     initialEquity: 400000,
-    loanType: "interestOnly",
+    repaymentType: "interestOnly",
     interestRate: 3.5,
     loanTerm: 30,
     overPayment: 0,

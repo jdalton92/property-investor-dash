@@ -2,8 +2,8 @@ import axios from "axios";
 import { getAuthHeader } from "../utils/tokenHelper";
 const baseUrl = "/api/users";
 
-const create = async (userDetails) => {
-  const response = await axios.post(baseUrl, userDetails);
+const create = async (userData) => {
+  const response = await axios.post(baseUrl, userData);
   return response.data;
 };
 
