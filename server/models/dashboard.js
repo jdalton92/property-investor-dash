@@ -227,13 +227,15 @@ const dashboardSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      minlength: 3,
+      minLength: 3,
+      maxLength: 200,
       required: true,
     },
     address: {
       type: String,
       required: true,
-      minlength: 3,
+      minLength: 3,
+      maxLength: 200,
     },
     created: {
       type: Date,

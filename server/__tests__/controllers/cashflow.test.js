@@ -1,43 +1,62 @@
 const request = require("supertest");
-const mongoose = require("mongoose");
 const app = require("../../app");
-const constants = require("./constants");
+const Dashboard = require("../../models/dashboard");
+const constants = require("../constants");
+const dbHandler = require("../dbHandler");
+
+const agent = request.agent(app);
+let token;
+beforeAll(async () => {
+  token = await dbHandler.connectAndCreateUser();
+});
+afterEach(async () => await dbHandler.clearDatabase());
+afterAll(async () => await dbHandler.closeDatabase());
 
 describe("/api/dashboards", () => {
-  let token;
+  let res;
 
-  beforeAll(async (done) => {
-    try {
-      const res = await request(app).post("/api/login").send({
-        email: process.env.TEST_USER_EMAIL,
-        password: process.env.TEST_USER_PASSWORD,
-      });
-      token = res.body.token;
-      done();
-    } catch (e) {
-      done(e);
-    }
+  it("Anonymous POST / is allowed", async () => {
+    res = await agent.post("/api/cashflow").send({
+      type: "occupier",
+      assumptions: constants.occupierAssumptions,
+    });
+
+    expect(res.statusCode).toEqual(200);
   });
 
-  afterAll(async (done) => {
-    try {
-      await mongoose.connection.close();
-      await app.close();
-      done();
-    } catch (e) {
-      done(e);
-    }
-  });
+  it("Unauthenticated GET /:id", async () => {
+    let dashboard = new Dashboard({
+      description: "Test Description",
+      address: "Test Address",
+      type: "occupier",
+      assumptions: constants.occupierAssumptions,
+    });
+    dashboard = await dashboard.save();
 
-  it("Unauthorized GET / ", async () => {
-    const res = await request(app).get("/api/cashflow");
+    res = await agent.get(`/api/cashflow/${dashboard._id}`);
 
     expect(res.statusCode).toEqual(401);
     expect(res.body.message).toEqual("Login required");
   });
 
-  it("Invalid GET / ", async () => {
-    const res = await request(app)
+  it("Authenticated GET /:id", async () => {
+    let dashboard = new Dashboard({
+      description: "Test Description",
+      address: "Test Address",
+      type: "occupier",
+      assumptions: constants.occupierAssumptions,
+    });
+    dashboard = await dashboard.save();
+
+    res = await agent
+      .get(`/api/cashflow/${dashboard._id}`)
+      .set("authorization", `bearer ${token}`);
+
+    expect(res.statusCode).toEqual(200);
+  });
+
+  it("Invalid POST / ", async () => {
+    res = await agent
       .post("/api/cashflow")
       .set("authorization", `bearer ${token}`)
       .send({
@@ -47,13 +66,11 @@ describe("/api/dashboards", () => {
         },
       });
 
-    console.log(res);
-
     expect(res.statusCode).toEqual(400);
   });
 
-  it("Invalid occupier GET / ", async () => {
-    const res = await request(app)
+  it("Invalid occupier POST / ", async () => {
+    res = await agent
       .post("/api/cashflow")
       .set("authorization", `bearer ${token}`)
       .send({
@@ -63,26 +80,26 @@ describe("/api/dashboards", () => {
         },
       });
 
-    console.log(res);
-
     expect(res.statusCode).toEqual(400);
   });
 
-  it("Invalid investor GET / ", async () => {
-    const res = await request(app)
+  it("Invalid investor POST / ", async () => {
+    res = await agent
       .post("/api/cashflow")
       .set("authorization", `bearer ${token}`)
       .send({
         type: "investor",
-        assumptions: constants.investorAssumptions,
+        assumptions: {
+          test: "test",
+        },
       });
 
-    expect(res.statusCode).toEqual(200);
+    expect(res.statusCode).toEqual(400);
     // TODO: expect(res.body.length).toEqual(1);
   });
 
-  it("Invalid developer GET / ", async () => {
-    const res = await request(app)
+  it("Invalid developer POST / ", async () => {
+    res = await agent
       .post("/api/cashflow")
       .set("authorization", `bearer ${token}`)
       .send({
@@ -92,27 +109,25 @@ describe("/api/dashboards", () => {
         },
       });
 
-    expect(res.statusCode).toEqual(200);
+    expect(res.statusCode).toEqual(400);
     // TODO: expect(res.body.length).toEqual(1);
   });
 
-  it("Valid occupier GET / ", async () => {
-    const res = await request(app)
+  it("Valid occupier POST / ", async () => {
+    res = await agent
       .post("/api/cashflow")
       .set("authorization", `bearer ${token}`)
       .send({
         type: "occupier",
-        assumptions: {
-          test: "test",
-        },
+        assumptions: constants.occupierAssumptions,
       });
 
     expect(res.statusCode).toEqual(200);
     // TODO: expect(res.body.length).toEqual(1);
   });
 
-  it("Valid investor GET / ", async () => {
-    const res = await request(app)
+  it("Valid investor POST / ", async () => {
+    res = await agent
       .post("/api/cashflow")
       .set("authorization", `bearer ${token}`)
       .send({
@@ -124,8 +139,8 @@ describe("/api/dashboards", () => {
     // TODO: expect(res.body.length).toEqual(1);
   });
 
-  it("Valid developer GET / ", async () => {
-    const res = await request(app)
+  it("Valid developer POST / ", async () => {
+    res = await agent
       .post("/api/cashflow")
       .set("authorization", `bearer ${token}`)
       .send({

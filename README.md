@@ -62,16 +62,16 @@ $ npm run watch
 
 ## Testing
 
-Testing occurs locally using an in-memory mongo database. By default jest runs with `--silent` supressing the console when testing. This is configurable via `package.json`
+Testing occurs locally using an in-memory mongo database. Optionally, include `--silent` to supress the console when testing. This is configurable via `package.json`
 
 ```sh
-npm test
+npm test --silent
 ```
 
-**Optionally:** specify a specific file to test with `-t` eg. to test `server/__tests__/controllers/dashboards.test.js` use the following command
+**Optionally:** specify tests with `-t` eg. to test `server/__tests__/controllers/dashboards.test.js` use the following command
 
 ```sh
-npm test -t dashboards
+npm test --silent -t dashboards
 ```
 
 ## Built with
