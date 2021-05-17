@@ -62,16 +62,16 @@ $ npm run watch
 
 ## Testing
 
-Testing occurs locally using an in-memory mongo database. Optionally, include `--silent` to supress the console when testing. This is configurable via `package.json`
+Testing occurs locally using an in-memory mongo database. Optionally, include `--silent` to supress the console when testing.
 
 ```sh
-npm test --silent
+npm test
 ```
 
-**Optionally:** specify tests with `-t` eg. to test `server/__tests__/controllers/dashboards.test.js` use the following command
+**Optionally:** specify a file with `-f` and a test with `-t` eg. to test `server/__tests__/controllers/dashboards.test.js` file and the `Unauthorized GET /` test, use the following command
 
 ```sh
-npm test --silent -t dashboards
+npm test -f "__tests__/controllers/dashboards.test.js" -t "Unauthorized GET /"
 ```
 
 ## Built with

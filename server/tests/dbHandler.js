@@ -2,13 +2,9 @@ const mongoose = require("mongoose");
 // const bcrypt = require("bcryptjs");
 const { MongoMemoryServer } = require("mongodb-memory-server");
 
-const parsers = require("../utils/parsers");
-const User = require("../models/user");
-
 const mongod = new MongoMemoryServer();
 
-module.exports.connectAndCreateUser = async () => {
-  // Before establishing a new connection close previous
+module.exports.connect = async () => {
   await mongoose.disconnect();
 
   const uri = await mongod.getUri();
@@ -24,17 +20,6 @@ module.exports.connectAndCreateUser = async () => {
       console.error(err);
     }
   });
-
-  const testUser = new User({
-    email: process.env.TEST_USER_EMAIL,
-    passwordHash: process.env.TEST_USER_PASSWORD, // Plain text just for testing
-    hasAcceptedTCs: true,
-  });
-  await testUser.save();
-
-  const userInfo = parsers.userTokenParser(testUser);
-
-  return userInfo.token;
 };
 
 module.exports.closeDatabase = async () => {

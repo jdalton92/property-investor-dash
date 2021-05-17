@@ -3,9 +3,16 @@ const jwt = require("jsonwebtoken");
 const ValidationError = require("../utils/error");
 
 const requestLogger = (request, response, next) => {
-  logger.info("Method:", request.method);
-  logger.info("Path:  ", request.path);
-  logger.info("Body:  ", request.body);
+  logger.info(
+    "IP:          ",
+    request.headers["x-forwarded-for"] ||
+      request.connection.remoteAddress ||
+      request.ip
+  );
+  logger.info("Method:      ", request.method);
+  logger.info("Path:        ", request.path);
+  logger.info("Body:        ", request.body);
+  logger.info("Res status:  ", response.statusCode);
   logger.info("---");
   next();
 };
@@ -118,7 +125,7 @@ const assumptionsValidate = (request, response, next) => {
 
   fields.forEach((f) => {
     if (!templateFields.includes(f)) {
-      return next(new ValidationError(400, `invalid field: ${f}`));
+      return next(new ValidationError(400, `Invalid field: ${f}`));
     }
   });
 

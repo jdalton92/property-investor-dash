@@ -36,9 +36,7 @@ if (process.env.NODE_ENV !== "test") {
   databaseConnection();
 }
 
-if (process.env.NODE_ENV !== "production") {
-  app.use(middleware.requestLogger);
-}
+app.use(middleware.requestLogger);
 app.use(middleware.tokenExtractor);
 
 app.use("/api/login", loginRouter);

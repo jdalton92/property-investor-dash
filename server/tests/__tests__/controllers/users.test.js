@@ -1,12 +1,14 @@
 const request = require("supertest");
-const app = require("../../app");
-const dbHandler = require("../dbHandler");
-const User = require("../../models/user");
+const app = require("../../../app");
+const dbHandler = require("../../dbHandler");
+const factories = require("../../factories");
+const User = require("../../../models/user");
 
 const agent = request.agent(app);
 let token;
-beforeAll(async () => {
-  token = await dbHandler.connectAndCreateUser();
+beforeAll(async () => await dbHandler.connect());
+beforeEach(async () => {
+  token = await factories.getTestUserToken();
 });
 afterEach(async () => await dbHandler.clearDatabase());
 afterAll(async () => await dbHandler.closeDatabase());
@@ -27,13 +29,6 @@ describe("Test User Controllers", () => {
   });
 
   it("Create invalid user", async () => {
-    const existingUser = new User({
-      email: "user@email.com",
-      passwordHash: "passwordHash",
-      hasAcceptedTCs: true,
-    });
-    await existingUser.save();
-
     res = await agent.post("/api/users").send({
       email: "newUser@email.com",
       password: "password",
@@ -65,7 +60,7 @@ describe("Test User Controllers", () => {
     expect(res.body.message).toEqual("Pasword minimum length 3");
 
     res = await agent.post("/api/users").send({
-      email: "user@email.com",
+      email: process.env.TEST_USER_EMAIL,
       password: "password",
       checkPassword: "password",
       hasAcceptedTCs: true,
@@ -76,15 +71,10 @@ describe("Test User Controllers", () => {
   });
 
   it("Update user email", async () => {
-    const existingUser = new User({
-      email: "user@email.com",
-      passwordHash: "passwordHash",
-      hasAcceptedTCs: true,
-    });
-    await existingUser.save();
+    const testUser = await User.findOne({ email: process.env.TEST_USER_EMAIL });
 
     res = await agent
-      .put(`/api/users/${existingUser._id}`)
+      .put(`/api/users/${testUser._id}`)
       .set("authorization", `bearer ${token}`)
       .send({
         newEmail: "newUser@email.com",
@@ -92,25 +82,49 @@ describe("Test User Controllers", () => {
 
     const user = await User.findOne({ email: "newUser@email.com" });
     expect(res.statusCode).toEqual(200);
-    expect(user._id).toEqual(existingUser._id);
+    expect(user._id).toEqual(testUser._id);
   });
 
   it("Update user password", async () => {
-    const existingUser = new User({
-      email: "user@email.com",
-      passwordHash: "passwordHash",
-      hasAcceptedTCs: true,
-    });
-    await existingUser.save();
+    const testUser = await User.findOne({ email: process.env.TEST_USER_EMAIL });
 
     res = await agent
-      .put(`/api/users/${existingUser._id}`)
+      .put(`/api/users/${testUser._id}`)
       .set("authorization", `bearer ${token}`)
       .send({
-        oldPassword: "", // TODO
-        newPassword: "test",
+        oldPassword: process.env.TEST_USER_PASSWORD,
+        newPassword: "newPassword",
+        checkPassword: "newPassword",
       });
 
     expect(res.statusCode).toEqual(200);
+  });
+
+  it("Invalid update of user password", async () => {
+    const testUser = await User.findOne({ email: process.env.TEST_USER_EMAIL });
+
+    res = await agent
+      .put(`/api/users/${testUser._id}`)
+      .set("authorization", `bearer ${token}`)
+      .send({
+        oldPassword: "invalid",
+        newPassword: "newPassword",
+        checkPassword: "newPassword",
+      });
+
+    expect(res.statusCode).toEqual(401);
+    expect(res.body.message).toEqual("Invalid password");
+
+    res = await agent
+      .put(`/api/users/${testUser._id}`)
+      .set("authorization", `bearer ${token}`)
+      .send({
+        oldPassword: process.env.TEST_USER_PASSWORD,
+        newPassword: "newPassword",
+        checkPassword: "invalid",
+      });
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.body.message).toEqual("New passwords must match");
   });
 });

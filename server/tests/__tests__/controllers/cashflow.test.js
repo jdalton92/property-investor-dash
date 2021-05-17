@@ -1,18 +1,20 @@
 const request = require("supertest");
-const app = require("../../app");
-const Dashboard = require("../../models/dashboard");
-const constants = require("../constants");
-const dbHandler = require("../dbHandler");
+const app = require("../../../app");
+const Dashboard = require("../../../models/dashboard");
+const factories = require("../../factories");
+const constants = require("../../constants");
+const dbHandler = require("../../dbHandler");
 
 const agent = request.agent(app);
 let token;
-beforeAll(async () => {
-  token = await dbHandler.connectAndCreateUser();
+beforeAll(async () => await dbHandler.connect());
+beforeEach(async () => {
+  token = await factories.getTestUserToken();
 });
 afterEach(async () => await dbHandler.clearDatabase());
 afterAll(async () => await dbHandler.closeDatabase());
 
-describe("/api/dashboards", () => {
+describe("/api/cashflow", () => {
   let res;
 
   it("Anonymous POST / is allowed", async () => {
@@ -22,6 +24,7 @@ describe("/api/dashboards", () => {
     });
 
     expect(res.statusCode).toEqual(200);
+    expect(res.body.length).toEqual(24);
   });
 
   it("Unauthenticated GET /:id", async () => {
@@ -53,6 +56,8 @@ describe("/api/dashboards", () => {
       .set("authorization", `bearer ${token}`);
 
     expect(res.statusCode).toEqual(200);
+    expect(res.body.dashboard._id).toEqual(dashboard._id.toString());
+    expect(res.body.cashflow.length).toEqual(24);
   });
 
   it("Invalid POST / ", async () => {
@@ -67,6 +72,9 @@ describe("/api/dashboards", () => {
       });
 
     expect(res.statusCode).toEqual(400);
+    expect(res.body.message).toEqual(
+      "`type` must be 'occupier', 'investor', or 'developer'"
+    );
   });
 
   it("Invalid occupier POST / ", async () => {
@@ -81,6 +89,7 @@ describe("/api/dashboards", () => {
       });
 
     expect(res.statusCode).toEqual(400);
+    expect(res.body.message).toEqual("Invalid field: test");
   });
 
   it("Invalid investor POST / ", async () => {
@@ -95,7 +104,7 @@ describe("/api/dashboards", () => {
       });
 
     expect(res.statusCode).toEqual(400);
-    // TODO: expect(res.body.length).toEqual(1);
+    expect(res.body.message).toEqual("Invalid field: test");
   });
 
   it("Invalid developer POST / ", async () => {
@@ -110,7 +119,7 @@ describe("/api/dashboards", () => {
       });
 
     expect(res.statusCode).toEqual(400);
-    // TODO: expect(res.body.length).toEqual(1);
+    expect(res.body.message).toEqual("Invalid field: test");
   });
 
   it("Valid occupier POST / ", async () => {
@@ -123,7 +132,7 @@ describe("/api/dashboards", () => {
       });
 
     expect(res.statusCode).toEqual(200);
-    // TODO: expect(res.body.length).toEqual(1);
+    expect(res.body.length).toEqual(24);
   });
 
   it("Valid investor POST / ", async () => {
@@ -136,7 +145,7 @@ describe("/api/dashboards", () => {
       });
 
     expect(res.statusCode).toEqual(200);
-    // TODO: expect(res.body.length).toEqual(1);
+    expect(res.body.length).toEqual(24);
   });
 
   it("Valid developer POST / ", async () => {
@@ -149,6 +158,6 @@ describe("/api/dashboards", () => {
       });
 
     expect(res.statusCode).toEqual(200);
-    // TODO: expect(res.body.length).toEqual(1);
+    expect(res.body.length).toEqual(90);
   });
 });
