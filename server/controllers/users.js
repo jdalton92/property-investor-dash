@@ -36,9 +36,9 @@ usersRouter.post("/", async (request, response, next) => {
     const passwordHash = await bcrypt.hash(password, saltRounds);
     const user = new User({ email, passwordHash, hasAcceptedTCs });
     const savedUser = await user.save();
-    const userInfo = parsers.userTokenParser(savedUser);
+    const userResponse = parsers.userTokenParser(savedUser);
 
-    return response.status(201).json(userInfo);
+    return response.status(201).json(userResponse);
   } catch (e) {
     next(e);
   }
@@ -46,7 +46,7 @@ usersRouter.post("/", async (request, response, next) => {
 
 usersRouter.put(
   "/:id",
-  middleware.tokenValidate,
+  middleware.isAuthenticated,
   async (request, response, next) => {
     try {
       const userData = request.body;
@@ -128,9 +128,9 @@ usersRouter.put(
         { new: true }
       );
 
-      const userInfo = parsers.userTokenParser(updatedUser);
+      const userResponse = parsers.userTokenParser(updatedUser);
 
-      return response.status(200).send(userInfo);
+      return response.status(200).send(userResponse);
     } catch (e) {
       next(e);
     }
@@ -139,7 +139,7 @@ usersRouter.put(
 
 usersRouter.delete(
   "/:id",
-  middleware.tokenValidate,
+  middleware.isAuthenticated,
   async (request, response, next) => {
     try {
       const { password } = request.body;

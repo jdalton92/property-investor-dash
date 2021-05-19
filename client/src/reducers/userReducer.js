@@ -36,17 +36,24 @@ export const initUser = () => {
       const loggedUserJSON = window.localStorage.getItem("loggedUser");
 
       if (loggedUserJSON) {
-        const user = JSON.parse(loggedUserJSON);
-        setToken(user.token);
+        const { token, userData } = JSON.parse(loggedUserJSON);
+
+        if (!token || !userData) {
+          dispatch(logoutUser());
+          return;
+        }
+
+        setToken(token);
         dispatch({
           type: "SET_MESSAGES",
-          payLoad: { messages: user.messagesRead },
+          payLoad: { messages: userData.messagesRead },
         });
         dispatch({
           type: "SET_USER",
-          payLoad: { user },
+          payLoad: { user: userData },
         });
       } else {
+        dispatch(logoutUser());
         dispatch({
           type: "USER_REQUEST_FAIL",
         });
@@ -63,19 +70,22 @@ export const demoUser = () => {
       type: "USER_REQUEST",
     });
     try {
-      const user = await loginService.demo();
+      const { token, userData } = await loginService.demo();
 
-      window.localStorage.setItem("loggedUser", JSON.stringify(user));
+      window.localStorage.setItem(
+        "loggedUser",
+        JSON.stringify({ token, userData })
+      );
 
-      setToken(user.token);
+      setToken(token);
 
       dispatch({
         type: "SET_MESSAGES",
-        payLoad: { messages: user.messagesRead },
+        payLoad: { messages: userData.messagesRead },
       });
       dispatch({
         type: "SET_USER",
-        payLoad: { user },
+        payLoad: { user: userData },
       });
       dispatch(successNotification("Logged into demo account"));
     } catch (e) {
@@ -90,24 +100,27 @@ export const createUser = (email, password, checkPassword, hasAcceptedTCs) => {
       type: "USER_REQUEST",
     });
     try {
-      const user = await userService.create({
+      const { token, userData } = await userService.create({
         email,
         password,
         checkPassword,
         hasAcceptedTCs,
       });
 
-      window.localStorage.setItem("loggedUser", JSON.stringify(user));
+      window.localStorage.setItem(
+        "loggedUser",
+        JSON.stringify({ token, userData })
+      );
 
-      setToken(user.token);
+      setToken(token);
 
       dispatch({
         type: "SET_MESSAGES",
-        payLoad: { messages: user.messagesRead },
+        payLoad: { messages: userData.messagesRead },
       });
       dispatch({
         type: "SET_USER",
-        payLoad: { user },
+        payLoad: { user: userData },
       });
       dispatch(successNotification("User account created"));
     } catch (e) {
@@ -137,21 +150,24 @@ export const loginUser = (email, password) => {
       type: "USER_REQUEST",
     });
     try {
-      const user = await loginService.login({
+      const { userData, token } = await loginService.login({
         email,
         password,
       });
 
-      window.localStorage.setItem("loggedUser", JSON.stringify(user));
-      setToken(user.token);
+      window.localStorage.setItem(
+        "loggedUser",
+        JSON.stringify({ userData, token })
+      );
+      setToken(token);
 
       dispatch({
         type: "SET_MESSAGES",
-        payLoad: { messages: user.messagesRead },
+        payLoad: { messages: userData.messagesRead },
       });
       dispatch({
         type: "SET_USER",
-        payLoad: { user },
+        payLoad: { user: userData },
       });
     } catch (e) {
       dispatch({
@@ -162,23 +178,23 @@ export const loginUser = (email, password) => {
   };
 };
 
-export const updateUser = (id, userData) => {
+export const updateUser = (id, data) => {
   return async (dispatch) => {
     dispatch({
       type: "USER_REQUEST",
     });
     try {
-      const user = await userService.update(id, userData);
+      const { userData, token } = await userService.update(id, data);
 
-      if (user.token) {
-        window.localStorage.setItem("loggedUser", JSON.stringify(user));
+      if (token) {
         destroyToken();
-        setToken(user.token);
+        window.localStorage.setItem("loggedUser", JSON.stringify(userData));
+        setToken(token);
       }
 
       dispatch({
         type: "SET_USER",
-        payLoad: { user },
+        payLoad: { user: userData },
       });
       dispatch(infoNotification("User details updated"));
     } catch (e) {
@@ -198,8 +214,8 @@ export const deleteUser = (id, password) => {
     try {
       await userService.deleteUser(id, password);
 
-      window.localStorage.removeItem("loggedUser");
       destroyToken();
+      window.localStorage.removeItem("loggedUser");
 
       dispatch({
         type: "CLEAR_USER",

@@ -6,7 +6,7 @@ const parsers = require("../utils/parsers");
 
 cashflowRouter.get(
   "/:id",
-  middleware.tokenValidate,
+  middleware.isAuthenticated,
   async (request, response, next) => {
     try {
       const dashboard = await Dashboard.findById(request.params.id);

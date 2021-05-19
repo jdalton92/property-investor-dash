@@ -3,9 +3,7 @@ import { connect } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { initUser } from "./reducers/userReducer";
 import { CONSTANTS } from "./static/constants";
-import { createBrowserHistory } from "history";
 import ReactGA from "react-ga";
-
 import ScrollToTopControlller from "./components/Shared/ScrollToTopControlller";
 import Loader from "./components/Shared/Loader";
 import Notifications from "./components/Shared/Notification/Notifications";
@@ -21,14 +19,16 @@ const App = ({ initUser, isUserFetching, overlay, saveDashboardModal }) => {
     initUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const history = createBrowserHistory();
+
+  useEffect(() => {
+    if (process.env.NODE_ENV === "production") {
+      ReactGA.pageview(window.location.pathname + window.location.search);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [window.location.pathname]);
 
   if (process.env.NODE_ENV === "production") {
     ReactGA.initialize("UA-158975814-1");
-    history.listen((location) => {
-      ReactGA.set({ page: location.pathname });
-      ReactGA.pageview(location.pathname + location.search);
-    });
   }
 
   if (isUserFetching) {
@@ -36,7 +36,7 @@ const App = ({ initUser, isUserFetching, overlay, saveDashboardModal }) => {
   } else {
     return (
       <div className="app bg-base w100 fade-in">
-        <Router history={history}>
+        <Router>
           <ScrollToTopControlller />
           {overlay && <Overlay />}
           {saveDashboardModal && <SaveDashboardModal />}

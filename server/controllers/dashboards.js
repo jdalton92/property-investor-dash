@@ -7,7 +7,7 @@ const ValidationError = require("../utils/error");
 
 dashboardRouter.get(
   "/",
-  middleware.tokenValidate,
+  middleware.isAuthenticated,
   async (request, response, next) => {
     try {
       const type = request.query.type;
@@ -44,7 +44,7 @@ dashboardRouter.get(
 
 dashboardRouter.get(
   "/:id",
-  middleware.tokenValidate,
+  middleware.isAuthenticated,
   async (request, response, next) => {
     try {
       const dashboard = await Dashboard.findById(request.params.id);
@@ -59,7 +59,7 @@ dashboardRouter.get(
 dashboardRouter.post(
   "/",
   middleware.assumptionsValidate,
-  middleware.tokenValidate,
+  middleware.isAuthenticated,
   async (request, response, next) => {
     try {
       const { description, address, type, assumptions } = request.body;
@@ -99,7 +99,7 @@ dashboardRouter.post(
 dashboardRouter.put(
   "/:id",
   middleware.assumptionsValidate,
-  middleware.tokenValidate,
+  middleware.isAuthenticated,
   async (request, response, next) => {
     try {
       const { type, address, description, assumptions } = request.body;
@@ -134,7 +134,7 @@ dashboardRouter.put(
 
 dashboardRouter.delete(
   "/:id",
-  middleware.tokenValidate,
+  middleware.isAuthenticated,
   async (request, response, next) => {
     try {
       const dashboardId = request.params.id;

@@ -16,7 +16,7 @@ module.exports.getTestUserToken = async () => {
   });
   await testUser.save();
 
-  const userInfo = parsers.userTokenParser(testUser);
+  const userResponse = parsers.userTokenParser(testUser);
 
-  return userInfo.token;
+  return userResponse.token;
 };

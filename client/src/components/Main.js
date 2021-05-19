@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Redirect, Switch } from "react-router-dom";
 import CustomRoute from "./Shared/CustomRoute";
 
 import NavigationBar from "./NavigationBar/NavigationBar";
@@ -100,7 +100,8 @@ const Main = () => {
               path="/developer/dashboard/:id"
               render={() => <DeveloperDashboard />}
             />
-            <Route render={() => <NotFound />} />
+            <Route path="/404" render={() => <NotFound />} />
+            <Redirect from="*" to="/404" />
           </Switch>
         </div>
       </div>

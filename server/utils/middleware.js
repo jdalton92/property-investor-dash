@@ -1,6 +1,7 @@
 const logger = require("./logger");
 const jwt = require("jsonwebtoken");
 const ValidationError = require("../utils/error");
+const User = require("../models/user");
 
 const requestLogger = (request, response, next) => {
   logger.info(
@@ -17,20 +18,36 @@ const requestLogger = (request, response, next) => {
   next();
 };
 
-const getTokenFrom = (request) => {
+const tokenExtractor = (request, response, next) => {
+  let token = null;
   const authorization = request.get("authorization");
   if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
-    return authorization.substring(7);
+    token = authorization.substring(7);
   }
-  return null;
-};
-
-const tokenExtractor = (request, response, next) => {
-  request.token = getTokenFrom(request);
+  request.token = token;
   next();
 };
 
-const tokenValidate = async (request, response, next) => {
+const userExtractor = async (request, response, next) => {
+  let user = null;
+  if (request.token) {
+    const decodedToken = jwt.verify(request.token, process.env.SECRET);
+    if (!decodedToken.id) {
+      return next(new ValidationError(401, "Token missing or invalid"));
+    }
+    user = await await User.findById(
+      decodedToken.id,
+      "_id email messagesRead roles hasAcceptedTCs"
+    );
+    if (!user) {
+      return next(new ValidationError(404, "User not found"));
+    }
+  }
+  request.user = user;
+  next();
+};
+
+const isAuthenticated = async (request, response, next) => {
   if (!request.token) {
     return next(new ValidationError(401, "Login required"));
   }
@@ -48,7 +65,7 @@ const errorHandler = (error, request, response, next) => {
   if (error) {
     const status = error.status || error.statusCode || 500;
     const message =
-      error.message || error.statusMessage || "Internal Server Error";
+      error.message || error.statusMessage || "Internal server error";
     logger.error(error);
 
     return response.status(status).send({
@@ -135,7 +152,8 @@ const assumptionsValidate = (request, response, next) => {
 module.exports = {
   errorHandler,
   tokenExtractor,
-  tokenValidate,
+  isAuthenticated,
+  userExtractor,
   requestLogger,
   assumptionsValidate,
 };

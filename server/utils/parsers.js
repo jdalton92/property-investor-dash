@@ -11,9 +11,7 @@ const userTokenParser = (user) => {
 
   return {
     token,
-    id: user._id,
-    email: user.email,
-    messagesRead: user.messagesRead,
+    userData: user,
   };
 };
 

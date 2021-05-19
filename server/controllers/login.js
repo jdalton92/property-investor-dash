@@ -20,9 +20,9 @@ loginRouter.post("/", async (request, response, next) => {
       return next(new ValidationError(400, "Invalid email or password"));
     }
 
-    const userInfo = parsers.userTokenParser(user);
+    const userResponse = parsers.userTokenParser(user);
 
-    return response.status(200).send(userInfo);
+    return response.status(200).send(userResponse);
   } catch (e) {
     next(e);
   }
@@ -32,8 +32,8 @@ loginRouter.post("/demo", async (request, response, next) => {
   try {
     const demoUser = await User.findOne({ email: process.env.DEMO_USER_EMAIL });
 
-    const userInfo = parsers.userTokenParser(demoUser);
-    userInfo.messagesRead = []; // Show all messages for demo user
+    const userResponse = parsers.userTokenParser(demoUser);
+    userResponse.userData.messagesRead = []; // Show all messages for demo user
 
     return response.status(200).send(userInfo);
   } catch (e) {
