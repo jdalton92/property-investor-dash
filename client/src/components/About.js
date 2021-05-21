@@ -1,4 +1,7 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
+import { Icon } from "./Shared/Icon";
+import TickIcon from "../styles/svg/tick.svg";
 import developer from "../styles/images/card-developer.png";
 import financiers from "../styles/images/card-financiers.png";
 import firstHomeBuyer from "../styles/images/card-first-home-buyer.png";
@@ -6,6 +9,10 @@ import investor from "../styles/images/card-investor.png";
 import owner from "../styles/images/card-owner.png";
 
 const About = () => {
+  const history = useHistory();
+  const handleLink = (url) => {
+    history.push(url);
+  };
   return (
     <>
       <h1 className="f24 bold mt16 mb16">About</h1>
@@ -22,20 +29,35 @@ const About = () => {
         of investors
       </div>
       <h2 className="f20 bold mt16 mb16">How Does PropertyInvestorDash Work</h2>
+      <button
+        type="button"
+        className="form-button-p bs-3 font-white mb16 pt4 pb4 flex-row align-c justify-c"
+        onClick={() => handleLink("/calculator-types")}
+      >
+        <Icon
+          size={"20px"}
+          url={TickIcon}
+          color={"white"}
+          hover={false}
+          active={false}
+        />
+        <span className="ml8">Get Started</span>
+      </button>
       <div className="r bs-3 bg-1 p20 mb16">
         PropertyInvestorDash has been developed with key input from real estate
         industry experts and helps provide a simple, easy option for property
-        investors looking to estimate their next investment strategy.
-        ProperyInvestorDASH has been built so no prior experience is required,
-        and any stakeholder can find useful outputs to estimate key cost,
-        revenue, and timing outputs for all your property investments.
-        PropertyInvestorDash provides an easy tool for all users, from
-        individual home owners to large developers
+        investors looking to estimate their next investment strategy. Our tool
+        has been built so no prior experience is required, and any stakeholder
+        can find useful outputs to estimate key cost, revenue, and timing
+        outputs for all your property investments. PropertyInvestorDash provides
+        an easy tool for all users, from individual home owners to large
+        developers
       </div>
       <div className="r bs-3 bg-1 p20 mb16 jump">
         <h3 className="f16 bold mb16">Step 1: Choose your investment type</h3>
-        Choose what type of dashboard you would like to view, with each option
-        displaying bespoke outputs to suit your investment profile
+        Choose what type of investment you would like to calculate, with each
+        option displaying bespoke dashboard outputs to suit your investment
+        profile
       </div>
       <div className="r bs-3 bg-1 p20 mb16 jump">
         <h3 className="f16 bold mb16">Step 2: Input your assumptions</h3>

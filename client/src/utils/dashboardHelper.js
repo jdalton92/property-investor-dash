@@ -25,15 +25,15 @@ export const getDashboardTypeAndBaseUrl = (dashboard) => {
   let type;
   switch (dashboard.type) {
     case CONSTANTS.TYPES.DEVELOPER:
-      baseUrl = "developer/dashboard";
+      baseUrl = "developer";
       type = "Developer";
       break;
     case CONSTANTS.TYPES.INVESTOR:
-      baseUrl = "investor/dashboard";
+      baseUrl = "investor";
       type = "Investor";
       break;
     case CONSTANTS.TYPES.OCCUPIER:
-      baseUrl = "owner-occupier/dashboard";
+      baseUrl = "owner-occupier";
       type = "Owner-Occupier";
       break;
     default:

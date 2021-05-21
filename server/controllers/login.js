@@ -35,7 +35,7 @@ loginRouter.post("/demo", async (request, response, next) => {
     const userResponse = parsers.userTokenParser(demoUser);
     userResponse.userData.messagesRead = []; // Show all messages for demo user
 
-    return response.status(200).send(userInfo);
+    return response.status(200).send(userResponse);
   } catch (e) {
     next(e);
   }

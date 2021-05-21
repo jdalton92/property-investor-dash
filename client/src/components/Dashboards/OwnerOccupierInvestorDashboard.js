@@ -13,7 +13,6 @@ import {
   percentageFormatter,
   IRRCalculation,
 } from "../../utils/dashboardHelper";
-import { getCashflow } from "../../reducers/cashflowReducer";
 import { Line } from "react-chartjs-2";
 import { occupierInvestorTooltip } from "../../static/tooltipText";
 import ExpandIcon from "../../styles/svg/expand.svg";
@@ -123,7 +122,7 @@ const OwnerOccupierInvestorDashboard = ({ monthlyCashflow }) => {
             <Tooltip message={message} extraClass="mt8 mt-md-48" />
           </div>
           <button
-            type="submit"
+            type="button"
             className="absolute form-button-p bs-3 font-white pt4 pb4 flex-row align-c justify-c"
             onClick={() => setShowCashflow(!showCashflow)}
           >
@@ -195,9 +194,7 @@ const mapStateToProps = (state) => {
   return { monthlyCashflow: state.cashflow.monthlyCashflow };
 };
 
-const mapDispatchToProps = {
-  getCashflow,
-};
+const mapDispatchToProps = null;
 
 export default connect(
   mapStateToProps,

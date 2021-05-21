@@ -38,7 +38,7 @@ const CalculatorTypes = () => {
           first-home-buyers, upsizers/downsizes, as well as potential financiers
           who are looking to test mortgage terms for owner-occupiers
           <button
-            type="submit"
+            type="button"
             className="form-button-p bs-3 font-white mt20 pt4 pb4 flex-row align-c justify-c"
             onClick={() => handleLink("/owner-occupier/edit")}
           >
@@ -65,7 +65,7 @@ const CalculatorTypes = () => {
           or if you are looking to buy a home to live in and rent a room for
           additonal income.
           <button
-            type="submit"
+            type="button"
             className="form-button-p bs-3 font-white mt20 pt4 pb4 flex-row align-c justify-c"
             onClick={() => handleLink("/investor/edit")}
           >
@@ -105,7 +105,7 @@ const CalculatorTypes = () => {
           test estimated funding costs of a constructioon loan that is able to
           be rolled into an investment facility
           <button
-            type="submit"
+            type="button"
             className="form-button-p bs-3 font-white mt20 pt4 pb4 flex-row align-c justify-c"
             onClick={() => handleLink("/developer/edit")}
           >

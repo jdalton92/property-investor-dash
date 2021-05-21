@@ -32,7 +32,7 @@ const HelperMessage = ({
           <div className="ml20">
             <p className="f16">{body}</p>
             <button
-              type="submit"
+              type="button"
               className="form-button-p bs-3 font-white mt20 pt4 pb4 flex-row align-c justify-c"
               onClick={handleClick}
             >

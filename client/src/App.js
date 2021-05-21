@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { initUser } from "./reducers/userReducer";
 import { CONSTANTS } from "./static/constants";
-import ReactGA from "react-ga";
+import AnalyticsController from "./components/Shared/AnalyticsController";
 import ScrollToTopControlller from "./components/Shared/ScrollToTopControlller";
 import Loader from "./components/Shared/Loader";
 import Notifications from "./components/Shared/Notification/Notifications";
@@ -20,17 +20,6 @@ const App = ({ initUser, isUserFetching, overlay, saveDashboardModal }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    if (process.env.NODE_ENV === "production") {
-      ReactGA.pageview(window.location.pathname + window.location.search);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [window.location.pathname]);
-
-  if (process.env.NODE_ENV === "production") {
-    ReactGA.initialize("UA-158975814-1");
-  }
-
   if (isUserFetching) {
     return <Loader />;
   } else {
@@ -45,6 +34,7 @@ const App = ({ initUser, isUserFetching, overlay, saveDashboardModal }) => {
             <Route exact path="/login" render={() => <Login />} />
             <Route render={() => <Main />} />
           </Switch>
+          <AnalyticsController />
         </Router>
       </div>
     );

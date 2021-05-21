@@ -14,13 +14,7 @@ import EmailIcon from "../../styles/svg/email.svg";
 const NavigationBar = ({ setDropdown, showDropdown }) => {
   let history = useHistory();
 
-  const handleContactClick = (e) => {
-    e.preventDefault();
-    history.push("/contact");
-  };
-
-  const handleDropdownClick = (e) => {
-    e.preventDefault();
+  const handleDropdownClick = () => {
     setDropdown(CONSTANTS.DROPDOWNS.USERNAME, !showDropdown);
   };
 
@@ -37,7 +31,7 @@ const NavigationBar = ({ setDropdown, showDropdown }) => {
           ariaLabel={"Contact"}
           dataBalloonPos={"left"}
           extraClass={"button-transp-p align-c justify-c"}
-          onClick={handleContactClick}
+          onClick={() => history.push("/contact")}
           iconUrl={EmailIcon}
           iconColor={"white"}
         />
@@ -47,7 +41,7 @@ const NavigationBar = ({ setDropdown, showDropdown }) => {
               ariaLabel={"User Options"}
               dataBalloonPos={"left"}
               extraClass={"button-transp-p align-c justify-c"}
-              onClick={handleDropdownClick}
+              onClick={() => handleDropdownClick()}
               iconUrl={UserIcon}
               iconColor={"white"}
             />

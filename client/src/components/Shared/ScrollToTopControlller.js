@@ -22,7 +22,6 @@ const ScrollToTopControlller = ({ setLeftSidebar, setDropdown }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  // Renders nothing, since nothing is needed
   return null;
 };
 

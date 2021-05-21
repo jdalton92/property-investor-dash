@@ -13,8 +13,12 @@ import { setNotification } from "../../reducers/notificationReducer";
 import SaveIcon from "../../styles/svg/save.svg";
 import EditIcon from "../../styles/svg/edit.svg";
 import OwnerOccupierInvestorDashboard from "./OwnerOccupierInvestorDashboard";
+import DeveloperDashboard from "./DeveloperDashboard";
 import { CONSTANTS } from "../../static/constants";
-import { isEmpty } from "../../utils/dashboardHelper";
+import {
+  isEmpty,
+  getDashboardTypeAndBaseUrl,
+} from "../../utils/dashboardHelper";
 
 const OccupierDashboard = ({
   isFetchingDashboard,
@@ -45,10 +49,9 @@ const OccupierDashboard = ({
     setModal(CONSTANTS.MODALS.SAVEDASHBOARD, true);
   };
 
-  const handleEdit = (e) => {
-    e.preventDefault();
+  const handleEdit = (baseUrl) => {
     editDashboard();
-    history.push("/owner-occupier/edit");
+    history.push(`/${baseUrl}/edit`);
   };
 
   if (
@@ -58,13 +61,14 @@ const OccupierDashboard = ({
   ) {
     return <Loader />;
   } else {
+    const { type, baseUrl } = getDashboardTypeAndBaseUrl(currentDashboard);
     // if (isEmpty(currentDashboard.assumptions)) {
     //   history.push("/owner-occupier/edit");
     // }
     return (
       <div className="fade-in">
         <div className="dash-row relative">
-          <h2 className="f20 bold mt16 mb16">Owner Occupier Dashboard</h2>
+          <h2 className="f20 bold mt16 mb16">{type} Dashboard</h2>
           <div className="dash-btns flex-row">
             <button
               type="button"
@@ -83,7 +87,7 @@ const OccupierDashboard = ({
             <button
               type="button"
               className="form-button-s bs-3 font-white pt4 pb4 flex-row align-c justify-c"
-              onClick={handleEdit}
+              onClick={() => handleEdit(baseUrl)}
             >
               <Icon
                 size={"20px"}
@@ -96,7 +100,13 @@ const OccupierDashboard = ({
             </button>
           </div>
         </div>
-        <OwnerOccupierInvestorDashboard />
+        {(currentDashboard.type === CONSTANTS.TYPES.OCCUPIER ||
+          currentDashboard.type === CONSTANTS.TYPES.INVESTOR) && (
+          <OwnerOccupierInvestorDashboard />
+        )}
+        {currentDashboard.type === CONSTANTS.TYPES.DEVELOPER && (
+          <DeveloperDashboard />
+        )}
       </div>
     );
   }

@@ -14,9 +14,7 @@ import TermsAndConditions from "./TermsAndConditions";
 import OccupierForm from "./CalculatorInputs/OccupierForm";
 import InvestorForm from "./CalculatorInputs/InvestorForm";
 import DeveloperForm from "./CalculatorInputs/DeveloperForm";
-import OccupierDashboard from "./Dashboards/OccupierDashboard";
-import InvestorDashboard from "./Dashboards/InvestorDashboard";
-import DeveloperDashboard from "./Dashboards/DeveloperDashboard";
+import Dashboard from "./Dashboards/Dashboard";
 import SavedDashboards from "./SavedDashboards";
 import NotFound from "./NotFound";
 
@@ -73,33 +71,8 @@ const Main = () => {
               path="/developer/edit/:id"
               render={() => <DeveloperForm />}
             />
-            <Route
-              exact
-              path="/owner-occupier/dashboard"
-              render={() => <OccupierDashboard />}
-            />
-            <CustomRoute
-              path="/owner-occupier/dashboard/:id"
-              render={() => <OccupierDashboard />}
-            />
-            <Route
-              exact
-              path="/investor/dashboard"
-              render={() => <InvestorDashboard />}
-            />
-            <CustomRoute
-              path="/investor/dashboard/:id"
-              render={() => <InvestorDashboard />}
-            />
-            <Route
-              exact
-              path="/developer/dashboard"
-              render={() => <DeveloperDashboard />}
-            />
-            <CustomRoute
-              path="/developer/dashboard/:id"
-              render={() => <DeveloperDashboard />}
-            />
+            <Route exact path="/dashboard" render={() => <Dashboard />} />
+            <CustomRoute path="/dashboard/:id" render={() => <Dashboard />} />
             <Route path="/404" render={() => <NotFound />} />
             <Redirect from="*" to="/404" />
           </Switch>

@@ -95,7 +95,7 @@ const SavedDashboards = ({
                 <tbody>
                   {savedDashboards.resultsCount > 0 &&
                     savedDashboards.results.map((d, i) => {
-                      const { baseUrl, type } = getDashboardTypeAndBaseUrl(d);
+                      const { type } = getDashboardTypeAndBaseUrl(d);
                       const index = (currentPage - 1) * limit + i + 1;
                       return (
                         <tr key={i}>
@@ -111,7 +111,7 @@ const SavedDashboards = ({
                               dataBalloonPos={"left"}
                               extraClass={"button-p align-c justify-c mb12"}
                               onClick={() =>
-                                history.push(`${baseUrl}/${d._id}`)
+                                history.push(`/dashboard/${d._id}`)
                               }
                               iconUrl={OpenIcon}
                               iconColor={"white"}

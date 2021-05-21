@@ -39,7 +39,11 @@ export const initUser = () => {
         const { token, userData } = JSON.parse(loggedUserJSON);
 
         if (!token || !userData) {
-          dispatch(logoutUser());
+          destroyToken();
+          window.localStorage.removeItem("loggedUser");
+          dispatch({
+            type: "CLEAR_USER",
+          });
           return;
         }
 
@@ -53,9 +57,10 @@ export const initUser = () => {
           payLoad: { user: userData },
         });
       } else {
-        dispatch(logoutUser());
+        destroyToken();
+        window.localStorage.removeItem("loggedUser");
         dispatch({
-          type: "USER_REQUEST_FAIL",
+          type: "CLEAR_USER",
         });
       }
     } catch (e) {
