@@ -1,13 +1,13 @@
 const dashboardRouter = require("express").Router();
+const auth = require("../auth/authMiddleware");
 const middleware = require("../utils/middleware");
-const jwt = require("jsonwebtoken");
 const Dashboard = require("../models/dashboard");
 const User = require("../models/user");
 const ValidationError = require("../utils/error");
 
 dashboardRouter.get(
   "/",
-  middleware.isAuthenticated,
+  auth.isAuthenticated,
   async (request, response, next) => {
     try {
       const type = request.query.type;
@@ -21,8 +21,7 @@ dashboardRouter.get(
         );
       }
 
-      const decodedToken = jwt.verify(request.token, process.env.SECRET);
-      const query = { user: decodedToken.id };
+      const query = { user: request.user._id };
       if (type) {
         query.type = type;
       }
@@ -44,7 +43,8 @@ dashboardRouter.get(
 
 dashboardRouter.get(
   "/:id",
-  middleware.isAuthenticated,
+  auth.isAuthenticated,
+  auth.isAdminOrDashboardOwner,
   async (request, response, next) => {
     try {
       const dashboard = await Dashboard.findById(request.params.id);
@@ -59,7 +59,7 @@ dashboardRouter.get(
 dashboardRouter.post(
   "/",
   middleware.assumptionsValidate,
-  middleware.isAuthenticated,
+  auth.isAuthenticated,
   async (request, response, next) => {
     try {
       const { description, address, type, assumptions } = request.body;
@@ -74,9 +74,8 @@ dashboardRouter.post(
         );
       }
 
-      const decodedToken = jwt.verify(request.token, process.env.SECRET);
       const dashboard = new Dashboard({
-        user: decodedToken.id,
+        user: request.user._id,
         description,
         address,
         type,
@@ -85,7 +84,7 @@ dashboardRouter.post(
       const result = await dashboard.save();
 
       await User.findOneAndUpdate(
-        { _id: decodedToken.id },
+        { _id: request.user._id },
         { $push: { dashboards: result._id } }
       );
 
@@ -99,7 +98,8 @@ dashboardRouter.post(
 dashboardRouter.put(
   "/:id",
   middleware.assumptionsValidate,
-  middleware.isAuthenticated,
+  auth.isAuthenticated,
+  auth.isAdminOrDashboardOwner,
   async (request, response, next) => {
     try {
       const { type, address, description, assumptions } = request.body;
@@ -134,24 +134,18 @@ dashboardRouter.put(
 
 dashboardRouter.delete(
   "/:id",
-  middleware.isAuthenticated,
+  auth.isAuthenticated,
+  auth.isAdminOrDashboardOwner,
   async (request, response, next) => {
     try {
       const dashboardId = request.params.id;
-      const decodedToken = jwt.verify(request.token, process.env.SECRET);
 
-      const dashboard = await Dashboard.findById(dashboardId);
-
-      if (dashboard.user.toString() === decodedToken.id) {
-        await Dashboard.findByIdAndRemove(dashboardId);
-        await User.findOneAndUpdate(
-          { _id: decodedToken.id },
-          { $pull: { dashboards: dashboardId } }
-        );
-        return response.status(204).end();
-      } else {
-        return next(new ValidationError(404, "Not found"));
-      }
+      await Dashboard.findByIdAndRemove(dashboardId);
+      await User.findOneAndUpdate(
+        { _id: request.user._id },
+        { $pull: { dashboards: dashboardId } }
+      );
+      return response.status(204).end();
     } catch (e) {
       next(e);
     }

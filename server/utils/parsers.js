@@ -11,7 +11,13 @@ const userTokenParser = (user) => {
 
   return {
     token,
-    userData: user,
+    userData: {
+      _id: user._id,
+      email: user.email,
+      hasAcceptedTCs: user.hasAcceptedTCs,
+      roles: user.roles,
+      messagesRead: user.messagesRead,
+    },
   };
 };
 
@@ -30,6 +36,13 @@ const occupierInvestorCashflow = ({
   overPayment,
   rentalYield,
 }) => {
+  // Parse non required fields so empty strings are ignored
+  capitalGrowth = capitalGrowth ? capitalGrowth : null;
+  opexGrowth = opexGrowth ? opexGrowth : null;
+  upfrontCosts = upfrontCosts ? upfrontCosts : null;
+  opex = opex ? opex : null;
+  overPayment = overPayment ? overPayment : null;
+
   // Initalise loan variables
   const t = ownershipLength * 12;
   const r = interestRate / 100;
@@ -156,6 +169,22 @@ const developerCashflow = ({
   capitalGrowth,
   constructionCostGrowth,
 }) => {
+  // Parse non required fields so empty strings are ignored
+  acquisitionCosts = acquisitionCosts ? acquisitionCosts : null;
+  investmentPeriod = investmentPeriod ? investmentPeriod : null;
+  designFees = designFees ? designFees : null;
+  statutoryFees = statutoryFees ? statutoryFees : null;
+  constructionContingency = constructionContingency
+    ? constructionContingency
+    : null;
+  constructionCostGrowth = constructionCostGrowth
+    ? constructionCostGrowth
+    : null;
+  capitalGrowth = capitalGrowth ? capitalGrowth : null;
+  sellingCosts = sellingCosts ? sellingCosts : null;
+  recurringCosts = recurringCosts ? recurringCosts : null;
+  overPayment = overPayment ? overPayment : null;
+
   constructionCostGrowth = constructionCostGrowth / 100;
   capitalGrowth = capitalGrowth / 100;
   const deliveryPhase = planningAndDesign + constructionDuration;

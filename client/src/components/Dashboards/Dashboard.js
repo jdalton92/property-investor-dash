@@ -62,9 +62,6 @@ const OccupierDashboard = ({
     return <Loader />;
   } else {
     const { type, baseUrl } = getDashboardTypeAndBaseUrl(currentDashboard);
-    // if (isEmpty(currentDashboard.assumptions)) {
-    //   history.push("/owner-occupier/edit");
-    // }
     return (
       <div className="fade-in">
         <div className="dash-row relative">

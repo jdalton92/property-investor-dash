@@ -1,18 +1,16 @@
 import { useEffect } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, useLocation } from "react-router-dom";
 import ReactGA from "react-ga";
 
 const AnalyticsController = () => {
-  if (process.env.NODE_ENV === "production") {
-    ReactGA.initialize("UA-158975814-1");
-  }
+  ReactGA.initialize("UA-158975814-1");
+
+  const { pathname, search } = useLocation();
   useEffect(() => {
-    if (process.env.NODE_ENV === "production") {
-      ReactGA.set({ page: window.location.pathname });
-      ReactGA.pageview(window.location.pathname + window.location.search);
-    }
+    ReactGA.set({ page: pathname });
+    ReactGA.pageview(pathname + search);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [window.location.pathname]);
+  }, [pathname, search]);
 
   return null;
 };

@@ -1,4 +1,5 @@
 const cashflowRouter = require("express").Router();
+const auth = require("../auth/authMiddleware");
 const middleware = require("../utils/middleware");
 const ValidationError = require("../utils/error");
 const Dashboard = require("../models/dashboard");
@@ -6,7 +7,8 @@ const parsers = require("../utils/parsers");
 
 cashflowRouter.get(
   "/:id",
-  middleware.isAuthenticated,
+  auth.isAuthenticated,
+  auth.isAdminOrDashboardOwner,
   async (request, response, next) => {
     try {
       const dashboard = await Dashboard.findById(request.params.id);

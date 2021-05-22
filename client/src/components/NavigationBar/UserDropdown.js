@@ -47,8 +47,8 @@ const UserDropdown = ({
   return (
     <>
       {showDropdown && email && (
-        <div className="user-dropdown flex-col pt8 pb8 fade-in r bs-3">
-          <span className="bold ml8 f16">{email}</span>
+        <div className="user-dropdown flex-col p8 fade-in r bs-3">
+          <span className="bold ml8 f16 ellipse">{email}</span>
           <Button
             extraClass={"button-transp-p align-c"}
             captionClass={"ml8"}

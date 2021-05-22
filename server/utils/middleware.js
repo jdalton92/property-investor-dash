@@ -1,6 +1,6 @@
 const logger = require("./logger");
 const jwt = require("jsonwebtoken");
-const ValidationError = require("../utils/error");
+const ValidationError = require("./error");
 const User = require("../models/user");
 
 const requestLogger = (request, response, next) => {
@@ -35,29 +35,12 @@ const userExtractor = async (request, response, next) => {
     if (!decodedToken.id) {
       return next(new ValidationError(401, "Token missing or invalid"));
     }
-    user = await await User.findById(
-      decodedToken.id,
-      "_id email messagesRead roles hasAcceptedTCs"
-    );
+    user = await await User.findById(decodedToken.id);
     if (!user) {
       return next(new ValidationError(404, "User not found"));
     }
   }
   request.user = user;
-  next();
-};
-
-const isAuthenticated = async (request, response, next) => {
-  if (!request.token) {
-    return next(new ValidationError(401, "Login required"));
-  }
-
-  const decodedToken = jwt.verify(request.token, process.env.SECRET);
-
-  if (!decodedToken.id) {
-    return next(new ValidationError(401, "Token missing or invalid"));
-  }
-
   next();
 };
 
@@ -152,7 +135,6 @@ const assumptionsValidate = (request, response, next) => {
 module.exports = {
   errorHandler,
   tokenExtractor,
-  isAuthenticated,
   userExtractor,
   requestLogger,
   assumptionsValidate,

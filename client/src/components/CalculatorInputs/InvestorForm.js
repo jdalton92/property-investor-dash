@@ -27,7 +27,7 @@ const InvestorForm = ({
 
   const onSubmit = (assumptions) => {
     testDashboard(CONSTANTS.TYPES.INVESTOR, assumptions);
-    history.push("/investor/dashboard");
+    history.push("/dashboard");
   };
 
   if (isFetching) {

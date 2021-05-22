@@ -32,6 +32,10 @@ loginRouter.post("/demo", async (request, response, next) => {
   try {
     const demoUser = await User.findOne({ email: process.env.DEMO_USER_EMAIL });
 
+    if (!demoUser) {
+      return next(new ValidationError(404, "Demo user not found"));
+    }
+
     const userResponse = parsers.userTokenParser(demoUser);
     userResponse.userData.messagesRead = []; // Show all messages for demo user
 

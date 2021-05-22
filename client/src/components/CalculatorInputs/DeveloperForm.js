@@ -31,7 +31,7 @@ const DeveloperForm = ({
 
   const onSubmit = (assumptions) => {
     testDashboard(CONSTANTS.TYPES.DEVELOPER, assumptions);
-    history.push("/developer/dashboard");
+    history.push("/dashboard");
   };
 
   if (isFetching) {

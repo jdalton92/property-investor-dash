@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const middleware = require("../utils/middleware");
+const auth = require("../auth/authMiddleware");
 const bcrypt = require("bcryptjs");
 const usersRouter = require("express").Router();
 const User = require("../models/user");
@@ -46,7 +46,8 @@ usersRouter.post("/", async (request, response, next) => {
 
 usersRouter.put(
   "/:id",
-  middleware.isAuthenticated,
+  auth.isAuthenticated,
+  auth.isAdminOrUserOwner,
   async (request, response, next) => {
     try {
       const userData = request.body;
@@ -61,20 +62,12 @@ usersRouter.put(
       }
 
       // Update Email
-      let token;
       if (userData.newEmail) {
         const existingEmail = await User.find({ email: userData.newEmail });
 
         if (existingEmail.length > 0) {
           return next(new ValidationError(400, "Email already in use"));
         }
-
-        const userForToken = {
-          email: userData.newEmail,
-          id: user._id,
-        };
-
-        token = jwt.sign(userForToken, process.env.SECRET);
 
         updatedUserData.email = userData.newEmail;
       }
@@ -139,7 +132,8 @@ usersRouter.put(
 
 usersRouter.delete(
   "/:id",
-  middleware.isAuthenticated,
+  auth.isAuthenticated,
+  auth.isAdminOrUserOwner,
   async (request, response, next) => {
     try {
       const { password } = request.body;

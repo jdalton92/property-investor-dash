@@ -1,6 +1,7 @@
 import loginService from "../services/login";
 import { setToken, destroyToken } from "../utils/tokenHelper";
 import userService from "../services/user";
+import { CONSTANTS } from "../static/constants";
 import {
   successNotification,
   errorNotification,
@@ -33,14 +34,16 @@ export const initUser = () => {
       type: "USER_REQUEST",
     });
     try {
-      const loggedUserJSON = window.localStorage.getItem("loggedUser");
+      const loggedUserJSON = window.localStorage.getItem(
+        CONSTANTS.LOCALSTORAGE.LOGGEDUSER
+      );
 
       if (loggedUserJSON) {
         const { token, userData } = JSON.parse(loggedUserJSON);
 
         if (!token || !userData) {
           destroyToken();
-          window.localStorage.removeItem("loggedUser");
+          window.localStorage.removeItem(CONSTANTS.LOCALSTORAGE.LOGGEDUSER);
           dispatch({
             type: "CLEAR_USER",
           });
@@ -58,7 +61,7 @@ export const initUser = () => {
         });
       } else {
         destroyToken();
-        window.localStorage.removeItem("loggedUser");
+        window.localStorage.removeItem(CONSTANTS.LOCALSTORAGE.LOGGEDUSER);
         dispatch({
           type: "CLEAR_USER",
         });
@@ -78,7 +81,7 @@ export const demoUser = () => {
       const { token, userData } = await loginService.demo();
 
       window.localStorage.setItem(
-        "loggedUser",
+        CONSTANTS.LOCALSTORAGE.LOGGEDUSER,
         JSON.stringify({ token, userData })
       );
 
@@ -113,7 +116,7 @@ export const createUser = (email, password, checkPassword, hasAcceptedTCs) => {
       });
 
       window.localStorage.setItem(
-        "loggedUser",
+        CONSTANTS.LOCALSTORAGE.LOGGEDUSER,
         JSON.stringify({ token, userData })
       );
 
@@ -141,7 +144,7 @@ export const createUser = (email, password, checkPassword, hasAcceptedTCs) => {
 export const logoutUser = () => {
   return async (dispatch) => {
     destroyToken();
-    window.localStorage.removeItem("loggedUser");
+    window.localStorage.removeItem(CONSTANTS.LOCALSTORAGE.LOGGEDUSER);
     dispatch({
       type: "CLEAR_USER",
     });
@@ -161,7 +164,7 @@ export const loginUser = (email, password) => {
       });
 
       window.localStorage.setItem(
-        "loggedUser",
+        CONSTANTS.LOCALSTORAGE.LOGGEDUSER,
         JSON.stringify({ userData, token })
       );
       setToken(token);
@@ -192,8 +195,10 @@ export const updateUser = (id, data) => {
       const { userData, token } = await userService.update(id, data);
 
       if (token) {
-        destroyToken();
-        window.localStorage.setItem("loggedUser", JSON.stringify(userData));
+        window.localStorage.setItem(
+          CONSTANTS.LOCALSTORAGE.LOGGEDUSER,
+          JSON.stringify({ userData, token })
+        );
         setToken(token);
       }
 
@@ -220,7 +225,7 @@ export const deleteUser = (id, password) => {
       await userService.deleteUser(id, password);
 
       destroyToken();
-      window.localStorage.removeItem("loggedUser");
+      window.localStorage.removeItem(CONSTANTS.LOCALSTORAGE.LOGGEDUSER);
 
       dispatch({
         type: "CLEAR_USER",

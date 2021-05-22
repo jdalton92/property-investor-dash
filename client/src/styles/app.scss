@@ -204,6 +204,12 @@
   font-weight: bold;
 }
 
+.ellipse {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .font-p {
   color: $font-p;
 }

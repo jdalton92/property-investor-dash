@@ -17,7 +17,7 @@ const ChangePassword = ({ user, updateUser }) => {
       newPassword,
       checkPassword,
     };
-    updateUser(user.data.id, userData);
+    updateUser(user.data._id, userData);
   };
 
   return (

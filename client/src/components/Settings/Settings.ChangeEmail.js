@@ -18,7 +18,7 @@ const ChangeEmail = ({ user, updateUser }) => {
       const userData = {
         newEmail: values.newEmail,
       };
-      updateUser(user.data.id, userData);
+      updateUser(user.data._id, userData);
     }
   };
 

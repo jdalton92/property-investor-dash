@@ -1,4 +1,7 @@
 export const CONSTANTS = {
+  LOCALSTORAGE: {
+    LOGGEDUSER: "loggedUser",
+  },
   NOTIFICATION: {
     INFO: "INFO",
     SUCCESS: "SUCCESS",

@@ -27,7 +27,7 @@ const OccupierForm = ({
 
   const onSubmit = (assumptions) => {
     testDashboard(CONSTANTS.TYPES.OCCUPIER, assumptions);
-    history.push("/owner-occupier/dashboard");
+    history.push("/dashboard");
   };
 
   if (isFetching) {

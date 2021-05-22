@@ -12,7 +12,7 @@ const DeleteAccount = ({ user, deleteUser }) => {
   const handleSubmit = async ({ password }) => {
     const confirm = window.confirm(`Delete ${user.data.email}?`);
     if (confirm) {
-      deleteUser(user.data.id, password);
+      deleteUser(user.data._id, password);
     }
   };
 
