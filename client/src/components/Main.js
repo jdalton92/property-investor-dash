@@ -10,6 +10,8 @@ import About from "./About";
 import CalculatorTypes from "./CalculatorTypes";
 import Blog from "./Blog";
 import Settings from "./Settings/Settings";
+import ResetPassword from "./ResetPassword";
+import NewPassword from "./NewPassword";
 import TermsAndConditions from "./TermsAndConditions";
 import OccupierForm from "./CalculatorInputs/OccupierForm";
 import InvestorForm from "./CalculatorInputs/InvestorForm";
@@ -28,6 +30,12 @@ const Main = () => {
           <Switch>
             <Route exact path="/" render={() => <About />} />
             <CustomRoute path="/settings" render={() => <Settings />} />
+            <Route
+              exact
+              path="/reset-password/new-password"
+              render={() => <NewPassword />}
+            />
+            <Route path="/reset-password" render={() => <ResetPassword />} />
             <CustomRoute
               path="/saved-dashboards"
               render={() => <SavedDashboards />}

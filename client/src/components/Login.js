@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { Form, Field } from "react-final-form";
 import { useHistory } from "react-router-dom";
 import { loginUser, createUser, demoUser } from "../reducers/userReducer";
-import { setNotification } from "../reducers/notificationReducer";
 import { setTab } from "../reducers/navigationReducer";
 import {
   required,
@@ -17,15 +16,7 @@ import UserIcon from "../styles/svg/user.svg";
 import CreateUserIcon from "../styles/svg/create-user.svg";
 import hero from "../styles/images/hero.jpg";
 
-const Login = ({
-  loginUser,
-  createUser,
-  user,
-  demoUser,
-  setNotification,
-  setTab,
-  tab,
-}) => {
+const Login = ({ loginUser, createUser, user, demoUser, setTab, tab }) => {
   const history = useHistory();
 
   useEffect(() => {
@@ -40,11 +31,7 @@ const Login = ({
   };
 
   const handleForgotPassword = () => {
-    history.push("/contact");
-    setNotification(
-      "Password reset functionality coming soon, please contact us to reset your password",
-      CONSTANTS.NOTIFICATION.INFO
-    );
+    history.push("/reset-password");
   };
 
   const handleCreateUser = ({
@@ -58,7 +45,6 @@ const Login = ({
 
   const handleDemo = () => {
     demoUser();
-    history.push("/");
   };
 
   return (
@@ -332,7 +318,6 @@ const mapDispatchToProps = {
   loginUser,
   createUser,
   demoUser,
-  setNotification,
   setTab,
 };
 

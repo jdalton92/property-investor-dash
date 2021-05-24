@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/static/css/main.6cfcfe28.chunk.css",
-    "main.js": "/static/js/main.1991888f.chunk.js",
-    "main.js.map": "/static/js/main.1991888f.chunk.js.map",
+    "main.js": "/static/js/main.9571169a.chunk.js",
+    "main.js.map": "/static/js/main.9571169a.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.32bac452.js",
     "runtime-main.js.map": "/static/js/runtime-main.32bac452.js.map",
-    "static/js/2.a3cf7bd1.chunk.js": "/static/js/2.a3cf7bd1.chunk.js",
-    "static/js/2.a3cf7bd1.chunk.js.map": "/static/js/2.a3cf7bd1.chunk.js.map",
+    "static/js/2.c1b1395f.chunk.js": "/static/js/2.c1b1395f.chunk.js",
+    "static/js/2.c1b1395f.chunk.js.map": "/static/js/2.c1b1395f.chunk.js.map",
     "index.html": "/index.html",
     "static/css/main.6cfcfe28.chunk.css.map": "/static/css/main.6cfcfe28.chunk.css.map",
-    "static/js/2.a3cf7bd1.chunk.js.LICENSE.txt": "/static/js/2.a3cf7bd1.chunk.js.LICENSE.txt",
+    "static/js/2.c1b1395f.chunk.js.LICENSE.txt": "/static/js/2.c1b1395f.chunk.js.LICENSE.txt",
     "static/media/book.7cfb85dd.svg": "/static/media/book.7cfb85dd.svg",
     "static/media/card-developer.7342d2cd.png": "/static/media/card-developer.7342d2cd.png",
     "static/media/card-financiers.4cb62340.png": "/static/media/card-financiers.4cb62340.png",
@@ -44,8 +44,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.32bac452.js",
-    "static/js/2.a3cf7bd1.chunk.js",
+    "static/js/2.c1b1395f.chunk.js",
     "static/css/main.6cfcfe28.chunk.css",
-    "static/js/main.1991888f.chunk.js"
+    "static/js/main.9571169a.chunk.js"
   ]
 }

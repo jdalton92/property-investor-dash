@@ -50,6 +50,8 @@ DOMAIN=<your_mailgun_domain>
 DEMO_USER_EMAIL=demo@email.com
 TEST_USER_EMAIL=test@email.com
 TEST_USER_PASSWORD=test
+FRONTEND_URL=https://propertyinvestordash.com
+TEST_FRONTEND_URL=http://localhost:3000
 ```
 
 Then navidate to the server directory and install dependencies, and run the backend with `nodemon`

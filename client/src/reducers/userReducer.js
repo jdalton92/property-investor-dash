@@ -67,6 +67,9 @@ export const initUser = () => {
         });
       }
     } catch (e) {
+      dispatch({
+        type: "USER_REQUEST_FAIL",
+      });
       dispatch(errorNotification(e.response.data.message));
     }
   };
@@ -97,6 +100,9 @@ export const demoUser = () => {
       });
       dispatch(successNotification("Logged into demo account"));
     } catch (e) {
+      dispatch({
+        type: "USER_REQUEST_FAIL",
+      });
       dispatch(errorNotification(e.response.data.message));
     }
   };
@@ -132,7 +138,6 @@ export const createUser = (email, password, checkPassword, hasAcceptedTCs) => {
       });
       dispatch(successNotification("User account created"));
     } catch (e) {
-      console.log(e);
       dispatch({
         type: "USER_REQUEST_FAIL",
       });
@@ -158,10 +163,7 @@ export const loginUser = (email, password) => {
       type: "USER_REQUEST",
     });
     try {
-      const { userData, token } = await loginService.login({
-        email,
-        password,
-      });
+      const { userData, token } = await loginService.login(email, password);
 
       window.localStorage.setItem(
         CONSTANTS.LOCALSTORAGE.LOGGEDUSER,
@@ -194,19 +196,75 @@ export const updateUser = (id, data) => {
     try {
       const { userData, token } = await userService.update(id, data);
 
-      if (token) {
-        window.localStorage.setItem(
-          CONSTANTS.LOCALSTORAGE.LOGGEDUSER,
-          JSON.stringify({ userData, token })
-        );
-        setToken(token);
-      }
+      window.localStorage.setItem(
+        CONSTANTS.LOCALSTORAGE.LOGGEDUSER,
+        JSON.stringify({ userData, token })
+      );
+      setToken(token);
 
       dispatch({
         type: "SET_USER",
         payLoad: { user: userData },
       });
       dispatch(infoNotification("User details updated"));
+    } catch (e) {
+      dispatch({
+        type: "USER_REQUEST_FAIL",
+      });
+      dispatch(errorNotification(e.response.data.message));
+    }
+  };
+};
+
+export const resetPassword = (email) => {
+  return async (dispatch) => {
+    dispatch({
+      type: "USER_REQUEST",
+    });
+    try {
+      await loginService.resetPassword(email);
+      dispatch(
+        infoNotification(
+          "Check your email shortly for password reset instructions"
+        )
+      );
+      dispatch({
+        type: "USER_REQUEST_FAIL",
+      });
+    } catch (e) {
+      console.log(e);
+      dispatch({
+        type: "USER_REQUEST_FAIL",
+      });
+      dispatch(errorNotification(e.response.data.message));
+    }
+  };
+};
+
+export const setNewPassword = (id, resetToken, password, checkPassword) => {
+  return async (dispatch) => {
+    dispatch({
+      type: "USER_REQUEST",
+    });
+    try {
+      const { userData, token } = await userService.setNewPassword(
+        id,
+        resetToken,
+        password,
+        checkPassword
+      );
+
+      window.localStorage.setItem(
+        CONSTANTS.LOCALSTORAGE.LOGGEDUSER,
+        JSON.stringify({ userData, token })
+      );
+      setToken(token);
+
+      dispatch({
+        type: "SET_USER",
+        payLoad: { user: userData },
+      });
+      dispatch(infoNotification("Password reset"));
     } catch (e) {
       dispatch({
         type: "USER_REQUEST_FAIL",

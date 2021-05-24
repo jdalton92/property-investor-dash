@@ -1,8 +1,8 @@
-const jwt = require("jsonwebtoken");
 const auth = require("../auth/authMiddleware");
 const bcrypt = require("bcryptjs");
 const usersRouter = require("express").Router();
 const User = require("../models/user");
+const Token = require("../models/token");
 const ValidationError = require("../utils/error");
 const parsers = require("../utils/parsers");
 
@@ -129,6 +129,68 @@ usersRouter.put(
     }
   }
 );
+
+usersRouter.post("/reset-password", async (request, response, next) => {
+  try {
+    const { id, token, password, checkPassword } = request.body;
+
+    if (!password || !checkPassword) {
+      return next(
+        new ValidationError(
+          400,
+          "Password and confirmation password are required"
+        )
+      );
+    }
+
+    if (password !== checkPassword) {
+      return next(new ValidationError(400, "New passwords must match"));
+    }
+
+    if (password.length < 3) {
+      return next(new ValidationError(400, "Pasword minimum length 3"));
+    }
+
+    const passwordResetToken = await Token.findOne({ user: id });
+
+    if (!passwordResetToken) {
+      return next(
+        new ValidationError(
+          400,
+          "Invalid or expired password reset token. Please generate a new link"
+        )
+      );
+    }
+
+    const tokenCorrect = await bcrypt.compare(
+      token,
+      passwordResetToken.tokenHash
+    );
+    if (!tokenCorrect) {
+      return next(
+        new ValidationError(
+          400,
+          "Invalid or expired password reset token. Please generate a new link"
+        )
+      );
+    }
+    const saltRounds = 10;
+    const passwordHash = await bcrypt.hash(password, saltRounds);
+    const user = await User.findByIdAndUpdate(
+      id,
+      { passwordHash },
+      { new: true }
+    );
+
+    await passwordResetToken.deleteOne();
+
+    const userResponse = parsers.userTokenParser(user);
+
+    return response.status(200).send(userResponse);
+  } catch (e) {
+    next(e);
+  }
+});
 
 usersRouter.delete(
   "/:id",

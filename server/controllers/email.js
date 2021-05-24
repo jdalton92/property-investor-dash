@@ -1,6 +1,5 @@
 const emailRouter = require("express").Router();
-const nodemailer = require("nodemailer");
-const mailGun = require("nodemailer-mailgun-transport");
+const sendEmail = require("../utils/email");
 const ValidationError = require("../utils/error");
 
 emailRouter.post("/", async (request, response, next) => {
@@ -14,30 +13,13 @@ emailRouter.post("/", async (request, response, next) => {
       );
     }
 
-    const auth = {
-      auth: {
-        api_key: process.env.API_KEY,
-        domain: process.env.DOMAIN,
-      },
-    };
-
-    const transporter = nodemailer.createTransport(mailGun(auth));
-
-    const mailOptions = {
-      from: `"${fullName}" <${email}>`,
-      to: process.env.EMAIL,
-      subject: "PropertyInvestorDash: New Message",
-      text: `
-      Date: ${date}
-      Name: ${fullName}
-      Email: ${email}
-      Company: ${company}
-
-      ${message}
-      `,
-    };
-
-    await transporter.sendMail(mailOptions);
+    await sendEmail(
+      `"${fullName}" <${email}>`,
+      process.env.EMAIL,
+      "New Message",
+      "./templates/new-message.handlebars",
+      { date: Date.now(), fullName, company, email, message }
+    );
 
     return response.status(200).send({
       message: "Email sent",

@@ -23,5 +23,15 @@ const deleteUser = async (id, password) => {
   return response.data;
 };
 
+const setNewPassword = async (id, token, password, checkPassword) => {
+  const response = await axios.post(`${baseUrl}/reset-password`, {
+    id,
+    token,
+    password,
+    checkPassword,
+  });
+  return response.data;
+};
+
 // eslint-disable-next-line
-export default { create, update, deleteUser };
+export default { create, update, deleteUser, setNewPassword };

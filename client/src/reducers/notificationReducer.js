@@ -40,7 +40,7 @@ const notificationReducer = (state = initialState, action) => {
   }
 };
 
-export const errorNotification = (message) => {
+export const errorNotification = (message = "An unexpected error occured") => {
   const id = uuid();
   return {
     type: "SET_NOTIFICATION",
@@ -52,7 +52,7 @@ export const errorNotification = (message) => {
   };
 };
 
-export const successNotification = (message) => {
+export const successNotification = (message = "Success") => {
   const id = uuid();
   return {
     type: "SET_NOTIFICATION",
