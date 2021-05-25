@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { initUser } from "./reducers/userReducer";
+import { initUser } from "./reducers/usersReducer";
 import { CONSTANTS } from "./static/constants";
 import AnalyticsController from "./components/Shared/AnalyticsController";
 import ScrollToTopControlller from "./components/Shared/ScrollToTopControlller";
@@ -45,8 +45,7 @@ const App = ({ initUser, isUserFetching, overlay, saveDashboardModal }) => {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user,
-    isUserFetching: state.user.isFetching,
+    isUserFetching: state.users.isFetching,
     overlay: state.navigation.overlay,
     saveDashboardModal: state.navigation.modal[CONSTANTS.MODALS.SAVEDASHBOARD],
   };

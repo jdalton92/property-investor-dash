@@ -4,9 +4,9 @@ import { Form, Field } from "react-final-form";
 import { setModal, setTab } from "../../reducers/navigationReducer";
 import {
   getDashboards,
-  saveDashboard,
+  createDashboard,
   updateDashboard,
-} from "../../reducers/dashboardReducer";
+} from "../../reducers/dashboardsReducer";
 import {
   composeValidators,
   required,
@@ -30,10 +30,10 @@ const SaveDashboardModal = ({
   currentDashboard,
   savedDashboards,
   setModal,
-  saveDashboard,
+  createDashboard,
   updateDashboard,
   setNotification,
-  email,
+  isLoggedIn,
   setTab,
   tab,
 }) => {
@@ -51,7 +51,7 @@ const SaveDashboardModal = ({
   };
 
   const handleSave = async (saveData) => {
-    if (!email) {
+    if (!isLoggedIn) {
       setNotification("Log in to save dashboard", CONSTANTS.NOTIFICATION.ERROR);
       return;
     }
@@ -61,12 +61,12 @@ const SaveDashboardModal = ({
       assumptions: currentDashboard.assumptions,
       ...saveData,
     };
-    await saveDashboard(dashboard);
+    await createDashboard(dashboard);
     setModal(CONSTANTS.MODALS.SAVEDASHBOARD, false);
   };
 
   const handleOverwrite = async ({ address, description }) => {
-    if (!email) {
+    if (!isLoggedIn) {
       setNotification("Log in to save dashboard", CONSTANTS.NOTIFICATION.ERROR);
       return;
     }
@@ -422,7 +422,7 @@ const mapStateToProps = (state) => {
     savedDashboards: state.dashboards.savedDashboards,
     saveDashboardModal: state.navigation.modal.saveDashboard,
     tab: state.navigation.tabs.saveDashboard,
-    email: state.user.data?.email,
+    isLoggedIn: !!state.users.data?.email,
   };
 };
 
@@ -430,7 +430,7 @@ const mapDispatchToProps = {
   setModal,
   getDashboards,
   setTab,
-  saveDashboard,
+  createDashboard,
   updateDashboard,
   setNotification,
 };

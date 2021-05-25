@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Form, Field } from "react-final-form";
-import { deleteUser } from "../../reducers/userReducer";
+import { deleteUser } from "../../reducers/usersReducer";
 import {
   required,
   minLength,
@@ -10,9 +10,9 @@ import {
 
 const DeleteAccount = ({ user, deleteUser }) => {
   const handleSubmit = async ({ password }) => {
-    const confirm = window.confirm(`Delete ${user.data.email}?`);
+    const confirm = window.confirm(`Delete ${user.email}?`);
     if (confirm) {
-      deleteUser(user.data._id, password);
+      deleteUser(user._id, password);
     }
   };
 
@@ -62,7 +62,7 @@ const DeleteAccount = ({ user, deleteUser }) => {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user,
+    user: state.users.data,
   };
 };
 

@@ -1,5 +1,6 @@
 import axios from "axios";
-const baseUrl = "/api/email";
+import { V1_API } from "../config";
+const baseUrl = `${V1_API}/contact`;
 
 const sendEmail = async (emailDetail) => {
   const response = await axios.post(baseUrl, emailDetail);

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { getDashboards, deleteDashboard } from "../reducers/dashboardReducer";
+import { getDashboards, deleteDashboard } from "../reducers/dashboardsReducer";
 import Loader from "./Shared/Loader";
 import Button from "./Shared/Button";
 import {

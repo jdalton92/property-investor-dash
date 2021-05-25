@@ -4,8 +4,9 @@ const dbHandler = require("../../dbHandler");
 const factories = require("../../factories");
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
-const User = require("../../../models/user");
+const User = require("../../../models/user.model");
 const Token = require("../../../models/token");
+const config = require("../../../utils/config");
 
 const agent = request.agent(app);
 let token;
@@ -133,9 +134,8 @@ describe("Test User Controllers", () => {
 
   it("Reset users password", async () => {
     const testUser = await User.findOne({ email: process.env.TEST_USER_EMAIL });
-    const saltRounds = 10;
     const resetToken = crypto.randomBytes(32).toString("hex");
-    const tokenHash = await bcrypt.hash(resetToken, saltRounds);
+    const tokenHash = await bcrypt.hash(resetToken, config.SALT_ROUNDS);
     await new Token({
       user: testUser._id,
       tokenHash,

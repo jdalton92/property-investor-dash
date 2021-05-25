@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const ValidationError = require("../utils/error");
 
-const isAuthenticated = async (request, response, next) => {
+const isAuthenticated = (request, response, next) => {
   if (!request.token) {
     return next(new ValidationError(401, "Login required"));
   }
@@ -15,7 +15,7 @@ const isAuthenticated = async (request, response, next) => {
   next();
 };
 
-const isAdminOrDashboardOwner = async (request, response, next) => {
+const isAdminOrDashboardOwner = (request, response, next) => {
   if (request.user.roles.includes("admin")) {
     return next();
   }
@@ -31,7 +31,7 @@ const isAdminOrDashboardOwner = async (request, response, next) => {
   next();
 };
 
-const isAdminOrUserOwner = async (request, response, next) => {
+const isAdminOrUserOwner = (request, response, next) => {
   if (request.user.roles.includes("admin")) {
     return next();
   }
@@ -47,8 +47,22 @@ const isAdminOrUserOwner = async (request, response, next) => {
   next();
 };
 
+const isNotDemoUser = (request, response, next) => {
+  if (request.user.roles.includes("demo")) {
+    return next(
+      new ValidationError(
+        403,
+        "Demo user does not have permission for this action"
+      )
+    );
+  }
+
+  next();
+};
+
 module.exports = {
   isAuthenticated,
   isAdminOrDashboardOwner,
   isAdminOrUserOwner,
+  isNotDemoUser,
 };

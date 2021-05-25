@@ -1,7 +1,7 @@
 const logger = require("./logger");
 const jwt = require("jsonwebtoken");
 const ValidationError = require("./error");
-const User = require("../models/user");
+const User = require("../models/user.model");
 
 const requestLogger = (request, response, next) => {
   logger.info(
@@ -34,7 +34,7 @@ const userExtractor = async (request, response, next) => {
     if (!decodedToken.id) {
       return next(new ValidationError(401, "Token missing or invalid"));
     }
-    user = await await User.findById(decodedToken.id);
+    user = await User.findById(decodedToken.id);
     if (!user) {
       return next(new ValidationError(404, "User not found"));
     }

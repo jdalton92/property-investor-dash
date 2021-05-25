@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const sCurveData = require("./sCurve.json");
 
-const userTokenParser = (user) => {
+const getUserAndToken = (user) => {
   const userForToken = {
     email: user.email,
     id: user._id,
@@ -21,7 +21,7 @@ const userTokenParser = (user) => {
   };
 };
 
-const occupierInvestorCashflow = ({
+const getOccupierInvestorCashflow = ({
   capitalGrowth,
   opexGrowth,
   purchasePrice,
@@ -143,7 +143,7 @@ const occupierInvestorCashflow = ({
   return monthSummary;
 };
 
-const developerCashflow = ({
+const getDeveloperCashflow = ({
   acquisitionPrice,
   acquisitionCosts,
   dwellings,
@@ -365,7 +365,7 @@ const developerCashflow = ({
 };
 
 module.exports = {
-  userTokenParser,
-  occupierInvestorCashflow,
-  developerCashflow,
+  getUserAndToken,
+  getOccupierInvestorCashflow,
+  getDeveloperCashflow,
 };

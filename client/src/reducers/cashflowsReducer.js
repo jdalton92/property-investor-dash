@@ -1,4 +1,4 @@
-import cashflowService from "../services/cashflow";
+import cashflowsService from "../services/cashflows";
 import { errorNotification } from "./notificationReducer";
 
 const initialState = {
@@ -6,7 +6,7 @@ const initialState = {
   monthlyCashflow: [],
 };
 
-const cashflowReducer = (state = initialState, action) => {
+const cashflowsReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
     case "CASHFLOW_REQUEST":
@@ -33,7 +33,7 @@ export const getCashflow = (type, assumptions) => {
       type: "CASHFLOW_REQUEST",
     });
     try {
-      const monthlyCashflow = await cashflowService.getCashflow(
+      const monthlyCashflow = await cashflowsService.getCashflow(
         type,
         assumptions
       );
@@ -59,7 +59,7 @@ export const getDashboardAndCashflow = (dashboardId) => {
     });
     try {
       const { dashboard, cashflow } =
-        await cashflowService.getDashboardAndCashflow(dashboardId);
+        await cashflowsService.getDashboardAndCashflow(dashboardId);
       dispatch({
         type: "GET_CASHFLOW",
         payLoad: {
@@ -79,4 +79,4 @@ export const getDashboardAndCashflow = (dashboardId) => {
   };
 };
 
-export default cashflowReducer;
+export default cashflowsReducer;

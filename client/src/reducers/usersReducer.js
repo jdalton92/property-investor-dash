@@ -1,6 +1,6 @@
-import loginService from "../services/login";
+import authService from "../services/auth";
 import { setToken, destroyToken } from "../utils/tokenHelper";
-import userService from "../services/user";
+import usersService from "../services/users";
 import { CONSTANTS } from "../static/constants";
 import {
   successNotification,
@@ -10,7 +10,7 @@ import {
 
 const initialState = { isFetching: true, data: {} };
 
-const userReducer = (state = initialState, action) => {
+const usersReducer = (state = initialState, action) => {
   switch (action.type) {
     case "USER_REQUEST":
       return { ...state, isFetching: true };
@@ -81,7 +81,7 @@ export const demoUser = () => {
       type: "USER_REQUEST",
     });
     try {
-      const { token, userData } = await loginService.demo();
+      const { token, userData } = await authService.demo();
 
       window.localStorage.setItem(
         CONSTANTS.LOCALSTORAGE.LOGGEDUSER,
@@ -114,7 +114,7 @@ export const createUser = (email, password, checkPassword, hasAcceptedTCs) => {
       type: "USER_REQUEST",
     });
     try {
-      const { token, userData } = await userService.create({
+      const { token, userData } = await usersService.createUser({
         email,
         password,
         checkPassword,
@@ -163,7 +163,7 @@ export const loginUser = (email, password) => {
       type: "USER_REQUEST",
     });
     try {
-      const { userData, token } = await loginService.login(email, password);
+      const { userData, token } = await authService.login(email, password);
 
       window.localStorage.setItem(
         CONSTANTS.LOCALSTORAGE.LOGGEDUSER,
@@ -194,7 +194,7 @@ export const updateUser = (id, data) => {
       type: "USER_REQUEST",
     });
     try {
-      const { userData, token } = await userService.update(id, data);
+      const { userData, token } = await usersService.updateUser(id, data);
 
       window.localStorage.setItem(
         CONSTANTS.LOCALSTORAGE.LOGGEDUSER,
@@ -208,6 +208,7 @@ export const updateUser = (id, data) => {
       });
       dispatch(infoNotification("User details updated"));
     } catch (e) {
+      console.log(e);
       dispatch({
         type: "USER_REQUEST_FAIL",
       });
@@ -216,13 +217,13 @@ export const updateUser = (id, data) => {
   };
 };
 
-export const resetPassword = (email) => {
+export const requestPasswordReset = (email) => {
   return async (dispatch) => {
     dispatch({
       type: "USER_REQUEST",
     });
     try {
-      await loginService.resetPassword(email);
+      await authService.requestPasswordReset(email);
       dispatch(
         infoNotification(
           "Check your email shortly for password reset instructions"
@@ -241,13 +242,13 @@ export const resetPassword = (email) => {
   };
 };
 
-export const setNewPassword = (id, resetToken, password, checkPassword) => {
+export const resetPassword = (id, resetToken, password, checkPassword) => {
   return async (dispatch) => {
     dispatch({
       type: "USER_REQUEST",
     });
     try {
-      const { userData, token } = await userService.setNewPassword(
+      const { userData, token } = await authService.resetPassword(
         id,
         resetToken,
         password,
@@ -280,7 +281,7 @@ export const deleteUser = (id, password) => {
       type: "USER_REQUEST",
     });
     try {
-      await userService.deleteUser(id, password);
+      await usersService.deleteUser(id, password);
 
       destroyToken();
       window.localStorage.removeItem(CONSTANTS.LOCALSTORAGE.LOGGEDUSER);
@@ -297,4 +298,4 @@ export const deleteUser = (id, password) => {
   };
 };
 
-export default userReducer;
+export default usersReducer;

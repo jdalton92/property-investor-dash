@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { CONSTANTS } from "../../static/constants";
 import { setDropdown, setTab } from "../../reducers/navigationReducer";
-import { logoutUser } from "../../reducers/userReducer";
+import { logoutUser } from "../../reducers/usersReducer";
 import Button from "../Shared/Button";
 import SettingsIcon from "../../styles/svg/settings.svg";
 import LogoutIcon from "../../styles/svg/logout.svg";
@@ -15,6 +15,7 @@ const UserDropdown = ({
   showDropdown,
   setDropdown,
   logoutUser,
+  isLoggedIn,
   email,
   setTab,
 }) => {
@@ -46,7 +47,7 @@ const UserDropdown = ({
 
   return (
     <>
-      {showDropdown && email && (
+      {showDropdown && isLoggedIn && (
         <div className="user-dropdown flex-col p8 fade-in r bs-3">
           <span className="bold ml8 f16 ellipse">{email}</span>
           <Button
@@ -102,7 +103,8 @@ const UserDropdown = ({
 const mapStateToProps = (state) => {
   return {
     showDropdown: state.navigation.dropdown[CONSTANTS.DROPDOWNS.USERNAME],
-    email: state.user.data.email,
+    isLoggedIn: !!state.users.data?._id,
+    email: state.users.data?.email,
   };
 };
 

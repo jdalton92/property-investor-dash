@@ -1,12 +1,12 @@
-const parsers = require("../utils/parsers");
 const bcrypt = require("bcryptjs");
-const User = require("../models/user");
+const User = require("../models/user.model");
+const { getUserAndToken } = require("../utils/parsers");
+const config = require("../utils/config");
 
 module.exports.getTestUserToken = async () => {
-  const saltRounds = 10;
   const passwordHash = await bcrypt.hash(
     process.env.TEST_USER_PASSWORD,
-    saltRounds
+    config.SALT_ROUNDS
   );
 
   const testUser = new User({
@@ -16,7 +16,7 @@ module.exports.getTestUserToken = async () => {
   });
   await testUser.save();
 
-  const userResponse = parsers.userTokenParser(testUser);
+  const userResponse = getUserAndToken(testUser);
 
   return userResponse.token;
 };

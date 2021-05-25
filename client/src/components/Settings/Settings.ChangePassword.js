@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Form, Field } from "react-final-form";
-import { updateUser } from "../../reducers/userReducer";
+import { updateUser } from "../../reducers/usersReducer";
 import {
   required,
   minLength,
@@ -17,7 +17,7 @@ const ChangePassword = ({ user, updateUser }) => {
       newPassword,
       checkPassword,
     };
-    updateUser(user.data._id, userData);
+    updateUser(user._id, userData);
   };
 
   return (
@@ -124,7 +124,7 @@ const ChangePassword = ({ user, updateUser }) => {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user,
+    user: state.users.data,
   };
 };
 

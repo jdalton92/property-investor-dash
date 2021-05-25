@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { testDashboard, getDashboard } from "../../reducers/dashboardReducer";
+import { testDashboard, getDashboard } from "../../reducers/dashboardsReducer";
 import { CONSTANTS } from "../../static/constants";
 import { helperMessage } from "../../static/helperMessageText";
 import HelperMessage from "../Shared/HelperMessage";

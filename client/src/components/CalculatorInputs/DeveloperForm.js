@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { Form, Field } from "react-final-form";
-import { testDashboard, getDashboard } from "../../reducers/dashboardReducer";
+import { testDashboard, getDashboard } from "../../reducers/dashboardsReducer";
 import { CONSTANTS } from "../../static/constants";
 import { helperMessage } from "../../static/helperMessageText";
 import { required, minValue, maxValue } from "../../utils/formValidatorHelper";

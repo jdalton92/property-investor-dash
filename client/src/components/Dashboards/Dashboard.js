@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import Loader from "../Shared/Loader";
 import { Icon } from "../Shared/Icon";
-import { editDashboard } from "../../reducers/dashboardReducer";
+import { editDashboard } from "../../reducers/dashboardsReducer";
 import {
   getCashflow,
   getDashboardAndCashflow,
-} from "../../reducers/cashflowReducer";
+} from "../../reducers/cashflowsReducer";
 import { setModal } from "../../reducers/navigationReducer";
 import { setNotification } from "../../reducers/notificationReducer";
 import SaveIcon from "../../styles/svg/save.svg";
@@ -113,7 +113,7 @@ const mapStateToProps = (state) => {
   return {
     currentDashboard: state.dashboards.currentDashboard,
     isFetchingDashboard: state.dashboards.isFetching,
-    isFetchingCashflow: state.cashflow.isFetching,
+    isFetchingCashflow: state.cashflows.isFetching,
   };
 };
 

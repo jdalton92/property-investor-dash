@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Form, Field } from "react-final-form";
 import { useHistory } from "react-router-dom";
-import { loginUser, createUser, demoUser } from "../reducers/userReducer";
+import { loginUser, createUser, demoUser } from "../reducers/usersReducer";
 import { setTab } from "../reducers/navigationReducer";
 import {
   required,
@@ -16,11 +16,18 @@ import UserIcon from "../styles/svg/user.svg";
 import CreateUserIcon from "../styles/svg/create-user.svg";
 import hero from "../styles/images/hero.jpg";
 
-const Login = ({ loginUser, createUser, user, demoUser, setTab, tab }) => {
+const Login = ({
+  loginUser,
+  createUser,
+  isLoggedIn,
+  demoUser,
+  setTab,
+  tab,
+}) => {
   const history = useHistory();
 
   useEffect(() => {
-    if (user.data.email) {
+    if (isLoggedIn) {
       history.push("/");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -309,7 +316,7 @@ const Login = ({ loginUser, createUser, user, demoUser, setTab, tab }) => {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user,
+    isLoggedIn: !!state.users?.data?._id,
     tab: state.navigation.tabs.login,
   };
 };

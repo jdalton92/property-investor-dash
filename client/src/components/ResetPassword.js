@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Form, Field } from "react-final-form";
-import { resetPassword } from "../reducers/userReducer";
+import { requestPasswordReset } from "../reducers/usersReducer";
 import {
   required,
   minLength,
@@ -10,9 +10,9 @@ import {
 } from "../utils/formValidatorHelper";
 import Loader from "./Shared/Loader";
 
-const ResetPassword = ({ isFetching, resetPassword }) => {
+const ResetPassword = ({ isFetching, requestPasswordReset }) => {
   const handleResetPassword = ({ email }) => {
-    resetPassword(email);
+    requestPasswordReset(email);
   };
 
   if (isFetching) {
@@ -66,14 +66,14 @@ const ResetPassword = ({ isFetching, resetPassword }) => {
 
 const mapStateToProps = (state) => {
   return {
-    isFetching: state.user.isFetching,
-    user: state.user,
+    isFetching: state.users.isFetching,
+    user: state.users,
     tab: state.navigation.tabs.login,
   };
 };
 
 const mapDispatchToProps = {
-  resetPassword,
+  requestPasswordReset,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword);

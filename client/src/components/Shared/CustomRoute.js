@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
 
 const CustomRoute = (props) => {
-  if (props.email) {
+  if (props.isLoggedIn) {
     return <Route {...props} />;
   }
   return <Redirect to="/login" />;
@@ -11,7 +11,7 @@ const CustomRoute = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    email: state.user?.data?.email,
+    isLoggedIn: state.users.data?._id,
   };
 };
 

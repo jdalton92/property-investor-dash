@@ -3,18 +3,18 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 
 //Reducers
-import userReducer from "./reducers/userReducer";
+import usersReducer from "./reducers/usersReducer";
 import notificationReducer from "./reducers/notificationReducer";
-import dashboardReducer from "./reducers/dashboardReducer";
+import dashboardsReducer from "./reducers/dashboardsReducer";
 import navigationReducer from "./reducers/navigationReducer";
 import contactReducer from "./reducers/contactReducer";
-import cashflowReducer from "./reducers/cashflowReducer";
+import cashflowsReducer from "./reducers/cashflowsReducer";
 
 const reducer = combineReducers({
-  user: userReducer,
+  users: usersReducer,
   notification: notificationReducer,
-  dashboards: dashboardReducer,
-  cashflow: cashflowReducer,
+  dashboards: dashboardsReducer,
+  cashflows: cashflowsReducer,
   navigation: navigationReducer,
   contact: contactReducer,
 });

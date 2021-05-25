@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { DropdownOutsideAlerter } from "../../utils/hooks";
-import { logoutUser } from "../../reducers/userReducer";
+import { logoutUser } from "../../reducers/usersReducer";
 import { setDropdown } from "../../reducers/navigationReducer";
 import { CONSTANTS } from "../../static/constants";
 import UserDropdown from "./UserDropdown";
@@ -55,7 +55,7 @@ const NavigationBar = ({ setDropdown, showDropdown }) => {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user,
+    user: state.users,
     showDropdown: state.navigation.dropdown[CONSTANTS.DROPDOWNS.USERNAME],
   };
 };

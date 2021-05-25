@@ -54,7 +54,7 @@ const HelperMessage = ({
 
 const mapStateToProps = (state) => {
   return {
-    userId: state.user.data.id,
+    userId: state.users.data?.id,
     messagesRead: state.notification.messagesRead,
   };
 };

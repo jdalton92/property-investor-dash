@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Form, Field } from "react-final-form";
-import { updateUser } from "../../reducers/userReducer";
+import { updateUser } from "../../reducers/usersReducer";
 import {
   required,
   minLength,
@@ -12,13 +12,12 @@ import {
 const ChangeEmail = ({ user, updateUser }) => {
   const handleEmailChange = async (values) => {
     const confirm = window.confirm(
-      `Change email from ${user.data.email} to ${values.newEmail}?`
+      `Change email from ${user.email} to ${values.newEmail}?`
     );
     if (confirm) {
-      const userData = {
+      updateUser(user._id, {
         newEmail: values.newEmail,
-      };
-      updateUser(user.data._id, userData);
+      });
     }
   };
 
@@ -37,7 +36,7 @@ const ChangeEmail = ({ user, updateUser }) => {
               <input
                 id="old-email"
                 className="form-input bs-1 w100"
-                value={user.data.email}
+                value={user.email}
                 type="email"
                 disabled
               />
@@ -80,7 +79,7 @@ const ChangeEmail = ({ user, updateUser }) => {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user,
+    user: state.users.data,
   };
 };
 

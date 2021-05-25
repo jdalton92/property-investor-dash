@@ -191,7 +191,7 @@ const OwnerOccupierInvestorDashboard = ({ monthlyCashflow }) => {
 };
 
 const mapStateToProps = (state) => {
-  return { monthlyCashflow: state.cashflow.monthlyCashflow };
+  return { monthlyCashflow: state.cashflows.monthlyCashflow };
 };
 
 const mapDispatchToProps = null;

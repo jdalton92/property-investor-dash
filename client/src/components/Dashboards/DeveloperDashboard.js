@@ -384,8 +384,8 @@ const mapStateToProps = (state) => {
   return {
     currentDashboard: state.dashboards.currentDashboard,
     isFetchingDashboard: state.dashboards.isFetching,
-    isFetchingCashflow: state.cashflow.isFetching,
-    monthlyCashflow: state.cashflow.monthlyCashflow,
+    isFetchingCashflow: state.cashflows.isFetching,
+    monthlyCashflow: state.cashflows.monthlyCashflow,
   };
 };
 

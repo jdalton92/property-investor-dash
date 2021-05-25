@@ -1,8 +1,9 @@
 import axios from "axios";
 import { getAuthHeader } from "../utils/tokenHelper";
-const baseUrl = "/api/dashboards";
+import { V1_API } from "../config";
+const baseUrl = `${V1_API}/dashboards`;
 
-const getAllDashboards = async (params = {}) => {
+const getDashboards = async (params = {}) => {
   const config = getAuthHeader();
   config.params = params;
   const response = await axios.get(baseUrl, config);
@@ -14,7 +15,7 @@ const getDashboard = async (id) => {
   return response.data;
 };
 
-const saveDashboard = async (dashboardData) => {
+const createDashboard = async (dashboardData) => {
   const response = await axios.post(baseUrl, dashboardData, getAuthHeader());
   return response.data;
 };
@@ -28,16 +29,16 @@ const updateDashboard = async (id, dashboardData) => {
   return response.data;
 };
 
-const removeDashboard = async (id) => {
+const deleteDashboard = async (id) => {
   const response = await axios.delete(`${baseUrl}/${id}`, getAuthHeader());
   return response.data;
 };
 
 // eslint-disable-next-line
 export default {
-  getAllDashboards,
+  getDashboards,
   getDashboard,
-  saveDashboard,
+  createDashboard,
   updateDashboard,
-  removeDashboard,
+  deleteDashboard,
 };

@@ -1,5 +1,5 @@
 import { v4 as uuid } from "uuid";
-import userService from "../services/user";
+import userService from "../services/users";
 import { CONSTANTS } from "../static/constants";
 
 const initialState = {

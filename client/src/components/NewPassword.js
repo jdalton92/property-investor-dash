@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Form, Field } from "react-final-form";
 import Loader from "./Shared/Loader";
-import { setNewPassword } from "../reducers/userReducer";
+import { resetPassword } from "../reducers/usersReducer";
 import { setNotification } from "../reducers/notificationReducer";
 import { CONSTANTS } from "../static/constants";
 import queryString from "query-string";
@@ -13,7 +13,7 @@ import {
   composeValidators,
 } from "../utils/formValidatorHelper";
 
-const NewPassword = ({ isFetching, setNewPassword, setNotification }) => {
+const NewPassword = ({ isFetching, resetPassword, setNotification }) => {
   const history = useHistory();
   const { id, token } = queryString.parse(history.location.search);
 
@@ -23,7 +23,7 @@ const NewPassword = ({ isFetching, setNewPassword, setNotification }) => {
   }
 
   const handleSetNewPassword = ({ password, checkPassword }) => {
-    setNewPassword(id, token, password, checkPassword);
+    resetPassword(id, token, password, checkPassword);
   };
 
   if (isFetching) {
@@ -109,14 +109,14 @@ const NewPassword = ({ isFetching, setNewPassword, setNotification }) => {
 
 const mapStateToProps = (state) => {
   return {
-    isFetching: state.user.isFetching,
-    user: state.user,
+    isFetching: state.users.isFetching,
+    user: state.users,
     tab: state.navigation.tabs.login,
   };
 };
 
 const mapDispatchToProps = {
-  setNewPassword,
+  resetPassword,
   setNotification,
 };
 

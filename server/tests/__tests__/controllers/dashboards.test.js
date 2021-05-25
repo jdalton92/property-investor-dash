@@ -4,7 +4,7 @@ const dbHandler = require("../../dbHandler");
 const factories = require("../../factories");
 const constants = require("../../constants");
 const Dashboard = require("../../../models/dashboard");
-const User = require("../../../models/user");
+const User = require("../../../models/user.model");
 
 const agent = request.agent(app);
 let token;

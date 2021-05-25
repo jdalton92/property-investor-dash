@@ -4,7 +4,7 @@ import MenuContainer from "./MenuContainer";
 import Burger from "../NavigationBar/Burger";
 import { CONSTANTS } from "../../static/constants";
 import { setTab } from "../../reducers/navigationReducer";
-import { logoutUser } from "../../reducers/userReducer";
+import { logoutUser } from "../../reducers/usersReducer";
 
 import QuestionIcon from "../../styles/svg/question.svg";
 import MessageIcon from "../../styles/svg/message.svg";
@@ -21,9 +21,9 @@ import CreateUserIcon from "../../styles/svg/create-user.svg";
 import SettingsIcon from "../../styles/svg/settings.svg";
 import LogoutIcon from "../../styles/svg/logout.svg";
 
-const LeftMenu = ({ leftSidebarOpen, email, setTab, logoutUser }) => {
+const LeftMenu = ({ leftSidebarOpen, isLoggedIn, setTab, logoutUser }) => {
   let userMenuItems = [];
-  if (email) {
+  if (isLoggedIn) {
     userMenuItems = [
       {
         title: "Saved Dashboards",
@@ -175,7 +175,7 @@ const LeftMenu = ({ leftSidebarOpen, email, setTab, logoutUser }) => {
 const mapStateToProps = (state) => {
   return {
     leftSidebarOpen: state.navigation.sidebarOpen.left,
-    email: state.user.data?.email,
+    isLoggedIn: state.users.data?._id,
   };
 };
 

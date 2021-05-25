@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getAuthHeader } from "../utils/tokenHelper";
-const baseUrl = "/api/cashflow";
+import { V1_API } from "../config";
+const baseUrl = `${V1_API}/cashflows`;
 
 const getCashflow = async (type, assumptions) => {
   const response = await axios.post(`${baseUrl}/`, { type, assumptions });

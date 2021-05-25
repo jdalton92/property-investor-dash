@@ -1,4 +1,4 @@
-import dashboardService from "../services/dashboard";
+import dashboardsService from "../services/dashboards";
 import { successNotification, errorNotification } from "./notificationReducer";
 import { paginatedResults } from "../utils/dashboardHelper";
 
@@ -73,7 +73,7 @@ let initialState = {
   // },
 };
 
-const dashboardReducer = (state = initialState, action) => {
+const dashboardsReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
     case "DASHBOARD_REQUEST":
@@ -135,6 +135,7 @@ const dashboardReducer = (state = initialState, action) => {
           (d) => d._id !== action.payLoad.id
         ),
       ];
+      newState.isFetching = false;
       return newState;
     default:
       return state;
@@ -147,7 +148,8 @@ export const getDashboards = (params) => {
       type: "DASHBOARD_REQUEST",
     });
     try {
-      const response = await dashboardService.getAllDashboards(params);
+      const response = await dashboardsService.getDashboards(params);
+
       dispatch({
         type: "INIT_DASHBOARDS",
         payLoad: { response },
@@ -167,7 +169,7 @@ export const getDashboard = (id) => {
       type: "DASHBOARD_REQUEST",
     });
     try {
-      const dashboard = await dashboardService.getDashboard(id);
+      const dashboard = await dashboardsService.getDashboard(id);
 
       dispatch({
         type: "GET_DASHBOARD",
@@ -199,13 +201,13 @@ export const editDashboard = () => {
   };
 };
 
-export const saveDashboard = (dashboard) => {
+export const createDashboard = (dashboard) => {
   return async (dispatch) => {
     dispatch({
       type: "DASHBOARD_REQUEST",
     });
     try {
-      const newDashboard = await dashboardService.saveDashboard(dashboard);
+      const newDashboard = await dashboardsService.createDashboard(dashboard);
 
       dispatch({
         type: "SAVE_DASHBOARD",
@@ -230,7 +232,7 @@ export const updateDashboard = (id, dashboardData) => {
       type: "DASHBOARD_REQUEST",
     });
     try {
-      const updatedDashboard = await dashboardService.updateDashboard(
+      const updatedDashboard = await dashboardsService.updateDashboard(
         id,
         dashboardData
       );
@@ -256,7 +258,7 @@ export const deleteDashboard = (id) => {
       type: "DASHBOARD_REQUEST",
     });
     try {
-      await dashboardService.removeDashboard(id);
+      await dashboardsService.deleteDashboard(id);
 
       dispatch({
         type: "DELETE_DASHBOARD",
@@ -275,4 +277,4 @@ export const deleteDashboard = (id) => {
   };
 };
 
-export default dashboardReducer;
+export default dashboardsReducer;
