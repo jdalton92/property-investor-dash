@@ -5,12 +5,12 @@ const User = require("../models/user.model");
 
 const requestLogger = (req, res, next) => {
   logger.info(
-    "IP:          ",
+    "IP:      ",
     req.headers["x-forwarded-for"] || req.connection.remoteAddress || req.ip
   );
-  logger.info("Method:      ", req.method);
-  logger.info("Path:        ", req.path);
-  logger.info("Body:        ", req.body);
+  logger.info("Method:  ", req.method);
+  logger.info("Path:    ", req.path);
+  logger.info("Body:    ", req.body);
   logger.info("---");
   next();
 };

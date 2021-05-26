@@ -27,8 +27,8 @@ const createUser = async (password, email, checkPassword, hasAcceptedTCs) => {
     throw new Exception(400, "Pasword minimum length 3");
   }
 
-  const passwordHash = await bcrypt.hash(password, config.SALT_ROUNDS);
-  const user = new User({ email, passwordHash, hasAcceptedTCs });
+  // Password hashing handled in pre save hook
+  const user = new User({ email, passwordHash: password, hasAcceptedTCs });
   const savedUser = await user.save();
   const userResponse = getUserAndToken(savedUser);
 
@@ -70,9 +70,7 @@ const updateUser = async (userId, userData) => {
     }
 
     const passwordCorrect =
-      user === null
-        ? false
-        : await bcrypt.compare(userData.oldPassword, user.passwordHash);
+      user && (await user.validatePassword(userData.oldPassword));
 
     if (!passwordCorrect) {
       throw new Exception(401, "Incorrect password");
@@ -98,10 +96,9 @@ const updateUser = async (userId, userData) => {
 
 const deleteUser = async (userId, password) => {
   const user = await User.findById(userId);
-  const passwordCorrect =
-    user === null ? false : await bcrypt.compare(password, user.passwordHash);
+  const passwordCorrect = user && (await user.validatePassword(password));
 
-  if (user && passwordCorrect) {
+  if (passwordCorrect) {
     await User.findByIdAndDelete(userId);
   } else {
     throw new Exception(401, "Invalid user or password");

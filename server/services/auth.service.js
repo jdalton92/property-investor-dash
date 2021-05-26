@@ -13,10 +13,9 @@ const loginUser = async (email, password) => {
   }
 
   const user = await User.findOne({ email });
-  const passwordCorrect =
-    user === null ? false : await bcrypt.compare(password, user.passwordHash);
+  const passwordCorrect = user && (await user.validatePassword(password));
 
-  if (!(user && passwordCorrect)) {
+  if (!passwordCorrect) {
     throw new Exception(400, "Invalid email or password");
   }
 
@@ -49,11 +48,11 @@ const requestPasswordReset = async (email) => {
   await Token.findOneAndDelete({ user: user._id });
 
   const resetToken = crypto.randomBytes(32).toString("hex");
-  const tokenHash = await bcrypt.hash(resetToken, config.SALT_ROUNDS);
 
+  // Token hashing handled in pre save hook
   await new Token({
     user: user._id,
-    tokenHash,
+    tokenHash: resetToken,
   }).save();
 
   const baseUrl = `${config.FRONTEND_URL}`;
@@ -90,10 +89,7 @@ const resetPassword = async (id, token, password, checkPassword) => {
     );
   }
 
-  const tokenCorrect = await bcrypt.compare(
-    token,
-    passwordResetToken.tokenHash
-  );
+  const tokenCorrect = await passwordResetToken.validateToken(token);
   if (!tokenCorrect) {
     throw new Exception(
       400,

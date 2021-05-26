@@ -10,11 +10,7 @@ const authRouter = require("express").Router();
 
 authRouter.post("/login", loginController);
 authRouter.post("/demo", demoUserController);
-authRouter.post(
-  "/request-password-reset",
-  isNotDemoUser,
-  requestPasswordResetController
-);
-authRouter.post("/reset-password", isNotDemoUser, resetPasswordController);
+authRouter.post("/request-password-reset", requestPasswordResetController);
+authRouter.post("/reset-password", resetPasswordController);
 
 module.exports = authRouter;
