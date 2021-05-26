@@ -1,19 +1,14 @@
+const Exception = require("../utils/error");
 const Dashboard = require("../models/dashboard.model");
 const User = require("../models/user.model");
 
 const getDashboards = async (userId, dashboardType, paginateOptions) => {
   const types = ["developer", "investor", "occupier"];
   if (dashboardType && !types.includes(dashboardType)) {
-    throw new Error(
-      "`type` must be 'occupier', 'investor', or 'developer'",
-      400
+    throw new Exception(
+      400,
+      "`type` must be 'occupier', 'investor', or 'developer'"
     );
-    // return next(
-    //   new ValidationError(
-    //     400,
-    //     "`type` must be 'occupier', 'investor', or 'developer'"
-    //   )
-    // );
   }
 
   const query = { user: userId };
@@ -45,16 +40,10 @@ const createDashboard = async (
 ) => {
   const types = ["developer", "investor", "occupier"];
   if (!type || !types.includes(type)) {
-    throw new Error(
-      "`type` must be 'occupier', 'investor', or 'developer'",
-      400
+    throw new Exception(
+      400,
+      "`type` must be 'occupier', 'investor', or 'developer'"
     );
-    // return next(
-    //   new ValidationError(
-    //     400,
-    //     "`type` must be 'occupier', 'investor', or 'developer'"
-    //   )
-    // );
   }
 
   const dashboard = await Dashboard({
@@ -82,7 +71,7 @@ const updateDashboard = async (
   const existingDashboard = await Dashboard.findById(dashboardId);
 
   if (!existingDashboard) {
-    throw new Error("Dashboard does not exist", 404);
+    throw new Exception(404, "Dashboard does not exist");
   }
 
   const updatedDashboard = {

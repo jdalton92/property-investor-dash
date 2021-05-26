@@ -1,56 +1,54 @@
 const logger = require("./logger");
 const jwt = require("jsonwebtoken");
-const ValidationError = require("./error");
+const Exception = require("./error");
 const User = require("../models/user.model");
 
-const requestLogger = (request, response, next) => {
+const requestLogger = (req, res, next) => {
   logger.info(
     "IP:          ",
-    request.headers["x-forwarded-for"] ||
-      request.connection.remoteAddress ||
-      request.ip
+    req.headers["x-forwarded-for"] || req.connection.remoteAddress || req.ip
   );
-  logger.info("Method:      ", request.method);
-  logger.info("Path:        ", request.path);
-  logger.info("Body:        ", request.body);
+  logger.info("Method:      ", req.method);
+  logger.info("Path:        ", req.path);
+  logger.info("Body:        ", req.body);
   logger.info("---");
   next();
 };
 
-const tokenExtractor = (request, response, next) => {
+const tokenExtractor = (req, res, next) => {
   let token = null;
-  const authorization = request.get("authorization");
+  const authorization = req.get("authorization");
   if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
     token = authorization.substring(7);
   }
-  request.token = token;
+  req.token = token;
   next();
 };
 
-const userExtractor = async (request, response, next) => {
+const userExtractor = async (req, res, next) => {
   let user = null;
-  if (request.token) {
-    const decodedToken = jwt.verify(request.token, process.env.SECRET);
+  if (req.token) {
+    const decodedToken = jwt.verify(req.token, process.env.SECRET);
     if (!decodedToken.id) {
-      return next(new ValidationError(401, "Token missing or invalid"));
+      throw new Exception(401, "Token missing or invalid");
     }
     user = await User.findById(decodedToken.id);
     if (!user) {
-      return next(new ValidationError(404, "User not found"));
+      throw new Exception(404, "User not found");
     }
   }
-  request.user = user;
+  req.user = user;
   next();
 };
 
-const errorHandler = (error, request, response, next) => {
+const errorHandler = (error, req, res, next) => {
   if (error) {
     const status = error.status || error.statusCode || 500;
     const message =
       error.message || error.statusMessage || "Internal server error";
     logger.error(error);
 
-    return response.status(status).send({
+    return res.status(status).send({
       status,
       message,
     });
@@ -59,8 +57,8 @@ const errorHandler = (error, request, response, next) => {
   next(error);
 };
 
-const assumptionsValidate = (request, response, next) => {
-  let { type, assumptions } = request.body;
+const assumptionsValidate = (req, res, next) => {
+  let { type, assumptions } = req.body;
   const fields = Object.keys(assumptions);
 
   const occupierFields = [
@@ -114,17 +112,15 @@ const assumptionsValidate = (request, response, next) => {
       templateFields = developerFields;
       break;
     default:
-      return next(
-        new ValidationError(
-          400,
-          "`type` must be 'occupier', 'investor', or 'developer'"
-        )
+      throw new Exception(
+        400,
+        "`type` must be 'occupier', 'investor', or 'developer'"
       );
   }
 
   fields.forEach((f) => {
     if (!templateFields.includes(f)) {
-      return next(new ValidationError(400, `Invalid field: ${f}`));
+      throw new Exception(400, `Invalid field: ${f}`);
     }
   });
 

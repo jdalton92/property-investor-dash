@@ -1,4 +1,5 @@
 const Dashboard = require("../models/dashboard.model");
+const Exception = require("../utils/error");
 const {
   getDeveloperCashflow,
   getOccupierInvestorCashflow,
@@ -22,7 +23,7 @@ const getCashflow = (type, assumptions) => {
       cashflow = getOccupierInvestorCashflow(assumptions);
       break;
     default:
-      throw new Error(
+      throw new Exception(
         "`type` must be 'occupier', 'investor', or 'developer'",
         400
       );

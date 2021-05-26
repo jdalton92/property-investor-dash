@@ -1,20 +1,12 @@
-const ValidationError = require("./error");
+const Exception = require("./error");
 
 function paginate(query, options) {
   return new Promise((resolve, reject) => {
     if (options.limit && options.limit <= 0) {
-      throw new Error("Limit must be greater than 0", 400);
-      // return callback(
-      //   new ValidationError(400, "limit must be greater than 0"),
-      //   null
-      // );
+      throw new Exception(400, "Limit must be greater than 0");
     }
     if (options.page && options.page < 0) {
-      throw new Error("Page must be greater than 0", 400);
-      // return callback(
-      //   new ValidationError(400, "page must be greater than 0"),
-      //   null
-      // );
+      throw new Exception(400, "Page must be greater than 0");
     }
 
     query = query || {};
@@ -52,11 +44,7 @@ function paginate(query, options) {
         .limit(limit)
         .exec(function (error, results) {
           if (error) {
-            reject(new Error("Error paginating results", 500));
-            // return callback(
-            //   new ValidationError(500, "Error paginating results"),
-            //   null
-            // );
+            reject(new Error("Error paginating results"));
           } else {
             resolve({
               pagesCount,

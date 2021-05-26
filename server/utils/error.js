@@ -1,8 +1,8 @@
-class ValidationError extends Error {
-  constructor(status, message) {
+class Exception extends Error {
+  constructor(status = 500, message = "Internal server error") {
     super(message);
     this.status = status;
   }
 }
 
-module.exports = ValidationError;
+module.exports = Exception;

@@ -1,13 +1,11 @@
+const Exception = require("../utils/error");
 const sendEmail = require("../utils/email");
 
 const contact = async (fullName, company, email, message) => {
   const date = new Intl.DateTimeFormat("en-GB").format(Date.now());
 
   if (!fullName || !email || !message) {
-    throw new Error("Full name, email, and message required", 400);
-    // return next(
-    //   new ValidationError(400, "Full name, email, and message required")
-    // );
+    throw new Exception(400, "Full name, email, and message required");
   }
 
   await sendEmail(
