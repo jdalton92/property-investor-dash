@@ -28,6 +28,9 @@ const getDashboards = async (userId, dashboardType, paginateOptions) => {
 
 const getDashboard = async (id) => {
   const dashboard = await Dashboard.findById(id);
+  if (!dashboard) {
+    throw new Exception(404, "Dashboard does not exist");
+  }
   return dashboard;
 };
 

@@ -22,10 +22,10 @@ describe("Auth Service Tests", () => {
     const email = process.env.TEST_USER_EMAIL;
     const password = process.env.TEST_USER_PASSWORD;
 
-    expect(() => loginUser()).rejects.toThrow(
+    await expect(() => loginUser()).rejects.toThrow(
       "Provide both email and password"
     );
-    expect(() => loginUser(email, "invalid-password")).rejects.toThrow(
+    await expect(() => loginUser(email, "invalid-password")).rejects.toThrow(
       "Invalid email or password"
     );
 
@@ -36,7 +36,7 @@ describe("Auth Service Tests", () => {
   });
 
   it("Demo user", async () => {
-    expect(() => demoUser()).rejects.toThrow("Demo user not found");
+    await expect(() => demoUser()).rejects.toThrow("Demo user not found");
 
     const email = process.env.DEMO_USER_EMAIL;
     const password = process.env.DEMO_USER_PASSWORD;
@@ -50,12 +50,12 @@ describe("Auth Service Tests", () => {
   });
 
   it("Request password reset", async () => {
-    expect(() => requestPasswordReset()).rejects.toThrow(
+    await expect(() => requestPasswordReset()).rejects.toThrow(
       "Please provide email"
     );
-    expect(() => requestPasswordReset("invalid@email.com")).rejects.toThrow(
-      "User not found"
-    );
+    await expect(() =>
+      requestPasswordReset("invalid@email.com")
+    ).rejects.toThrow("User not found");
 
     const email = process.env.TEST_USER_EMAIL;
     const password = process.env.TEST_USER_PASSWORD;
@@ -75,10 +75,10 @@ describe("Auth Service Tests", () => {
     const { userData, token } = await getTestUserAndToken(email, password);
     const passwordResetToken = await getPasswordResetToken(userData._id);
 
-    expect(() =>
+    await expect(() =>
       resetPassword(userData._id, passwordResetToken, newPassword, "invalid")
     ).rejects.toThrow("New passwords must match");
-    expect(() =>
+    await expect(() =>
       resetPassword(
         userData._id,
         "invalidtoken",
@@ -89,8 +89,6 @@ describe("Auth Service Tests", () => {
       "Invalid or expired password reset token. Please generate a new link"
     );
 
-    // const newPasswordResetToken = await getPasswordResetToken(userData._id);
-    // console.log("newPasswordResetToken", newPasswordResetToken);
     const res = await resetPassword(
       userData._id,
       passwordResetToken,

@@ -40,7 +40,7 @@ const updateUser = async (userId, userData) => {
 
   const user = await User.findById(userId);
   if (!user) {
-    throw new Exception(400, "Invalid user id");
+    throw new Exception(404, "User not found");
   }
 
   // Update Email
@@ -86,12 +86,7 @@ const updateUser = async (userId, userData) => {
 
   // Messages read
   if (userData.messagesRead) {
-    updatedUserData.messagesRead = user.messagesRead;
-    userData.messagesRead.forEach((message) => {
-      if (user.messagesRead.indexOf(message) === -1) {
-        updatedUserData.messagesRead.push(message);
-      }
-    });
+    updatedUserData.$addToSet = { messagesRead: userData.messagesRead };
   }
 
   const updatedUser = await User.findByIdAndUpdate(userId, updatedUserData, {
