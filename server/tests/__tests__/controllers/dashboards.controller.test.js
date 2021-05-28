@@ -1,67 +1,175 @@
-const request = require("supertest");
-const app = require("../../../app");
 const dbHandler = require("../../dbHandler");
-const factories = require("../../factories");
-const constants = require("../../constants");
-const Dashboard = require("../../../models/dashboard");
-const User = require("../../../models/user.model");
+const {
+  mockReq,
+  mockRes,
+  mockNext,
+  getTestUserAndToken,
+  getTestOccupierDashboard,
+  getTestInvestorDashboard,
+  paginateArray,
+} = require("../../factories");
+const {
+  occupierDashboardAssumptions,
+  investorDashboardAssumptions,
+} = require("../../constants");
+const dashboardsService = require("../../../services/dashboards.service");
+const {
+  createDashboardController,
+  getDashboardsController,
+  getDashboardController,
+  updateDashboardController,
+  deleteDashboardController,
+} = require("../../../controllers/dashboards.controller");
 
-const agent = request.agent(app);
-let token;
-beforeAll(async () => await dbHandler.connect());
-beforeEach(async () => {
-  token = await factories.getTestUserToken();
-});
-afterEach(async () => await dbHandler.clearDatabase());
-afterAll(async () => await dbHandler.closeDatabase());
+jest.mock("../../../services/dashboards.service");
 
-describe("Test Dashboard Controllers", () => {
-  it("Unauthorized GET / ", async () => {
-    const res = await agent.get("/api/dashboards");
-
-    expect(res.statusCode).toEqual(401);
-    expect(res.body.message).toEqual("Login required");
+describe("Dashboards controller tests", () => {
+  let res;
+  let next;
+  beforeAll(async () => {
+    await dbHandler.connect();
+    res = mockRes();
+    next = mockNext();
   });
-
-  it("Authorized Dashboard GET /", async () => {
-    const testUser = await User.findOne({ email: process.env.TEST_USER_EMAIL });
-    let dashboard = new Dashboard({
-      user: testUser._id,
-      description: "Test Description",
-      address: "Test Address",
-      type: "occupier",
-      assumptions: constants.occupierAssumptions,
-    });
-    dashboard = await dashboard.save();
-
-    const res = await agent
-      .get("/api/dashboards")
-      .set("authorization", `bearer ${token}`);
-
-    expect(res.statusCode).toEqual(200);
-    expect(res.body.resultsCount).toEqual(1);
-    expect(res.body.results[0].description).toEqual(dashboard.description);
-    expect(res.body.results[0].address).toEqual(dashboard.address);
-    expect(res.body.results[0].type).toEqual(dashboard.type);
+  afterEach(async () => {
+    res = mockRes();
+    next = mockNext();
   });
+  afterEach(async () => await dbHandler.clearDatabase());
+  afterAll(async () => await dbHandler.closeDatabase());
 
-  it("Authorized POST / ", async () => {
-    const data = {
-      description: "Test Dashboard",
-      address: "Test Address",
-      type: "developer",
-      assumptions: constants.developerAssumptions,
+  it("Create dashboard", async () => {
+    const { userData } = await getTestUserAndToken();
+    const occupierDashboard = await getTestOccupierDashboard(userData._id);
+    const description = "Dashboard description";
+    const address = "Address";
+    const type = "occupier";
+    const reqBody = {
+      description,
+      address,
+      type,
+      assumptions: occupierDashboardAssumptions,
     };
+    const options = {
+      user: userData,
+    };
+    const req = mockReq(reqBody, options);
 
-    const res = await agent
-      .post("/api/dashboards")
-      .set("authorization", `bearer ${token}`)
-      .send(data);
+    dashboardsService.createDashboard.mockResolvedValue(occupierDashboard);
+    await createDashboardController(req, res, next);
+    expect(dashboardsService.createDashboard.mock.calls.length).toEqual(1);
+    expect(dashboardsService.createDashboard.mock.calls[0]).toEqual([
+      userData._id,
+      description,
+      address,
+      type,
+      occupierDashboardAssumptions,
+    ]);
+    expect(res.status).toBeCalledWith(201);
+    expect(res.json).toBeCalledWith(occupierDashboard);
+  });
 
-    expect(res.statusCode).toEqual(201);
-    expect(res.body.description).toEqual(data.description);
-    expect(res.body.address).toEqual(data.address);
-    expect(res.body.type).toEqual(data.type);
-    expect(res.body.assumptions).toEqual(data.assumptions);
+  it("Get dashboard", async () => {
+    const { userData } = await getTestUserAndToken();
+    const occupierDashboard = await getTestOccupierDashboard(userData._id);
+    const reqBody = undefined;
+    const options = {
+      params: { id: occupierDashboard._id },
+    };
+    const req = mockReq(reqBody, options);
+
+    dashboardsService.getDashboard.mockResolvedValue(occupierDashboard);
+    await getDashboardController(req, res, next);
+    expect(dashboardsService.getDashboard.mock.calls.length).toEqual(1);
+    expect(dashboardsService.getDashboard.mock.calls[0]).toEqual([
+      occupierDashboard._id,
+    ]);
+    expect(res.status).toBeCalledWith(200);
+    expect(res.json).toBeCalledWith(occupierDashboard);
+  });
+
+  it("Get dashboards", async () => {
+    const { userData } = await getTestUserAndToken();
+    const occupierDashboard1 = await getTestOccupierDashboard(userData._id);
+    const occupierDashboard2 = await getTestOccupierDashboard(userData._id);
+    const occupierDashboard3 = await getTestOccupierDashboard(userData._id);
+    const reqBody = undefined;
+    const page = 1;
+    const limit = 10;
+    const options = {
+      user: userData,
+      query: { type: "occupier", page, limit },
+    };
+    const req = mockReq(reqBody, options);
+
+    const paginatedDashboards = paginateArray(
+      [occupierDashboard1, occupierDashboard2, occupierDashboard3],
+      { page, limit }
+    );
+
+    dashboardsService.getDashboards.mockResolvedValue(paginatedDashboards);
+    await getDashboardsController(req, res, next);
+    expect(dashboardsService.getDashboards.mock.calls.length).toEqual(1);
+    expect(dashboardsService.getDashboards.mock.calls[0]).toEqual([
+      userData._id,
+      "occupier",
+      { page, limit },
+    ]);
+    expect(res.status).toBeCalledWith(200);
+    expect(res.json).toBeCalledWith(paginatedDashboards);
+  });
+
+  it("Update dashboard", async () => {
+    const { userData } = await getTestUserAndToken();
+    const occupierDashboard = await getTestOccupierDashboard(userData._id);
+    const investorDashboard = await getTestInvestorDashboard(userData._id);
+    const type = "investor";
+    const description = "Updated dashboard description";
+    const address = "Updated address";
+    const reqBody = {
+      type,
+      description,
+      address,
+      assumptions: investorDashboardAssumptions,
+    };
+    const options = {
+      params: { id: occupierDashboard._id },
+    };
+    const req = mockReq(reqBody, options);
+
+    dashboardsService.updateDashboard.mockResolvedValue(investorDashboard);
+    await updateDashboardController(req, res, next);
+    expect(dashboardsService.updateDashboard.mock.calls.length).toEqual(1);
+    expect(dashboardsService.updateDashboard.mock.calls[0]).toEqual([
+      occupierDashboard._id,
+      type,
+      address,
+      description,
+      investorDashboardAssumptions,
+    ]);
+    expect(res.status).toBeCalledWith(200);
+    expect(res.json).toBeCalledWith(investorDashboard);
+  });
+
+  it("Delete dashboard", async () => {
+    const { userData } = await getTestUserAndToken();
+    const occupierDashboard = await getTestOccupierDashboard(userData._id);
+    const reqBody = undefined;
+    const options = {
+      user: userData,
+      params: {
+        id: occupierDashboard._id,
+      },
+    };
+    const req = mockReq(reqBody, options);
+
+    await deleteDashboardController(req, res, next);
+    expect(dashboardsService.deleteDashboard.mock.calls.length).toEqual(1);
+    expect(dashboardsService.deleteDashboard.mock.calls[0]).toEqual([
+      userData._id,
+      occupierDashboard._id,
+    ]);
+    expect(res.status).toBeCalledWith(204);
+    expect(res.end).toBeCalled();
   });
 });

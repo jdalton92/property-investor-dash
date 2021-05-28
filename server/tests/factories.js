@@ -81,10 +81,54 @@ const getTestDeveloperDashboard = async (userId) => {
   return dashboard;
 };
 
+const mockReq = (body, options = {}) => ({
+  body,
+  params: options.params,
+  user: options.user,
+  query: options.query,
+});
+
+const mockRes = () => {
+  const res = {};
+  res.status = jest.fn().mockReturnValue(res);
+  res.json = jest.fn().mockReturnValue(res);
+  res.send = jest.fn().mockReturnValue(res);
+  res.end = jest.fn();
+  return res;
+};
+
+const mockNext = () => {
+  const next = jest.fn();
+  return next;
+};
+
+const paginateArray = (arr, options) => {
+  const limit = options.limit || 10;
+  const page = options.page || 1;
+
+  const resultsCount = arr.length;
+  const pagesCount = Math.ceil(arr.length / limit);
+  const startIndex = (page - 1) * limit;
+  const endIndex = Math.min(resultsCount, page * limit);
+  const results = arr.slice(startIndex, endIndex);
+
+  return {
+    pagesCount,
+    nextPage: page < pagesCount ? page + 1 : null,
+    previousPage: page - 1 > 0 ? page - 1 : null,
+    resultsCount,
+    results,
+  };
+};
+
 module.exports = {
   getTestUserAndToken,
   getPasswordResetToken,
   getTestOccupierDashboard,
   getTestInvestorDashboard,
   getTestDeveloperDashboard,
+  mockReq,
+  mockRes,
+  mockNext,
+  paginateArray,
 };

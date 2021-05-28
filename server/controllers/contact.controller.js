@@ -6,7 +6,7 @@ const contactController = async (req, res, next) => {
 
     await contact(fullName, company, email, message);
 
-    return res.status(200).send({
+    return res.status(200).json({
       message: "Email sent",
     });
   } catch (e) {

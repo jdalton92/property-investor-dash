@@ -41,7 +41,7 @@ const requestPasswordReset = async (email) => {
   }
 
   const user = await User.findOne({ email });
-  if (!user) {
+  if (!user.length) {
     throw new Exception(404, "User not found");
   }
 

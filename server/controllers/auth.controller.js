@@ -9,7 +9,7 @@ const loginController = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const userAndToken = await loginUser(email, password);
-    return res.status(200).send(userAndToken);
+    return res.status(200).json(userAndToken);
   } catch (e) {
     next(e);
   }
@@ -18,7 +18,7 @@ const loginController = async (req, res, next) => {
 const demoUserController = async (req, res, next) => {
   try {
     const userAndToken = await demoUser();
-    return res.status(200).send(userAndToken);
+    return res.status(200).json(userAndToken);
   } catch (e) {
     next(e);
   }
@@ -32,7 +32,7 @@ const requestPasswordResetController = async (req, res, next) => {
 
     return res
       .status(200)
-      .send({ message: `An email has been sent to ${email}` });
+      .json({ message: `An email has been sent to ${email}` });
   } catch (e) {
     next(e);
   }
@@ -47,7 +47,7 @@ const resetPasswordController = async (req, res, next) => {
       password,
       checkPassword
     );
-    return res.status(200).send(userAndToken);
+    return res.status(200).json(userAndToken);
   } catch (e) {
     next(e);
   }

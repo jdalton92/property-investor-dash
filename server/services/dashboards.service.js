@@ -102,10 +102,7 @@ const updateDashboard = async (
 
 const deleteDashboard = async (userId, dashboardId) => {
   await Dashboard.findByIdAndRemove(dashboardId);
-  await User.findOneAndUpdate(
-    { _id: userId },
-    { $pull: { dashboards: dashboardId } }
-  );
+  await User.findByIdAndUpdate(userId, { $pull: { dashboards: dashboardId } });
 };
 
 module.exports = {
