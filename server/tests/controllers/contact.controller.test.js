@@ -1,10 +1,8 @@
-const { mockReq, mockRes, mockNext } = require("../../factories");
-const contactService = require("../../../services/contact.service");
-const {
-  contactController,
-} = require("../../../controllers/contact.controller");
+const { mockReq, mockRes, mockNext } = require("../factories");
+const contactService = require("../../services/contact.service");
+const { contactController } = require("../../controllers/contact.controller");
 
-jest.mock("../../../services/contact.service");
+jest.mock("../../services/contact.service");
 
 describe("Contact controller tests", () => {
   let res;

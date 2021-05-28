@@ -1,24 +1,24 @@
-const dbHandler = require("../../dbHandler");
-const User = require("../../../models/user.model");
+const dbHandler = require("../dbHandler");
+const User = require("../../models/user.model");
 const {
   occupierDashboardAssumptions,
   investorDashboardAssumptions,
   developerDashboardAssumptions,
-} = require("../../constants");
+} = require("../constants");
 const {
   getTestUserAndToken,
   getTestOccupierDashboard,
   getTestInvestorDashboard,
   getTestDeveloperDashboard,
-} = require("../../factories");
+} = require("../factories");
 const {
   getDashboard,
   getDashboards,
   createDashboard,
   updateDashboard,
   deleteDashboard,
-} = require("../../../services/dashboards.service");
-const Dashboard = require("../../../models/dashboard.model");
+} = require("../../services/dashboards.service");
+const Dashboard = require("../../models/dashboard.model");
 
 beforeAll(async () => await dbHandler.connect());
 afterEach(async () => await dbHandler.clearDatabase());

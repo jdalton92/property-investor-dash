@@ -87,6 +87,11 @@ const updateUser = async (userId, userData) => {
     updatedUserData.$addToSet = { messagesRead: userData.messagesRead };
   }
 
+  // T&CS
+  if (userData.hasAcceptedTCs) {
+    updatedUserData.hasAcceptedTCs = userData.hasAcceptedTCs;
+  }
+
   const updatedUser = await User.findByIdAndUpdate(userId, updatedUserData, {
     new: true,
   });

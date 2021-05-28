@@ -1,20 +1,20 @@
-const dbHandler = require("../../dbHandler");
+const dbHandler = require("../dbHandler");
 const {
   mockReq,
   mockRes,
   mockNext,
   getTestUserAndToken,
   getTestOccupierDashboard,
-} = require("../../factories");
-const { occupierDashboardAssumptions } = require("../../constants");
+} = require("../factories");
+const { occupierDashboardAssumptions } = require("../constants");
 const {
   getCashflow,
   getCashflowAndDashboard,
-} = require("../../../services/cashflows.service");
+} = require("../../services/cashflows.service");
 const {
   getCashflowController,
   getCashflowAndDashboardController,
-} = require("../../../controllers/cashflows.controller");
+} = require("../../controllers/cashflows.controller");
 
 describe("Cashflow controller tests", () => {
   let res;

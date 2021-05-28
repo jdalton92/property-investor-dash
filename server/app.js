@@ -4,6 +4,7 @@ const app = express();
 const cors = require("cors");
 const { connectDatabase } = require("./utils/database");
 
+const { V1_API } = require("./utils/config");
 const middleware = require("./utils/middleware");
 const mainRouter = require("./routes/index.route");
 
@@ -19,7 +20,7 @@ app.use(middleware.requestLogger);
 app.use(middleware.tokenExtractor);
 app.use(middleware.userExtractor);
 
-app.use("/api/v1", mainRouter);
+app.use(V1_API, mainRouter);
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "build", "index.html"));
 });

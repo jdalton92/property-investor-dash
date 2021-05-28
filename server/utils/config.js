@@ -6,6 +6,7 @@ let SALT_ROUNDS = parseInt(process.env.SALT_ROUNDS, 10);
 let PORT = process.env.PORT || 3001;
 let MONGODB_URI = process.env.MONGODB_URI;
 let FRONTEND_URL = process.env.FRONTEND_URL;
+let V1_API = "/api/v1";
 
 if (process.env.NODE_ENV !== "production") {
   SALT_ROUNDS = parseInt(process.env.TEST_SALT_ROUNDS);
@@ -19,4 +20,5 @@ module.exports = {
   FRONTEND_URL,
   MONGODB_URI,
   PORT,
+  V1_API,
 };

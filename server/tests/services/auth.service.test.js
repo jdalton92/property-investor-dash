@@ -1,21 +1,18 @@
-const dbHandler = require("../../dbHandler");
+const dbHandler = require("../dbHandler");
 const sendEmail = require("../../../utils/email");
-const {
-  getPasswordResetToken,
-  getTestUserAndToken,
-} = require("../../factories");
+const { getPasswordResetToken, getTestUserAndToken } = require("../factories");
 const {
   loginUser,
   demoUser,
   requestPasswordReset,
   resetPassword,
-} = require("../../../services/auth.service");
+} = require("../../services/auth.service");
 
 beforeAll(async () => await dbHandler.connect());
 afterEach(async () => await dbHandler.clearDatabase());
 afterAll(async () => await dbHandler.closeDatabase());
 
-jest.mock("../../../utils/email");
+jest.mock("../../utils/email");
 
 describe("Auth Service Tests", () => {
   it("Login user", async () => {

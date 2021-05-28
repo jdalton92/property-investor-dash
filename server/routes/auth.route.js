@@ -1,4 +1,3 @@
-const { isNotDemoUser } = require("../utils/authMiddleware");
 const {
   loginController,
   demoUserController,

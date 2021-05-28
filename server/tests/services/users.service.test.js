@@ -1,11 +1,11 @@
-const dbHandler = require("../../dbHandler");
-const User = require("../../../models/user.model");
-const { getTestUserAndToken } = require("../../factories");
+const dbHandler = require("../dbHandler");
+const User = require("../../models/user.model");
+const { getTestUserAndToken } = require("../factories");
 const {
   createUser,
   updateUser,
   deleteUser,
-} = require("../../../services/users.service");
+} = require("../../services/users.service");
 
 beforeAll(async () => await dbHandler.connect());
 afterEach(async () => await dbHandler.clearDatabase());

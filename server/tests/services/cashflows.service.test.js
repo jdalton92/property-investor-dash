@@ -1,21 +1,21 @@
-const dbHandler = require("../../dbHandler");
+const dbHandler = require("../dbHandler");
 const {
   getOccupierInvestorCashflow,
   getDeveloperCashflow,
-} = require("../../../utils/parsers");
+} = require("../../utils/parsers");
 const {
   occupierDashboardAssumptions,
   investorDashboardAssumptions,
   developerDashboardAssumptions,
-} = require("../../constants");
+} = require("../constants");
 const {
   getTestUserAndToken,
   getTestDeveloperDashboard,
-} = require("../../factories");
+} = require("../factories");
 const {
   getCashflowAndDashboard,
   getCashflow,
-} = require("../../../services/cashflows.service");
+} = require("../../services/cashflows.service");
 
 beforeAll(async () => await dbHandler.connect());
 afterEach(async () => await dbHandler.clearDatabase());

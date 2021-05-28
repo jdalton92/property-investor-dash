@@ -1,20 +1,20 @@
-const dbHandler = require("../../dbHandler");
+const dbHandler = require("../dbHandler");
 const {
   mockReq,
   mockRes,
   mockNext,
   getTestUserAndToken,
   getPasswordResetToken,
-} = require("../../factories");
-const authService = require("../../../services/auth.service");
+} = require("../factories");
+const authService = require("../../services/auth.service");
 const {
   loginController,
   demoUserController,
   requestPasswordResetController,
   resetPasswordController,
-} = require("../../../controllers/auth.controller");
+} = require("../../controllers/auth.controller");
 
-jest.mock("../../../services/auth.service");
+jest.mock("../../services/auth.service");
 
 describe("Auth controller tests", () => {
   let res;
@@ -33,13 +33,17 @@ describe("Auth controller tests", () => {
 
   it("Login user", async () => {
     const userAndToken = await getTestUserAndToken();
+    const email = process.env.TEST_USER_EMAIL;
+    const password = process.env.TEST_USER_PASSWORD;
     const req = mockReq({
-      email: process.env.TEST_USER_EMAIL,
-      password: process.env.TEST_USER_PASSWORD,
+      email,
+      password,
     });
 
     authService.loginUser.mockResolvedValue(userAndToken);
     await loginController(req, res, next);
+    expect(authService.loginUser.mock.calls.length).toEqual(1);
+    expect(authService.loginUser.mock.calls[0]).toEqual([email, password]);
     expect(res.status).toBeCalledWith(200);
     expect(res.json).toBeCalledWith(userAndToken);
   });

@@ -1,4 +1,4 @@
-const dbHandler = require("../../dbHandler");
+const dbHandler = require("../dbHandler");
 const {
   mockReq,
   mockRes,
@@ -7,21 +7,21 @@ const {
   getTestOccupierDashboard,
   getTestInvestorDashboard,
   paginateArray,
-} = require("../../factories");
+} = require("../factories");
 const {
   occupierDashboardAssumptions,
   investorDashboardAssumptions,
-} = require("../../constants");
-const dashboardsService = require("../../../services/dashboards.service");
+} = require("../constants");
+const dashboardsService = require("../../services/dashboards.service");
 const {
   createDashboardController,
   getDashboardsController,
   getDashboardController,
   updateDashboardController,
   deleteDashboardController,
-} = require("../../../controllers/dashboards.controller");
+} = require("../../controllers/dashboards.controller");
 
-jest.mock("../../../services/dashboards.service");
+jest.mock("../../services/dashboards.service");
 
 describe("Dashboards controller tests", () => {
   let res;

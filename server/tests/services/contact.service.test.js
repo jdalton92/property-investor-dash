@@ -1,7 +1,7 @@
-const sendEmail = require("../../../utils/email");
-const { contact } = require("../../../services/contact.service");
+const sendEmail = require("../../utils/email");
+const { contact } = require("../../services/contact.service");
 
-jest.mock("../../../utils/email");
+jest.mock("../../utils/email");
 
 describe("Contact Service Tests", () => {
   it("contact", async () => {
