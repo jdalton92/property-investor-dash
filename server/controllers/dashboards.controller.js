@@ -9,7 +9,7 @@ const {
 const createDashboardController = async (req, res, next) => {
   try {
     const { description, address, type, assumptions } = req.body;
-    const userId = req.user._id;
+    const userId = req.session.user._id;
 
     const dashboard = await createDashboard(
       userId,
@@ -40,7 +40,7 @@ const getDashboardsController = async (req, res, next) => {
       page: req.query.page,
       limit: req.query.limit,
     };
-    const userId = req.user._id;
+    const userId = req.session.user._id;
     const dashboards = await getDashboards(
       userId,
       dashboardType,
@@ -72,7 +72,7 @@ const updateDashboardController = async (req, res, next) => {
 
 const deleteDashboardController = async (req, res, next) => {
   try {
-    const userId = req.user._id;
+    const userId = req.session.user._id;
     const dashboardId = req.params.id;
     await deleteDashboard(userId, dashboardId);
     return res.status(204).end();

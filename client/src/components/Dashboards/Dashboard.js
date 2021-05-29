@@ -39,6 +39,7 @@ const OccupierDashboard = ({
     } else if (currentDashboard.type && currentDashboard.assumptions) {
       getCashflow(currentDashboard.type, currentDashboard.assumptions);
     } else {
+      history.push("/calculator-types");
       setNotification("Error loading dashboard", CONSTANTS.NOTIFICATION.ERROR);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

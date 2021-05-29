@@ -7,6 +7,9 @@ const {
 
 const getCashflowAndDashboard = async (dashboardId) => {
   const dashboard = await Dashboard.findById(dashboardId);
+  if (!dashboard) {
+    throw new Exception("Dashboard does not exist", 400);
+  }
   const cashflow = getCashflow(dashboard.type, dashboard.assumptions);
 
   return { dashboard, cashflow };

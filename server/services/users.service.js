@@ -2,7 +2,8 @@ const bcrypt = require("bcryptjs");
 const Exception = require("../utils/error");
 const User = require("../models/user.model");
 const config = require("../utils/config");
-const { getUserAndToken } = require("../utils/parsers");
+const { serializeUser } = require("../utils/user");
+const Dashboard = require("../models/dashboard.model");
 
 const createUser = async (password, email, checkPassword, hasAcceptedTCs) => {
   if (!email) {
@@ -30,7 +31,7 @@ const createUser = async (password, email, checkPassword, hasAcceptedTCs) => {
   // Password hashing handled in pre save hook
   const user = new User({ email, passwordHash: password, hasAcceptedTCs });
   const savedUser = await user.save();
-  const userResponse = getUserAndToken(savedUser);
+  const userResponse = serializeUser(savedUser);
 
   return userResponse;
 };
@@ -96,7 +97,7 @@ const updateUser = async (userId, userData) => {
     new: true,
   });
 
-  return getUserAndToken(updatedUser);
+  return serializeUser(updatedUser);
 };
 
 const deleteUser = async (userId, password) => {
@@ -105,6 +106,7 @@ const deleteUser = async (userId, password) => {
 
   if (passwordCorrect) {
     await User.findByIdAndDelete(userId);
+    await Dashboard.deleteMany({ user: userId });
   } else {
     throw new Exception(401, "Invalid user or password");
   }

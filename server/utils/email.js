@@ -5,7 +5,6 @@ const fs = require("fs");
 const path = require("path");
 
 const sendEmail = async (from, to, subject, template, data) => {
-  console.log("SEND EMAIL");
   return new Promise(async (resolve, reject) => {
     try {
       const auth = {

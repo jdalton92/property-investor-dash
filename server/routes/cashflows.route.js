@@ -2,7 +2,7 @@ const {
   isAuthenticated,
   isAdminOrDashboardOwner,
 } = require("../utils/authMiddleware");
-const { assumptionsValidate } = require("../utils/middleware");
+const { isValidId, isValidAssumptions } = require("../utils/middleware");
 const {
   getCashflowController,
   getCashflowAndDashboardController,
@@ -10,10 +10,11 @@ const {
 
 const cashflowsRouter = require("express").Router();
 
-cashflowsRouter.post("/", assumptionsValidate, getCashflowController);
+cashflowsRouter.post("/", isValidAssumptions, getCashflowController);
 cashflowsRouter.get(
   "/:id",
   isAuthenticated,
+  isValidId,
   isAdminOrDashboardOwner,
   getCashflowAndDashboardController
 );

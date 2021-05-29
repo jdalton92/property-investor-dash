@@ -2,14 +2,14 @@ const crypto = require("crypto");
 const User = require("../models/user.model");
 const Token = require("../models/token.model");
 const Dashboard = require("../models/dashboard.model");
-const { getUserAndToken } = require("../utils/parsers");
+const { serializeUser } = require("../utils/user");
 const {
   occupierDashboardAssumptions,
   investorDashboardAssumptions,
   developerDashboardAssumptions,
 } = require("./constants");
 
-const getTestUserAndToken = async (email, password) => {
+const getTestUser = async (email, password) => {
   // Password hashing handled in pre save hook
   const user = new User({
     email: email || process.env.TEST_USER_EMAIL,
@@ -18,9 +18,9 @@ const getTestUserAndToken = async (email, password) => {
   });
   await user.save();
 
-  const userResponse = getUserAndToken(user);
+  const userData = serializeUser(user);
 
-  return userResponse;
+  return userData;
 };
 
 const getPasswordResetToken = async (userId) => {
@@ -83,9 +83,9 @@ const getTestDeveloperDashboard = async (userId) => {
 
 const mockReq = (body, options = {}) => ({
   body,
-  params: options.params,
-  user: options.user,
-  query: options.query,
+  session: options.session || {},
+  params: options.params || {},
+  query: options.query || {},
 });
 
 const mockRes = () => {
@@ -122,7 +122,7 @@ const paginateArray = (arr, options) => {
 };
 
 module.exports = {
-  getTestUserAndToken,
+  getTestUser,
   getPasswordResetToken,
   getTestOccupierDashboard,
   getTestInvestorDashboard,

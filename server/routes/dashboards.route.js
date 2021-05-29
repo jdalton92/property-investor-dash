@@ -2,7 +2,7 @@ const {
   isAuthenticated,
   isAdminOrDashboardOwner,
 } = require("../utils/authMiddleware");
-const { assumptionsValidate } = require("../utils/middleware");
+const { isValidId, isValidAssumptions } = require("../utils/middleware");
 const {
   createDashboardController,
   getDashboardsController,
@@ -13,24 +13,27 @@ const {
 
 const dashboardsRouter = require("express").Router();
 
-dashboardsRouter.post("/", assumptionsValidate, createDashboardController);
+dashboardsRouter.post("/", isValidAssumptions, createDashboardController);
 dashboardsRouter.get("/", isAuthenticated, getDashboardsController);
 dashboardsRouter.get(
   "/:id",
   isAuthenticated,
+  isValidId,
   isAdminOrDashboardOwner,
   getDashboardController
 );
 dashboardsRouter.put(
   "/:id",
   isAuthenticated,
-  assumptionsValidate,
+  isValidId,
+  isValidAssumptions,
   isAdminOrDashboardOwner,
   updateDashboardController
 );
 dashboardsRouter.delete(
   "/:id",
   isAuthenticated,
+  isValidId,
   isAdminOrDashboardOwner,
   deleteDashboardController
 );

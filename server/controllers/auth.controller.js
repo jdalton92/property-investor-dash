@@ -8,8 +8,18 @@ const {
 const loginController = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    const userAndToken = await loginUser(email, password);
-    return res.status(200).json(userAndToken);
+    const user = await loginUser(email, password);
+    req.session.user = user;
+    return res.status(200).json(user);
+  } catch (e) {
+    next(e);
+  }
+};
+
+const logoutController = async (req, res, next) => {
+  try {
+    await req.session.destroy();
+    return res.status(204).end();
   } catch (e) {
     next(e);
   }
@@ -17,8 +27,9 @@ const loginController = async (req, res, next) => {
 
 const demoUserController = async (req, res, next) => {
   try {
-    const userAndToken = await demoUser();
-    return res.status(200).json(userAndToken);
+    const user = await demoUser();
+    req.session.user = user;
+    return res.status(200).json(user);
   } catch (e) {
     next(e);
   }
@@ -41,13 +52,8 @@ const requestPasswordResetController = async (req, res, next) => {
 const resetPasswordController = async (req, res, next) => {
   try {
     const { id, token, password, checkPassword } = req.body;
-    const userAndToken = await resetPassword(
-      id,
-      token,
-      password,
-      checkPassword
-    );
-    return res.status(200).json(userAndToken);
+    const user = await resetPassword(id, token, password, checkPassword);
+    return res.status(200).json(user);
   } catch (e) {
     next(e);
   }
@@ -55,6 +61,7 @@ const resetPasswordController = async (req, res, next) => {
 
 module.exports = {
   loginController,
+  logoutController,
   demoUserController,
   requestPasswordResetController,
   resetPasswordController,

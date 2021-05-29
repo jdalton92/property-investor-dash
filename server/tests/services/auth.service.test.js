@@ -1,6 +1,6 @@
 const dbHandler = require("../dbHandler");
-const sendEmail = require("../../../utils/email");
-const { getPasswordResetToken, getTestUserAndToken } = require("../factories");
+const sendEmail = require("../../utils/email");
+const { getPasswordResetToken, getTestUser } = require("../factories");
 const {
   loginUser,
   demoUser,
@@ -26,10 +26,9 @@ describe("Auth Service Tests", () => {
       "Invalid email or password"
     );
 
-    const { token, userData } = await getTestUserAndToken();
+    const user = await getTestUser();
     const res = await loginUser(email, password);
-    expect(res.token).toEqual(token);
-    expect(res.userData._id).toEqual(userData._id);
+    expect(res._id).toEqual(user._id);
   });
 
   it("Demo user", async () => {
@@ -38,12 +37,11 @@ describe("Auth Service Tests", () => {
     const email = process.env.DEMO_USER_EMAIL;
     const password = process.env.DEMO_USER_PASSWORD;
 
-    const { token, userData } = await getTestUserAndToken(email, password);
+    const user = await getTestUser(email, password);
 
     const res = await demoUser();
 
-    expect(res.token).toEqual(token);
-    expect(res.userData._id).toEqual(userData._id);
+    expect(res._id).toEqual(user._id);
   });
 
   it("Request password reset", async () => {
@@ -56,7 +54,7 @@ describe("Auth Service Tests", () => {
 
     const email = process.env.TEST_USER_EMAIL;
     const password = process.env.TEST_USER_PASSWORD;
-    await getTestUserAndToken(email, password);
+    await getTestUser(email, password);
 
     await requestPasswordReset(email);
 
@@ -69,31 +67,25 @@ describe("Auth Service Tests", () => {
     const newPassword = "newPassword";
     const confirmNewPassword = "newPassword";
 
-    const { userData, token } = await getTestUserAndToken(email, password);
-    const passwordResetToken = await getPasswordResetToken(userData._id);
+    const user = await getTestUser(email, password);
+    const passwordResetToken = await getPasswordResetToken(user._id);
 
     await expect(() =>
-      resetPassword(userData._id, passwordResetToken, newPassword, "invalid")
+      resetPassword(user._id, passwordResetToken, newPassword, "invalid")
     ).rejects.toThrow("New passwords must match");
     await expect(() =>
-      resetPassword(
-        userData._id,
-        "invalidtoken",
-        newPassword,
-        confirmNewPassword
-      )
+      resetPassword(user._id, "invalidtoken", newPassword, confirmNewPassword)
     ).rejects.toThrow(
       "Invalid or expired password reset token. Please generate a new link"
     );
 
     const res = await resetPassword(
-      userData._id,
+      user._id,
       passwordResetToken,
       newPassword,
       confirmNewPassword
     );
 
-    expect(res.token).toEqual(token);
-    expect(res.userData._id).toEqual(userData._id);
+    expect(res._id).toEqual(user._id);
   });
 });

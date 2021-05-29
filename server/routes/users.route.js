@@ -3,6 +3,7 @@ const {
   isNotDemoUser,
   isAdminOrUserOwner,
 } = require("../utils/authMiddleware");
+const { isValidId } = require("../utils/middleware");
 const {
   createUserController,
   updateUserController,
@@ -15,6 +16,7 @@ usersRouter.post("/", createUserController);
 usersRouter.put(
   "/:id",
   isAuthenticated,
+  isValidId,
   isNotDemoUser,
   isAdminOrUserOwner,
   updateUserController
@@ -22,6 +24,7 @@ usersRouter.put(
 usersRouter.delete(
   "/:id",
   isAuthenticated,
+  isValidId,
   isNotDemoUser,
   isAdminOrUserOwner,
   deleteUserController

@@ -1,9 +1,15 @@
 import axios from "axios";
+import { getAuthOptions } from "../utils/authHelper";
 import { V1_API } from "../config";
 const baseUrl = `${V1_API}/auth`;
 
 const login = async (email, password) => {
   const response = await axios.post(`${baseUrl}/login`, { email, password });
+  return response.data;
+};
+
+const logout = async () => {
+  const response = await axios.post(`${baseUrl}/logout`, getAuthOptions());
   return response.data;
 };
 
@@ -30,4 +36,10 @@ const resetPassword = async (id, token, password, checkPassword) => {
 };
 
 // eslint-disable-next-line
-export default { login, demo, requestPasswordReset, resetPassword };
+export default {
+  login,
+  logout,
+  demo,
+  requestPasswordReset,
+  resetPassword,
+};

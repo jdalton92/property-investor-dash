@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAuthHeader } from "../utils/tokenHelper";
+import { getAuthOptions } from "../utils/authHelper";
 import { V1_API } from "../config";
 const baseUrl = `${V1_API}/cashflows`;
 
@@ -9,7 +9,8 @@ const getCashflow = async (type, assumptions) => {
 };
 
 const getDashboardAndCashflow = async (id) => {
-  const response = await axios.get(`${baseUrl}/${id}`, getAuthHeader());
+  const options = getAuthOptions();
+  const response = await axios.get(`${baseUrl}/${id}`, options);
   return response.data;
 };
 

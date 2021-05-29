@@ -43,7 +43,9 @@ Example `.env` file in the `server` directory:
 ```sh
 MONGODB_URI=mongodb+srv://<username>:<id>@<url>.mongodb.net/<collection-name>
 PORT=3001
-SECRET=<your_secret_key>
+SESSION_SECRET=<session_secret>
+ACCESS_TOKEN_SECRET=<access_token_secret>
+REFRESH_TOKEN_SECRET=<refresh_token_secret>
 EMAIL=<your_email>
 API_KEY=<your_mailgun_api_key>
 DOMAIN=<your_mailgun_domain>
@@ -70,10 +72,10 @@ Testing occurs locally using an in-memory mongo database. Optionally, include `-
 npm test
 ```
 
-**Optionally:** specify a file with `-f` and a test with `-t` eg. to test `server/__tests__/controllers/dashboards.test.js` file and the `Unauthorized GET /` test, use the following command
+**Optionally:** specify a file with `-f` and a test with `-t` eg. to test `server/tests/routes/dashboards.route.test.js` file and the `GET /` test, use the following command
 
 ```sh
-npm test -f "__tests__/controllers/dashboards.test.js" -t "Unauthorized GET /"
+npm test -f "tests/routes/dashboards.route.test" -t "GET /"
 ```
 
 ## Built with

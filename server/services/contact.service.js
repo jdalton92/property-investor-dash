@@ -11,7 +11,7 @@ const contact = async (fullName, company, email, message) => {
   await sendEmail(
     `"${fullName}" <${email}>`,
     process.env.EMAIL,
-    "New Message",
+    "PropertyInvestorDash: New Message",
     "./templates/new-message.handlebars",
     { date, fullName, company, email, message }
   );

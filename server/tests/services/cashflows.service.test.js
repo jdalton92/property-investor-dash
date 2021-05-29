@@ -8,10 +8,7 @@ const {
   investorDashboardAssumptions,
   developerDashboardAssumptions,
 } = require("../constants");
-const {
-  getTestUserAndToken,
-  getTestDeveloperDashboard,
-} = require("../factories");
+const { getTestUser, getTestDeveloperDashboard } = require("../factories");
 const {
   getCashflowAndDashboard,
   getCashflow,
@@ -37,8 +34,8 @@ describe("Cashflow Service Tests", () => {
   });
 
   it("Get cashflow and dashboard", async () => {
-    const { userData } = await getTestUserAndToken();
-    const testDashboard = await getTestDeveloperDashboard(userData._id);
+    const user = await getTestUser();
+    const testDashboard = await getTestDeveloperDashboard(user._id);
     const cashflow = getDeveloperCashflow(testDashboard.assumptions);
 
     const res = await getCashflowAndDashboard(testDashboard._id);

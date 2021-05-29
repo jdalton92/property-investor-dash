@@ -3,7 +3,7 @@ const {
   mockReq,
   mockRes,
   mockNext,
-  getTestUserAndToken,
+  getTestUser,
   getTestOccupierDashboard,
 } = require("../factories");
 const { occupierDashboardAssumptions } = require("../constants");
@@ -45,8 +45,8 @@ describe("Cashflow controller tests", () => {
   });
 
   it("Get cashflow and dashboards", async () => {
-    const { userData } = await getTestUserAndToken();
-    const dashboard = await getTestOccupierDashboard(userData._id);
+    const user = await getTestUser();
+    const dashboard = await getTestOccupierDashboard(user._id);
     const reqBody = {
       type: "occupier",
       assumptions: occupierDashboardAssumptions,

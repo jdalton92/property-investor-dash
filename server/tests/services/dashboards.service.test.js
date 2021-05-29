@@ -6,7 +6,7 @@ const {
   developerDashboardAssumptions,
 } = require("../constants");
 const {
-  getTestUserAndToken,
+  getTestUser,
   getTestOccupierDashboard,
   getTestInvestorDashboard,
   getTestDeveloperDashboard,
@@ -28,24 +28,24 @@ const paginateOptions = {};
 
 describe("Dashboard Service Tests", () => {
   it("Get dashboard", async () => {
-    const { userData } = await getTestUserAndToken();
-    const dashboard = await getTestOccupierDashboard(userData._id);
+    const user = await getTestUser();
+    const dashboard = await getTestOccupierDashboard(user._id);
     const res = await getDashboard(dashboard._id);
     expect(res.type).toEqual("occupier");
   });
 
   it("Get dashboards", async () => {
-    const { userData } = await getTestUserAndToken();
+    const user = await getTestUser();
     const invalidType = "invalid";
     await expect(() =>
-      getDashboards(userData._id, invalidType, paginateOptions)
+      getDashboards(user._id, invalidType, paginateOptions)
     ).rejects.toThrow("`type` must be 'occupier', 'investor', or 'developer'");
 
-    await getTestOccupierDashboard(userData._id);
-    await getTestInvestorDashboard(userData._id);
-    await getTestDeveloperDashboard(userData._id);
+    await getTestOccupierDashboard(user._id);
+    await getTestInvestorDashboard(user._id);
+    await getTestDeveloperDashboard(user._id);
 
-    const res = await getDashboards(userData._id, null, paginateOptions);
+    const res = await getDashboards(user._id, null, paginateOptions);
 
     expect(res.resultsCount).toEqual(3);
     expect(res.results.map((d) => d.type)).toEqual([
@@ -56,7 +56,7 @@ describe("Dashboard Service Tests", () => {
   });
 
   it("Create dashboard", async () => {
-    const { userData } = await getTestUserAndToken();
+    const userData = await getTestUser();
     const description = "Description";
     const address = "address";
     const invalidType = "invalid";
@@ -109,8 +109,8 @@ describe("Dashboard Service Tests", () => {
   });
 
   it("Update dashboard", async () => {
-    const { userData } = await getTestUserAndToken();
-    const dashboard = await getTestOccupierDashboard(userData._id);
+    const user = await getTestUser();
+    const dashboard = await getTestOccupierDashboard(user._id);
 
     const type = "occupier";
     const address = "New address";
@@ -133,7 +133,7 @@ describe("Dashboard Service Tests", () => {
   });
 
   it("Delete dashboard", async () => {
-    const { userData } = await getTestUserAndToken();
+    const userData = await getTestUser();
     const occupierDashboard = await getTestOccupierDashboard(userData._id);
     const investorDashboard = await getTestInvestorDashboard(userData._id);
 

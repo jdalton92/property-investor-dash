@@ -1,26 +1,19 @@
-const jwt = require("jsonwebtoken");
 const Exception = require("../utils/error");
 
 const isAuthenticated = (req, res, next) => {
-  if (!req.token) {
+  if (!req.session || !req.session.user) {
+    req.session && req.session.destroy();
     throw new Exception(401, "Login required");
   }
-
-  const decodedToken = jwt.verify(req.token, process.env.SECRET);
-
-  if (!decodedToken.id) {
-    throw new Exception(401, "Token missing or invalid");
-  }
-
   next();
 };
 
 const isAdminOrDashboardOwner = (req, res, next) => {
-  if (req.user.roles.includes("admin")) {
+  if (req.session.user.roles.includes("admin")) {
     return next();
   }
 
-  if (!req.user.dashboards.includes(req.params.id)) {
+  if (!req.session.user.dashboards.includes(id)) {
     throw new Exception(
       403,
       "You do not have permission to access this resource"
@@ -30,11 +23,11 @@ const isAdminOrDashboardOwner = (req, res, next) => {
 };
 
 const isAdminOrUserOwner = (req, res, next) => {
-  if (req.user.roles.includes("admin")) {
+  if (req.session.user.roles.includes("admin")) {
     return next();
   }
 
-  if (req.user._id.toString() !== req.params.id) {
+  if (req.session.user._id.toString() !== id) {
     throw new Exception(
       403,
       "You do not have permission to access this resource"
@@ -44,7 +37,7 @@ const isAdminOrUserOwner = (req, res, next) => {
 };
 
 const isNotDemoUser = (req, res, next) => {
-  if (req.user.roles.includes("demo")) {
+  if (req.session.user.roles.includes("demo")) {
     throw new Exception(
       403,
       "Demo user does not have permission for this action"

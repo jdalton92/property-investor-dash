@@ -1,5 +1,4 @@
 import authService from "../services/auth";
-import { setToken, destroyToken } from "../utils/tokenHelper";
 import usersService from "../services/users";
 import { CONSTANTS } from "../static/constants";
 import {
@@ -39,10 +38,9 @@ export const initUser = () => {
       );
 
       if (loggedUserJSON) {
-        const { token, userData } = JSON.parse(loggedUserJSON);
+        const user = JSON.parse(loggedUserJSON);
 
-        if (!token || !userData) {
-          destroyToken();
+        if (!user) {
           window.localStorage.removeItem(CONSTANTS.LOCALSTORAGE.LOGGEDUSER);
           dispatch({
             type: "CLEAR_USER",
@@ -50,17 +48,15 @@ export const initUser = () => {
           return;
         }
 
-        setToken(token);
         dispatch({
           type: "SET_MESSAGES",
-          payLoad: { messages: userData.messagesRead },
+          payLoad: { messages: user.messagesRead },
         });
         dispatch({
           type: "SET_USER",
-          payLoad: { user: userData },
+          payLoad: { user },
         });
       } else {
-        destroyToken();
         window.localStorage.removeItem(CONSTANTS.LOCALSTORAGE.LOGGEDUSER);
         dispatch({
           type: "CLEAR_USER",
@@ -81,25 +77,24 @@ export const demoUser = () => {
       type: "USER_REQUEST",
     });
     try {
-      const { token, userData } = await authService.demo();
+      const user = await authService.demo();
 
       window.localStorage.setItem(
         CONSTANTS.LOCALSTORAGE.LOGGEDUSER,
-        JSON.stringify({ token, userData })
+        JSON.stringify(user)
       );
-
-      setToken(token);
 
       dispatch({
         type: "SET_MESSAGES",
-        payLoad: { messages: userData.messagesRead },
+        payLoad: { messages: user.messagesRead },
       });
       dispatch({
         type: "SET_USER",
-        payLoad: { user: userData },
+        payLoad: { user },
       });
       dispatch(successNotification("Logged into demo account"));
     } catch (e) {
+      console.log(e);
       dispatch({
         type: "USER_REQUEST_FAIL",
       });
@@ -114,7 +109,7 @@ export const createUser = (email, password, checkPassword, hasAcceptedTCs) => {
       type: "USER_REQUEST",
     });
     try {
-      const { token, userData } = await usersService.createUser({
+      const user = await usersService.createUser({
         email,
         password,
         checkPassword,
@@ -123,18 +118,16 @@ export const createUser = (email, password, checkPassword, hasAcceptedTCs) => {
 
       window.localStorage.setItem(
         CONSTANTS.LOCALSTORAGE.LOGGEDUSER,
-        JSON.stringify({ token, userData })
+        JSON.stringify(user)
       );
-
-      setToken(token);
 
       dispatch({
         type: "SET_MESSAGES",
-        payLoad: { messages: userData.messagesRead },
+        payLoad: { messages: user.messagesRead },
       });
       dispatch({
         type: "SET_USER",
-        payLoad: { user: userData },
+        payLoad: { user },
       });
       dispatch(successNotification("User account created"));
     } catch (e) {
@@ -148,12 +141,22 @@ export const createUser = (email, password, checkPassword, hasAcceptedTCs) => {
 
 export const logoutUser = () => {
   return async (dispatch) => {
-    destroyToken();
-    window.localStorage.removeItem(CONSTANTS.LOCALSTORAGE.LOGGEDUSER);
     dispatch({
-      type: "CLEAR_USER",
+      type: "USER_REQUEST",
     });
-    dispatch(successNotification("Logged out"));
+    try {
+      window.localStorage.removeItem(CONSTANTS.LOCALSTORAGE.LOGGEDUSER);
+      await authService.logout();
+      dispatch({
+        type: "CLEAR_USER",
+      });
+      dispatch(successNotification("Logged out"));
+    } catch (e) {
+      dispatch({
+        type: "USER_REQUEST_FAIL",
+      });
+      dispatch(errorNotification(e.response.data.message));
+    }
   };
 };
 
@@ -163,21 +166,20 @@ export const loginUser = (email, password) => {
       type: "USER_REQUEST",
     });
     try {
-      const { userData, token } = await authService.login(email, password);
+      const user = await authService.login(email, password);
 
       window.localStorage.setItem(
         CONSTANTS.LOCALSTORAGE.LOGGEDUSER,
-        JSON.stringify({ userData, token })
+        JSON.stringify(user)
       );
-      setToken(token);
 
       dispatch({
         type: "SET_MESSAGES",
-        payLoad: { messages: userData.messagesRead },
+        payLoad: { messages: user.messagesRead },
       });
       dispatch({
         type: "SET_USER",
-        payLoad: { user: userData },
+        payLoad: { user },
       });
     } catch (e) {
       dispatch({
@@ -194,17 +196,16 @@ export const updateUser = (id, data) => {
       type: "USER_REQUEST",
     });
     try {
-      const { userData, token } = await usersService.updateUser(id, data);
+      const user = await usersService.updateUser(id, data);
 
       window.localStorage.setItem(
         CONSTANTS.LOCALSTORAGE.LOGGEDUSER,
-        JSON.stringify({ userData, token })
+        JSON.stringify(user)
       );
-      setToken(token);
 
       dispatch({
         type: "SET_USER",
-        payLoad: { user: userData },
+        payLoad: { user },
       });
       dispatch(infoNotification("User details updated"));
     } catch (e) {
@@ -248,7 +249,7 @@ export const resetPassword = (id, resetToken, password, checkPassword) => {
       type: "USER_REQUEST",
     });
     try {
-      const { userData, token } = await authService.resetPassword(
+      const user = await authService.resetPassword(
         id,
         resetToken,
         password,
@@ -257,13 +258,12 @@ export const resetPassword = (id, resetToken, password, checkPassword) => {
 
       window.localStorage.setItem(
         CONSTANTS.LOCALSTORAGE.LOGGEDUSER,
-        JSON.stringify({ userData, token })
+        JSON.stringify(user)
       );
-      setToken(token);
 
       dispatch({
         type: "SET_USER",
-        payLoad: { user: userData },
+        payLoad: { user },
       });
       dispatch(infoNotification("Password reset"));
     } catch (e) {
@@ -283,7 +283,6 @@ export const deleteUser = (id, password) => {
     try {
       await usersService.deleteUser(id, password);
 
-      destroyToken();
       window.localStorage.removeItem(CONSTANTS.LOCALSTORAGE.LOGGEDUSER);
 
       dispatch({

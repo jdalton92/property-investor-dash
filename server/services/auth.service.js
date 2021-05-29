@@ -4,7 +4,7 @@ const User = require("../models/user.model");
 const Token = require("../models/token.model");
 const Exception = require("../utils/error");
 const sendEmail = require("../utils/email");
-const { getUserAndToken } = require("../utils/parsers");
+const { serializeUser } = require("../utils/user");
 const config = require("../utils/config");
 
 const loginUser = async (email, password) => {
@@ -19,7 +19,7 @@ const loginUser = async (email, password) => {
     throw new Exception(400, "Invalid email or password");
   }
 
-  return getUserAndToken(user);
+  return serializeUser(user);
 };
 
 const demoUser = async () => {
@@ -29,10 +29,10 @@ const demoUser = async () => {
     throw new Exception(404, "Demo user not found");
   }
 
-  const userResponse = getUserAndToken(demoUser);
-  userResponse.userData.messagesRead = []; // Show all messages for demo user
+  const user = serializeUser(demoUser);
+  user.messagesRead = []; // Show all messages for demo user
 
-  return userResponse;
+  return user;
 };
 
 const requestPasswordReset = async (email) => {
@@ -41,7 +41,7 @@ const requestPasswordReset = async (email) => {
   }
 
   const user = await User.findOne({ email });
-  if (!user.length) {
+  if (!user) {
     throw new Exception(404, "User not found");
   }
 
@@ -105,7 +105,7 @@ const resetPassword = async (id, token, password, checkPassword) => {
 
   await passwordResetToken.deleteOne();
 
-  return getUserAndToken(user);
+  return serializeUser(user);
 };
 
 module.exports = {

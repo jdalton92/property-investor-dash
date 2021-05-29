@@ -1,7 +1,5 @@
 const logger = require("./logger");
-const jwt = require("jsonwebtoken");
 const Exception = require("./error");
-const User = require("../models/user.model");
 
 const requestLogger = (req, res, next) => {
   logger.info(
@@ -12,32 +10,6 @@ const requestLogger = (req, res, next) => {
   logger.info("Path:    ", req.path);
   logger.info("Body:    ", req.body);
   logger.info("---");
-  next();
-};
-
-const tokenExtractor = (req, res, next) => {
-  let token = null;
-  const authorization = req.get("authorization");
-  if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
-    token = authorization.substring(7);
-  }
-  req.token = token;
-  next();
-};
-
-const userExtractor = async (req, res, next) => {
-  let user = null;
-  if (req.token) {
-    const decodedToken = jwt.verify(req.token, process.env.SECRET);
-    if (!decodedToken.id) {
-      throw new Exception(401, "Token missing or invalid");
-    }
-    user = await User.findById(decodedToken.id);
-    if (!user) {
-      throw new Exception(404, "User not found");
-    }
-  }
-  req.user = user;
   next();
 };
 
@@ -57,7 +29,14 @@ const errorHandler = (error, req, res, next) => {
   next(error);
 };
 
-const assumptionsValidate = (req, res, next) => {
+const isValidId = (req, res, next) => {
+  const id = req.params.id;
+  if (!idRegex.test(id)) {
+    throw new Exception(400, "Invalid id");
+  }
+};
+
+const isValidAssumptions = (req, res, next) => {
   let { type, assumptions } = req.body;
   const fields = Object.keys(assumptions);
 
@@ -129,8 +108,7 @@ const assumptionsValidate = (req, res, next) => {
 
 module.exports = {
   errorHandler,
-  tokenExtractor,
-  userExtractor,
   requestLogger,
-  assumptionsValidate,
+  isValidId,
+  isValidAssumptions,
 };

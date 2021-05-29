@@ -8,14 +8,14 @@ const createUserController = async (req, res, next) => {
   try {
     const { password, email, checkPassword, hasAcceptedTCs } = req.body;
 
-    const userAndToken = await createUser(
+    const user = await createUser(
       password,
       email,
       checkPassword,
       hasAcceptedTCs
     );
 
-    return res.status(201).json(userAndToken);
+    return res.status(201).json(user);
   } catch (e) {
     next(e);
   }
@@ -23,9 +23,9 @@ const createUserController = async (req, res, next) => {
 
 const updateUserController = async (req, res, next) => {
   try {
-    const userId = req.user._id;
-    const userAndToken = await updateUser(userId, req.body);
-    return res.status(200).json(userAndToken);
+    const userId = req.session.user._id;
+    const user = await updateUser(userId, req.body);
+    return res.status(200).json(user);
   } catch (e) {
     next(e);
   }

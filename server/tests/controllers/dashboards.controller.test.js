@@ -3,7 +3,7 @@ const {
   mockReq,
   mockRes,
   mockNext,
-  getTestUserAndToken,
+  getTestUser,
   getTestOccupierDashboard,
   getTestInvestorDashboard,
   paginateArray,
@@ -39,8 +39,8 @@ describe("Dashboards controller tests", () => {
   afterAll(async () => await dbHandler.closeDatabase());
 
   it("Create dashboard", async () => {
-    const { userData } = await getTestUserAndToken();
-    const occupierDashboard = await getTestOccupierDashboard(userData._id);
+    const user = await getTestUser();
+    const occupierDashboard = await getTestOccupierDashboard(user._id);
     const description = "Dashboard description";
     const address = "Address";
     const type = "occupier";
@@ -50,16 +50,14 @@ describe("Dashboards controller tests", () => {
       type,
       assumptions: occupierDashboardAssumptions,
     };
-    const options = {
-      user: userData,
-    };
+    const options = { session: { user } };
     const req = mockReq(reqBody, options);
 
     dashboardsService.createDashboard.mockResolvedValue(occupierDashboard);
     await createDashboardController(req, res, next);
     expect(dashboardsService.createDashboard.mock.calls.length).toEqual(1);
     expect(dashboardsService.createDashboard.mock.calls[0]).toEqual([
-      userData._id,
+      user._id,
       description,
       address,
       type,
@@ -70,8 +68,8 @@ describe("Dashboards controller tests", () => {
   });
 
   it("Get dashboard", async () => {
-    const { userData } = await getTestUserAndToken();
-    const occupierDashboard = await getTestOccupierDashboard(userData._id);
+    const user = await getTestUser();
+    const occupierDashboard = await getTestOccupierDashboard(user._id);
     const reqBody = undefined;
     const options = {
       params: { id: occupierDashboard._id },
@@ -89,15 +87,15 @@ describe("Dashboards controller tests", () => {
   });
 
   it("Get dashboards", async () => {
-    const { userData } = await getTestUserAndToken();
-    const occupierDashboard1 = await getTestOccupierDashboard(userData._id);
-    const occupierDashboard2 = await getTestOccupierDashboard(userData._id);
-    const occupierDashboard3 = await getTestOccupierDashboard(userData._id);
+    const user = await getTestUser();
+    const occupierDashboard1 = await getTestOccupierDashboard(user._id);
+    const occupierDashboard2 = await getTestOccupierDashboard(user._id);
+    const occupierDashboard3 = await getTestOccupierDashboard(user._id);
     const reqBody = undefined;
     const page = 1;
     const limit = 10;
     const options = {
-      user: userData,
+      session: { user },
       query: { type: "occupier", page, limit },
     };
     const req = mockReq(reqBody, options);
@@ -111,7 +109,7 @@ describe("Dashboards controller tests", () => {
     await getDashboardsController(req, res, next);
     expect(dashboardsService.getDashboards.mock.calls.length).toEqual(1);
     expect(dashboardsService.getDashboards.mock.calls[0]).toEqual([
-      userData._id,
+      user._id,
       "occupier",
       { page, limit },
     ]);
@@ -120,9 +118,9 @@ describe("Dashboards controller tests", () => {
   });
 
   it("Update dashboard", async () => {
-    const { userData } = await getTestUserAndToken();
-    const occupierDashboard = await getTestOccupierDashboard(userData._id);
-    const investorDashboard = await getTestInvestorDashboard(userData._id);
+    const user = await getTestUser();
+    const occupierDashboard = await getTestOccupierDashboard(user._id);
+    const investorDashboard = await getTestInvestorDashboard(user._id);
     const type = "investor";
     const description = "Updated dashboard description";
     const address = "Updated address";
@@ -152,11 +150,11 @@ describe("Dashboards controller tests", () => {
   });
 
   it("Delete dashboard", async () => {
-    const { userData } = await getTestUserAndToken();
-    const occupierDashboard = await getTestOccupierDashboard(userData._id);
+    const user = await getTestUser();
+    const occupierDashboard = await getTestOccupierDashboard(user._id);
     const reqBody = undefined;
     const options = {
-      user: userData,
+      session: { user },
       params: {
         id: occupierDashboard._id,
       },
@@ -166,7 +164,7 @@ describe("Dashboards controller tests", () => {
     await deleteDashboardController(req, res, next);
     expect(dashboardsService.deleteDashboard.mock.calls.length).toEqual(1);
     expect(dashboardsService.deleteDashboard.mock.calls[0]).toEqual([
-      userData._id,
+      user._id,
       occupierDashboard._id,
     ]);
     expect(res.status).toBeCalledWith(204);

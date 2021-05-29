@@ -1,5 +1,6 @@
 const {
   loginController,
+  logoutController,
   demoUserController,
   requestPasswordResetController,
   resetPasswordController,
@@ -8,6 +9,7 @@ const {
 const authRouter = require("express").Router();
 
 authRouter.post("/login", loginController);
+authRouter.post("/logout", logoutController);
 authRouter.post("/demo", demoUserController);
 authRouter.post("/request-password-reset", requestPasswordResetController);
 authRouter.post("/reset-password", resetPasswordController);

@@ -1,25 +1,4 @@
-const jwt = require("jsonwebtoken");
 const sCurveData = require("./sCurve.json");
-
-const getUserAndToken = (user) => {
-  const userForToken = {
-    email: user.email,
-    id: user._id,
-  };
-
-  const token = jwt.sign(userForToken, process.env.SECRET);
-
-  return {
-    token,
-    userData: {
-      _id: user._id,
-      email: user.email,
-      hasAcceptedTCs: user.hasAcceptedTCs,
-      roles: user.roles,
-      messagesRead: user.messagesRead,
-    },
-  };
-};
 
 const getOccupierInvestorCashflow = ({
   capitalGrowth,
@@ -365,7 +344,6 @@ const getDeveloperCashflow = ({
 };
 
 module.exports = {
-  getUserAndToken,
   getOccupierInvestorCashflow,
   getDeveloperCashflow,
 };

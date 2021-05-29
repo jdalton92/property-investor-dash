@@ -104,14 +104,11 @@ export const hideHelperMessage = (userId, message) => {
     try {
       if (userId) {
         userService.update(userId, { messagesRead: [message] });
-        const { token, userData } = JSON.parse(
-          window.localStorage.getItem("loggedUser")
+        const user = JSON.parse(
+          window.localStorage.getItem(CONSTANTS.LOCALSTORAGE.LOGGEDUSER)
         );
-        userData.messagesRead = [...userData.messagesRead, message];
-        window.localStorage.setItem(
-          "loggedUser",
-          JSON.stringify({ token, userData })
-        );
+        user.messagesRead = [...user.messagesRead, message];
+        window.localStorage.setItem("loggedUser", JSON.stringify(user));
       }
       dispatch({
         type: "SET_MESSAGE",

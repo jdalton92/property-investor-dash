@@ -1,22 +1,22 @@
 import axios from "axios";
-import { getAuthHeader } from "../utils/tokenHelper";
+import { getAuthOptions } from "../utils/authHelper";
 import { V1_API } from "../config";
 const baseUrl = `${V1_API}/dashboards`;
 
 const getDashboards = async (params = {}) => {
-  const config = getAuthHeader();
+  const config = getAuthOptions();
   config.params = params;
   const response = await axios.get(baseUrl, config);
   return response.data;
 };
 
 const getDashboard = async (id) => {
-  const response = await axios.get(`${baseUrl}/${id}`, getAuthHeader());
+  const response = await axios.get(`${baseUrl}/${id}`, getAuthOptions());
   return response.data;
 };
 
 const createDashboard = async (dashboardData) => {
-  const response = await axios.post(baseUrl, dashboardData, getAuthHeader());
+  const response = await axios.post(baseUrl, dashboardData, getAuthOptions());
   return response.data;
 };
 
@@ -24,13 +24,13 @@ const updateDashboard = async (id, dashboardData) => {
   const response = await axios.put(
     `${baseUrl}/${id}`,
     dashboardData,
-    getAuthHeader()
+    getAuthOptions()
   );
   return response.data;
 };
 
 const deleteDashboard = async (id) => {
-  const response = await axios.delete(`${baseUrl}/${id}`, getAuthHeader());
+  const response = await axios.delete(`${baseUrl}/${id}`, getAuthOptions());
   return response.data;
 };
 
