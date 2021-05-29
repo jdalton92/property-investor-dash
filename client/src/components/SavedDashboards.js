@@ -43,43 +43,47 @@ const SavedDashboards = ({
     return (
       <>
         <h1 className="f24 bold mt16 mb16">Saved Dashboards</h1>
-        <div className="mb16 flex-row align-c">
-          <button
-            onClick={() =>
-              setParams({
-                limit,
-                page: savedDashboards.previousPage,
-              })
-            }
-            type="button"
-            disabled={!savedDashboards.previousPage}
-            className={`${
-              savedDashboards.previousPage ? "bg-blue-1" : "bg-4"
-            } mr12 r bs-3 font-white flex-row align-c justify-c`}
-          >
-            Prev
-          </button>
-          <span className="mr4">Page</span>
-          <span className="bold mr4">{currentPage}</span>
-          <span className="mr4">of</span>
-          <span className="bold mr12">{savedDashboards.pagesCount}</span>
-          <button
-            onClick={() => setParams({ limit, page: savedDashboards.nextPage })}
-            type="button"
-            disabled={!savedDashboards.nextPage}
-            className={`${
-              savedDashboards.nextPage ? "bg-blue-1" : "bg-4"
-            } r bs-3 font-white flex-row align-c justify-c`}
-          >
-            Next
-          </button>
-        </div>
+        {savedDashboards?.resultsCount > 0 ? (
+          <div className="mb16 flex-row align-c">
+            <button
+              onClick={() =>
+                setParams({
+                  limit,
+                  page: savedDashboards.previousPage,
+                })
+              }
+              type="button"
+              disabled={!savedDashboards.previousPage}
+              className={`${
+                savedDashboards.previousPage ? "bg-blue-1" : "bg-4"
+              } mr12 r bs-3 font-white flex-row align-c justify-c`}
+            >
+              Prev
+            </button>
+            <span className="mr4">Page</span>
+            <span className="bold mr4">{currentPage}</span>
+            <span className="mr4">of</span>
+            <span className="bold mr12">{savedDashboards.pagesCount}</span>
+            <button
+              onClick={() =>
+                setParams({ limit, page: savedDashboards.nextPage })
+              }
+              type="button"
+              disabled={!savedDashboards.nextPage}
+              className={`${
+                savedDashboards.nextPage ? "bg-blue-1" : "bg-4"
+              } r bs-3 font-white flex-row align-c justify-c`}
+            >
+              Next
+            </button>
+          </div>
+        ) : null}
         <div className="r bs-3 bg-1 p20 mb20">
           <div className="mh700 o-y-auto o-x-auto">
-            {savedDashboards.resultsCount === 0 && (
+            {!savedDashboards?.resultsCount && (
               <div>No saved dashboards...</div>
             )}
-            {savedDashboards.resultsCount > 0 && (
+            {savedDashboards?.resultsCount > 0 && (
               <table id="save-overwrite" className="overpayments w100 mb20">
                 <thead>
                   <tr>

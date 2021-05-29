@@ -6,7 +6,6 @@ const occupierSchema = {
   // Growth rates
   capitalGrowth: {
     type: Number,
-    required: true,
     min: 0,
     max: 100,
   },
@@ -205,7 +204,6 @@ const developerSchema = {
   },
   capitalGrowth: {
     type: Number,
-    required: true,
     default: 0,
     min: 0,
     max: 100,

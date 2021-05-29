@@ -1,5 +1,7 @@
 const logger = require("./logger");
+const config = require("./config");
 const Exception = require("./error");
+const idRegex = new RegExp(config.ID_REGEX);
 
 const requestLogger = (req, res, next) => {
   logger.info(
@@ -34,6 +36,7 @@ const isValidId = (req, res, next) => {
   if (!idRegex.test(id)) {
     throw new Exception(400, "Invalid id");
   }
+  next();
 };
 
 const isValidAssumptions = (req, res, next) => {

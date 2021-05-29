@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
-import CustomRoute from "./Shared/CustomRoute";
+import PrivateRoute from "./Shared/PrivateRoute";
 
 import NavigationBar from "./NavigationBar/NavigationBar";
 import LeftMenu from "./Menu/LeftMenu";
@@ -29,14 +29,14 @@ const Main = () => {
         <div className="main p8 w100">
           <Switch>
             <Route exact path="/" render={() => <About />} />
-            <CustomRoute path="/settings" render={() => <Settings />} />
+            <PrivateRoute path="/settings" render={() => <Settings />} />
             <Route
               exact
               path="/reset-password/new-password"
               render={() => <NewPassword />}
             />
             <Route path="/reset-password" render={() => <ResetPassword />} />
-            <CustomRoute
+            <PrivateRoute
               path="/saved-dashboards"
               render={() => <SavedDashboards />}
             />
@@ -67,20 +67,20 @@ const Main = () => {
               path="/developer/edit"
               render={() => <DeveloperForm />}
             />
-            <CustomRoute
+            <PrivateRoute
               path="/owner-occupier/edit/:id"
               render={() => <OccupierForm />}
             />
-            <CustomRoute
+            <PrivateRoute
               path="/investor/edit/:id"
               render={() => <InvestorForm />}
             />
-            <CustomRoute
+            <PrivateRoute
               path="/developer/edit/:id"
               render={() => <DeveloperForm />}
             />
             <Route exact path="/dashboard" render={() => <Dashboard />} />
-            <CustomRoute path="/dashboard/:id" render={() => <Dashboard />} />
+            <PrivateRoute path="/dashboard/:id" render={() => <Dashboard />} />
             <Route path="/404" render={() => <NotFound />} />
             <Redirect from="*" to="/404" />
           </Switch>

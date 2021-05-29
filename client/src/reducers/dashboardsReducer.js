@@ -118,6 +118,8 @@ const dashboardsReducer = (state = initialState, action) => {
         ...state.savedDashboards.results,
         action.payLoad.dashboard,
       ];
+      newState.savedDashboards.resultsCount =
+        newState.savedDashboards.results.length;
       return newState;
     case "UPDATE_DASHBOARDS":
       newState = { ...state };
@@ -135,6 +137,8 @@ const dashboardsReducer = (state = initialState, action) => {
           (d) => d._id !== action.payLoad.id
         ),
       ];
+      newState.savedDashboards.resultsCount =
+        newState.savedDashboards.results.length;
       newState.isFetching = false;
       return newState;
     default:

@@ -53,6 +53,7 @@ const resetPasswordController = async (req, res, next) => {
   try {
     const { id, token, password, checkPassword } = req.body;
     const user = await resetPassword(id, token, password, checkPassword);
+    req.session.user = user;
     return res.status(200).json(user);
   } catch (e) {
     next(e);

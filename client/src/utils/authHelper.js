@@ -1,4 +1,4 @@
-export const getAuthOptions = () => {
+export const getAuthConfig = () => {
   return {
     withCredentials: true,
   };

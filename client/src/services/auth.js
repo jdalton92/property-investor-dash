@@ -1,20 +1,24 @@
 import axios from "axios";
-import { getAuthOptions } from "../utils/authHelper";
+import { getAuthConfig } from "../utils/authHelper";
 import { V1_API } from "../config";
 const baseUrl = `${V1_API}/auth`;
 
 const login = async (email, password) => {
-  const response = await axios.post(`${baseUrl}/login`, { email, password });
+  const response = await axios.post(
+    `${baseUrl}/login`,
+    { email, password },
+    getAuthConfig()
+  );
   return response.data;
 };
 
 const logout = async () => {
-  const response = await axios.post(`${baseUrl}/logout`, getAuthOptions());
+  const response = await axios.post(`${baseUrl}/logout`, {}, getAuthConfig());
   return response.data;
 };
 
 const demo = async () => {
-  const response = await axios.post(`${baseUrl}/demo`);
+  const response = await axios.post(`${baseUrl}/demo`, {}, getAuthConfig());
   return response.data;
 };
 

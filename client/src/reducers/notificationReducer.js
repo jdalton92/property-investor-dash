@@ -108,7 +108,10 @@ export const hideHelperMessage = (userId, message) => {
           window.localStorage.getItem(CONSTANTS.LOCALSTORAGE.LOGGEDUSER)
         );
         user.messagesRead = [...user.messagesRead, message];
-        window.localStorage.setItem("loggedUser", JSON.stringify(user));
+        window.localStorage.setItem(
+          CONSTANTS.LOCALSTORAGE.LOGGEDUSER,
+          JSON.stringify(user)
+        );
       }
       dispatch({
         type: "SET_MESSAGE",

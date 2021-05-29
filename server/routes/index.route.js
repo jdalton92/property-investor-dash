@@ -4,12 +4,12 @@ const dashboardsRouter = require("./dashboards.route");
 const cashflowsRouter = require("./cashflows.route");
 const contactRouter = require("./contact.route");
 
-const mainRouter = require("express").Router();
+const v1Routes = require("express").Router();
 
-mainRouter.use("/auth", authRouter);
-mainRouter.use("/cashflows", cashflowsRouter);
-mainRouter.use("/dashboards", dashboardsRouter);
-mainRouter.use("/users", usersRouter);
-mainRouter.use("/contact", contactRouter);
+v1Routes.use("/auth", authRouter);
+v1Routes.use("/cashflows", cashflowsRouter);
+v1Routes.use("/dashboards", dashboardsRouter);
+v1Routes.use("/users", usersRouter);
+v1Routes.use("/contact", contactRouter);
 
-module.exports = mainRouter;
+module.exports = v1Routes;

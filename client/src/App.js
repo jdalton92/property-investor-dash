@@ -21,26 +21,28 @@ const App = ({ initUser, isUserFetching, overlay, saveDashboardModal }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (isUserFetching) {
-    return <Loader />;
-  } else {
-    return (
-      <div className="app bg-base w100 fade-in">
-        <Router>
-          <PageTitleController />
-          <ScrollToTopControlller />
-          {overlay && <Overlay />}
-          {saveDashboardModal && <SaveDashboardModal />}
-          <Notifications />
-          <Switch>
-            <Route exact path="/login" render={() => <Login />} />
-            <Route render={() => <Main />} />
-          </Switch>
-          {process.env.NODE_ENV === "production" && <AnalyticsController />}
-        </Router>
-      </div>
-    );
-  }
+  return (
+    <div className="app bg-base w100 fade-in">
+      <Router>
+        <PageTitleController />
+        <ScrollToTopControlller />
+        <Notifications />
+        {isUserFetching ? (
+          <Loader />
+        ) : (
+          <>
+            {overlay && <Overlay />}
+            {saveDashboardModal && <SaveDashboardModal />}
+            <Switch>
+              <Route exact path="/login" render={() => <Login />} />
+              <Route render={() => <Main />} />
+            </Switch>
+          </>
+        )}
+        {process.env.NODE_ENV === "production" && <AnalyticsController />}
+      </Router>
+    </div>
+  );
 };
 
 const mapStateToProps = (state) => {
