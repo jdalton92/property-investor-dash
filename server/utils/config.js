@@ -6,11 +6,11 @@ if (process.env.NODE_ENV !== "production") {
 
 let FRONTEND_URL = "http://localhost:3000";
 const SALT_ROUNDS = 10;
-const TWO_HOURS = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
+const ONE_WEEK = 7 * 24 * 60 * 60 * 1000; // 1 week in milliseconds
 const PORT = process.env.PORT || 3001;
 const MONGODB_URI = process.env.MONGODB_URI;
 const V1_API = "/api/v1";
-const ID_REGEX = /^[a-f\d]{24}$/i;
+const MONGO_ID_REGEX = /^[a-f\d]{24}$/i;
 
 const SESSION_CONFIG = {
   name: "sid",
@@ -18,7 +18,7 @@ const SESSION_CONFIG = {
   saveUninitialized: false,
   secret: process.env.SESSION_SECRET,
   cookie: {
-    maxAge: TWO_HOURS,
+    maxAge: ONE_WEEK,
     sameSite: false,
   },
 };
@@ -34,7 +34,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 module.exports = {
-  ID_REGEX,
+  MONGO_ID_REGEX,
   SESSION_CONFIG,
   SALT_ROUNDS,
   FRONTEND_URL,

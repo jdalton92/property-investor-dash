@@ -56,7 +56,69 @@ const developerDashboardAssumptions = {
   constructionCostGrowth: 2.5,
 };
 
+const occupierCashflowFields = [
+  "month",
+  "year",
+  "annualIndex",
+  "acquisition",
+  "upfrontCost",
+  "rentalIncome",
+  "opex",
+  "grossRealisation",
+  "sellingCost",
+  "preFinanceCashflow",
+  "openingBalance",
+  "equityUse",
+  "debtUse",
+  "interest",
+  "loanInstallment",
+  "principalRepayment",
+  "closingBalance",
+  "postFinanceCashflow",
+];
+
+const investorCashflowFields = occupierCashflowFields;
+
+const developerCashflowFields = [
+  "month",
+  "year",
+  "acquisition",
+  "initialCosts",
+  "constructionCost",
+  "professionalFees",
+  "statutoryCosts",
+  "contingency",
+  "grossRealisation",
+  "sellingCost",
+  "rentalIncome",
+  "opex",
+  "preFinanceCashflow",
+  "openingBalance",
+  "interest",
+  "loanInstallment",
+  "principalRepayment",
+  "closingBalance",
+  "equitySource",
+  "equityWithdraw",
+  "debtSource",
+  "postFinanceCashflow",
+];
+
+const dashboardFields = [
+  "assumptions",
+  "created",
+  "type",
+  "_id",
+  "user",
+  "description",
+  "address",
+];
+
 module.exports = {
+  dashboardFields,
+  occupierCashflowFields,
+  investorCashflowFields,
+  developerCashflowFields,
   occupierDashboardAssumptions,
   investorDashboardAssumptions,
   developerDashboardAssumptions,

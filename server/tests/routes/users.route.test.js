@@ -1,153 +1,103 @@
-const request = require("supertest");
-const app = require("../../../app");
-const dbHandler = require("../../dbHandler");
-const factories = require("../../factories");
-const crypto = require("crypto");
-const bcrypt = require("bcryptjs");
-const User = require("../../../models/user.model");
-const Token = require("../../../models/token");
-const config = require("../../../utils/config");
+const app = require("../../index");
+const testSession = require("supertest-session");
+const dbHandler = require("../dbHandler");
+const User = require("../../models/user.model");
+const { getTestUser, getPasswordResetToken } = require("../factories");
+const { V1_API } = require("../../utils/config");
 
-const agent = request.agent(app);
-let token;
+jest.mock("../../utils/email");
+
+const urlBase = `${V1_API}/users`;
+let unauthenticatedSession = null;
+let authenticatedSession = null;
+let user = null;
+
 beforeAll(async () => await dbHandler.connect());
 beforeEach(async () => {
-  token = await factories.getTestUserToken();
+  unauthenticatedSession = testSession(app);
+  authenticatedSession = testSession(app);
+  user = await getTestUser();
+  await authenticatedSession.post(`${V1_API}/auth/login`).send({
+    email: process.env.TEST_USER_EMAIL,
+    password: process.env.TEST_USER_PASSWORD,
+  });
 });
 afterEach(async () => await dbHandler.clearDatabase());
-afterAll(async () => await dbHandler.closeDatabase());
+afterAll(async () => {
+  await dbHandler.closeDatabase();
+  app.close();
+});
 
-describe("Test User Controllers", () => {
-  let res;
-
-  it("Create new user", async () => {
-    res = await agent.post("/api/users").send({
+describe("Users route tests", () => {
+  it("POST /", async () => {
+    const res = await unauthenticatedSession.post(`${urlBase}/`).send({
       email: "newUser@email.com",
       password: "password",
       checkPassword: "password",
       hasAcceptedTCs: true,
     });
 
-    expect(res.statusCode).toEqual(201);
-    expect(res.body.email).toEqual("newUser@email.com");
+    expect(res.status).toEqual(201);
+    expect(res.body).toEqual(
+      expect.objectContaining({
+        _id: expect.any(String),
+        email: expect.any(String),
+        dashboards: expect.any(Array),
+        messagesRead: expect.any(Array),
+        hasAcceptedTCs: expect.any(Boolean),
+        roles: expect.any(Array),
+      })
+    );
   });
 
-  it("Create invalid user", async () => {
-    res = await agent.post("/api/users").send({
-      email: "newUser@email.com",
-      password: "password",
-      checkPassword: "invalid",
-      hasAcceptedTCs: true,
-    });
-
-    expect(res.statusCode).toEqual(400);
-    expect(res.body.message).toEqual("Passwords must match");
-
-    res = await agent.post("/api/users").send({
-      email: "newUser@email.com",
-      password: "password",
-      checkPassword: "password",
-      hasAcceptedTCs: false,
-    });
-
-    expect(res.statusCode).toEqual(400);
-    expect(res.body.message).toEqual("Must accept terms and conditions");
-
-    res = await agent.post("/api/users").send({
-      email: "newUser@email.com",
-      password: "a",
-      checkPassword: "a",
-      hasAcceptedTCs: true,
-    });
-
-    expect(res.statusCode).toEqual(400);
-    expect(res.body.message).toEqual("Pasword minimum length 3");
-
-    res = await agent.post("/api/users").send({
-      email: process.env.TEST_USER_EMAIL,
-      password: "password",
-      checkPassword: "password",
-      hasAcceptedTCs: true,
-    });
-
-    expect(res.statusCode).toEqual(400);
-    expect(res.body.message).toEqual("Email in use");
-  });
-
-  it("Update user email", async () => {
-    const testUser = await User.findOne({ email: process.env.TEST_USER_EMAIL });
-
-    res = await agent
-      .put(`/api/users/${testUser._id}`)
-      .set("authorization", `bearer ${token}`)
+  it("Unauthenticated PUT /:id", async () => {
+    const res = await unauthenticatedSession
+      .put(`${urlBase}/${user._id}`)
       .send({
         newEmail: "newUser@email.com",
-      });
-
-    const user = await User.findOne({ email: "newUser@email.com" });
-    expect(res.statusCode).toEqual(200);
-    expect(user._id).toEqual(testUser._id);
-  });
-
-  it("Update user password", async () => {
-    const testUser = await User.findOne({ email: process.env.TEST_USER_EMAIL });
-
-    res = await agent
-      .put(`/api/users/${testUser._id}`)
-      .set("authorization", `bearer ${token}`)
-      .send({
         oldPassword: process.env.TEST_USER_PASSWORD,
         newPassword: "newPassword",
         checkPassword: "newPassword",
+        messagesRead: ["TESTMESSAGE"],
       });
 
-    expect(res.statusCode).toEqual(200);
+    expect(res.status).toEqual(401);
+    expect(res.body.message).toEqual("Login required");
   });
 
-  it("Invalid update of user password", async () => {
-    const testUser = await User.findOne({ email: process.env.TEST_USER_EMAIL });
-
-    res = await agent
-      .put(`/api/users/${testUser._id}`)
-      .set("authorization", `bearer ${token}`)
-      .send({
-        oldPassword: "invalid",
-        newPassword: "newPassword",
-        checkPassword: "newPassword",
-      });
-
-    expect(res.statusCode).toEqual(401);
-    expect(res.body.message).toEqual("Invalid password");
-
-    res = await agent
-      .put(`/api/users/${testUser._id}`)
-      .set("authorization", `bearer ${token}`)
-      .send({
-        oldPassword: process.env.TEST_USER_PASSWORD,
-        newPassword: "newPassword",
-        checkPassword: "invalid",
-      });
-
-    expect(res.statusCode).toEqual(400);
-    expect(res.body.message).toEqual("New passwords must match");
-  });
-
-  it("Reset users password", async () => {
-    const testUser = await User.findOne({ email: process.env.TEST_USER_EMAIL });
-    const resetToken = crypto.randomBytes(32).toString("hex");
-    const tokenHash = await bcrypt.hash(resetToken, config.SALT_ROUNDS);
-    await new Token({
-      user: testUser._id,
-      tokenHash,
-    }).save();
-
-    res = await agent.post(`/api/users/reset-password`).send({
-      id: testUser._id.toString(),
-      token: resetToken,
-      password: "newPassword",
+  it("Authenticated PUT /:id", async () => {
+    const res = await authenticatedSession.put(`${urlBase}/${user._id}`).send({
+      newEmail: "newUser@email.com",
+      oldPassword: process.env.TEST_USER_PASSWORD,
+      newPassword: "newPassword",
       checkPassword: "newPassword",
+      messagesRead: ["TESTMESSAGE"],
     });
 
-    expect(res.statusCode).toEqual(200);
+    expect(res.status).toEqual(200);
+    expect(res.body.email).toEqual("newUser@email.com");
+    expect(res.body.messagesRead).toEqual(["TESTMESSAGE"]);
+
+    user = await User.findById(user._id);
+    const passwordUpdated = await user.validatePassword("newPassword");
+    expect(passwordUpdated).toBeTruthy();
+  });
+
+  it("Unauthenticated DELETE /:id", async () => {
+    const res = await unauthenticatedSession.delete(`${urlBase}/${user._id}`);
+
+    expect(res.status).toEqual(401);
+    expect(res.body.message).toEqual("Login required");
+  });
+
+  it("Authenticated DELETE /:id", async () => {
+    const res = await authenticatedSession
+      .delete(`${urlBase}/${user._id}`)
+      .send({ password: process.env.TEST_USER_PASSWORD });
+
+    expect(res.status).toEqual(204);
+
+    user = await User.findById(user._id);
+    expect(user).toBeFalsy();
   });
 });

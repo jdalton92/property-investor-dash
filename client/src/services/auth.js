@@ -3,6 +3,15 @@ import { getAuthConfig } from "../utils/authHelper";
 import { V1_API } from "../config";
 const baseUrl = `${V1_API}/auth`;
 
+const initUser = async () => {
+  const response = await axios.post(
+    `${baseUrl}/init-user`,
+    {},
+    getAuthConfig()
+  );
+  return response.data;
+};
+
 const login = async (email, password) => {
   const response = await axios.post(
     `${baseUrl}/login`,
@@ -41,6 +50,7 @@ const resetPassword = async (id, token, password, checkPassword) => {
 
 // eslint-disable-next-line
 export default {
+  initUser,
   login,
   logout,
   demo,

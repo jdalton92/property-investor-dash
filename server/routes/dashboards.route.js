@@ -13,7 +13,12 @@ const {
 
 const dashboardsRouter = require("express").Router();
 
-dashboardsRouter.post("/", isValidAssumptions, createDashboardController);
+dashboardsRouter.post(
+  "/",
+  isAuthenticated,
+  isValidAssumptions,
+  createDashboardController
+);
 dashboardsRouter.get("/", isAuthenticated, getDashboardsController);
 dashboardsRouter.get(
   "/:id",

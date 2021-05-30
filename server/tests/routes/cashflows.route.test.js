@@ -1,163 +1,130 @@
-const request = require("supertest");
-const app = require("../../../app");
-const Dashboard = require("../../../models/dashboard");
-const factories = require("../../factories");
-const constants = require("../../constants");
-const dbHandler = require("../../dbHandler");
+const app = require("../../index");
+const testSession = require("supertest-session");
+const dbHandler = require("../dbHandler");
+const {
+  getTestUser,
+  refreshTestUserAuthSession,
+  getTestOccupierDashboard,
+  getTestInvestorDashboard,
+  getTestDeveloperDashboard,
+} = require("../factories");
+const {
+  dashboardFields,
+  occupierDashboardAssumptions,
+  occupierCashflowFields,
+  investorDashboardAssumptions,
+  investorCashflowFields,
+  developerDashboardAssumptions,
+  developerCashflowFields,
+} = require("../constants");
 
-const agent = request.agent(app);
-let token;
+const { V1_API } = require("../../utils/config");
+const urlBase = `${V1_API}/cashflows`;
+let unauthenticatedSession = null;
+let authenticatedSession = null;
+let user = null;
+
 beforeAll(async () => await dbHandler.connect());
 beforeEach(async () => {
-  token = await factories.getTestUserToken();
+  unauthenticatedSession = testSession(app);
+  authenticatedSession = testSession(app);
+  user = await getTestUser();
+  await authenticatedSession.post(`${V1_API}/auth/login`).send({
+    email: process.env.TEST_USER_EMAIL,
+    password: process.env.TEST_USER_PASSWORD,
+  });
 });
 afterEach(async () => await dbHandler.clearDatabase());
-afterAll(async () => await dbHandler.closeDatabase());
+afterAll(async () => {
+  await dbHandler.closeDatabase();
+  app.close();
+});
 
-describe("/api/cashflow", () => {
-  let res;
-
-  it("Anonymous POST / is allowed", async () => {
-    res = await agent.post("/api/cashflow").send({
+describe("Cashflow route tests", () => {
+  it("Unauthenticated POST /", async () => {
+    let res = await unauthenticatedSession.post(`${urlBase}/`).send({
       type: "occupier",
-      assumptions: constants.occupierAssumptions,
+      assumptions: occupierDashboardAssumptions,
     });
 
-    expect(res.statusCode).toEqual(200);
-    expect(res.body.length).toEqual(24);
+    expect(res.status).toEqual(200);
+    for (index in occupierCashflowFields) {
+      expect(res.body[0]).toHaveProperty(occupierCashflowFields[index]);
+    }
+
+    res = await unauthenticatedSession.post(`${urlBase}/`).send({
+      type: "investor",
+      assumptions: investorDashboardAssumptions,
+    });
+
+    expect(res.status).toEqual(200);
+    for (index in investorCashflowFields) {
+      expect(res.body[0]).toHaveProperty(investorCashflowFields[index]);
+    }
+
+    res = await unauthenticatedSession.post(`${urlBase}/`).send({
+      type: "developer",
+      assumptions: developerDashboardAssumptions,
+    });
+
+    expect(res.status).toEqual(200);
+    for (index in developerCashflowFields) {
+      expect(res.body[0]).toHaveProperty(developerCashflowFields[index]);
+    }
   });
 
   it("Unauthenticated GET /:id", async () => {
-    let dashboard = new Dashboard({
-      description: "Test Description",
-      address: "Test Address",
-      type: "occupier",
-      assumptions: constants.occupierAssumptions,
-    });
-    dashboard = await dashboard.save();
+    const dashboard = await getTestOccupierDashboard(user._id);
 
-    res = await agent.get(`/api/cashflow/${dashboard._id}`);
+    res = await unauthenticatedSession.get(`${urlBase}/${dashboard._id}`);
 
-    expect(res.statusCode).toEqual(401);
+    expect(res.status).toEqual(401);
     expect(res.body.message).toEqual("Login required");
   });
 
   it("Authenticated GET /:id", async () => {
-    let dashboard = new Dashboard({
-      description: "Test Description",
-      address: "Test Address",
-      type: "occupier",
-      assumptions: constants.occupierAssumptions,
-    });
-    dashboard = await dashboard.save();
-
-    res = await agent
-      .get(`/api/cashflow/${dashboard._id}`)
-      .set("authorization", `bearer ${token}`);
-
-    expect(res.statusCode).toEqual(200);
-    expect(res.body.dashboard._id).toEqual(dashboard._id.toString());
-    expect(res.body.cashflow.length).toEqual(24);
-  });
-
-  it("Invalid POST / ", async () => {
-    res = await agent
-      .post("/api/cashflow")
-      .set("authorization", `bearer ${token}`)
-      .send({
-        type: "invalid",
-        assumptions: {
-          test: "test",
-        },
-      });
-
-    expect(res.statusCode).toEqual(400);
-    expect(res.body.message).toEqual(
-      "`type` must be 'occupier', 'investor', or 'developer'"
+    const occupierDashboard = await getTestOccupierDashboard(user._id);
+    const investorDashboard = await getTestInvestorDashboard(user._id);
+    const developerDashboard = await getTestDeveloperDashboard(user._id);
+    authenticatedSession = await refreshTestUserAuthSession(
+      authenticatedSession
     );
-  });
 
-  it("Invalid occupier POST / ", async () => {
-    res = await agent
-      .post("/api/cashflow")
-      .set("authorization", `bearer ${token}`)
-      .send({
-        type: "occupier",
-        assumptions: {
-          test: "test",
-        },
-      });
+    let res = await authenticatedSession.get(
+      `${urlBase}/${occupierDashboard._id}`
+    );
+    expect(res.status).toEqual(200);
+    for (index in dashboardFields) {
+      expect(res.body.dashboard).toHaveProperty(dashboardFields[index]);
+    }
+    for (index in occupierCashflowFields) {
+      expect(res.body.cashflow[0]).toHaveProperty(
+        occupierCashflowFields[index]
+      );
+    }
 
-    expect(res.statusCode).toEqual(400);
-    expect(res.body.message).toEqual("Invalid field: test");
-  });
+    res = await authenticatedSession.get(`${urlBase}/${investorDashboard._id}`);
+    expect(res.status).toEqual(200);
+    for (index in dashboardFields) {
+      expect(res.body.dashboard).toHaveProperty(dashboardFields[index]);
+    }
+    for (index in investorCashflowFields) {
+      expect(res.body.cashflow[0]).toHaveProperty(
+        investorCashflowFields[index]
+      );
+    }
 
-  it("Invalid investor POST / ", async () => {
-    res = await agent
-      .post("/api/cashflow")
-      .set("authorization", `bearer ${token}`)
-      .send({
-        type: "investor",
-        assumptions: {
-          test: "test",
-        },
-      });
-
-    expect(res.statusCode).toEqual(400);
-    expect(res.body.message).toEqual("Invalid field: test");
-  });
-
-  it("Invalid developer POST / ", async () => {
-    res = await agent
-      .post("/api/cashflow")
-      .set("authorization", `bearer ${token}`)
-      .send({
-        type: "developer",
-        assumptions: {
-          test: "test",
-        },
-      });
-
-    expect(res.statusCode).toEqual(400);
-    expect(res.body.message).toEqual("Invalid field: test");
-  });
-
-  it("Valid occupier POST / ", async () => {
-    res = await agent
-      .post("/api/cashflow")
-      .set("authorization", `bearer ${token}`)
-      .send({
-        type: "occupier",
-        assumptions: constants.occupierAssumptions,
-      });
-
-    expect(res.statusCode).toEqual(200);
-    expect(res.body.length).toEqual(24);
-  });
-
-  it("Valid investor POST / ", async () => {
-    res = await agent
-      .post("/api/cashflow")
-      .set("authorization", `bearer ${token}`)
-      .send({
-        type: "investor",
-        assumptions: constants.investorAssumptions,
-      });
-
-    expect(res.statusCode).toEqual(200);
-    expect(res.body.length).toEqual(24);
-  });
-
-  it("Valid developer POST / ", async () => {
-    res = await agent
-      .post("/api/cashflow")
-      .set("authorization", `bearer ${token}`)
-      .send({
-        type: "developer",
-        assumptions: constants.developerAssumptions,
-      });
-
-    expect(res.statusCode).toEqual(200);
-    expect(res.body.length).toEqual(90);
+    res = await authenticatedSession.get(
+      `${urlBase}/${developerDashboard._id}`
+    );
+    expect(res.status).toEqual(200);
+    for (index in dashboardFields) {
+      expect(res.body.dashboard).toHaveProperty(dashboardFields[index]);
+    }
+    for (index in developerCashflowFields) {
+      expect(res.body.cashflow[0]).toHaveProperty(
+        developerCashflowFields[index]
+      );
+    }
   });
 });

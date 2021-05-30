@@ -1,39 +1,18 @@
 import { v4 as uuid } from "uuid";
-import userService from "../services/users";
 import { CONSTANTS } from "../static/constants";
 
-const initialState = {
-  messagesRead: [],
-  notifications: [],
-};
+const initialState = [];
 
 const notificationReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
-    case "SET_MESSAGE":
-      newState = { ...state };
-      newState.messagesRead = [...state.messagesRead, action.payLoad.message];
-      return newState;
-    case "SET_MESSAGES":
-      if (action.payLoad.messages && action.payLoad.messages.length) {
-        newState = { ...state };
-        newState.messagesRead = [
-          ...state.messagesRead,
-          ...action.payLoad.messages,
-        ];
-        return newState;
-      } else {
-        return state;
-      }
     case "SET_NOTIFICATION":
-      newState = { ...state };
-      newState.notifications = [...state.notifications, action.payLoad];
+      newState = [...state];
+      newState = [...state, action.payLoad];
       return newState;
     case "CLEAR_NOTIFICATION":
-      newState = { ...state };
-      newState.notifications = state.notifications.filter(
-        (n) => n.id !== action.payLoad.id
-      );
+      newState = [...state];
+      newState = newState.filter((n) => n.id !== action.payLoad.id);
       return newState;
     default:
       return state;
@@ -96,31 +75,6 @@ export const clearNotification = (id) => {
       type: "CLEAR_NOTIFICATION",
       payLoad: { id },
     });
-  };
-};
-
-export const hideHelperMessage = (userId, message) => {
-  return (dispatch) => {
-    try {
-      if (userId) {
-        userService.update(userId, { messagesRead: [message] });
-        const user = JSON.parse(
-          window.localStorage.getItem(CONSTANTS.LOCALSTORAGE.LOGGEDUSER)
-        );
-        user.messagesRead = [...user.messagesRead, message];
-        window.localStorage.setItem(
-          CONSTANTS.LOCALSTORAGE.LOGGEDUSER,
-          JSON.stringify(user)
-        );
-      }
-      dispatch({
-        type: "SET_MESSAGE",
-        payLoad: { message },
-      });
-    } catch (e) {
-      console.log(e);
-      dispatch(errorNotification(e.response.data.message));
-    }
   };
 };
 

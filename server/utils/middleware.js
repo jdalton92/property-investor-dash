@@ -1,7 +1,7 @@
 const logger = require("./logger");
 const config = require("./config");
 const Exception = require("./error");
-const idRegex = new RegExp(config.ID_REGEX);
+const idRegex = new RegExp(config.MONGO_ID_REGEX);
 
 const requestLogger = (req, res, next) => {
   logger.info(
@@ -20,7 +20,7 @@ const errorHandler = (error, req, res, next) => {
     const status = error.status || error.statusCode || 500;
     const message =
       error.message || error.statusMessage || "Internal server error";
-    logger.error(error);
+    logger.info(error);
 
     return res.status(status).send({
       status,
@@ -41,6 +41,11 @@ const isValidId = (req, res, next) => {
 
 const isValidAssumptions = (req, res, next) => {
   let { type, assumptions } = req.body;
+
+  if (!assumptions || typeof assumptions !== "object") {
+    throw new Exception(400, "Unable to validate dashboard assumptions");
+  }
+
   const fields = Object.keys(assumptions);
 
   const occupierFields = [

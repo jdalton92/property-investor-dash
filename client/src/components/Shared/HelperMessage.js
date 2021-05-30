@@ -1,23 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
-import { hideHelperMessage } from "../../reducers/notificationReducer";
+import { readHelperMessage } from "../../reducers/usersReducer";
 import { Icon } from "./Icon";
 import TickIcon from "../../styles/svg/tick.svg";
 import MessageIcon from "../../styles/svg/message.svg";
 
 const HelperMessage = ({
   userId,
-  hideHelperMessage,
+  readHelperMessage,
   type,
   body,
   messagesRead,
 }) => {
   const handleClick = (e) => {
     e.preventDefault();
-    hideHelperMessage(userId, type);
+    readHelperMessage(userId, type);
   };
 
-  if (messagesRead.includes(type)) {
+  if (messagesRead && messagesRead.includes(type)) {
     return null;
   } else {
     return (
@@ -54,13 +54,13 @@ const HelperMessage = ({
 
 const mapStateToProps = (state) => {
   return {
-    userId: state.users.data?.id,
-    messagesRead: state.notification.messagesRead,
+    userId: state.users.data?._id,
+    messagesRead: state.users.data?.messagesRead,
   };
 };
 
 const mapDispatchToProps = {
-  hideHelperMessage,
+  readHelperMessage,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HelperMessage);

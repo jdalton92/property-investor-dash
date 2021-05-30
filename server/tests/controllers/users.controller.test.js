@@ -76,6 +76,7 @@ describe("Users controller tests", () => {
     const reqBody = { password };
     const options = {
       params: { id: user._id },
+      session: { destroy: jest.fn() },
     };
     const req = mockReq(reqBody, options);
 

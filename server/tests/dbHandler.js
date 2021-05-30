@@ -9,6 +9,7 @@ module.exports.connect = async () => {
   const uri = await mongod.getUri();
 
   const options = {
+    useCreateIndex: true,
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useFindAndModify: false,

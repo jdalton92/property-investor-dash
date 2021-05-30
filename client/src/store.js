@@ -12,7 +12,7 @@ import cashflowsReducer from "./reducers/cashflowsReducer";
 
 const reducer = combineReducers({
   users: usersReducer,
-  notification: notificationReducer,
+  notifications: notificationReducer,
   dashboards: dashboardsReducer,
   cashflows: cashflowsReducer,
   navigation: navigationReducer,

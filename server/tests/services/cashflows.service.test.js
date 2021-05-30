@@ -2,7 +2,7 @@ const dbHandler = require("../dbHandler");
 const {
   getOccupierInvestorCashflow,
   getDeveloperCashflow,
-} = require("../../utils/parsers");
+} = require("../../utils/cashflows");
 const {
   occupierDashboardAssumptions,
   investorDashboardAssumptions,

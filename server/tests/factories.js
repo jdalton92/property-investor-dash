@@ -8,6 +8,7 @@ const {
   investorDashboardAssumptions,
   developerDashboardAssumptions,
 } = require("./constants");
+const { V1_API } = require("../utils/config");
 
 const getTestUser = async (email, password) => {
   // Password hashing handled in pre save hook
@@ -21,6 +22,14 @@ const getTestUser = async (email, password) => {
   const userData = serializeUser(user);
 
   return userData;
+};
+
+const refreshTestUserAuthSession = async (session) => {
+  await session.post(`${V1_API}/auth/login`).send({
+    email: process.env.TEST_USER_EMAIL,
+    password: process.env.TEST_USER_PASSWORD,
+  });
+  return session;
 };
 
 const getPasswordResetToken = async (userId) => {
@@ -123,6 +132,7 @@ const paginateArray = (arr, options) => {
 
 module.exports = {
   getTestUser,
+  refreshTestUserAuthSession,
   getPasswordResetToken,
   getTestOccupierDashboard,
   getTestInvestorDashboard,

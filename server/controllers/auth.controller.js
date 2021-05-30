@@ -5,6 +5,18 @@ const {
   resetPassword,
 } = require("../services/auth.service");
 
+const initUserController = async (req, res, next) => {
+  try {
+    if (req.session && req.session.user) {
+      user = req.session.user;
+      return res.status(200).json(user);
+    }
+    return res.status(204).end();
+  } catch (e) {
+    next(e);
+  }
+};
+
 const loginController = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -61,6 +73,7 @@ const resetPasswordController = async (req, res, next) => {
 };
 
 module.exports = {
+  initUserController,
   loginController,
   logoutController,
   demoUserController,

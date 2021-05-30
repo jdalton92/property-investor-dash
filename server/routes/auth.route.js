@@ -1,4 +1,5 @@
 const {
+  initUserController,
   loginController,
   logoutController,
   demoUserController,
@@ -8,6 +9,7 @@ const {
 
 const authRouter = require("express").Router();
 
+authRouter.post("/init-user", initUserController);
 authRouter.post("/login", loginController);
 authRouter.post("/logout", logoutController);
 authRouter.post("/demo", demoUserController);

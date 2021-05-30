@@ -3,7 +3,7 @@ const Exception = require("../utils/error");
 const {
   getDeveloperCashflow,
   getOccupierInvestorCashflow,
-} = require("../utils/parsers");
+} = require("../utils/cashflows");
 
 const getCashflowAndDashboard = async (dashboardId) => {
   const dashboard = await Dashboard.findById(dashboardId);

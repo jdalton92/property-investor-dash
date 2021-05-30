@@ -7,7 +7,18 @@ import {
   infoNotification,
 } from "./notificationReducer";
 
-const initialState = { isFetching: true, data: {} };
+const anonymousUser = {
+  _id: "",
+  email: "",
+  dashboards: [],
+  messagesRead: [],
+  hasAcceptedTCs: false,
+  roles: [],
+};
+const initialState = {
+  isFetching: true,
+  data: anonymousUser,
+};
 
 const usersReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -15,13 +26,20 @@ const usersReducer = (state = initialState, action) => {
       return { ...state, isFetching: true };
     case "USER_REQUEST_FAIL":
       return { ...state, isFetching: false };
+    case "READ_MESSAGE":
+      const newState = { ...state };
+      newState.data.messagesRead = [
+        ...newState.data.messagesRead,
+        action.payLoad.message,
+      ];
+      return newState;
     case "SET_USER":
       return {
         isFetching: false,
         data: action.payLoad.user,
       };
     case "CLEAR_USER":
-      return { isFetching: false, data: {} };
+      return { isFetching: false, data: anonymousUser };
     default:
       return state;
   }
@@ -33,25 +51,12 @@ export const initUser = () => {
       type: "USER_REQUEST",
     });
     try {
-      const loggedUserJSON = window.localStorage.getItem(
-        CONSTANTS.LOCALSTORAGE.LOGGEDUSER
-      );
-
-      if (loggedUserJSON) {
-        const user = JSON.parse(loggedUserJSON);
-
-        if (!user) {
-          window.localStorage.removeItem(CONSTANTS.LOCALSTORAGE.LOGGEDUSER);
-          dispatch({
-            type: "CLEAR_USER",
-          });
-          return;
-        }
-
-        dispatch({
-          type: "SET_MESSAGES",
-          payLoad: { messages: user.messagesRead },
-        });
+      const user = await authService.initUser();
+      if (user) {
+        window.localStorage.setItem(
+          CONSTANTS.LOCALSTORAGE.LOGGEDUSER,
+          JSON.stringify(user)
+        );
         dispatch({
           type: "SET_USER",
           payLoad: { user },
@@ -63,6 +68,7 @@ export const initUser = () => {
         });
       }
     } catch (e) {
+      console.log(e);
       dispatch({
         type: "USER_REQUEST_FAIL",
       });
@@ -83,11 +89,6 @@ export const demoUser = () => {
         CONSTANTS.LOCALSTORAGE.LOGGEDUSER,
         JSON.stringify(user)
       );
-
-      dispatch({
-        type: "SET_MESSAGES",
-        payLoad: { messages: user.messagesRead },
-      });
       dispatch({
         type: "SET_USER",
         payLoad: { user },
@@ -120,11 +121,6 @@ export const createUser = (email, password, checkPassword, hasAcceptedTCs) => {
         CONSTANTS.LOCALSTORAGE.LOGGEDUSER,
         JSON.stringify(user)
       );
-
-      dispatch({
-        type: "SET_MESSAGES",
-        payLoad: { messages: user.messagesRead },
-      });
       dispatch({
         type: "SET_USER",
         payLoad: { user },
@@ -172,11 +168,6 @@ export const loginUser = (email, password) => {
         CONSTANTS.LOCALSTORAGE.LOGGEDUSER,
         JSON.stringify(user)
       );
-
-      dispatch({
-        type: "SET_MESSAGES",
-        payLoad: { messages: user.messagesRead },
-      });
       dispatch({
         type: "SET_USER",
         payLoad: { user },
@@ -213,6 +204,32 @@ export const updateUser = (id, data) => {
       dispatch({
         type: "USER_REQUEST_FAIL",
       });
+      dispatch(errorNotification(e.response.data.message));
+    }
+  };
+};
+
+export const readHelperMessage = (userId, message) => {
+  return (dispatch) => {
+    try {
+      if (userId) {
+        // Dont await server response so UX seems instant
+        usersService.updateUser(userId, { messagesRead: [message] });
+        const user = JSON.parse(
+          window.localStorage.getItem(CONSTANTS.LOCALSTORAGE.LOGGEDUSER)
+        );
+        user.messagesRead = [...user.messagesRead, message];
+        window.localStorage.setItem(
+          CONSTANTS.LOCALSTORAGE.LOGGEDUSER,
+          JSON.stringify(user)
+        );
+      }
+      dispatch({
+        type: "READ_MESSAGE",
+        payLoad: { message },
+      });
+    } catch (e) {
+      console.log(e);
       dispatch(errorNotification(e.response.data.message));
     }
   };

@@ -102,7 +102,8 @@ const updateUser = async (userId, userData) => {
 
 const deleteUser = async (userId, password) => {
   const user = await User.findById(userId);
-  const passwordCorrect = user && (await user.validatePassword(password));
+  const passwordCorrect =
+    user && password && (await user.validatePassword(password));
 
   if (passwordCorrect) {
     await User.findByIdAndDelete(userId);
