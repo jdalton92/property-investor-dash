@@ -15,17 +15,14 @@ const useDropdownOutsideAlerter = (ref) => {
         payLoad: {
           dropdown: CONSTANTS.DROPDOWNS.USERNAME,
           status: false,
-          overlay: false,
         },
       });
     }
   };
 
   useEffect(() => {
-    // Bind the event listener
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      // Unbind the event listener on clean up
       document.removeEventListener("mousedown", handleClickOutside);
     };
   });
@@ -57,10 +54,8 @@ const useOverlayOutsideAlerter = (ref) => {
   };
 
   useEffect(() => {
-    // Bind the event listener
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      // Unbind the event listener on clean up
       document.removeEventListener("mousedown", handleClickOutside);
     };
   });

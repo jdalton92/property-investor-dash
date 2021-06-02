@@ -209,19 +209,19 @@ export const updateUser = (id, data) => {
   };
 };
 
-export const readHelperMessage = (userId, message) => {
+export const readHelperMessage = (user, message) => {
   return (dispatch) => {
     try {
-      if (userId) {
+      if (user._id && !user.roles.includes("demo")) {
         // Dont await server response so UX seems instant
-        usersService.updateUser(userId, { messagesRead: [message] });
-        const user = JSON.parse(
+        usersService.updateUser(user._id, { messagesRead: [message] });
+        const storedUser = JSON.parse(
           window.localStorage.getItem(CONSTANTS.LOCALSTORAGE.LOGGEDUSER)
         );
-        user.messagesRead = [...user.messagesRead, message];
+        storedUser.messagesRead = [...storedUser.messagesRead, message];
         window.localStorage.setItem(
           CONSTANTS.LOCALSTORAGE.LOGGEDUSER,
-          JSON.stringify(user)
+          JSON.stringify(storedUser)
         );
       }
       dispatch({

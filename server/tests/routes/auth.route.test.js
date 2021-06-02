@@ -28,13 +28,13 @@ afterAll(async () => {
 });
 
 describe("Auth route tests", () => {
-  it("POST /init-user", async () => {
-    let res = await unauthenticatedSession.post(`${urlBase}/init-user`);
+  it("GET /init-user", async () => {
+    let res = await unauthenticatedSession.get(`${urlBase}/init-user`);
 
     expect(res.status).toEqual(204);
     expect(res.body).toEqual({});
 
-    res = await authenticatedSession.post(`${urlBase}/init-user`);
+    res = await authenticatedSession.get(`${urlBase}/init-user`);
 
     expect(res.status).toEqual(200);
     expect(res.body).toEqual(

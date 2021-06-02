@@ -11,12 +11,12 @@
   background-repeat: no-repeat;
   &:nth-child(1),
   &:nth-child(3) {
-    border-top-left-radius: $border-radius-base;
-    border-bottom-left-radius: $border-radius-base;
+    border-top-left-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
   }
   &:nth-child(2) {
-    border-top-right-radius: $border-radius-base;
-    border-bottom-right-radius: $border-radius-base;
+    border-top-right-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
   }
 }
 
@@ -33,8 +33,8 @@
     min-height: 300px;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    border-top-right-radius: $border-radius-base;
-    border-top-left-radius: $border-radius-base;
+    border-top-right-radius: $border-radius;
+    border-top-left-radius: $border-radius;
   }
 }
 

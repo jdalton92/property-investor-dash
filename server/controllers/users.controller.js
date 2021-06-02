@@ -15,6 +15,7 @@ const createUserController = async (req, res, next) => {
       hasAcceptedTCs
     );
 
+    req.session.user = user;
     return res.status(201).json(user);
   } catch (e) {
     next(e);

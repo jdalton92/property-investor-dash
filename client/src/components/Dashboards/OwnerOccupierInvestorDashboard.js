@@ -9,7 +9,7 @@ import {
   occupierInvestorMOCCalculation,
 } from "../../utils/occupierAndInvestorCalculations";
 import {
-  currencyFormatter,
+  cashflowFormatter,
   percentageFormatter,
   IRRCalculation,
 } from "../../utils/dashboardHelper";
@@ -30,7 +30,7 @@ const OwnerOccupierInvestorDashboard = ({ monthlyCashflow }) => {
     <>
       <h2 className="f16 bold mt16 mb16">Post Funding Metrics</h2>
       <div className="dash-row flex-row">
-        <table className="r bs-3 bg-1 p20 mb16 o-hidden">
+        <table className="dashboard-table r bs-3 bg-1 p20 mb16 o-hidden">
           <thead>
             <tr>
               <th>Total</th>
@@ -40,19 +40,19 @@ const OwnerOccupierInvestorDashboard = ({ monthlyCashflow }) => {
           <tbody>
             <tr>
               <td>Rental Income:</td>
-              <td>{currencyFormatter.format(cardData.rentalIncome)}</td>
+              <td>{cashflowFormatter(cardData.rentalIncome)}</td>
             </tr>
             <tr>
               <td>Loan Interest:</td>
-              <td>{currencyFormatter.format(cardData.mortgageInterest)}</td>
+              <td>{cashflowFormatter(cardData.mortgageInterest)}</td>
             </tr>
             <tr>
               <td>Profit:</td>
-              <td>{currencyFormatter.format(cardData.profit)}</td>
+              <td>{cashflowFormatter(cardData.profit)}</td>
             </tr>
           </tbody>
         </table>
-        <table className="r bs-3 bg-1 p20 mb16 o-hidden">
+        <table className="dashboard-table r bs-3 bg-1 p20 mb16 o-hidden">
           <thead>
             <tr>
               <th>Avg Per Month</th>
@@ -63,28 +63,22 @@ const OwnerOccupierInvestorDashboard = ({ monthlyCashflow }) => {
             <tr>
               <td>Rental Income:</td>
               <td>
-                {currencyFormatter.format(
-                  cardData.rentalIncome / cardData.months
-                )}
+                {cashflowFormatter(cardData.rentalIncome / cardData.months)}
               </td>
             </tr>
             <tr>
               <td>Operating Costs:</td>
-              <td>
-                {currencyFormatter.format(cardData.opex / cardData.months)}
-              </td>
+              <td>{cashflowFormatter(cardData.opex / cardData.months)}</td>
             </tr>
             <tr>
               <td>Mortgage Payment:</td>
               <td>
-                {currencyFormatter.format(
-                  cardData.mortgagePayment / cardData.months
-                )}
+                {cashflowFormatter(cardData.mortgagePayment / cardData.months)}
               </td>
             </tr>
           </tbody>
         </table>
-        <table className="r bs-3 bg-1 p20 mb16 o-hidden">
+        <table className="dashboard-table r bs-3 bg-1 p20 mb16 o-hidden">
           <thead>
             <tr>
               <th>Project Metrics</th>
@@ -138,7 +132,7 @@ const OwnerOccupierInvestorDashboard = ({ monthlyCashflow }) => {
         </div>
         {showCashflow && (
           <div className="o-x-auto">
-            <table className="w100 r bg-1 p20 mb16 o-hidden">
+            <table className="dashboard-table w100 r bg-1 p20 mb16 o-hidden">
               <thead>
                 <tr>
                   <th>Year</th>
@@ -156,30 +150,28 @@ const OwnerOccupierInvestorDashboard = ({ monthlyCashflow }) => {
                 {tableData?.annualCashflow.map((c) => (
                   <tr key={c.year}>
                     <td>{c.year}</td>
-                    <td>{currencyFormatter.format(c.equityUse)}</td>
-                    <td>{currencyFormatter.format(c.rentalIncome)}</td>
-                    <td>{currencyFormatter.format(c.opex)}</td>
-                    <td>{currencyFormatter.format(c.netSale)}</td>
-                    <td>{currencyFormatter.format(c.fundingCost)}</td>
-                    <td>{currencyFormatter.format(c.totalIncome)}</td>
-                    <td>{currencyFormatter.format(c.totalCost)}</td>
-                    <td>{currencyFormatter.format(c.postFinanceCashflow)}</td>
+                    <td>{cashflowFormatter(c.equityUse)}</td>
+                    <td>{cashflowFormatter(c.rentalIncome)}</td>
+                    <td>{cashflowFormatter(c.opex)}</td>
+                    <td>{cashflowFormatter(c.netSale)}</td>
+                    <td>{cashflowFormatter(c.fundingCost)}</td>
+                    <td>{cashflowFormatter(c.totalIncome)}</td>
+                    <td>{cashflowFormatter(c.totalCost)}</td>
+                    <td>{cashflowFormatter(c.postFinanceCashflow)}</td>
                   </tr>
                 ))}
               </tbody>
               <tfoot>
                 <tr>
                   <th>Total</th>
-                  <td>{currencyFormatter.format(total?.equityUse)}</td>
-                  <td>{currencyFormatter.format(total?.rentalIncome)}</td>
-                  <td>{currencyFormatter.format(total?.opex)}</td>
-                  <td>{currencyFormatter.format(total?.netSale)}</td>
-                  <td>{currencyFormatter.format(total?.fundingCost)}</td>
-                  <td>{currencyFormatter.format(total?.totalIncome)}</td>
-                  <td>{currencyFormatter.format(total?.totalCost)}</td>
-                  <td>
-                    {currencyFormatter.format(total?.postFinanceCashflow)}
-                  </td>
+                  <td>{cashflowFormatter(total?.equityUse)}</td>
+                  <td>{cashflowFormatter(total?.rentalIncome)}</td>
+                  <td>{cashflowFormatter(total?.opex)}</td>
+                  <td>{cashflowFormatter(total?.netSale)}</td>
+                  <td>{cashflowFormatter(total?.fundingCost)}</td>
+                  <td>{cashflowFormatter(total?.totalIncome)}</td>
+                  <td>{cashflowFormatter(total?.totalCost)}</td>
+                  <td>{cashflowFormatter(total?.postFinanceCashflow)}</td>
                 </tr>
               </tfoot>
             </table>

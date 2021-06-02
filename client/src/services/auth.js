@@ -4,11 +4,7 @@ import { V1_API } from "../config";
 const baseUrl = `${V1_API}/auth`;
 
 const initUser = async () => {
-  const response = await axios.post(
-    `${baseUrl}/init-user`,
-    {},
-    getAuthConfig()
-  );
+  const response = await axios.get(`${baseUrl}/init-user`, getAuthConfig());
   return response.data;
 };
 

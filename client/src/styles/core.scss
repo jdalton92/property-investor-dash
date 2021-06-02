@@ -2,64 +2,25 @@
 *::before,
 *::after {
   box-sizing: inherit;
-  line-height: 2;
 }
 
 *:focus {
   outline: none;
 }
 
-html {
-  font-family: $font-family-base;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  list-style-position: inside;
-  -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
-  -ms-overflow-style: scrollbar;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-
-// IE10+ doesn't honor `<meta name="viewport">` in some cases.
-@at-root {
-  @-ms-viewport {
-    width: device-width;
-  }
-}
-
+html,
 body {
-  font-feature-settings: "kern", "liga", "pnum";
-  -webkit-font-smoothing: antialiased;
   margin: 0;
-  font-family: $font-family-base;
-  font-size: $font-size-base;
-  font-weight: $weight-normal;
-  line-height: $line-height-base;
-  letter-spacing: $letter-spacing-base;
+  box-sizing: border-box;
+  font-family: "Oxygen", sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 1.5;
+  letter-spacing: 0.2px;
   color: $color-base;
   background-color: $bg-color-base;
 }
 
-// Credit: https://github.com/suitcss/base
-[tabindex="-1"]:focus {
-  outline: none !important;
-}
-
-hr {
-  box-sizing: content-box;
-  height: 0;
-  overflow: visible;
-
-  // Apply style
-  border-bottom: 1px solid $border-color-base;
-  border-left: none;
-  border-right: none;
-  border-top: none;
-  margin: 0;
-}
-
-// Remove top margins from headings
 h1,
 h2,
 h3,
@@ -72,155 +33,17 @@ h6 {
   font-weight: inherit;
 }
 
-// Reset margins on paragraphs
 p {
   margin-top: 0;
   margin-bottom: 0;
 }
 
-// 1. Remove the bottom border in Firefox 39-.
-// 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
-// 3. Add explicit cursor to indicate changed behavior.
-// 4. Duplicate behavior to the data-* attribute for our tooltip plugin
-
-abbr[title],
-abbr[data-original-title] {
-  text-decoration: underline;
-  text-decoration: underline dotted;
-  cursor: help;
-  border-bottom: 0;
-}
-
-address {
-  margin-bottom: 0;
-  font-style: normal;
-  line-height: inherit;
-}
-
-ol,
-ul,
-dl {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-ol ol,
-ul ul,
-ol ul,
-ul ol {
-  margin-bottom: 0;
-}
-
-dt {
-  font-weight: $weight-normal;
-}
-
-dd {
-  margin-bottom: 0;
-  margin-left: 0; // Undo browser default
-}
-
-blockquote {
-  margin: 0;
-}
-
-dfn {
-  font-style: italic; // Add the correct font style in Android 4.3-
-}
-
 b,
 strong {
-  font-weight: bold; // Add the correct font weight in Chrome, Edge, and Safari
+  font-weight: bold;
 }
 
-small {
-  font-size: 80%; // Add the correct font size in all browsers
-}
-
-em {
-  font-style: italic;
-}
-
-sub,
-sup {
-  position: relative;
-  font-size: 75%;
-  line-height: 0;
-  vertical-align: baseline;
-}
-
-sub {
-  bottom: -0.25em;
-}
-sup {
-  top: -0.5em;
-}
-
-*[tabindex]:focus {
-  outline: 0;
-}
-
-pre,
-code,
-kbd,
-samp {
-  font-family: monospace, monospace; // Correct the inheritance and scaling of font size in all browsers.
-  font-size: 1em; // Correct the odd `em` font sizing in all browsers.
-}
-
-pre {
-  // Remove browser default top margin
-  margin-top: 0;
-  // Reset browser default of `1em` to use `rem`s
-  margin-bottom: 1rem;
-  // Don't allow content to break outside
-  overflow: auto;
-}
-
-figure {
-  // Apply a consistent margin strategy (matches our type styles).
-  margin: 0 0 1rem;
-}
-
-img {
-  vertical-align: middle;
-  border-style: none; // Remove the border on images inside links in IE 10-.
-}
-
-img,
-picture {
-  margin: 0;
-  max-width: 100%;
-}
-
-svg:not(:root) {
-  overflow: hidden; // Hide the overflow in IE
-}
-
-// Avoid 300ms click delay on touch devices that support the `touch-action` CSS property.
-a,
-area,
-button,
-[role="button"],
-input,
-label,
-select,
-summary,
-textarea {
-  touch-action: manipulation;
-}
-
-table {
-  border-collapse: collapse; // Prevent double borders
-}
-
-th {
-  // Matches default `<td>` alignment
-  text-align: left;
-}
-
-button,
-[role="button"] {
+button {
   cursor: pointer;
   border: 0;
   background-color: transparent;
@@ -228,9 +51,8 @@ button,
 }
 
 label {
-  // Allow labels to use `margin` for spacing.
-  display: inline-block;
   margin-bottom: 0;
+  display: inline-block;
   cursor: pointer;
 }
 
@@ -238,83 +60,21 @@ button:focus {
   outline: 0px;
 }
 
+table {
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+}
+
 input,
 button,
 select,
-optgroup,
 textarea {
-  margin: 0; // Remove the margin in Firefox and Safari
+  margin: 0;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
-  letter-spacing: $letter-spacing-base;
-}
-
-button,
-input {
-  overflow: visible; // Show the overflow in Edge
-}
-
-button,
-select {
-  text-transform: none; // Remove the inheritance of text transform in Firefox
-}
-
-// Remove inner border and padding from Firefox, but don't restore the outline like Normalize.
-button::-moz-focus-inner,
-[type="button"]::-moz-focus-inner,
-[type="reset"]::-moz-focus-inner,
-[type="submit"]::-moz-focus-inner {
-  padding: 0;
-  border-style: none;
-}
-
-input[type="button"],
-input[type="submit"],
-input[type="reset"] {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-
-input[type="radio"],
-input[type="checkbox"] {
-  box-sizing: border-box; // 1. Add the correct box sizing in IE 10-
-  padding: 0; // 2. Remove the padding in IE 10-
-}
-
-input[type="date"],
-input[type="time"],
-input[type="datetime-local"],
-input[type="month"] {
-  // Remove the default appearance of temporal inputs to avoid a Mobile Safari
-  // bug where setting a custom line-height prevents text from being vertically
-  // centered within the input.
-  // See https://bugs.webkit.org/show_bug.cgi?id=139848
-  // and https://github.com/twbs/bootstrap/issues/11266
-  -webkit-appearance: listbox;
-}
-
-textarea {
-  overflow: auto; // Remove the default vertical scrollbar in IE.
-  // Textareas should really only resize vertically so they don't break their (horizontal) containers.
-  resize: vertical;
-}
-
-// Correct the cursor style of increment and decrement buttons in Chrome.
-[type="number"]::-webkit-inner-spin-button,
-[type="number"]::-webkit-outer-spin-button {
-  height: auto;
-}
-
-// Remove the inner padding and cancel buttons in Chrome and Safari on macOS.
-[type="search"]::-webkit-search-cancel-button,
-[type="search"]::-webkit-search-decoration {
-  -webkit-appearance: none;
-}
-
-// Always hide an element with the `hidden` HTML attribute (from PureCSS).
-// Needed for proper display in IE 10-.
-[hidden] {
-  display: none !important;
+  letter-spacing: 1.5;
 }

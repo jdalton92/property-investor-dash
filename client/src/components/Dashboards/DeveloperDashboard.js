@@ -9,8 +9,8 @@ import {
   fundingChartParse,
 } from "../../utils/developerCalculations";
 import {
-  currencyFormatter,
   percentageFormatter,
+  cashflowFormatter,
   IRRCalculation,
 } from "../../utils/dashboardHelper";
 import { developerTooltip } from "../../static/tooltipText";
@@ -34,7 +34,7 @@ const DeveloperDashboard = ({ currentDashboard, monthlyCashflow }) => {
     <>
       <h2 className="f16 bold mt16 mb16">Pre Funding Metrics</h2>
       <div className="dash-row flex-row">
-        <table className="r bs-3 bg-1 p20 mb16 o-hidden">
+        <table className="dashboard-table r bs-3 bg-1 p20 mb16 o-hidden">
           <thead>
             <tr>
               <th>Total</th>
@@ -43,20 +43,20 @@ const DeveloperDashboard = ({ currentDashboard, monthlyCashflow }) => {
           </thead>
           <tbody>
             <tr>
-              <td>Revenue:</td>
-              <td>{currencyFormatter.format(total?.totalRevenue)}</td>
+              <td className="text-s">Revenue:</td>
+              <td>{cashflowFormatter(total?.totalRevenue)}</td>
             </tr>
             <tr>
-              <td>Costs:</td>
-              <td>{currencyFormatter.format(total?.totalCostsPreFinance)}</td>
+              <td className="text-s">Costs:</td>
+              <td>{cashflowFormatter(total?.totalCostsPreFinance)}</td>
             </tr>
             <tr>
-              <td>Profit:</td>
-              <td>{currencyFormatter.format(total?.preFinanceCashflow)}</td>
+              <td className="text-s">Profit:</td>
+              <td>{cashflowFormatter(total?.preFinanceCashflow)}</td>
             </tr>
           </tbody>
         </table>
-        <table className="r bs-3 bg-1 p20 mb16 o-hidden">
+        <table className="dashboard-table r bs-3 bg-1 p20 mb16 o-hidden">
           <thead>
             <tr>
               <th>Per Dwelling</th>
@@ -65,26 +65,26 @@ const DeveloperDashboard = ({ currentDashboard, monthlyCashflow }) => {
           </thead>
           <tbody>
             <tr>
-              <td>Revenue:</td>
+              <td className="text-s">Revenue:</td>
               <td>
-                {currencyFormatter.format(
+                {cashflowFormatter(
                   total?.totalRevenue / currentDashboard.assumptions.dwellings
                 )}
               </td>
             </tr>
             <tr>
-              <td>Costs:</td>
+              <td className="text-s">Costs:</td>
               <td>
-                {currencyFormatter.format(
+                {cashflowFormatter(
                   total?.totalCostsPreFinance /
                     currentDashboard.assumptions.dwellings
                 )}
               </td>
             </tr>
             <tr>
-              <td>Profit:</td>
+              <td className="text-s">Profit:</td>
               <td>
-                {currencyFormatter.format(
+                {cashflowFormatter(
                   total?.preFinanceCashflow /
                     currentDashboard.assumptions.dwellings
                 )}
@@ -92,7 +92,7 @@ const DeveloperDashboard = ({ currentDashboard, monthlyCashflow }) => {
             </tr>
           </tbody>
         </table>
-        <table className="r bs-3 bg-1 p20 mb16 o-hidden">
+        <table className="dashboard-table r bs-3 bg-1 p20 mb16 o-hidden">
           <thead>
             <tr>
               <th>Unlevered Metrics</th>
@@ -101,7 +101,7 @@ const DeveloperDashboard = ({ currentDashboard, monthlyCashflow }) => {
           </thead>
           <tbody>
             <tr>
-              <td>IRR:</td>
+              <td className="text-s">IRR:</td>
               <td>
                 {percentageFormatter.format(
                   IRRCalculation(monthlyCashflow).preFinance
@@ -109,7 +109,7 @@ const DeveloperDashboard = ({ currentDashboard, monthlyCashflow }) => {
               </td>
             </tr>
             <tr>
-              <td>Margin On Cost:</td>
+              <td className="text-s">Margin On Cost:</td>
               <td>
                 {percentageFormatter.format(
                   developerMOCCalculation(monthlyCashflow).preFinance
@@ -151,7 +151,7 @@ const DeveloperDashboard = ({ currentDashboard, monthlyCashflow }) => {
         </div>
         {showPreFinanceCashflow && (
           <div className="o-x-auto">
-            <table className="w100 bg-1 p20 mb16 o-hidden">
+            <table className="dashboard-table w100 bg-1 p20 mb16 o-hidden">
               <thead>
                 <tr>
                   <th>Year</th>
@@ -168,28 +168,26 @@ const DeveloperDashboard = ({ currentDashboard, monthlyCashflow }) => {
                 {tableData?.annualCashflow.map((c) => (
                   <tr key={c.year}>
                     <td>{c.year}</td>
-                    <td>{currencyFormatter.format(c.acquisitionCosts)}</td>
-                    <td>{currencyFormatter.format(c.TDC)}</td>
-                    <td>{currencyFormatter.format(c.NOI)}</td>
-                    <td>{currencyFormatter.format(c.netSale)}</td>
-                    <td>{currencyFormatter.format(c.totalIncome)}</td>
-                    <td>{currencyFormatter.format(c.preFinanceTotalCost)}</td>
-                    <td>{currencyFormatter.format(c.preFinanceCashflow)}</td>
+                    <td>{cashflowFormatter(c.acquisitionCosts)}</td>
+                    <td>{cashflowFormatter(c.TDC)}</td>
+                    <td>{cashflowFormatter(c.NOI)}</td>
+                    <td>{cashflowFormatter(c.netSale)}</td>
+                    <td>{cashflowFormatter(c.totalIncome)}</td>
+                    <td>{cashflowFormatter(c.preFinanceTotalCost)}</td>
+                    <td>{cashflowFormatter(c.preFinanceCashflow)}</td>
                   </tr>
                 ))}
               </tbody>
               <tfoot>
                 <tr>
                   <th>Total</th>
-                  <td>{currencyFormatter.format(total?.acquisitionCosts)}</td>
-                  <td>{currencyFormatter.format(total?.TDC)}</td>
-                  <td>{currencyFormatter.format(total?.NOI)}</td>
-                  <td>{currencyFormatter.format(total?.netSale)}</td>
-                  <td>{currencyFormatter.format(total?.totalIncome)}</td>
-                  <td>
-                    {currencyFormatter.format(total?.preFinanceTotalCost)}
-                  </td>
-                  <td>{currencyFormatter.format(total?.preFinanceCashflow)}</td>
+                  <td>{cashflowFormatter(total?.acquisitionCosts)}</td>
+                  <td>{cashflowFormatter(total?.TDC)}</td>
+                  <td>{cashflowFormatter(total?.NOI)}</td>
+                  <td>{cashflowFormatter(total?.netSale)}</td>
+                  <td>{cashflowFormatter(total?.totalIncome)}</td>
+                  <td>{cashflowFormatter(total?.preFinanceTotalCost)}</td>
+                  <td>{cashflowFormatter(total?.preFinanceCashflow)}</td>
                 </tr>
               </tfoot>
             </table>
@@ -198,7 +196,7 @@ const DeveloperDashboard = ({ currentDashboard, monthlyCashflow }) => {
       </div>
       <h2 className="f16 bold mt16 mb16">Post Funding Metrics</h2>
       <div className="dash-row flex-row">
-        <table className="r bs-3 bg-1 p20 mb16 o-hidden">
+        <table className="dashboard-table r bs-3 bg-1 p20 mb16 o-hidden">
           <thead>
             <tr>
               <th>Total</th>
@@ -207,20 +205,20 @@ const DeveloperDashboard = ({ currentDashboard, monthlyCashflow }) => {
           </thead>
           <tbody>
             <tr>
-              <td>Revenue:</td>
-              <td>{currencyFormatter.format(total?.totalRevenue)}</td>
+              <td className="text-s">Revenue:</td>
+              <td>{cashflowFormatter(total?.totalRevenue)}</td>
             </tr>
             <tr>
-              <td>Costs:</td>
-              <td>{currencyFormatter.format(total?.totalCostsPostFinance)}</td>
+              <td className="text-s">Costs:</td>
+              <td>{cashflowFormatter(total?.totalCostsPostFinance)}</td>
             </tr>
             <tr>
-              <td>Profit:</td>
-              <td>{currencyFormatter.format(total?.postFinanceCashflow)}</td>
+              <td className="text-s">Profit:</td>
+              <td>{cashflowFormatter(total?.postFinanceCashflow)}</td>
             </tr>
           </tbody>
         </table>
-        <table className="r bs-3 bg-1 p20 mb16 o-hidden">
+        <table className="dashboard-table r bs-3 bg-1 p20 mb16 o-hidden">
           <thead>
             <tr>
               <th>Per Dwelling</th>
@@ -229,26 +227,26 @@ const DeveloperDashboard = ({ currentDashboard, monthlyCashflow }) => {
           </thead>
           <tbody>
             <tr>
-              <td>Revenue:</td>
+              <td className="text-s">Revenue:</td>
               <td>
-                {currencyFormatter.format(
+                {cashflowFormatter(
                   total?.totalRevenue / currentDashboard.assumptions.dwellings
                 )}
               </td>
             </tr>
             <tr>
-              <td>Costs:</td>
+              <td className="text-s">Costs:</td>
               <td>
-                {currencyFormatter.format(
+                {cashflowFormatter(
                   total?.totalCostsPostFinance /
                     currentDashboard.assumptions.dwellings
                 )}
               </td>
             </tr>
             <tr>
-              <td>Profit:</td>
+              <td className="text-s">Profit:</td>
               <td>
-                {currencyFormatter.format(
+                {cashflowFormatter(
                   total?.postFinanceCashflow /
                     currentDashboard.assumptions.dwellings
                 )}
@@ -256,7 +254,7 @@ const DeveloperDashboard = ({ currentDashboard, monthlyCashflow }) => {
             </tr>
           </tbody>
         </table>
-        <table className="r bs-3 bg-1 p20 mb16 o-hidden">
+        <table className="dashboard-table r bs-3 bg-1 p20 mb16 o-hidden">
           <thead>
             <tr>
               <th>Levered Metrics</th>
@@ -265,7 +263,7 @@ const DeveloperDashboard = ({ currentDashboard, monthlyCashflow }) => {
           </thead>
           <tbody>
             <tr>
-              <td>IRR:</td>
+              <td className="text-s">IRR:</td>
               <td>
                 {percentageFormatter.format(
                   IRRCalculation(monthlyCashflow).postFinance
@@ -273,7 +271,7 @@ const DeveloperDashboard = ({ currentDashboard, monthlyCashflow }) => {
               </td>
             </tr>
             <tr>
-              <td>Margin On Cost:</td>
+              <td className="text-s">Margin On Cost:</td>
               <td>
                 {percentageFormatter.format(
                   developerMOCCalculation(monthlyCashflow).postFinance
@@ -323,7 +321,7 @@ const DeveloperDashboard = ({ currentDashboard, monthlyCashflow }) => {
         </div>
         {showPostFinanceCashflow && (
           <div className="o-x-auto">
-            <table className="w100 bg-1 p20 mb16 o-hidden">
+            <table className="dashboard-table w100 bg-1 p20 mb16 o-hidden">
               <thead>
                 <tr>
                   <th>Year</th>
@@ -342,34 +340,30 @@ const DeveloperDashboard = ({ currentDashboard, monthlyCashflow }) => {
                 {tableData?.annualCashflow.map((c) => (
                   <tr key={c.year}>
                     <td>{c.year}</td>
-                    <td>{currencyFormatter.format(c.acquisitionCosts)}</td>
-                    <td>{currencyFormatter.format(c.TDC)}</td>
-                    <td>{currencyFormatter.format(c.NOI)}</td>
-                    <td>{currencyFormatter.format(c.netSale)}</td>
-                    <td>{currencyFormatter.format(c.loanCosts)}</td>
-                    <td>{currencyFormatter.format(c.totalIncome)}</td>
-                    <td>{currencyFormatter.format(c.postFinanceTotalCost)}</td>
-                    <td>{currencyFormatter.format(c.debtSource)}</td>
-                    <td>{currencyFormatter.format(c.postFinanceCashflow)}</td>
+                    <td>{cashflowFormatter(c.acquisitionCosts)}</td>
+                    <td>{cashflowFormatter(c.TDC)}</td>
+                    <td>{cashflowFormatter(c.NOI)}</td>
+                    <td>{cashflowFormatter(c.netSale)}</td>
+                    <td>{cashflowFormatter(c.loanCosts)}</td>
+                    <td>{cashflowFormatter(c.totalIncome)}</td>
+                    <td>{cashflowFormatter(c.postFinanceTotalCost)}</td>
+                    <td>{cashflowFormatter(c.debtSource)}</td>
+                    <td>{cashflowFormatter(c.postFinanceCashflow)}</td>
                   </tr>
                 ))}
               </tbody>
               <tfoot>
                 <tr>
                   <th>Total</th>
-                  <td>{currencyFormatter.format(total?.acquisitionCosts)}</td>
-                  <td>{currencyFormatter.format(total?.TDC)}</td>
-                  <td>{currencyFormatter.format(total?.NOI)}</td>
-                  <td>{currencyFormatter.format(total?.netSale)}</td>
-                  <td>{currencyFormatter.format(total?.loanCosts)}</td>
-                  <td>{currencyFormatter.format(total?.totalIncome)}</td>
-                  <td>
-                    {currencyFormatter.format(total?.postFinanceTotalCost)}
-                  </td>
-                  <td>{currencyFormatter.format(total?.debtSource)}</td>
-                  <td>
-                    {currencyFormatter.format(total?.postFinanceCashflow)}
-                  </td>
+                  <td>{cashflowFormatter(total?.acquisitionCosts)}</td>
+                  <td>{cashflowFormatter(total?.TDC)}</td>
+                  <td>{cashflowFormatter(total?.NOI)}</td>
+                  <td>{cashflowFormatter(total?.netSale)}</td>
+                  <td>{cashflowFormatter(total?.loanCosts)}</td>
+                  <td>{cashflowFormatter(total?.totalIncome)}</td>
+                  <td>{cashflowFormatter(total?.postFinanceTotalCost)}</td>
+                  <td>{cashflowFormatter(total?.debtSource)}</td>
+                  <td>{cashflowFormatter(total?.postFinanceCashflow)}</td>
                 </tr>
               </tfoot>
             </table>

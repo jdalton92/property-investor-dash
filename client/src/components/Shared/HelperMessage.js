@@ -2,11 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import { readHelperMessage } from "../../reducers/usersReducer";
 import { Icon } from "./Icon";
-import TickIcon from "../../styles/svg/tick.svg";
 import MessageIcon from "../../styles/svg/message.svg";
 
 const HelperMessage = ({
-  userId,
+  user,
   readHelperMessage,
   type,
   body,
@@ -14,7 +13,7 @@ const HelperMessage = ({
 }) => {
   const handleClick = (e) => {
     e.preventDefault();
-    readHelperMessage(userId, type);
+    readHelperMessage(user, type);
   };
 
   if (messagesRead && messagesRead.includes(type)) {
@@ -36,14 +35,7 @@ const HelperMessage = ({
               className="form-button-p bs-3 font-white mt20 pt4 pb4 flex-row align-c justify-c"
               onClick={handleClick}
             >
-              <Icon
-                size={"20px"}
-                url={TickIcon}
-                color={"white"}
-                hover={false}
-                active={false}
-              />
-              <span className="ml8">Okay</span>
+              <span>Okay</span>
             </button>
           </div>
         </div>
@@ -54,7 +46,7 @@ const HelperMessage = ({
 
 const mapStateToProps = (state) => {
   return {
-    userId: state.users.data?._id,
+    user: state.users.data,
     messagesRead: state.users.data?.messagesRead,
   };
 };

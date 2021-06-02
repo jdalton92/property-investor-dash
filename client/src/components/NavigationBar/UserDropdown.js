@@ -12,10 +12,9 @@ import UserIcon from "../../styles/svg/user.svg";
 import CreateUserIcon from "../../styles/svg/create-user.svg";
 
 const UserDropdown = ({
-  showDropdown,
   setDropdown,
   logoutUser,
-  isLoggedIn,
+  isAuthedUser,
   email,
   setTab,
 }) => {
@@ -47,7 +46,7 @@ const UserDropdown = ({
 
   return (
     <>
-      {showDropdown && isLoggedIn && (
+      {isAuthedUser && (
         <div className="user-dropdown flex-col p8 fade-in r bs-3">
           <span className="bold ml8 f16 ellipse">{email}</span>
           <Button
@@ -56,7 +55,7 @@ const UserDropdown = ({
             caption={"Saved Dashboards"}
             onClick={() => handleLink("/saved-dashboards")}
             iconUrl={DashboardIcon}
-            iconColor={"black"}
+            iconColor={"#51535c"}
           />
           <Button
             extraClass={"button-transp-p align-c"}
@@ -64,7 +63,7 @@ const UserDropdown = ({
             caption={"Account Settings"}
             onClick={() => handleLink("/settings")}
             iconUrl={SettingsIcon}
-            iconColor={"black"}
+            iconColor={"#51535c"}
           />
           <Button
             extraClass={"button-transp-p align-c"}
@@ -72,11 +71,11 @@ const UserDropdown = ({
             caption={"Logout"}
             onClick={handleLogout}
             iconUrl={LogoutIcon}
-            iconColor={"black"}
+            iconColor={"#51535c"}
           />
         </div>
       )}
-      {showDropdown && !email && (
+      {!isAuthedUser && (
         <div className="user-dropdown flex-col pt8 pb8 fade-in r bs-3">
           <Button
             extraClass={"button-transp-p align-c"}
@@ -84,7 +83,7 @@ const UserDropdown = ({
             caption={"Login"}
             onClick={handleLogin}
             iconUrl={UserIcon}
-            iconColor={"black"}
+            iconColor={"#51535c"}
           />
           <Button
             extraClass={"button-transp-p align-c"}
@@ -92,7 +91,7 @@ const UserDropdown = ({
             caption={"Create Account"}
             onClick={handleCreate}
             iconUrl={CreateUserIcon}
-            iconColor={"black"}
+            iconColor={"#51535c"}
           />
         </div>
       )}
@@ -102,8 +101,7 @@ const UserDropdown = ({
 
 const mapStateToProps = (state) => {
   return {
-    showDropdown: state.navigation.dropdown[CONSTANTS.DROPDOWNS.USERNAME],
-    isLoggedIn: !!state.users.data?._id,
+    isAuthedUser: !!state.users.data?._id,
     email: state.users.data?.email,
   };
 };

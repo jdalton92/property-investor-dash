@@ -275,7 +275,7 @@ const SaveDashboardModal = ({
                         <div className="mh300 o-y-auto o-x-auto">
                           <table
                             id="overwrite-dashboard"
-                            className="overpayments w100"
+                            className="dashboard-table w100"
                           >
                             <thead>
                               <tr>

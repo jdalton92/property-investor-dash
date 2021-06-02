@@ -1,12 +1,5 @@
-// .app {
-//   background-image: url("./images/background.jpeg");
-//   background-size: cover;
-//   background-repeat: no-repeat;
-//   background-position: center center;
-// }
-
 .main {
-  max-width: 1200px;
+  max-width: 1000px;
   min-height: calc(100vh - 56px);
 }
 
@@ -27,36 +20,12 @@
   background-color: $bg-color-base;
 }
 
-.bg-0 {
-  background-color: $n0;
-}
-
 .bg-1 {
-  background-color: $n1;
-}
-
-.bg-2 {
-  background-color: $n2;
-}
-
-.bg-3 {
-  background-color: $n3;
+  background-color: $grey1;
 }
 
 .bg-4 {
-  background-color: $n4;
-}
-
-.bg-5 {
-  background-color: $n5;
-}
-
-.bg-8 {
-  background-color: $n8;
-}
-
-.bg-blue-0 {
-  background-color: $primary-0;
+  background-color: $grey4;
 }
 
 .bg-blue-1 {
@@ -85,6 +54,18 @@
 
 .opacity5 {
   opacity: 0.5;
+}
+
+.text-p {
+  color: black;
+}
+
+.text-s {
+  color: $grey6;
+}
+
+.text-r {
+  color: $red3;
 }
 
 .f32 {
@@ -210,6 +191,20 @@
   text-overflow: ellipsis;
 }
 
+.line-clamp-1 {
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.line-clamp-2 {
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
 .font-p {
   color: $font-p;
 }
@@ -219,7 +214,7 @@
 }
 
 .font-n1 {
-  color: $n1;
+  color: $grey1;
 }
 
 .font-black {
@@ -313,6 +308,10 @@
 
 .flex-10 {
   flex: 10;
+}
+
+.minw0 {
+  min-width: 0;
 }
 
 .w100 {
@@ -1008,33 +1007,33 @@
 
 .border-p {
   border-style: solid;
-  border-radius: $border-radius-base;
-  border-color: $border-color-base;
-  border-width: $border-width-base;
+  border-radius: $border-radius;
+  border-color: $border-color;
+  border-width: $border-width;
 }
 
 .r {
-  border-radius: $border-radius-base;
+  border-radius: $border-radius;
 }
 
 .rt {
-  border-top-left-radius: $border-radius-base;
-  border-top-right-radius: $border-radius-base;
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
 }
 
 .rb {
-  border-bottom-left-radius: $border-radius-base;
-  border-bottom-right-radius: $border-radius-base;
+  border-bottom-left-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
 }
 
 .rr {
-  border-top-right-radius: $border-radius-base;
-  border-bottom-right-radius: $border-radius-base;
+  border-top-right-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
 }
 
 .rl {
-  border-top-left-radius: $border-radius-base;
-  border-bottom-left-radius: $border-radius-base;
+  border-top-left-radius: $border-radius;
+  border-bottom-left-radius: $border-radius;
 }
 
 .background-p {

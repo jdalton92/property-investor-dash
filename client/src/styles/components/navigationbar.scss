@@ -2,6 +2,7 @@
   height: $nav-height;
   flex-wrap: nowrap;
   z-index: 1;
+  background-color: $nav-color-base;
 }
 
 .navbar-side {
@@ -11,7 +12,7 @@
 }
 
 .navbar-main {
-  max-width: 1500px;
+  max-width: 1300px;
 }
 
 .nav-burger {
@@ -21,7 +22,7 @@
 
 .user-dropdown {
   z-index: $modal-z-index;
-  background-color: $n1;
+  background-color: $grey1;
   width: 200px;
   position: absolute;
   top: 40px;

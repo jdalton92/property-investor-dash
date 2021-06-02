@@ -5,14 +5,14 @@ button:disabled {
 .button-p {
   display: flex;
   height: 40px;
-  background-color: $n3-transp;
+  background-color: $grey3-transp;
   transition: background-color 0.2s ease;
   &:hover {
-    background-color: $n4-transp;
+    background-color: $grey4-transp;
   }
 
   &:active {
-    background-color: $n5-transp;
+    background-color: $grey5-transp;
   }
 }
 
@@ -21,11 +21,11 @@ button:disabled {
   height: 40px;
   transition: background-color 0.2s ease;
   &:hover {
-    background-color: $n3-transp;
+    background-color: $grey3-transp;
   }
 
   &:active {
-    background-color: $n4-transp;
+    background-color: $grey4-transp;
   }
 }
 
@@ -34,31 +34,14 @@ button:disabled {
   height: 40px;
   transition: background-color 0.2s ease;
   &:hover {
-    background-color: $n2;
+    background-color: $grey2;
   }
 
   &:active {
-    background-color: $n3;
+    background-color: $grey3;
   }
 }
 
 .button-transp-s.active {
-  background-color: $n2;
+  background-color: $grey2;
 }
-
-// .active-link {
-//   background-color: black;
-// }
-
-// .button-s {
-//   display: flex;
-//   height: 40px;
-//   transition: background-color 0.2s ease;
-//   &:hover {
-//     background-color: $primary-3;
-//   }
-
-//   &:active {
-//     background-color: $primary-2;
-//   }
-// }

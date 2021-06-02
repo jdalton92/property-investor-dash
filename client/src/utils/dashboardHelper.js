@@ -47,6 +47,31 @@ export const formatDate = (dbDate) => {
   return new Intl.DateTimeFormat("en-GB").format(date);
 };
 
+export const cashflowFormatter = (number, minimumFractionDigits = 0) => {
+  let cashflow;
+  let className = "text-s";
+  const integer = parseInt(number);
+  switch (true) {
+    case integer === 0:
+      cashflow = "-";
+      break;
+    case integer > 0:
+      cashflow = integer.toLocaleString("en-US", {
+        minimumFractionDigits,
+      });
+      break;
+    case integer < 0:
+      cashflow = `(${Math.abs(integer).toLocaleString("en-US", {
+        minimumFractionDigits,
+      })})`;
+      className = "text-r";
+      break;
+    default:
+      cashflow = `${integer}`;
+  }
+  return <span className={`${className}`}>{cashflow}</span>;
+};
+
 export const currencyFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",

@@ -1,38 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { getDashboards, deleteDashboard } from "../reducers/dashboardsReducer";
+import { getDashboards } from "../reducers/dashboardsReducer";
 import Loader from "./Shared/Loader";
-import Button from "./Shared/Button";
-import {
-  formatDate,
-  getDashboardTypeAndBaseUrl,
-} from "../utils/dashboardHelper";
-import OpenIcon from "../styles/svg/tick.svg";
-import CloseIcon from "../styles/svg/close.svg";
+import SavedDashboard from "./SavedDashboard";
 
-const SavedDashboards = ({
-  getDashboards,
-  isFetching,
-  savedDashboards,
-  deleteDashboard,
-}) => {
+const SavedDashboards = ({ getDashboards, isFetching, savedDashboards }) => {
   const limit = 5;
-  const history = useHistory();
   const [params, setParams] = useState({ limit });
   useEffect(() => {
     getDashboards(params);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
-
-  const handleDelete = (dashboard) => {
-    const confirm = window.confirm(
-      `Delete dashboard: ${dashboard.description}?`
-    );
-    if (confirm) {
-      deleteDashboard(dashboard._id);
-    }
-  };
 
   if (isFetching) {
     return <Loader />;
@@ -78,65 +56,46 @@ const SavedDashboards = ({
             </button>
           </div>
         ) : null}
-        <div className="r bs-3 bg-1 p20 mb20">
-          <div className="mh700 o-y-auto o-x-auto">
-            {!savedDashboards?.resultsCount && (
-              <div>No saved dashboards...</div>
-            )}
-            {savedDashboards?.resultsCount > 0 && (
-              <table id="save-overwrite" className="overpayments w100 mb20">
-                <thead>
-                  <tr>
-                    <th>Ref</th>
-                    <th>Description</th>
-                    <th>Address</th>
-                    <th>Type</th>
-                    <th>Created</th>
-                    <th>Updated</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {savedDashboards.resultsCount > 0 &&
-                    savedDashboards.results.map((d, i) => {
-                      const { type } = getDashboardTypeAndBaseUrl(d);
-                      const index = (currentPage - 1) * limit + i + 1;
-                      return (
-                        <tr key={i}>
-                          <td>{index}</td>
-                          <td>{d.description}</td>
-                          <td>{d.address}</td>
-                          <td>{type}</td>
-                          <td>{formatDate(d.created)}</td>
-                          <td>{d.updated ? formatDate(d.updated) : "-"}</td>
-                          <td>
-                            <Button
-                              ariaLabel={"Open"}
-                              dataBalloonPos={"left"}
-                              extraClass={"button-p align-c justify-c mb12"}
-                              onClick={() =>
-                                history.push(`/dashboard/${d._id}`)
-                              }
-                              iconUrl={OpenIcon}
-                              iconColor={"white"}
-                            />
-                            <Button
-                              ariaLabel={"Delete"}
-                              dataBalloonPos={"left"}
-                              extraClass={"button-p align-c justify-c"}
-                              onClick={() => handleDelete(d)}
-                              iconUrl={CloseIcon}
-                              iconColor={"white"}
-                            />
-                          </td>
-                        </tr>
-                      );
-                    })}
-                </tbody>
-              </table>
-            )}
-          </div>
-        </div>
+        {!savedDashboards?.resultsCount && <div>No saved dashboards...</div>}
+        {savedDashboards?.resultsCount > 0 && (
+          <table
+            id="save-overwrite"
+            className="dashboard-table o-x-auto w100 r bs-3 bg-1 "
+          >
+            <thead>
+              <tr>
+                <th>
+                  <span className="line-clamp-1">Ref</span>
+                </th>
+                <th>
+                  <span className="line-clamp-1">Description</span>
+                </th>
+                <th>
+                  <span className="line-clamp-1">Address</span>
+                </th>
+                <th>
+                  <span className="line-clamp-1">Type</span>
+                </th>
+                <th>
+                  <span className="line-clamp-1">Created</span>
+                </th>
+                <th>
+                  <span className="line-clamp-1">Updated</span>
+                </th>
+                <th>
+                  <span className="line-clamp-1">Action</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {savedDashboards.resultsCount > 0 &&
+                savedDashboards.results.map((d, i) => {
+                  const index = (currentPage - 1) * limit + i + 1;
+                  return <SavedDashboard key={i} index={index} dashboard={d} />;
+                })}
+            </tbody>
+          </table>
+        )}
       </>
     );
   }
@@ -151,7 +110,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   getDashboards,
-  deleteDashboard,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SavedDashboards);

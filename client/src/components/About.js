@@ -1,17 +1,24 @@
 import React from "react";
+import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { demoUser } from "../reducers/usersReducer";
 import { Icon } from "./Shared/Icon";
 import TickIcon from "../styles/svg/tick.svg";
+import QuestionIcon from "../styles/svg/question.svg";
 import developer from "../styles/images/card-developer.png";
 import financiers from "../styles/images/card-financiers.png";
 import firstHomeBuyer from "../styles/images/card-first-home-buyer.png";
 import investor from "../styles/images/card-investor.png";
 import owner from "../styles/images/card-owner.png";
 
-const About = () => {
+const About = ({ isAuthedUser, demoUser }) => {
   const history = useHistory();
   const handleLink = (url) => {
     history.push(url);
+  };
+  const handleViewDemo = () => {
+    demoUser();
+    handleLink(`/saved-dashboards`);
   };
   return (
     <>
@@ -29,20 +36,38 @@ const About = () => {
         of investors
       </div>
       <h2 className="f20 bold mt16 mb16">How Does PropertyInvestorDash Work</h2>
-      <button
-        type="button"
-        className="form-button-p bs-3 font-white mb16 pt4 pb4 flex-row align-c justify-c"
-        onClick={() => handleLink("/calculator-types")}
-      >
-        <Icon
-          size={"20px"}
-          url={TickIcon}
-          color={"white"}
-          hover={false}
-          active={false}
-        />
-        <span className="ml8">Get Started</span>
-      </button>
+      <div className="flex-row">
+        <button
+          type="button"
+          className="form-button-p bs-3 font-white mb16 pt4 pb4 flex-row align-c justify-c"
+          onClick={() => handleLink("/calculator-types")}
+        >
+          <Icon
+            size={"20px"}
+            url={TickIcon}
+            color={"white"}
+            hover={false}
+            active={false}
+          />
+          <span className="ml8">Get Started</span>
+        </button>
+        {!isAuthedUser && (
+          <button
+            type="button"
+            className="form-button-s bs-3 ml12 font-white mb16 pt4 pb4 flex-row align-c justify-c"
+            onClick={handleViewDemo}
+          >
+            <Icon
+              size={"20px"}
+              url={QuestionIcon}
+              color={"white"}
+              hover={false}
+              active={false}
+            />
+            <span className="ml8">Show Demo</span>
+          </button>
+        )}
+      </div>
       <div className="r bs-3 bg-1 p20 mb16">
         PropertyInvestorDash has been developed with key input from real estate
         industry experts and helps provide a simple, easy option for property
@@ -155,4 +180,14 @@ const About = () => {
   );
 };
 
-export default About;
+const mapStateToProps = (state) => {
+  return {
+    isAuthedUser: !!state.users.data?._id,
+  };
+};
+
+const mapDispatchToProps = {
+  demoUser,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(About);

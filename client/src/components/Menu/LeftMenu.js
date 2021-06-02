@@ -15,7 +15,7 @@ import GitHubIcon from "../../styles/svg/github.svg";
 import HomeOwnerIcon from "../../styles/svg/home-owner.svg";
 import UnitsIcon from "../../styles/svg/units.svg";
 import FinanceIcon from "../../styles/svg/finance.svg";
-import PrivacyIcon from "../../styles/svg/privacy.svg";
+import InfoIcon from "../../styles/svg/information.svg";
 import UserIcon from "../../styles/svg/user.svg";
 import CreateUserIcon from "../../styles/svg/create-user.svg";
 import SettingsIcon from "../../styles/svg/settings.svg";
@@ -133,7 +133,7 @@ const LeftMenu = ({ leftSidebarOpen, isLoggedIn, setTab, logoutUser }) => {
         url: "/privacy-policy",
         internal: true,
       },
-      icon: PrivacyIcon,
+      icon: InfoIcon,
     },
     {
       title: "GitHub",

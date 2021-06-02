@@ -55,7 +55,7 @@ const Login = ({
   };
 
   return (
-    <div className="vh100 w100 fade-in bg-blue-1 flex-row justify-c">
+    <div className="login-wrapper vh100 w100 fade-in flex-row justify-c">
       <div className="w100 vh100 h1080">
         <div
           className="h100 w100 img-cover opacity9"

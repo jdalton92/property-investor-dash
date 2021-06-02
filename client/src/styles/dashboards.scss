@@ -33,27 +33,6 @@
   right: 0;
 }
 
-.dash-cashflow table thead tr,
-.dash-cashflow table tfoot tr,
-.dash-row table thead tr,
-.dash-row table tfoot tr {
-  font-weight: bold;
-}
-
-.dash-cashflow table th,
-.dash-cashflow table td,
-.dash-row table th,
-.dash-row table td {
-  padding: 8px;
-  border-bottom: 1px solid #bbbbbb;
-}
-
-.dash-cashflow tr {
-  &:hover {
-    background-color: $gr4 !important;
-  }
-}
-
 .dash-chart {
   min-height: 400px !important;
 }
@@ -87,10 +66,5 @@
 
   .dash-row {
     flex-direction: column;
-  }
-
-  .dash-row table {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
   }
 }
