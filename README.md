@@ -31,14 +31,7 @@ $ npm start
 
 2. Run the backend locally
 
-Create `.env` file in backend root directory with environment variables for the following uses;
-
-- **requests:** PORT
-- **MongoDB:** MONGODB_URI
-- **jwt:** SECRET
-- **Mailgun:** API_KEY, DOMAIN, EMAIL
-
-Example `.env` file in the `server` directory:
+Create `.env` file in server root directory with environment variables as follows;
 
 ```sh
 MONGODB_URI=mongodb+srv://<username>:<id>@<url>.mongodb.net/<collection-name>
