@@ -16,6 +16,10 @@
   z-index: $overlay-z-index;
 }
 
+.bg-nav {
+  background-color: $nav-color-base;
+}
+
 .bg-base {
   background-color: $bg-color-base;
 }
@@ -1185,6 +1189,12 @@
 
 @media screen and (max-width: 400px) {
   .h400 {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .h500 {
     display: none;
   }
 }

@@ -151,7 +151,7 @@ const LeftMenu = ({ leftSidebarOpen, isLoggedIn, setTab, logoutUser }) => {
         leftSidebarOpen ? "open-left" : ""
       }`}
     >
-      <div className="navbar-side bg-blue-1 s1080 h100 p8 flex-row align-c justify-e">
+      <div className="navbar-side bg-nav s1080 h100 p8 flex-row align-c justify-e">
         <h1 className="w100 f20 bold text-start font-white ts-3">
           PropertyInvestorDash
         </h1>

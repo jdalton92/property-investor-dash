@@ -35,7 +35,9 @@ const DeleteAccount = ({ user, deleteUser }) => {
                 <div className="relative mb20">
                   <input
                     id="password"
-                    className="form-input bs-1 w100"
+                    className={`form-input bs-1 w100 ${
+                      meta.error && meta.touched ? "input-error" : ""
+                    }`}
                     placeholder="Password"
                     type="password"
                     autoComplete="off"

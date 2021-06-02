@@ -159,7 +159,9 @@ const SaveDashboardModal = ({
                   <div className="relative mb20">
                     <input
                       id="save-description"
-                      className="form-input bs-1 w100"
+                      className={`form-input bs-1 w100 ${
+                        meta.error && meta.touched ? "input-error" : ""
+                      }`}
                       placeholder="Description"
                       type="text"
                       {...input}
@@ -188,7 +190,9 @@ const SaveDashboardModal = ({
                   <div className="relative mb20">
                     <input
                       id="save-address"
-                      className="form-input bs-1 w100"
+                      className={`form-input bs-1 w100 ${
+                        meta.error && meta.touched ? "input-error" : ""
+                      }`}
                       placeholder="Address"
                       type="text"
                       {...input}
@@ -359,7 +363,9 @@ const SaveDashboardModal = ({
                   <div className="relative mb20">
                     <input
                       id="overwrite-description"
-                      className="form-input bs-1 w100"
+                      className={`form-input bs-1 w100 ${
+                        meta.error && meta.touched ? "input-error" : ""
+                      }`}
                       placeholder="Description"
                       type="text"
                       {...input}
@@ -388,7 +394,9 @@ const SaveDashboardModal = ({
                   <div className="relative mb20">
                     <input
                       id="overwrite-address"
-                      className="form-input bs-1 w100"
+                      className={`form-input bs-1 w100 ${
+                        meta.error && meta.touched ? "input-error" : ""
+                      }`}
                       placeholder="Address"
                       type="text"
                       {...input}

@@ -53,7 +53,9 @@ const ChangeEmail = ({ user, updateUser }) => {
                 <div className="relative mb20">
                   <input
                     id="new-email"
-                    className="form-input bs-1 w100"
+                    className={`form-input bs-1 w100 ${
+                      meta.error && meta.touched ? "input-error" : ""
+                    }`}
                     placeholder="new@email.com"
                     type="email"
                     {...input}

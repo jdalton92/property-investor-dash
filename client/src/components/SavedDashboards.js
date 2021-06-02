@@ -77,10 +77,10 @@ const SavedDashboards = ({ getDashboards, isFetching, savedDashboards }) => {
                   <span className="line-clamp-1">Type</span>
                 </th>
                 <th>
-                  <span className="line-clamp-1">Created</span>
+                  <span className="line-clamp-1 h500">Created</span>
                 </th>
                 <th>
-                  <span className="line-clamp-1">Updated</span>
+                  <span className="line-clamp-1 h768">Updated</span>
                 </th>
                 <th>
                   <span className="line-clamp-1">Action</span>

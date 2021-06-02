@@ -32,19 +32,23 @@ const SavedDashboards = ({ index, dashboard }) => {
         <span className="ml4">{index}</span>
       </td>
       <td>
-        <span className="bold line-clamp-2">{dashboard.description}</span>
+        <span className="text-s bold line-clamp-2">
+          {dashboard.description}
+        </span>
       </td>
       <td>
         <span className="line-clamp-2">{dashboard.address}</span>
       </td>
       <td>
-        <span className="line-clamp-1">{type}</span>
+        <span className="line-clamp-2">{type}</span>
       </td>
       <td>
-        <span className="line-clamp-1">{formatDate(dashboard.created)}</span>
+        <span className="line-clamp-1 h500">
+          {formatDate(dashboard.created)}
+        </span>
       </td>
       <td>
-        <span className="line-clamp-1">
+        <span className="line-clamp-1 h768">
           {dashboard.updated ? formatDate(dashboard.updated) : "-"}
         </span>
       </td>

@@ -1,6 +1,7 @@
 const {
   isAuthenticated,
   isAdminOrDashboardOwner,
+  isNotDemoUser,
 } = require("../utils/authMiddleware");
 const { isValidId, isValidAssumptions } = require("../utils/middleware");
 const {
@@ -40,6 +41,7 @@ dashboardsRouter.delete(
   isAuthenticated,
   isValidId,
   isAdminOrDashboardOwner,
+  isNotDemoUser,
   deleteDashboardController
 );
 

@@ -123,7 +123,9 @@ const Login = ({
                       <div className="relative mb20">
                         <input
                           id="login-email"
-                          className="form-input bs-1 w100"
+                          className={`form-input bs-1 w100 ${
+                            meta.error && meta.touched ? "input-error" : ""
+                          }`}
                           placeholder="example@email.com"
                           type="text"
                           {...input}
@@ -146,7 +148,9 @@ const Login = ({
                       <div className="relative mb20">
                         <input
                           id="login-password"
-                          className="form-input bs-1 w100"
+                          className={`form-input bs-1 w100 ${
+                            meta.error && meta.touched ? "input-error" : ""
+                          }`}
                           placeholder="Password"
                           type="password"
                           autoComplete="off"
@@ -195,7 +199,9 @@ const Login = ({
                       <div className="relative mb20">
                         <input
                           id="create-email"
-                          className="form-input bs-1 w100"
+                          className={`form-input bs-1 w100 ${
+                            meta.error && meta.touched ? "input-error" : ""
+                          }`}
                           placeholder="example@email.com"
                           type="text"
                           {...input}
@@ -218,7 +224,9 @@ const Login = ({
                       <div className="relative mb20">
                         <input
                           id="create-password"
-                          className="form-input bs-1 w100"
+                          className={`form-input bs-1 w100 ${
+                            meta.error && meta.touched ? "input-error" : ""
+                          }`}
                           placeholder="Password"
                           type="password"
                           autoComplete="off"
@@ -239,7 +247,9 @@ const Login = ({
                       <div className="relative mb20">
                         <input
                           id="create-confirm"
-                          className="form-input bs-1 w100"
+                          className={`form-input bs-1 w100 ${
+                            meta.error && meta.touched ? "input-error" : ""
+                          }`}
                           placeholder="Confirm Password"
                           type="password"
                           autoComplete="off"

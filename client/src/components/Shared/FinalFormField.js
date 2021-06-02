@@ -60,7 +60,7 @@ const FinalFormField = ({
               id={id}
               className={`form-input bs-1 w100 ${prepend ? "pl32" : ""} ${
                 append ? "pr70" : ""
-              }`}
+              } ${meta.error && meta.touched ? "input-error" : ""}`}
               placeholder={placeholder}
               type={fieldType}
               maxLength={maxLength}

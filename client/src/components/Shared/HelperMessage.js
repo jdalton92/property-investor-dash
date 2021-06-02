@@ -24,7 +24,7 @@ const HelperMessage = ({
         <div className="flex-row align-c">
           <Icon
             url={MessageIcon}
-            color={"black"}
+            color={"#51535c"}
             hover={false}
             active={false}
           />

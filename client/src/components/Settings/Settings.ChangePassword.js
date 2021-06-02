@@ -49,7 +49,9 @@ const ChangePassword = ({ user, updateUser }) => {
                 <div className="relative mb20">
                   <input
                     id="old-password"
-                    className="form-input bs-1 w100"
+                    className={`form-input bs-1 w100 ${
+                      meta.error && meta.touched ? "input-error" : ""
+                    }`}
                     placeholder="Password"
                     type="password"
                     autoComplete="off"
@@ -73,7 +75,9 @@ const ChangePassword = ({ user, updateUser }) => {
                 <div className="relative mb20">
                   <input
                     id="new-password"
-                    className="form-input bs-1 w100"
+                    className={`form-input bs-1 w100 ${
+                      meta.error && meta.touched ? "input-error" : ""
+                    }`}
                     placeholder="Password"
                     type="password"
                     autoComplete="off"
@@ -97,7 +101,9 @@ const ChangePassword = ({ user, updateUser }) => {
                 <div className="relative mb20">
                   <input
                     id="confirm-password"
-                    className="form-input bs-1 w100"
+                    className={`form-input bs-1 w100 ${
+                      meta.error && meta.touched ? "input-error" : ""
+                    }`}
                     placeholder="Password"
                     type="password"
                     autoComplete="off"
