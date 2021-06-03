@@ -64,7 +64,7 @@ const About = ({ isAuthedUser, demoUser }) => {
               hover={false}
               active={false}
             />
-            <span className="ml8">Show Demo</span>
+            <span className="ml8">Try Demo</span>
           </button>
         )}
       </div>

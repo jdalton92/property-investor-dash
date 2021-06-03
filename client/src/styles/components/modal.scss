@@ -23,13 +23,14 @@
 }
 
 #overwrite-dashboard tbody tr {
+  border-bottom: 1px solid #bbbbbb80;
   &:hover {
     cursor: pointer;
   }
 }
 
 #overwrite-dashboard tbody tr.selected {
-  background-color: $grey4;
+  background-color: $grey2-transp;
 }
 
 @media screen and (max-width: 768px) {

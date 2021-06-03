@@ -8,6 +8,7 @@
   font-weight: bold;
 }
 
+.dashboard-table tbody tr.hover,
 .dashboard-table tr.hover {
   &:hover {
     background-color: $grey2-transp !important;

@@ -305,7 +305,7 @@ const SaveDashboardModal = ({
                                         ? setSelectedDashboardId(null)
                                         : setSelectedDashboardId(d._id)
                                     }
-                                    className={`${
+                                    className={`hover ${
                                       d._id === selectedDashboardId
                                         ? "selected"
                                         : ""
