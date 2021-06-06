@@ -1,23 +1,19 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Form, Field } from "react-final-form";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { loginUser, createUser, demoUser } from "../reducers/usersReducer";
 import { setTab } from "../reducers/navigationReducer";
-import {
-  required,
-  minLength,
-  isEmail,
-  composeValidators,
-} from "../utils/formValidatorHelper";
+import { required, minLength, isEmail } from "../utils/formValidatorHelper";
 import { CONSTANTS } from "../static/constants";
-import { Icon } from "./Shared/Icon";
-import UserIcon from "../styles/svg/user.svg";
-import CreateUserIcon from "../styles/svg/create-user.svg";
+import Tab from "./Shared/Tab";
+import Input from "./Shared/FinalForm/Input";
+import Button from "./Shared/FinalForm/Button";
 import hero from "../styles/images/hero.jpg";
 
 const Login = ({
   loginUser,
+  isUserFetching,
   createUser,
   isLoggedIn,
   demoUser,
@@ -29,16 +25,18 @@ const Login = ({
   useEffect(() => {
     if (isLoggedIn) {
       history.push("/");
+    } else {
+      let tab;
+      history.location.pathname === "/login"
+        ? (tab = CONSTANTS.TABS.LOGIN.LOGIN)
+        : (tab = CONSTANTS.TABS.LOGIN.CREATEUSER);
+      setTab("login", tab);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isLoggedIn]);
 
   const handleLogin = ({ email, password }) => {
     loginUser(email, password);
-  };
-
-  const handleForgotPassword = () => {
-    history.push("/reset-password");
   };
 
   const handleCreateUser = ({
@@ -55,269 +53,215 @@ const Login = ({
   };
 
   return (
-    <div className="login-wrapper vh100 w100 fade-in flex-row justify-c">
-      <div className="w100 vh100 h1080">
-        <div
-          className="h100 w100 img-cover opacity9"
-          style={{
-            backgroundImage: `url(${hero})`,
-          }}
-        />
-      </div>
-      <div className="login-container flex-col justify-c m8">
-        <div className="login r p20 m8 bs-3 bg-1 mw450 m-auto">
-          <h1
-            className="bold text-center ts-4 link"
-            onClick={() => history.push("/")}
-          >
-            PropertyInvestorDash
-          </h1>
-          <div className="flex-row mb16">
-            <button
-              type="button"
-              className={`tab-opt button-transp-s rt pl16 pr16 flex-row align-c justify-c jump ${
-                tab === CONSTANTS.TABS.LOGIN.LOGIN ? "active" : ""
-              }`}
-              onClick={() => setTab("login", CONSTANTS.TABS.LOGIN.LOGIN)}
-            >
-              <Icon
-                size={"20px"}
-                url={UserIcon}
-                color={"black"}
-                hover={false}
-                active={false}
+    <div className="flex flex-row h-screen bg-indigo-900">
+      <div
+        className="h-full bg-cover bg-no-repeat bg-center object-cover hidden
+        md:block md:flex-1"
+        style={{
+          backgroundImage: `url(${hero})`,
+        }}
+      />
+      <div className="flex h-screen w-full lg:w-700px">
+        <div className="flex flex-col m-auto">
+          <div className="shadow-xl rounded-2xl p-4 bg-white w-full h-550px md:w-450px">
+            <Link className="w-full hover:underline" to={"/"}>
+              <h1 className="text-center font-medium text-2xl text-shadow-xs mt-3 mb-7">
+                PropertyInvestorDash
+              </h1>
+            </Link>
+            <div className="flex mb-4">
+              <Tab
+                title={"Login"}
+                to={"/login"}
+                options={{
+                  icon: "user",
+                  onClick: () => setTab("login", CONSTANTS.TABS.LOGIN.LOGIN),
+                }}
               />
-              <span className="ml8 f16 bold">Login</span>
-            </button>
-            <button
-              type="button"
-              className={`tab-opt button-transp-s rt pl16 pr16 flex-row align-c justify-c jump ${
-                tab === CONSTANTS.TABS.LOGIN.CREATEUSER ? "active" : ""
-              }`}
-              onClick={() => setTab("login", CONSTANTS.TABS.LOGIN.CREATEUSER)}
-            >
-              <Icon
-                size={"20px"}
-                url={CreateUserIcon}
-                color={"black"}
-                hover={false}
-                active={false}
+              <Tab
+                title={"Create Account"}
+                to={"/sign-up"}
+                options={{
+                  icon: "create-user",
+                  onClick: () =>
+                    setTab("login", CONSTANTS.TABS.LOGIN.CREATEUSER),
+                }}
               />
-              <span className="ml8 f16 bold">Create Account</span>
-            </button>
+            </div>
+            {tab === CONSTANTS.TABS.LOGIN.LOGIN && (
+              <Form
+                onSubmit={handleLogin}
+                render={({ handleSubmit }) => (
+                  <form onSubmit={handleSubmit}>
+                    <Input
+                      label={"Email"}
+                      name={"email"}
+                      options={{
+                        id: "login-email",
+                        validators: [required, isEmail],
+                        placeholder: "example@email.com",
+                        type: "text",
+                        extraClass: "mb-4",
+                      }}
+                    />
+                    <Input
+                      label={"Password"}
+                      name={"password"}
+                      options={{
+                        id: "login-password",
+                        validators: [required, minLength(3)],
+                        placeholder: "Password",
+                        type: "password",
+                        autoComplete: "off",
+                        extraClass: "mb-7",
+                      }}
+                    />
+                    <Button
+                      label={"Login"}
+                      type={"submit"}
+                      options={{
+                        styleType: "primary",
+                        isLoading: isUserFetching,
+                        iconClass: "mr-20",
+                      }}
+                    />
+                  </form>
+                )}
+              />
+            )}
+            {tab === CONSTANTS.TABS.LOGIN.CREATEUSER && (
+              <Form
+                onSubmit={handleCreateUser}
+                validate={(values) => {
+                  const errors = {};
+                  if (!values.checkPassword) {
+                    errors.checkPassword = "Required";
+                  }
+                  if (values.password !== values.checkPassword) {
+                    errors.checkPassword = "Passwords must match";
+                  }
+                  return errors;
+                }}
+                render={({ handleSubmit }) => (
+                  <form onSubmit={handleSubmit}>
+                    <Input
+                      label={"Email"}
+                      name={"email"}
+                      options={{
+                        id: "create-email",
+                        validators: [required, isEmail],
+                        placeholder: "example@email.com",
+                        type: "text",
+                        extraClass: "mb-4",
+                      }}
+                    />
+                    <Input
+                      label={"Password"}
+                      name={"password"}
+                      options={{
+                        id: "create-password",
+                        validators: [required, minLength(3)],
+                        placeholder: "Password",
+                        type: "password",
+                        autoComplete: "off",
+                        extraClass: "mb-4",
+                      }}
+                    />
+                    <Input
+                      label={"Confirm Password"}
+                      name={"checkPassword"}
+                      options={{
+                        id: "create-confirm",
+                        validators: [required, minLength(3)],
+                        placeholder: "Password",
+                        type: "password",
+                        autoComplete: "off",
+                        extraClass: "mb-6",
+                      }}
+                    />
+                    <div className="flex items-center">
+                      <Field
+                        name="hasAcceptedTCs"
+                        validate={required}
+                        type="checkbox"
+                      >
+                        {({ input, meta }) => (
+                          <>
+                            <div className="relative flex items-center mb-4">
+                              <input
+                                className={`${
+                                  meta.error && meta.touched
+                                    ? "ring-2 border-red-600 ring-red-300"
+                                    : ""
+                                }`}
+                                id="terms-and-conditions"
+                                type="checkbox"
+                                {...input}
+                              />
+                              <label
+                                className="ml-1 text-xs"
+                                htmlFor="terms-and-conditions"
+                              >
+                                Accept{" "}
+                                <Link
+                                  className="underline"
+                                  to="/terms-and-conditions"
+                                >
+                                  Terms and Conditions
+                                </Link>{" "}
+                                and{" "}
+                                <Link
+                                  className="underline"
+                                  to="/privacy-policy"
+                                >
+                                  Privacy Policy
+                                </Link>
+                                <span className="text-red-500 required-dot">
+                                  {" "}
+                                  *
+                                </span>
+                              </label>
+                            </div>
+                            {meta.error && meta.touched && (
+                              <p className="absolute text-xs text-red-500 mt-4">
+                                {meta.error}
+                              </p>
+                            )}
+                          </>
+                        )}
+                      </Field>
+                    </div>
+                    <Button
+                      label={"Create Account"}
+                      type={"submit"}
+                      options={{
+                        styleType: "primary",
+                        isLoading: isUserFetching,
+                        iconClass: "mr-36",
+                      }}
+                    />
+                  </form>
+                )}
+              />
+            )}
           </div>
-          {tab === CONSTANTS.TABS.LOGIN.LOGIN && (
-            <Form
-              onSubmit={handleLogin}
-              render={({ handleSubmit }) => (
-                <form onSubmit={handleSubmit}>
-                  <label htmlFor="login-email" className="f16 mb8">
-                    Email
-                    <span className="font-red f12 bold ml4">*</span>
-                  </label>
-                  <Field
-                    name="email"
-                    validate={composeValidators(isEmail, required)}
-                  >
-                    {({ input, meta }) => (
-                      <div className="relative mb20">
-                        <input
-                          id="login-email"
-                          className={`form-input bs-1 w100 ${
-                            meta.error && meta.touched ? "input-error" : ""
-                          }`}
-                          placeholder="example@email.com"
-                          type="text"
-                          {...input}
-                        />
-                        {meta.error && meta.touched && (
-                          <span className="form-error f10">{meta.error}</span>
-                        )}
-                      </div>
-                    )}
-                  </Field>
-                  <label htmlFor="login-password" className="f16 mb8">
-                    Password
-                    <span className="font-red f12 bold ml4">*</span>
-                  </label>
-                  <Field
-                    name="password"
-                    validate={composeValidators(minLength(3), required)}
-                  >
-                    {({ input, meta }) => (
-                      <div className="relative mb20">
-                        <input
-                          id="login-password"
-                          className={`form-input bs-1 w100 ${
-                            meta.error && meta.touched ? "input-error" : ""
-                          }`}
-                          placeholder="Password"
-                          type="password"
-                          autoComplete="off"
-                          {...input}
-                        />
-                        {meta.error && meta.touched && (
-                          <span className="form-error f10">{meta.error}</span>
-                        )}
-                      </div>
-                    )}
-                  </Field>
-                  <button
-                    className="form-button-p font-white bs-2 w100 mt12 pt8 pb8 r"
-                    type="submit"
-                  >
-                    Login
-                  </button>
-                </form>
-              )}
-            />
-          )}
-          {tab === CONSTANTS.TABS.LOGIN.CREATEUSER && (
-            <Form
-              onSubmit={handleCreateUser}
-              validate={(values) => {
-                const errors = {};
-                if (!values.checkPassword) {
-                  errors.checkPassword = "Required";
-                }
-                if (values.password !== values.checkPassword) {
-                  errors.checkPassword = "Passwords must match";
-                }
-                return errors;
-              }}
-              render={({ handleSubmit }) => (
-                <form onSubmit={handleSubmit}>
-                  <label htmlFor="create-email" className="f16 mb8">
-                    Email
-                    <span className="font-red f12 bold ml4">*</span>
-                  </label>
-                  <Field
-                    name="email"
-                    validate={composeValidators(isEmail, required)}
-                  >
-                    {({ input, meta }) => (
-                      <div className="relative mb20">
-                        <input
-                          id="create-email"
-                          className={`form-input bs-1 w100 ${
-                            meta.error && meta.touched ? "input-error" : ""
-                          }`}
-                          placeholder="example@email.com"
-                          type="text"
-                          {...input}
-                        />
-                        {meta.error && meta.touched && (
-                          <span className="form-error f10">{meta.error}</span>
-                        )}
-                      </div>
-                    )}
-                  </Field>
-                  <label htmlFor="create-password" className="f16 mb8">
-                    Password
-                    <span className="font-red f12 bold ml4">*</span>
-                  </label>
-                  <Field
-                    name="password"
-                    validate={composeValidators(minLength(3), required)}
-                  >
-                    {({ input, meta }) => (
-                      <div className="relative mb20">
-                        <input
-                          id="create-password"
-                          className={`form-input bs-1 w100 ${
-                            meta.error && meta.touched ? "input-error" : ""
-                          }`}
-                          placeholder="Password"
-                          type="password"
-                          autoComplete="off"
-                          {...input}
-                        />
-                        {meta.error && meta.touched && (
-                          <span className="form-error f10">{meta.error}</span>
-                        )}
-                      </div>
-                    )}
-                  </Field>
-                  <label htmlFor="create-confirm" className="f16 mb8">
-                    Confirm Password
-                    <span className="font-red f12 bold ml4">*</span>
-                  </label>
-                  <Field name="checkPassword">
-                    {({ input, meta }) => (
-                      <div className="relative mb20">
-                        <input
-                          id="create-confirm"
-                          className={`form-input bs-1 w100 ${
-                            meta.error && meta.touched ? "input-error" : ""
-                          }`}
-                          placeholder="Confirm Password"
-                          type="password"
-                          autoComplete="off"
-                          {...input}
-                        />
-                        {meta.error && meta.touched && (
-                          <span className="form-error f10">{meta.error}</span>
-                        )}
-                      </div>
-                    )}
-                  </Field>
-                  <div className="flex-row align-c mb12">
-                    <Field
-                      name="hasAcceptedTCs"
-                      validate={required}
-                      type="checkbox"
-                    >
-                      {({ input, meta }) => (
-                        <div className="flex-row align-c relative">
-                          <input
-                            id="terms-and-conditions"
-                            type="checkbox"
-                            {...input}
-                          />
-                          {meta.error && meta.touched && (
-                            <span className="form-error f10">{meta.error}</span>
-                          )}
-                        </div>
-                      )}
-                    </Field>
-                    <label htmlFor="terms-and-conditions" className="ml8 f12">
-                      Accept{" "}
-                      <span
-                        onClick={() => history.push("/terms-and-conditions")}
-                        className="link-underline"
-                      >
-                        Terms and Conditions
-                      </span>{" "}
-                      and{" "}
-                      <span
-                        onClick={() => history.push("/privacy-policy")}
-                        className="link-underline"
-                      >
-                        Privacy Policy
-                      </span>
-                      <span className="font-red f12 bold ml4">*</span>
-                    </label>
-                  </div>
-                  <button
-                    className="form-button-p font-white bs-2 w100 mt12 pt8 pb8 r"
-                    type="submit"
-                  >
-                    Create Account
-                  </button>
-                </form>
-              )}
-            />
-          )}
-        </div>
-        <div className="login mw450">
-          <span className="link font-n1" onClick={handleForgotPassword}>
-            Forgot your password
-          </span>
-        </div>
-        <div className="login mw450">
-          <span className="link font-n1" onClick={handleDemo}>
-            Try a demo account
-          </span>
+          <div className="mt-1">
+            <Link
+              className="text-xs text-white hover:text-gray-300 hover:underline"
+              to="/reset-password"
+            >
+              Forgot your password
+            </Link>
+          </div>
+          <div className="mt-1">
+            <Link
+              className="text-xs text-white hover:text-gray-300 hover:underline"
+              onClick={handleDemo}
+              to="/"
+            >
+              Try a demo account
+            </Link>
+          </div>
         </div>
       </div>
     </div>
@@ -326,6 +270,7 @@ const Login = ({
 
 const mapStateToProps = (state) => {
   return {
+    isUserFetching: state.users.isFetching,
     isLoggedIn: !!state.users?.data?._id,
     tab: state.navigation.tabs.login,
   };

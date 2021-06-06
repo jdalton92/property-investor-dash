@@ -13,7 +13,7 @@ import SaveDashboardModal from "./components/Dashboards/SaveDashboardModal";
 import Login from "./components/Login";
 import Main from "./components/Main";
 
-import "./styles/main.scss";
+// import "./styles/main.scss";
 
 const App = ({ initUser, isUserFetching, overlay, saveDashboardModal }) => {
   useEffect(() => {
@@ -22,23 +22,18 @@ const App = ({ initUser, isUserFetching, overlay, saveDashboardModal }) => {
   }, []);
 
   return (
-    <div className="app bg-base w100 fade-in">
+    <div className="app">
       <Router>
         <PageTitleController />
         <ScrollToTopControlller />
         <Notifications />
-        {isUserFetching ? (
-          <Loader />
-        ) : (
-          <>
-            {overlay && <Overlay />}
-            {saveDashboardModal && <SaveDashboardModal />}
-            <Switch>
-              <Route exact path="/login" render={() => <Login />} />
-              <Route render={() => <Main />} />
-            </Switch>
-          </>
-        )}
+        {overlay && <Overlay />}
+        {saveDashboardModal && <SaveDashboardModal />}
+        <Switch>
+          <Route exact path="/login" render={() => <Login />} />
+          <Route exact path="/sign-up" render={() => <Login />} />
+          {isUserFetching ? <Loader /> : <Route render={() => <Main />} />}
+        </Switch>
         {process.env.NODE_ENV === "production" && <AnalyticsController />}
       </Router>
     </div>
