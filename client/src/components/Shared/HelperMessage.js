@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { readHelperMessage } from "../../reducers/usersReducer";
-import { Icon } from "./Icon";
+import Icon from "./Icon";
 import MessageIcon from "../../styles/svg/message.svg";
 
 const HelperMessage = ({

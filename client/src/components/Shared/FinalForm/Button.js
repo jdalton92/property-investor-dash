@@ -1,5 +1,5 @@
 import React from "react";
-import { ReactComponent as Loader } from "../../../styles/svg/loader.svg";
+import Icon from "../Icon";
 
 const Button = ({ label, type = "button", options = {} }) => {
   let isDisabled = options.disabled || options.isLoading;
@@ -29,7 +29,7 @@ const Button = ({ label, type = "button", options = {} }) => {
   return (
     <button type={type} className={className} disabled={isDisabled}>
       {isLoading && (
-        <Loader className={`absolute animate-spin h-5 w-5 ${iconClass}`} />
+        <Icon icon={"loader"} className={`absolute h-5 w-5 ${iconClass}`} />
       )}
       <span>{label}</span>
     </button>

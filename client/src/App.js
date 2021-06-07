@@ -22,7 +22,7 @@ const App = ({ initUser, isUserFetching, overlay, saveDashboardModal }) => {
   }, []);
 
   return (
-    <div className="app">
+    <div className="app w-full min-h-screen bg-gray-200">
       <Router>
         <PageTitleController />
         <ScrollToTopControlller />

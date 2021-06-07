@@ -15,7 +15,7 @@ import {
 } from "../../utils/dashboardHelper";
 import { developerTooltip } from "../../static/tooltipText";
 import { Line, Bar } from "react-chartjs-2";
-import { Icon } from "../Shared/Icon";
+import Icon from "../Shared/Icon";
 import ExpandIcon from "../../styles/svg/expand.svg";
 import CollapseIcon from "../../styles/svg/collapse.svg";
 

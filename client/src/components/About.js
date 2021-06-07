@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { demoUser } from "../reducers/usersReducer";
-import { Icon } from "./Shared/Icon";
+import Icon from "./Shared/Icon";
 import TickIcon from "../styles/svg/tick.svg";
 import QuestionIcon from "../styles/svg/question.svg";
 import developer from "../styles/images/card-developer.png";

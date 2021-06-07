@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { Icon } from "./Shared/Icon";
+import Icon from "./Shared/Icon";
 import HomeOwnerIcon from "../styles/svg/home-owner.svg";
 import FinanceIcon from "../styles/svg/finance.svg";
 import UnitsIcon from "../styles/svg/units.svg";

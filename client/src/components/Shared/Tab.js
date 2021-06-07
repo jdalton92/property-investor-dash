@@ -9,9 +9,9 @@ const Tab = ({ title, to, options = {} }) => {
     <NavLink
       className="flex flex-row w-1/2 justify-center items-center
       text-gray-600 py-4 px-6 block hover:text-blue-500
-      focus:outline-none hover:bg-gray-50 rounded-t-lg"
+      focus:outline-none hover:bg-gray-50 rounded-t-xl"
       activeClassName="text-blue-500 border-b-2 font-medium
-      border-blue-500 bg-gray-50"
+      border-blue-500 bg-gray-100"
       to={to}
       onClick={onClick}
     >

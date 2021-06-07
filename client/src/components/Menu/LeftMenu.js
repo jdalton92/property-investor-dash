@@ -6,159 +6,133 @@ import { CONSTANTS } from "../../static/constants";
 import { setTab } from "../../reducers/navigationReducer";
 import { logoutUser } from "../../reducers/usersReducer";
 
-import QuestionIcon from "../../styles/svg/question.svg";
-import MessageIcon from "../../styles/svg/message.svg";
-import DashboardIcon from "../../styles/svg/dashboard.svg";
-import ContactIcon from "../../styles/svg/email.svg";
-import BookIcon from "../../styles/svg/book.svg";
-import GitHubIcon from "../../styles/svg/github.svg";
-import HomeOwnerIcon from "../../styles/svg/home-owner.svg";
-import UnitsIcon from "../../styles/svg/units.svg";
-import FinanceIcon from "../../styles/svg/finance.svg";
-import InfoIcon from "../../styles/svg/information.svg";
-import UserIcon from "../../styles/svg/user.svg";
-import CreateUserIcon from "../../styles/svg/create-user.svg";
-import SettingsIcon from "../../styles/svg/settings.svg";
-import LogoutIcon from "../../styles/svg/logout.svg";
-
 const LeftMenu = ({ leftSidebarOpen, isLoggedIn, setTab, logoutUser }) => {
-  let userMenuItems = [];
+  let userMenuItems = [
+    {
+      label: "Login",
+      link: {
+        url: "/login",
+        callBack: () => setTab("login", CONSTANTS.TABS.LOGIN.LOGIN),
+      },
+      icon: "user",
+    },
+    {
+      label: "Create Account",
+      link: {
+        url: "/login",
+        callBack: () => setTab("login", CONSTANTS.TABS.LOGIN.CREATEUSER),
+      },
+      icon: "create-user",
+    },
+  ];
   if (isLoggedIn) {
     userMenuItems = [
       {
-        title: "Saved Dashboards",
+        label: "Saved Dashboards",
         link: {
           url: "/saved-dashboards",
-          internal: true,
         },
-        icon: DashboardIcon,
+        icon: "dashboard",
       },
       {
-        title: "Account Settings",
+        label: "Account Settings",
         link: {
           url: "/settings",
-          internal: true,
         },
-        icon: SettingsIcon,
+        icon: "settings",
       },
       {
-        title: "Logout",
+        label: "Logout",
         link: {
           url: "/",
-          internal: true,
           callBack: () => logoutUser(),
         },
-        icon: LogoutIcon,
-      },
-    ];
-  } else {
-    userMenuItems = [
-      {
-        title: "Login",
-        link: {
-          url: "/login",
-          internal: true,
-          callBack: () => setTab("login", CONSTANTS.TABS.LOGIN.LOGIN),
-        },
-        icon: UserIcon,
-      },
-      {
-        title: "Create Account",
-        link: {
-          url: "/login",
-          internal: true,
-          callBack: () => setTab("login", CONSTANTS.TABS.LOGIN.CREATEUSER),
-        },
-        icon: CreateUserIcon,
+        icon: "logout",
       },
     ];
   }
 
-  let aboutMenuItems = [
+  const aboutMenuItems = [
     {
-      title: "About",
-      link: { url: "/", internal: true },
-      icon: QuestionIcon,
+      label: "About",
+      link: { url: "/" },
+      icon: "question",
     },
     {
-      title: "Calculator Types",
-      link: { url: "/calculator-types", internal: true },
-      icon: DashboardIcon,
+      label: "Calculator Types",
+      link: { url: "/calculator-types" },
+      icon: "dashboard",
     },
     {
-      title: "Blog",
-      link: { url: "/blog", internal: true },
-      icon: BookIcon,
+      label: "Blog",
+      link: { url: "/blog" },
+      icon: "book",
     },
     {
-      title: "Contact",
-      link: { url: "/contact", internal: true },
-      icon: ContactIcon,
+      label: "Contact",
+      link: { url: "/contact" },
+      icon: "email",
     },
   ];
 
   const calculatorMenuItems = [
     {
-      title: "Owner Occupier",
-      link: { url: "/owner-occupier/edit", internal: true },
-      icon: HomeOwnerIcon,
+      label: "Owner Occupier",
+      link: { url: "/owner-occupier/edit" },
+      icon: "home-owner",
     },
     {
-      title: "Investor",
+      label: "Investor",
       link: {
         url: "/investor/edit",
-        internal: true,
       },
-      icon: FinanceIcon,
+      icon: "finance",
     },
     {
-      title: "Developer",
+      label: "Developer",
       link: {
         url: "/developer/edit",
-        internal: true,
       },
-      icon: UnitsIcon,
+      icon: "units",
     },
   ];
 
   const otherMenuItems = [
     {
-      title: "Terms and Conditions",
-      link: { url: "/terms-and-conditions", internal: true },
-      icon: MessageIcon,
+      label: "Terms and Conditions",
+      link: { url: "/terms-and-conditions" },
+      icon: "message",
     },
     {
-      title: "Privacy Policy",
+      label: "Privacy Policy",
       link: {
         url: "/privacy-policy",
-        internal: true,
       },
-      icon: InfoIcon,
+      icon: "information",
     },
     {
-      title: "GitHub",
+      label: "GitHub",
       link: {
         url: "https://github.com/jdalton92/property-investor-dash",
-        internal: false,
+        external: true,
       },
-      icon: GitHubIcon,
+      icon: "github",
     },
   ];
 
   return (
     <div
-      className={`left-menu-wrapper bg-base sticky flex-col ${
-        leftSidebarOpen ? "open-left" : ""
+      className={`sticky top-0 max-h-screen overflow-y-scroll transition-transform duration-250 ease-in-out transform
+      lg:translate-x-0 ${
+        leftSidebarOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
-      <div className="navbar-side bg-nav s1080 h100 p8 flex-row align-c justify-e">
-        <h1 className="w100 f20 bold text-start font-white ts-3">
-          PropertyInvestorDash
-        </h1>
+      <div className="flex block lg:hidden">
+        <h1>PropertyInvestorDash</h1>
         <Burger customClass={"s1080"} />
       </div>
-      <div className="left-menu sticky-below-nav flex-col">
-        <div className="o-y-scroll o-x-hidden mt8 mb8 h100 scrollbar">
+      <div>
+        <div className="">
           <MenuContainer title={"User"} menuItems={userMenuItems} />
           <MenuContainer title={"About"} menuItems={aboutMenuItems} />
           <MenuContainer

@@ -7,44 +7,40 @@ import { setLeftSidebar } from "../../reducers/navigationReducer";
 const MenuContainer = ({ title, menuItems, setLeftSidebar }) => {
   const history = useHistory();
 
-  const handleClick = (link) => {
-    if (link.callBack) link.callBack();
-    handleLink(link.internal, link.url);
-  };
-
-  const handleLink = (internal, url) => {
+  const handleLink = (link) => {
+    if (link.callBack) {
+      link.callBack();
+    }
     setLeftSidebar(false);
-    if (internal) {
-      history.push(url);
-    } else {
-      const win = window.open(url, "_blank");
+    if (link.external) {
+      const win = window.open(link.url, "_blank");
       if (win !== null) {
         win.focus();
       }
+    } else {
+      history.push(link.url);
     }
   };
 
   return (
-    <div className="bg-1 r bs-1 mb12 flex-1 flex-col align-c">
-      <div className="flex-row w100">
-        <h3 className="ml16 pt4 pb4 bold f16">{title}</h3>
-      </div>
-      <div className="flex-col pl24 w100">
-        {menuItems.map((item, index) => {
-          return (
-            <Button
-              key={index}
-              extraClass={"button-transp-p align-c"}
-              iconColor={"#51535c"}
-              iconUrl={item.icon}
-              caption={item.title}
-              captionClass={"ml8"}
-              iconSize={"24px"}
-              onClick={() => handleClick(item.link)}
-            />
-          );
-        })}
-      </div>
+    <div className="shadow-xl rounded-2xl p-4 bg-white mb-4 flex flex-col">
+      <h3 className="font-semibold">{title}</h3>
+      {menuItems.map((item, index) => {
+        return (
+          <Button
+            key={index}
+            label={item.label}
+            options={{
+              styleType: "secondary-transparent",
+              buttonClass: "w-full h-10 pl-2",
+              labelClass: "ml-1",
+              icon: item.icon,
+              iconClass: "h-8 w-8",
+              onClick: () => handleLink(item.link),
+            }}
+          />
+        );
+      })}
     </div>
   );
 };

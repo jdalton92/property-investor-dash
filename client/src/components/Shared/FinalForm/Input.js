@@ -13,10 +13,24 @@ const Input = ({ label, name, options }) => {
   const autoComplete = options?.autoComplete;
   const extraClass = options?.extraClass;
   const id = options?.id || label;
+  const initialValue = options?.initialValue;
+  const disabled = options?.disabled || false;
   const maxLength = options?.maxLength;
   const min = options?.min;
   const max = options?.max;
   const step = options?.step;
+
+  let className = `w-full bg-white rounded-md border focus:border-indigo-500
+  focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1
+  px-3 transition-colors duration-200 ease-in-out leading-6 `;
+
+  if (disabled) {
+    className = `opacity-50 rounded-lg border-transparent flex-1 appearance-none
+  border-gray-300 w-full py-1 px-3 bg-white text-gray-700 placeholder-gray-400
+  shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600
+  focus:border-transparent border leading-6`;
+  }
+
   return (
     <>
       <label
@@ -31,16 +45,16 @@ const Input = ({ label, name, options }) => {
           </>
         )}
       </label>
-      <Field name={name} validate={composeValidators(...validators)}>
+      <Field
+        name={name}
+        initialValue={initialValue}
+        validate={composeValidators(...validators)}
+      >
         {({ input, meta }) => (
           <div className={`relative ${extraClass}`}>
             <input
               id={id}
-              className={`w-full bg-white rounded-md border
-                focus:border-indigo-500 focus:ring-2
-                focus:ring-indigo-200 text-base outline-none
-                text-gray-700 py-1 px-3 transition-colors
-                duration-200 ease-in-out leading-6
+              className={`${className}
                 ${
                   meta.error && meta.touched
                     ? "ring-2 border-red-600 ring-red-300"
@@ -53,6 +67,7 @@ const Input = ({ label, name, options }) => {
               min={min}
               max={max}
               step={step}
+              disabled={disabled}
               {...input}
             />
             {meta.error && meta.touched && (

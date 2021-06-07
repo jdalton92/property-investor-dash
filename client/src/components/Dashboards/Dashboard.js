@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import Loader from "../Shared/Loader";
-import { Icon } from "../Shared/Icon";
+import Icon from "../Shared/Icon";
 import { editDashboard } from "../../reducers/dashboardsReducer";
 import {
   getCashflow,

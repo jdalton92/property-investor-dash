@@ -16,7 +16,7 @@ import {
 import { formatDate } from "../../utils/dashboardHelper";
 import { CONSTANTS } from "../../static/constants";
 import Button from "../Shared/Button";
-import { Icon } from "../Shared/Icon";
+import Icon from "../Shared/Icon";
 import Loader from "../Shared/Loader";
 import CloseIcon from "../../styles/svg/close.svg";
 import SaveIcon from "../../styles/svg/save.svg";

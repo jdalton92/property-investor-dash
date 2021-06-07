@@ -1,13 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Form, Field } from "react-final-form";
+import { Form } from "react-final-form";
+import Input from "../Shared/FinalForm/Input";
+import Button from "../Shared/FinalForm/Button";
 import { updateUser } from "../../reducers/usersReducer";
-import {
-  required,
-  minLength,
-  isEmail,
-  composeValidators,
-} from "../../utils/formValidatorHelper";
+import { required, isEmail } from "../../utils/formValidatorHelper";
 
 const ChangeEmail = ({ user, updateUser }) => {
   const handleEmailChange = async (values) => {
@@ -22,60 +19,53 @@ const ChangeEmail = ({ user, updateUser }) => {
   };
 
   return (
-    <Form
-      onSubmit={handleEmailChange}
-      render={({ handleSubmit, values }) => (
-        <form onSubmit={handleSubmit}>
-          <h2 className="f20 bold mt16 mb16">Change Email</h2>
-          <div className="r bs-3 bg-1 p20 mb20">
-            <label htmlFor="old-email" className="f16 mb8">
-              Existing Email
-              <span className="font-red f12 bold ml4">*</span>
-            </label>
-            <div className="relative mb20">
-              <input
-                id="old-email"
-                className="form-input bs-1 w100"
-                value={user.email}
-                type="email"
-                disabled
+    <>
+      <h2 className="font-semibold mb-2">Change Email</h2>
+      <div className="shadow-xl rounded-2xl p-4 bg-white">
+        <Form
+          onSubmit={handleEmailChange}
+          render={({ handleSubmit, values }) => (
+            <form onSubmit={handleSubmit}>
+              <Input
+                label={"Existing Email"}
+                name={"email"}
+                options={{
+                  id: "old-email",
+                  validators: [required, isEmail],
+                  placeholder: "example@email.com",
+                  type: "email",
+                  extraClass: "mb-4",
+                  required: true,
+                  disabled: true,
+                  initialValue: user.email,
+                }}
               />
-            </div>
-            <label htmlFor="new-email" className="f16 mb8">
-              New Email
-              <span className="font-red f12 bold ml4">*</span>
-            </label>
-            <Field
-              name="newEmail"
-              validate={composeValidators(required, minLength(3), isEmail)}
-            >
-              {({ input, meta }) => (
-                <div className="relative mb20">
-                  <input
-                    id="new-email"
-                    className={`form-input bs-1 w100 ${
-                      meta.error && meta.touched ? "input-error" : ""
-                    }`}
-                    placeholder="new@email.com"
-                    type="email"
-                    {...input}
-                  />
-                  {meta.error && meta.touched && (
-                    <span className="form-error f10">{meta.error}</span>
-                  )}
-                </div>
-              )}
-            </Field>
-            <button
-              className="form-button-p font-white bs-2 pt8 pb8 r mt12"
-              type="submit"
-            >
-              Update
-            </button>
-          </div>
-        </form>
-      )}
-    />
+              <Input
+                label={"New Email"}
+                name={"newEmail"}
+                options={{
+                  id: "new-email",
+                  validators: [required, isEmail],
+                  placeholder: "new@email.com",
+                  type: "email",
+                  extraClass: "mb-7",
+                  required: true,
+                }}
+              />
+              <Button
+                label={"Update"}
+                type={"submit"}
+                options={{
+                  styleType: "primary",
+                  isLoading: user.isFetching,
+                  iconClass: "mr-20",
+                }}
+              />
+            </form>
+          )}
+        />
+      </div>
+    </>
   );
 };
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import Tooltip from "../Shared/Tooltip";
-import { Icon } from "../Shared/Icon";
+import Icon from "../Shared/Icon";
 import {
   cumulativeChartParse,
   tableParse,

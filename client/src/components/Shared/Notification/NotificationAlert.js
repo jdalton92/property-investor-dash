@@ -1,12 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { clearNotification } from "../../../reducers/notificationReducer";
-import Button from "../Button";
-import { Icon } from "../Icon";
+import Icon from "../Icon";
 import { CONSTANTS } from "../../../static/constants";
-import MessageIcon from "../../../styles/svg/message.svg";
-import TickIcon from "../../../styles/svg/tick.svg";
-import ErrorIcon from "../../../styles/svg/error.svg";
 import CloseIcon from "../../../styles/svg/close.svg";
 
 const NotificationAlert = ({ notification, clearNotification, key }) => {
@@ -16,20 +12,25 @@ const NotificationAlert = ({ notification, clearNotification, key }) => {
   };
 
   let notificationType = notification.type.toLowerCase();
-  let iconUrl;
+  let typeClass;
+  let icon;
   switch (notification.type) {
     case CONSTANTS.NOTIFICATION.INFO:
-      iconUrl = MessageIcon;
+      icon = "message";
+      typeClass = "text-gray-500";
       break;
     case CONSTANTS.NOTIFICATION.SUCCESS:
-      iconUrl = TickIcon;
+      icon = "tick";
+      typeClass = "text-green-500";
       break;
     case CONSTANTS.NOTIFICATION.ERROR:
-      iconUrl = ErrorIcon;
+      icon = "error";
+      typeClass = "text-red-500";
       break;
     default:
       notificationType = "info";
-      iconUrl = MessageIcon;
+      icon = "message";
+      typeClass = "text-gray-500";
   }
 
   const toTitleCase = (string) => {
@@ -41,27 +42,25 @@ const NotificationAlert = ({ notification, clearNotification, key }) => {
   return (
     <div
       key={key}
-      className="notification p8 ml8 mr8 mb8 fade-in flex-row align-c relative bs-2 jump r bs-3"
+      className="flex items-center rounded-lg shadow-2xl p-1 md:my-1 md:mr-1
+      bg-opacity-70 bg-gray-800"
     >
-      <Icon url={iconUrl} color={"white"} hover={false} active={false} />
-      <div className="w100 ml8">
-        <span className={`${notificationType} bold`}>
-          {toTitleCase(notificationType)}:
-        </span>
-        <span className="font-white pl4">
-          {typeof notification.message === "string"
-            ? ` ${notification.message}`
-            : ` ${notification.statusText}`}
-        </span>
+      <Icon icon={icon} className={`${typeClass} w-6 h-6 mx-2`} />
+      <div className="flex flex-col flex-1">
+        <h3 className={`text-md font-medium ${typeClass}`}>
+          {toTitleCase(notificationType)}
+        </h3>
+        <span className="text-sm text-white">{notification.message}</span>
       </div>
-      <Button
-        ariaLabel={"Close"}
-        dataBalloonPos={"left"}
-        extraClass={"button-transp-p align-c justify-c"}
+      <button
+        type="button"
+        className="bg-opacity-50 rounded-lg mr-1 transition ease-in
+        duration-100 focus:ring-2 focus:ring-offset-2 hover:bg-opacity-90
+        hover:bg-gray-400 hover:text-indigo-100 "
         onClick={handleCloseNotification}
-        iconUrl={CloseIcon}
-        iconColor={"white"}
-      />
+      >
+        <Icon icon="close" className="h-8 w-8" />
+      </button>
     </div>
   );
 };

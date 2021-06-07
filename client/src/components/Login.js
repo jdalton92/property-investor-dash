@@ -56,14 +56,16 @@ const Login = ({
     <div className="flex flex-row h-screen bg-indigo-900">
       <div
         className="h-full bg-cover bg-no-repeat bg-center object-cover hidden
-        md:block md:flex-1"
+        md:block md:flex-1 z-10"
         style={{
           backgroundImage: `url(${hero})`,
         }}
-      />
+      >
+        <div className="h-full w-full bg-gray-700 bg-opacity-25" />
+      </div>
       <div className="flex h-screen w-full lg:w-700px">
         <div className="flex flex-col m-auto">
-          <div className="shadow-xl rounded-2xl p-4 bg-white w-full h-550px md:w-450px">
+          <div className="shadow-xl rounded-2xl p-4 bg-white h-550px w-full sm:w-450px">
             <Link className="w-full hover:underline" to={"/"}>
               <h1 className="text-center font-medium text-2xl text-shadow-xs mt-3 mb-7">
                 PropertyInvestorDash
