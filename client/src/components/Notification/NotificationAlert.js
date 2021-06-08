@@ -1,9 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import { clearNotification } from "../../../reducers/notificationReducer";
-import Icon from "../Icon";
-import { CONSTANTS } from "../../../static/constants";
-import CloseIcon from "../../../styles/svg/close.svg";
+import { clearNotification } from "../../reducers/notificationReducer";
+import Icon from "../Shared/Icon";
+import { CONSTANTS } from "../../static/constants";
 
 const NotificationAlert = ({ notification, clearNotification, key }) => {
   const handleCloseNotification = (e) => {

@@ -45,7 +45,6 @@ const ChangePassword = ({ user, updateUser }) => {
                   placeholder: "Password",
                   type: "password",
                   extraClass: "mb-4",
-                  required: true,
                   autoComplete: "off",
                 }}
               />
@@ -58,7 +57,6 @@ const ChangePassword = ({ user, updateUser }) => {
                   placeholder: "Password",
                   type: "password",
                   extraClass: "mb-4",
-                  required: true,
                   autoComplete: "off",
                 }}
               />
@@ -71,7 +69,6 @@ const ChangePassword = ({ user, updateUser }) => {
                   placeholder: "Password",
                   type: "password",
                   extraClass: "mb-7",
-                  required: true,
                   autoComplete: "off",
                 }}
               />

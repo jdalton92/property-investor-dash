@@ -6,12 +6,12 @@ const Button = ({ label, type = "button", options = {} }) => {
   const isLoading = options?.isLoading || false;
   const styleType = options.styleType;
   const iconClass = options?.iconClass;
-  let className = `mt-2 py-1 px-4 text-white w-full transition ease-in
+  const buttonClass = options?.buttonClass;
+  let className = `${buttonClass} mt-2 py-1 px-4 text-white transition ease-in
     duration-200 text-center text-base shadow-lg focus:outline-none
     focus:ring-2 focus:ring-offset-2 rounded-md leading-7 flex justify-center
-    items-center relative ${
-      isDisabled ? "opacity-60 pointer-events-none" : ""
-    } `;
+    items-center relative ${isDisabled ? "opacity-60 pointer-events-none" : ""}
+    `;
 
   switch (styleType) {
     case "primary":

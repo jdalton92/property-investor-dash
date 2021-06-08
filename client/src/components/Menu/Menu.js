@@ -2,43 +2,37 @@ import React from "react";
 import { connect } from "react-redux";
 import MenuContainer from "./MenuContainer";
 import Burger from "../NavigationBar/Burger";
-import { CONSTANTS } from "../../static/constants";
-import { setTab } from "../../reducers/navigationReducer";
+import LoadingMenuContainer from "./LoadingMenuContainer";
 import { logoutUser } from "../../reducers/usersReducer";
 
-const LeftMenu = ({ leftSidebarOpen, isLoggedIn, setTab, logoutUser }) => {
+const Menu = ({
+  isUserFetching,
+  leftSidebarOpen,
+  isAuthedUser,
+  logoutUser,
+}) => {
   let userMenuItems = [
     {
       label: "Login",
-      link: {
-        url: "/login",
-        callBack: () => setTab("login", CONSTANTS.TABS.LOGIN.LOGIN),
-      },
+      link: { url: "/login", navLink: true },
       icon: "user",
     },
     {
       label: "Create Account",
-      link: {
-        url: "/login",
-        callBack: () => setTab("login", CONSTANTS.TABS.LOGIN.CREATEUSER),
-      },
+      link: { url: "/sign-up" },
       icon: "create-user",
     },
   ];
-  if (isLoggedIn) {
+  if (isAuthedUser) {
     userMenuItems = [
       {
         label: "Saved Dashboards",
-        link: {
-          url: "/saved-dashboards",
-        },
+        link: { url: "/saved-dashboards", navLink: true },
         icon: "dashboard",
       },
       {
         label: "Account Settings",
-        link: {
-          url: "/settings",
-        },
+        link: { url: "/settings", navLink: true },
         icon: "settings",
       },
       {
@@ -55,22 +49,22 @@ const LeftMenu = ({ leftSidebarOpen, isLoggedIn, setTab, logoutUser }) => {
   const aboutMenuItems = [
     {
       label: "About",
-      link: { url: "/" },
+      link: { url: "/", navLink: true },
       icon: "question",
     },
     {
       label: "Calculator Types",
-      link: { url: "/calculator-types" },
+      link: { url: "/calculator-types", navLink: true },
       icon: "dashboard",
     },
     {
       label: "Blog",
-      link: { url: "/blog" },
+      link: { url: "/blog", navLink: true },
       icon: "book",
     },
     {
       label: "Contact",
-      link: { url: "/contact" },
+      link: { url: "/contact", navLink: true },
       icon: "email",
     },
   ];
@@ -78,21 +72,17 @@ const LeftMenu = ({ leftSidebarOpen, isLoggedIn, setTab, logoutUser }) => {
   const calculatorMenuItems = [
     {
       label: "Owner Occupier",
-      link: { url: "/owner-occupier/edit" },
+      link: { url: "/owner-occupier/edit", navLink: true },
       icon: "home-owner",
     },
     {
       label: "Investor",
-      link: {
-        url: "/investor/edit",
-      },
+      link: { url: "/investor/edit", navLink: true },
       icon: "finance",
     },
     {
       label: "Developer",
-      link: {
-        url: "/developer/edit",
-      },
+      link: { url: "/developer/edit", navLink: true },
       icon: "units",
     },
   ];
@@ -100,14 +90,12 @@ const LeftMenu = ({ leftSidebarOpen, isLoggedIn, setTab, logoutUser }) => {
   const otherMenuItems = [
     {
       label: "Terms and Conditions",
-      link: { url: "/terms-and-conditions" },
+      link: { url: "/terms-and-conditions", navLink: true },
       icon: "message",
     },
     {
       label: "Privacy Policy",
-      link: {
-        url: "/privacy-policy",
-      },
+      link: { url: "/privacy-policy", navLink: true },
       icon: "information",
     },
     {
@@ -115,6 +103,7 @@ const LeftMenu = ({ leftSidebarOpen, isLoggedIn, setTab, logoutUser }) => {
       link: {
         url: "https://github.com/jdalton92/property-investor-dash",
         external: true,
+        navLink: false,
       },
       icon: "github",
     },
@@ -123,7 +112,7 @@ const LeftMenu = ({ leftSidebarOpen, isLoggedIn, setTab, logoutUser }) => {
   return (
     <div
       className={`sticky top-0 max-h-screen overflow-y-scroll transition-transform duration-250 ease-in-out transform
-      lg:translate-x-0 ${
+      lg:translate-x-0 w-60 ${
         leftSidebarOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
@@ -132,15 +121,25 @@ const LeftMenu = ({ leftSidebarOpen, isLoggedIn, setTab, logoutUser }) => {
         <Burger customClass={"s1080"} />
       </div>
       <div>
-        <div className="">
-          <MenuContainer title={"User"} menuItems={userMenuItems} />
-          <MenuContainer title={"About"} menuItems={aboutMenuItems} />
-          <MenuContainer
-            title={"Calculators"}
-            menuItems={calculatorMenuItems}
-          />
-          <MenuContainer title={"Other"} menuItems={otherMenuItems} />
-        </div>
+        {!isUserFetching && (
+          <>
+            <MenuContainer title={"User"} menuItems={userMenuItems} />
+            <MenuContainer title={"About"} menuItems={aboutMenuItems} />
+            <MenuContainer
+              title={"Calculators"}
+              menuItems={calculatorMenuItems}
+            />
+            <MenuContainer title={"Other"} menuItems={otherMenuItems} />
+          </>
+        )}
+        {isUserFetching && (
+          <>
+            <LoadingMenuContainer />
+            <LoadingMenuContainer />
+            <LoadingMenuContainer />
+            <LoadingMenuContainer />
+          </>
+        )}
       </div>
     </div>
   );
@@ -148,14 +147,15 @@ const LeftMenu = ({ leftSidebarOpen, isLoggedIn, setTab, logoutUser }) => {
 
 const mapStateToProps = (state) => {
   return {
+    isUserFetching: state.users.isFetching,
+    // isUserFetching: true,
     leftSidebarOpen: state.navigation.sidebarOpen.left,
-    isLoggedIn: state.users.data?._id,
+    isAuthedUser: state.users.data?._id,
   };
 };
 
 const mapDispatchToProps = {
-  setTab,
   logoutUser,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LeftMenu);
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);

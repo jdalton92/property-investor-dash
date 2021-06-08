@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
-import Button from "./Shared/Button";
-import DashboardDropdown from "./DashboardDropdown";
+import Button from "../Shared/Button";
+import DashboardDropdown from "../DashboardDropdown";
 import {
   formatDate,
   getDashboardTypeAndBaseUrl,
-} from "../utils/dashboardHelper";
-import VerticalDots from "../styles/svg/vertical-dots.svg";
+} from "../../utils/dashboardHelper";
 
 const SavedDashboards = ({ index, dashboard }) => {
   useEffect(() => {
@@ -27,40 +26,37 @@ const SavedDashboards = ({ index, dashboard }) => {
   const { type } = getDashboardTypeAndBaseUrl(dashboard);
 
   return (
-    <tr className="hover">
+    <tr className="border-b border-gray-200 h-12 hover:bg-gray-50">
       <td>
-        <span className="ml4">{index}</span>
+        <span>{index}</span>
       </td>
       <td>
-        <span className="text-s bold line-clamp-2">
-          {dashboard.description}
-        </span>
+        <span>{dashboard.description}</span>
       </td>
       <td>
-        <span className="line-clamp-2">{dashboard.address}</span>
+        <span>{dashboard.address}</span>
       </td>
       <td>
-        <span className="line-clamp-2">{type}</span>
+        <span>{type}</span>
       </td>
       <td>
-        <span className="line-clamp-1 h500">
-          {formatDate(dashboard.created)}
-        </span>
+        <span>{formatDate(dashboard.created)}</span>
       </td>
       <td>
-        <span className="line-clamp-1 h768">
-          {dashboard.updated ? formatDate(dashboard.updated) : "-"}
-        </span>
+        <span>{dashboard.updated ? formatDate(dashboard.updated) : "-"}</span>
       </td>
-      <td className="relative">
+      <td>
         <div ref={ref}>
           <Button
-            ariaLabel={"Actions"}
-            dataBalloonPos={"left"}
-            extraClass={"button-transp-p align-c justify-c"}
-            onClick={() => setShowDropdown(!showDropdown)}
-            iconUrl={VerticalDots}
-            iconColor={"#51535c"}
+            options={{
+              styleType: "secondary-transparent",
+              buttonClass: "w-10 h-10 justify-center",
+              ariaLabel: "Actions",
+              ariaPosition: "left",
+              icon: "vertical-dots",
+              iconClass: "h-4 w-4",
+              onClick: () => setShowDropdown(!showDropdown),
+            }}
           />
           {showDropdown && <DashboardDropdown dashboard={dashboard} />}
         </div>

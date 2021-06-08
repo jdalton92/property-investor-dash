@@ -31,7 +31,6 @@ const DeleteAccount = ({ user, deleteUser }) => {
                   placeholder: "Password",
                   type: "password",
                   extraClass: "mb-7",
-                  required: true,
                   autoComplete: "off",
                 }}
               />

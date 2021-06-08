@@ -35,7 +35,6 @@ const ChangeEmail = ({ user, updateUser }) => {
                   placeholder: "example@email.com",
                   type: "email",
                   extraClass: "mb-4",
-                  required: true,
                   disabled: true,
                   initialValue: user.email,
                 }}
@@ -49,7 +48,6 @@ const ChangeEmail = ({ user, updateUser }) => {
                   placeholder: "new@email.com",
                   type: "email",
                   extraClass: "mb-7",
-                  required: true,
                 }}
               />
               <Button

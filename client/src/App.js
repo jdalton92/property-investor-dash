@@ -6,8 +6,7 @@ import { CONSTANTS } from "./static/constants";
 import AnalyticsController from "./components/Shared/AnalyticsController";
 import ScrollToTopControlller from "./components/Shared/ScrollToTopControlller";
 import PageTitleController from "./components/Shared/PageTitleController";
-import Loader from "./components/Shared/Loader";
-import Notifications from "./components/Shared/Notification/Notifications";
+import Notifications from "./components/Notification/Notifications";
 import Overlay from "./components/Shared/Overlay";
 import SaveDashboardModal from "./components/Dashboards/SaveDashboardModal";
 import Login from "./components/Login";
@@ -15,14 +14,14 @@ import Main from "./components/Main";
 
 // import "./styles/main.scss";
 
-const App = ({ initUser, isUserFetching, overlay, saveDashboardModal }) => {
+const App = ({ initUser, overlay, saveDashboardModal }) => {
   useEffect(() => {
     initUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div className="app w-full min-h-screen bg-gray-200">
+    <div className="w-full min-h-screen bg-gray-200">
       <Router>
         <PageTitleController />
         <ScrollToTopControlller />
@@ -32,7 +31,7 @@ const App = ({ initUser, isUserFetching, overlay, saveDashboardModal }) => {
         <Switch>
           <Route exact path="/login" render={() => <Login />} />
           <Route exact path="/sign-up" render={() => <Login />} />
-          {isUserFetching ? <Loader /> : <Route render={() => <Main />} />}
+          <Route render={() => <Main />} />
         </Switch>
         {process.env.NODE_ENV === "production" && <AnalyticsController />}
       </Router>
@@ -42,7 +41,6 @@ const App = ({ initUser, isUserFetching, overlay, saveDashboardModal }) => {
 
 const mapStateToProps = (state) => {
   return {
-    isUserFetching: state.users.isFetching,
     overlay: state.navigation.overlay,
     saveDashboardModal: state.navigation.modal[CONSTANTS.MODALS.SAVEDASHBOARD],
   };

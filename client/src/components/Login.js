@@ -26,11 +26,16 @@ const Login = ({
     if (isLoggedIn) {
       history.push("/");
     } else {
-      let tab;
-      history.location.pathname === "/login"
-        ? (tab = CONSTANTS.TABS.LOGIN.LOGIN)
-        : (tab = CONSTANTS.TABS.LOGIN.CREATEUSER);
-      setTab("login", tab);
+      switch (history.location.pathname) {
+        case "/login":
+          setTab("login", CONSTANTS.TABS.LOGIN.LOGIN);
+          break;
+        case "/sign-up":
+          setTab("login", CONSTANTS.TABS.LOGIN.CREATEUSER);
+          break;
+        default:
+          history.push("/");
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
@@ -53,7 +58,7 @@ const Login = ({
   };
 
   return (
-    <div className="flex flex-row h-screen bg-indigo-900">
+    <div className="animate-fade-in flex flex-row h-screen bg-indigo-900">
       <div
         className="h-full bg-cover bg-no-repeat bg-center object-cover hidden
         md:block md:flex-1 z-10"
@@ -123,6 +128,7 @@ const Login = ({
                       type={"submit"}
                       options={{
                         styleType: "primary",
+                        buttonClass: "w-full",
                         isLoading: isUserFetching,
                         iconClass: "mr-20",
                       }}
@@ -238,6 +244,7 @@ const Login = ({
                       type={"submit"}
                       options={{
                         styleType: "primary",
+                        buttonClass: "w-full",
                         isLoading: isUserFetching,
                         iconClass: "mr-36",
                       }}

@@ -14,10 +14,10 @@ const contactReducer = (state = initialState, action) => {
   }
 };
 
-export const setMessage = (values) => {
+export const sendMessage = (values) => {
   return async (dispatch) => {
     dispatch({
-      type: "END_REQUEST",
+      type: "SEND_REQUEST",
     });
     try {
       const response = await contactService.sendEmail(values);

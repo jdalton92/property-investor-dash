@@ -26,12 +26,16 @@ const MenuContainer = ({ title, menuItems, setLeftSidebar }) => {
     <div className="shadow-xl rounded-2xl p-4 bg-white mb-4 flex flex-col">
       <h3 className="font-semibold">{title}</h3>
       {menuItems.map((item, index) => {
+        const navLink = item.link?.navLink;
+        const isExternal = item.link?.external;
         return (
           <Button
             key={index}
             label={item.label}
             options={{
-              styleType: "secondary-transparent",
+              styleType: "primary-transparent",
+              navLink: navLink,
+              route: navLink && !isExternal ? item.link.url : undefined,
               buttonClass: "w-full h-10 pl-2",
               labelClass: "ml-1",
               icon: item.icon,
