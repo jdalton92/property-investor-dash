@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { getDashboards } from "../../reducers/dashboardsReducer";
+import { getPaginateOptions } from "../../utils/dashboardHelper";
 import LoadingSavedDashboards from "./LoadingSavedDashboards";
 import Icon from "../Shared/Icon";
 import SavedDashboard from "./SavedDashboard";
 
 const SavedDashboards = ({ getDashboards, isFetching, savedDashboards }) => {
   const limit = 5;
-  const [params, setParams] = useState({ limit });
+  const viewPages = 5;
+  const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
-    getDashboards(params);
+    getDashboards({ limit, page: currentPage });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params]);
+  }, [currentPage]);
 
   if (isFetching) {
     return (
@@ -21,125 +23,135 @@ const SavedDashboards = ({ getDashboards, isFetching, savedDashboards }) => {
       </>
     );
   } else {
-    const currentPage = savedDashboards.nextPage
-      ? savedDashboards.nextPage - 1
-      : savedDashboards.pagesCount;
+    const pageOptions = getPaginateOptions(
+      currentPage,
+      viewPages,
+      savedDashboards.pagesCount
+    );
     return (
       <>
         <h1 className="my-2 text-xl font-semibold">Saved Dashboards</h1>
-        {savedDashboards?.resultsCount > 0 ? (
-          <div className="mb16 flex-row align-c">
-            <button
-              onClick={() =>
-                setParams({
-                  limit,
-                  page: savedDashboards.previousPage,
-                })
-              }
-              type="button"
-              disabled={!savedDashboards.previousPage}
-              className={`${
-                savedDashboards.previousPage ? "bg-blue-1" : "bg-4"
-              } mr12 r bs-3 font-white flex-row align-c justify-c`}
-            >
-              Prev
-            </button>
-            <span className="mr4">Page</span>
-            <span className="bold mr4">{currentPage}</span>
-            <span className="mr4">of</span>
-            <span className="bold mr12">{savedDashboards.pagesCount}</span>
-            <button
-              onClick={() =>
-                setParams({ limit, page: savedDashboards.nextPage })
-              }
-              type="button"
-              disabled={!savedDashboards.nextPage}
-              className={`${
-                savedDashboards.nextPage ? "bg-blue-1" : "bg-4"
-              } r bs-3 font-white flex-row align-c justify-c`}
-            >
-              Next
-            </button>
-          </div>
-        ) : null}
         {!savedDashboards?.resultsCount && <div>No saved dashboards...</div>}
         {savedDashboards?.resultsCount > 0 && (
           <>
-            <div className="w-full shadow-xl rounded-2xl bg-white mb-4 overflow-hidden">
+            <div className="w-full shadow-xl rounded-2xl bg-white mb-4">
               <table id="save-overwrite" className="w-full text-left">
                 <thead>
-                  <tr className="border-b border-gray-200 h-8">
-                    <th>
+                  <tr className="border-b border-gray-200 h-8 text-sm">
+                    <th className="font-normal">
                       <span>Ref</span>
                     </th>
-                    <th>
+                    <th className="font-normal">
                       <span>Description</span>
                     </th>
-                    <th>
+                    <th className="font-normal">
                       <span>Address</span>
                     </th>
-                    <th>
+                    <th className="font-normal">
                       <span>Type</span>
                     </th>
-                    <th>
+                    <th className="font-normal">
                       <span>Created</span>
                     </th>
-                    <th>
+                    <th className="font-normal">
                       <span>Updated</span>
                     </th>
-                    <th>
+                    <th className="font-normal">
                       <span>Action</span>
                     </th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="text-sm">
                   {savedDashboards.resultsCount > 0 &&
                     savedDashboards.results.map((d, i) => {
                       const index = (currentPage - 1) * limit + i + 1;
+                      const isBottomRow =
+                        index === limit ||
+                        index === savedDashboards.resultsCount + 1;
                       return (
-                        <SavedDashboard key={i} index={index} dashboard={d} />
+                        <SavedDashboard
+                          key={i}
+                          isBottomRow={isBottomRow}
+                          index={index}
+                          dashboard={d}
+                        />
                       );
                     })}
                 </tbody>
               </table>
             </div>
-            <div className="flex h-12">
-              <button
-                type="button"
-                className="px-2 border text-base rounded-l-xl text-gray-600 bg-white hover:bg-gray-100"
-              >
-                <Icon icon={"chevron-left"} className={"w-6 h-6"} />
-              </button>
-              <button
-                type="button"
-                className="px-4 border-t border-b text-base text-indigo-500 bg-white hover:bg-gray-100 "
-              >
-                1
-              </button>
-              <button
-                type="button"
-                className="px-4 border text-base text-gray-600 bg-white hover:bg-gray-100"
-              >
-                2
-              </button>
-              <button
-                type="button"
-                className="px-4 border-t border-b text-base text-gray-600 bg-white hover:bg-gray-100"
-              >
-                3
-              </button>
-              <button
-                type="button"
-                className="px-4 border text-base text-gray-600 bg-white hover:bg-gray-100"
-              >
-                4
-              </button>
-              <button
-                type="button"
-                className="px-2 border-t border-b border-r text-base  rounded-r-xl text-gray-600 bg-white hover:bg-gray-100"
-              >
-                <Icon icon={"chevron-right"} className={"w-6 h-6"} />
-              </button>
+            <div className="flex flex-col h-12">
+              <div className="flex mb-2">
+                <button
+                  disabled={currentPage === 1}
+                  type="button"
+                  className={`px-2 border-l border-t border-b text-base rounded-l-xl text-gray-600 bg-white ${
+                    currentPage === 1
+                      ? "cursor-not-allowed"
+                      : "hover:bg-gray-100"
+                  }`}
+                  onClick={() => setCurrentPage(1)}
+                >
+                  <Icon icon={"double-chevron-left"} className={"w-6 h-6"} />
+                </button>
+                <button
+                  disabled={currentPage === 1}
+                  type="button"
+                  className={`px-2 border-l border-t border-b text-base text-gray-600 bg-white ${
+                    currentPage === 1
+                      ? "cursor-not-allowed"
+                      : "hover:bg-gray-100"
+                  }`}
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                >
+                  <Icon icon={"chevron-left"} className={"w-6 h-6"} />
+                </button>
+                {pageOptions.map((pageNumber, index) => {
+                  return (
+                    <button
+                      key={index}
+                      type="button"
+                      className={`px-4 bg-white border-l border-t border-b ${
+                        pageNumber === savedDashboards.currentPage
+                          ? "border bg-indigo-500 border-indigo-500 text-white font-semibold"
+                          : "text-gray-600"
+                      } hover:bg-gray-100 hover:text-gray-600 ${
+                        pageOptions.length === index + 1 ? "border-r" : ""
+                      }`}
+                      onClick={() => setCurrentPage(pageNumber)}
+                    >
+                      {pageNumber}
+                    </button>
+                  );
+                })}
+                <button
+                  disabled={currentPage === savedDashboards.pagesCount}
+                  type="button"
+                  className={`px-2 border-t border-r border-b  text-base text-gray-600 bg-white ${
+                    currentPage === savedDashboards.pagesCount
+                      ? "cursor-not-allowed"
+                      : "hover:bg-gray-100"
+                  }`}
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                >
+                  <Icon icon={"chevron-right"} className={"w-6 h-6"} />
+                </button>
+                <button
+                  disabled={currentPage === savedDashboards.pagesCount}
+                  type="button"
+                  className={`px-2 border-t border-r border-b text-base rounded-r-xl text-gray-600 bg-white ${
+                    currentPage === savedDashboards.pagesCount
+                      ? "cursor-not-allowed"
+                      : "hover:bg-gray-100"
+                  }`}
+                  onClick={() => setCurrentPage(savedDashboards.pagesCount)}
+                >
+                  <Icon icon={"double-chevron-right"} className={"w-6 h-6"} />
+                </button>
+              </div>
+              <h3 className="text-xs">
+                Page {currentPage} of {savedDashboards.pagesCount}
+              </h3>
             </div>
           </>
         )}

@@ -27,7 +27,7 @@ const UserDropdown = ({
   if (isUserFetching) {
     return (
       <div
-        className="animate-fade-in absolute top-14 right-0 flex flex-col shadow-xl rounded-2xl
+        className="z-20 animate-fade-in absolute top-14 right-0 flex flex-col shadow-xl rounded-2xl
       p-4 w-full md:w-60 bg-white"
       >
         <div className="animate-pulse shadow-lg rounded-md bg-gray-300 h-8 w-full mb-2"></div>
@@ -38,7 +38,7 @@ const UserDropdown = ({
   } else {
     return (
       <div
-        className="animate-fade-in absolute top-14 right-0 flex flex-col shadow-xl rounded-2xl
+        className="z-20 animate-fade-in absolute top-14 right-0 flex flex-col shadow-xl rounded-2xl
       p-4 w-full md:w-60 bg-white"
       >
         {isAuthedUser && (

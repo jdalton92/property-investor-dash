@@ -5,7 +5,35 @@ export const paginatedResults = {
   pagesCount: null,
   previousPage: null,
   resultsCount: 0,
+  currentPage: 0,
   results: [],
+};
+
+export const getPaginateOptions = (currentPage, viewPages, totalPages) => {
+  let startPage;
+  let endPage;
+
+  if (totalPages <= viewPages) {
+    startPage = 1;
+    endPage = totalPages;
+  } else {
+    let maxPagesBeforeCurrentPage = Math.floor(viewPages / 2);
+    let maxPagesAfterCurrentPage = Math.ceil(viewPages / 2) - 1;
+    if (currentPage <= maxPagesBeforeCurrentPage) {
+      startPage = 1;
+      endPage = viewPages;
+    } else if (currentPage + maxPagesAfterCurrentPage >= totalPages) {
+      startPage = totalPages - viewPages + 1;
+      endPage = totalPages;
+    } else {
+      startPage = currentPage - maxPagesBeforeCurrentPage;
+      endPage = currentPage + maxPagesAfterCurrentPage;
+    }
+  }
+
+  return Array.from(Array(endPage + 1 - startPage).keys()).map(
+    (i) => startPage + i
+  );
 };
 
 export const isEmpty = (obj) =>

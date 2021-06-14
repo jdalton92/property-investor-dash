@@ -111,7 +111,7 @@ const Menu = ({
 
   return (
     <div
-      className={`sticky top-0 max-h-screen overflow-y-scroll transition-transform duration-250 ease-in-out transform
+      className={`h-screen transition-transform duration-250 ease-in-out transform
       lg:translate-x-0 w-60 ${
         leftSidebarOpen ? "translate-x-0" : "-translate-x-full"
       }`}

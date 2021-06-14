@@ -26,7 +26,7 @@ const Main = () => {
       <NavigationBar />
       <div className="w-full flex justify-center">
         <Menu />
-        <div className="flex-1 p-2 max-w-screen-lg">
+        <div className="w-full p-2 max-w-screen-lg">
           <Switch>
             <Route exact path="/" render={() => <About />} />
             <PrivateRoute path="/settings" render={() => <Settings />} />

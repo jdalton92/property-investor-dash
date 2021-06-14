@@ -17,7 +17,7 @@ const NavigationBar = ({ setDropdown, showDropdown }) => {
   };
 
   return (
-    <div className="flex-nowrap sticky top-0 p-0 flex justify-center bg-indigo-900 h-14">
+    <div className="z-10 flex-nowrap sticky top-0 p-0 flex justify-center bg-indigo-900 h-14">
       <div className="flex items-center justify-start h-full w-full max-w-screen-lg mx-auto p-2 relative">
         <Burger customClass={"block lg:hidden"} />
         <h1 className="text-xl text-white font-semibold text-shadow-lg mx-auto hover:underline">
@@ -25,7 +25,7 @@ const NavigationBar = ({ setDropdown, showDropdown }) => {
         </h1>
         <Button
           options={{
-            styleType: "primary-transparent",
+            styleType: "primary",
             buttonClass: "w-10 h-10 justify-center",
             ariaLabel: "Contact",
             ariaPosition: "left",
@@ -37,7 +37,7 @@ const NavigationBar = ({ setDropdown, showDropdown }) => {
         <DropdownOutsideAlerter>
           <Button
             options={{
-              styleType: "primary-transparent",
+              styleType: "primary",
               buttonClass: "w-10 h-10 justify-center relative ml-2",
               ariaLabel: "User menu",
               ariaPosition: "left",

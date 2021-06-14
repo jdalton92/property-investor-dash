@@ -15,33 +15,34 @@ const Button = ({ label, type = "button", options = {} }) => {
   const styleType = options?.styleType;
   const isDisabled = options?.isDisabled;
 
-  let className = `${buttonClass} text-white transition ease-in
-    duration-200 text-base shadow-lg focus:outline-none
-    focus:ring-2 focus:ring-offset-2 rounded-md leading-7 flex
-    items-center ${isDisabled ? "opacity-60 pointer-events-none" : ""} `;
+  let className = `${buttonClass} text-sm transition ease-in
+    duration-200 shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2
+    rounded-md leading-7 flex items-center
+    ${isDisabled ? "opacity-60 pointer-events-none" : ""} `;
   let activeClass;
 
   switch (styleType) {
     case "primary":
-      className = className.concat(`bg-indigo-600 hover:bg-indigo-700
+      className = className.concat(`text-white bg-indigo-600 hover:bg-indigo-700
         focus:ring-indigo-500 focus:ring-offset-indigo-200`);
       activeClass = "bg-indigo-800";
       break;
     case "secondary":
-      className = className.concat(`bg-gray-500 hover:bg-gray-600
+      className = className.concat(`text-white bg-gray-500 hover:bg-gray-600
         focus:ring-gray-400 focus:ring-offset-gray-200`);
       activeClass = "bg-gray-700";
       break;
     case "primary-transparent":
       className =
-        className.concat(`bg-opacity-20 bg-indigo-900 hover:bg-indigo-700
+        className.concat(`text-white bg-transparent hover:bg-indigo-400
         focus:ring-indigo-500 focus:ring-offset-indigo-200`);
-      activeClass = "bg-opacity-50 bg-indigo-900";
+      activeClass = "bg-indigo-200 hover:bg-indigo-200";
       break;
     case "secondary-transparent":
-      className = className.concat(`bg-opacity-20 bg-gray-900 hover:bg-gray-600
-        focus:ring-gray-400 focus:ring-offset-gray-200`);
-      activeClass = "bg-opacity-50 bg-gray-900";
+      className =
+        className.concat(`text-gray-600 hover:bg-gray-200 active:bg-gray-800
+        focus:ring-gray-200 focus:ring-offset-gray-200`);
+      activeClass = "bg-indigo-200 hover:bg-indigo-200";
       break;
     default:
       break;

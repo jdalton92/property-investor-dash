@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import Button from "../Shared/Button";
-import DashboardDropdown from "../DashboardDropdown";
+import SavedDashboardDropdown from "./SavedDashboardDropdown";
 import {
   formatDate,
   getDashboardTypeAndBaseUrl,
 } from "../../utils/dashboardHelper";
 
-const SavedDashboards = ({ index, dashboard }) => {
+const SavedDashboards = ({ isBottomRow, index, dashboard }) => {
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -27,17 +27,17 @@ const SavedDashboards = ({ index, dashboard }) => {
 
   return (
     <tr className="border-b border-gray-200 h-12 hover:bg-gray-50">
-      <td>
+      <td className={`${isBottomRow ? "rounded-bl-2xl" : ""}`}>
         <span>{index}</span>
       </td>
       <td>
-        <span>{dashboard.description}</span>
+        <span className="line-clamp-2">{dashboard.description}</span>
       </td>
       <td>
-        <span>{dashboard.address}</span>
+        <span className="line-clamp-2">{dashboard.address}</span>
       </td>
       <td>
-        <span>{type}</span>
+        <span className="line-clamp-2">{type}</span>
       </td>
       <td>
         <span>{formatDate(dashboard.created)}</span>
@@ -45,20 +45,20 @@ const SavedDashboards = ({ index, dashboard }) => {
       <td>
         <span>{dashboard.updated ? formatDate(dashboard.updated) : "-"}</span>
       </td>
-      <td>
-        <div ref={ref}>
+      <td className={`${isBottomRow ? "rounded-br-2xl" : ""}`}>
+        <div className="relative" ref={ref}>
           <Button
             options={{
               styleType: "secondary-transparent",
-              buttonClass: "w-10 h-10 justify-center",
+              buttonClass: "w-8 h-8 rounded-md justify-center",
               ariaLabel: "Actions",
               ariaPosition: "left",
-              icon: "vertical-dots",
-              iconClass: "h-4 w-4",
+              icon: "horizontal-dots",
+              iconClass: "h-5 w-5",
               onClick: () => setShowDropdown(!showDropdown),
             }}
           />
-          {showDropdown && <DashboardDropdown dashboard={dashboard} />}
+          {showDropdown && <SavedDashboardDropdown dashboard={dashboard} />}
         </div>
       </td>
     </tr>

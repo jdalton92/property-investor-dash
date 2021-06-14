@@ -2,11 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import { clearNotification } from "../../reducers/notificationReducer";
 import Icon from "../Shared/Icon";
+import Button from "../Shared/Button";
 import { CONSTANTS } from "../../static/constants";
 
 const NotificationAlert = ({ notification, clearNotification, key }) => {
-  const handleCloseNotification = (e) => {
-    e.preventDefault();
+  const handleCloseNotification = () => {
     clearNotification(notification.id);
   };
 
@@ -51,15 +51,15 @@ const NotificationAlert = ({ notification, clearNotification, key }) => {
         </h3>
         <span className="text-sm text-white">{notification.message}</span>
       </div>
-      <button
-        type="button"
-        className="bg-opacity-50 rounded-lg mr-1 transition ease-in
-        duration-100 focus:ring-2 focus:ring-offset-2 hover:bg-opacity-90
-        hover:bg-gray-400 hover:text-indigo-100 "
-        onClick={handleCloseNotification}
-      >
-        <Icon icon="close" className="h-8 w-8" />
-      </button>
+      <Button
+        options={{
+          styleType: "secondary-transparent",
+          buttonClass: "w-8 h-8",
+          icon: "close",
+          iconClass: "h-8 w-8 font-white",
+          onClick: () => handleCloseNotification(),
+        }}
+      />
     </div>
   );
 };
