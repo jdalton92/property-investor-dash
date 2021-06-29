@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import Button from "./Button";
 
-const Tooltip = ({ message, extraClass }) => {
+const Tooltip = ({ message }) => {
   const [show, setShow] = useState(false);
 
   let timer;
-  const handleMousEvent = (view) => {
+  const handleMouseEvent = (view) => {
     window.clearTimeout(timer);
     timer = window.setTimeout(
       () => {
@@ -16,25 +17,26 @@ const Tooltip = ({ message, extraClass }) => {
   };
 
   return (
-    <div className={`tooltip-container ml8 mb8 ${extraClass}`}>
+    <div className="relative flex items-center">
+      <Button
+        label={"?"}
+        options={{
+          styleType: "secondary",
+          buttonClass: "w-4 h-4 rounded-full justify-center",
+          onClick: () => handleMouseEvent(true),
+          onMouseEnter: () => handleMouseEvent(true),
+          onMouseLeave: () => handleMouseEvent(false),
+        }}
+      />
       {show && (
         <div
-          className="tooltip-msg absolute bg-black r p8 font-white white text-center fade-in"
-          onMouseEnter={() => handleMousEvent(true)}
-          onMouseLeave={() => handleMousEvent(false)}
+          className="right-5 top-0 text-center w-48 z-20 absolute px-2 py-1 rounded-md bg-gray-600 animate-fade-in text-white text-xs"
+          onMouseEnter={() => handleMouseEvent(true)}
+          onMouseLeave={() => handleMouseEvent(false)}
         >
           {message}
         </div>
       )}
-      <button
-        type="button"
-        className="tooltip-btn bs-2 flex-row align-c"
-        onClick={() => handleMousEvent(true)}
-        onMouseEnter={() => handleMousEvent(true)}
-        onMouseLeave={() => handleMousEvent(false)}
-      >
-        <span className="f10">?</span>
-      </button>
     </div>
   );
 };

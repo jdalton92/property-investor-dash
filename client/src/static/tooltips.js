@@ -1,4 +1,4 @@
-export const developerTooltip = {
+export const developerTooltips = {
   acquisitionPrice: {
     header: "Acqisition Price",
     message:
@@ -121,7 +121,7 @@ export const developerTooltip = {
   },
 };
 
-export const occupierInvestorTooltip = {
+export const occupierTooltips = {
   purchasePrice: {
     header: "Purchase Price",
     message: "Acquisition price of the property",
@@ -167,8 +167,7 @@ export const occupierInvestorTooltip = {
   },
   capitalGrowth: {
     header: "Capital Growth",
-    message:
-      "Percentage growth rate of property value, and rental income (if investor). Compounded annually",
+    message: "Percentage growth rate of property value. Compounded annually",
   },
   opexGrowth: {
     header: "Operating Cost Growth",
@@ -185,11 +184,6 @@ export const occupierInvestorTooltip = {
     message:
       "Cost of holding the property such as taxes/insurance/bills & utilities",
   },
-  rentalYield: {
-    header: "Rental Yield",
-    message:
-      "Amount of gross rent per annum you will recieve during the investment period. Calculated as rent / property value",
-  },
   cashflowAfterFunding: {
     header: "Cashflow After Funding",
     message: `Deposit: initial equity
@@ -198,5 +192,19 @@ export const occupierInvestorTooltip = {
       Net Sale Proceeds: gross sale - selling costs
       Mortgage Costs: loan repayments
       Debt Source: mortgage contribution to purchase price`,
+  },
+};
+
+export const investorTooltips = {
+  ...occupierTooltips,
+  capitalGrowth: {
+    header: "Capital Growth",
+    message:
+      "Percentage growth rate of property value and rental income. Compounded annually",
+  },
+  rentalYield: {
+    header: "Rental Yield",
+    message:
+      "Amount of gross rent per annum you will recieve during the investment period. Calculated as rent / property value",
   },
 };

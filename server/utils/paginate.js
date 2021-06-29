@@ -27,7 +27,7 @@ function paginate(query, options) {
         pagesCount = Math.ceil(resultsCount / limit);
       }
 
-      if (page > pagesCount) {
+      if (page > pagesCount || page < 0) {
         resolve({
           resultsCount,
           pagesCount,
@@ -48,6 +48,7 @@ function paginate(query, options) {
           } else {
             resolve({
               pagesCount,
+              currentPage: page,
               nextPage: page < pagesCount ? page + 1 : null,
               previousPage: page - 1 > 0 ? page - 1 : null,
               resultsCount,

@@ -8,6 +8,8 @@ const Button = ({ label, type = "button", options = {} }) => {
   const ariaLabel = options?.ariaLabel;
   const ariaPosition = options?.ariaPosition;
   const onClick = options?.onClick;
+  const onMouseEnter = options?.onMouseEnter;
+  const onMouseLeave = options?.onMouseLeave;
   const icon = options?.icon;
   const buttonClass = options?.buttonClass;
   const iconClass = options?.iconClass;
@@ -58,6 +60,8 @@ const Button = ({ label, type = "button", options = {} }) => {
         aria-label={ariaLabel}
         data-balloon-pos={ariaPosition}
         onClick={onClick}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
       >
         {icon && <Icon className={iconClass} icon={icon} />}
         {label && <span className={labelClass}>{label}</span>}
@@ -71,6 +75,8 @@ const Button = ({ label, type = "button", options = {} }) => {
         data-balloon-pos={ariaPosition}
         className={className}
         onClick={onClick}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
       >
         {icon && <Icon className={iconClass} icon={icon} />}
         {label && <span className={labelClass}>{label}</span>}

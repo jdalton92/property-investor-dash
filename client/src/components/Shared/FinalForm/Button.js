@@ -4,6 +4,7 @@ import Icon from "../Icon";
 const Button = ({ label, type = "button", options = {} }) => {
   let isDisabled = options.disabled || options.isLoading;
   const isLoading = options?.isLoading || false;
+  const onClick = options?.onClick;
   const styleType = options.styleType;
   const iconClass = options?.iconClass;
   const buttonClass = options?.buttonClass;
@@ -27,7 +28,12 @@ const Button = ({ label, type = "button", options = {} }) => {
   }
 
   return (
-    <button type={type} className={className} disabled={isDisabled}>
+    <button
+      type={type}
+      className={className}
+      disabled={isDisabled}
+      onClick={onClick}
+    >
       {isLoading && (
         <Icon icon={"loader"} className={`absolute h-5 w-5 ${iconClass}`} />
       )}

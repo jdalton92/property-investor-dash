@@ -14,14 +14,14 @@ import {
   IRRCalculation,
 } from "../../utils/dashboardHelper";
 import { Line } from "react-chartjs-2";
-import { occupierInvestorTooltip } from "../../static/tooltipText";
+import { occupierTooltips } from "../../static/tooltips";
 import ExpandIcon from "../../styles/svg/expand.svg";
 import CollapseIcon from "../../styles/svg/collapse.svg";
 
 const OwnerOccupierInvestorDashboard = ({ monthlyCashflow }) => {
   const [showCashflow, setShowCashflow] = useState(true);
 
-  const message = occupierInvestorTooltip.cashflowAfterFunding.message;
+  const message = occupierTooltips.cashflowAfterFunding.message;
   const chartData = cumulativeChartParse(monthlyCashflow);
   const tableData = tableParse(monthlyCashflow);
   const cardData = cardParse(monthlyCashflow);

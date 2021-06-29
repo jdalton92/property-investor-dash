@@ -9,7 +9,7 @@ export const paginatedResults = {
   results: [],
 };
 
-export const getPaginateOptions = (currentPage, viewPages, totalPages) => {
+export const getPaginateOptions = (currentPage, totalPages, viewPages = 3) => {
   let startPage;
   let endPage;
 
@@ -31,9 +31,27 @@ export const getPaginateOptions = (currentPage, viewPages, totalPages) => {
     }
   }
 
-  return Array.from(Array(endPage + 1 - startPage).keys()).map(
-    (i) => startPage + i
-  );
+  const pages = Array.from(Array(endPage + 1 - startPage).keys()).map((i) => ({
+    label: startPage + i,
+    active: currentPage === startPage + i,
+    link: true,
+  }));
+  if (pages.some((page) => page.label === totalPages)) {
+    return pages;
+  } else {
+    return pages.concat(
+      {
+        label: "...",
+        active: false,
+        link: false,
+      },
+      {
+        label: totalPages,
+        active: false,
+        link: true,
+      }
+    );
+  }
 };
 
 export const isEmpty = (obj) =>

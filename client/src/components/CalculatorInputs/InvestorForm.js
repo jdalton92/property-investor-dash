@@ -6,7 +6,7 @@ import { CONSTANTS } from "../../static/constants";
 import { helperMessage } from "../../static/helperMessageText";
 import HelperMessage from "../Shared/HelperMessage";
 import Loader from "../Shared/Loader";
-import OwnerOccupierInvestorInputs from "./OwnerOccupierInvestorInputs";
+import OccupierAndInvestorInputs from "./OccupierAndInvestorInputs";
 
 const InvestorForm = ({
   testDashboard,
@@ -52,8 +52,8 @@ const InvestorForm = ({
           type={CONSTANTS.HELPERMESSAGES.INVESTORFORM}
           body={helperMessage.investorForm}
         />
-        <OwnerOccupierInvestorInputs
-          investor={true}
+        <OccupierAndInvestorInputs
+          type={CONSTANTS.TYPES.INVESTOR}
           initialValues={initialValues}
           onSubmit={onSubmit}
         />

@@ -13,7 +13,7 @@ import {
   cashflowFormatter,
   IRRCalculation,
 } from "../../utils/dashboardHelper";
-import { developerTooltip } from "../../static/tooltipText";
+import { developerTooltips } from "../../static/tooltips";
 import { Line, Bar } from "react-chartjs-2";
 import Icon from "../Shared/Icon";
 import ExpandIcon from "../../styles/svg/expand.svg";
@@ -23,8 +23,8 @@ const DeveloperDashboard = ({ currentDashboard, monthlyCashflow }) => {
   const [showPreFinanceCashflow, setShowPreFinanceCashflow] = useState(true);
   const [showPostFinanceCashflow, setShowPostFinanceCashflow] = useState(true);
 
-  const preFinanceMessage = developerTooltip.cashflowBeforeFunding.message;
-  const postFinanceMessage = developerTooltip.cashflowAfterFunding.message;
+  const preFinanceMessage = developerTooltips.cashflowBeforeFunding.message;
+  const postFinanceMessage = developerTooltips.cashflowAfterFunding.message;
   const annualChart = annualChartParse(monthlyCashflow);
   const cumulativeChart = cumulativeChartParse(monthlyCashflow);
   const tableData = tableParse(monthlyCashflow);

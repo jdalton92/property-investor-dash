@@ -27,7 +27,7 @@ const SavedDashboards = ({ isBottomRow, index, dashboard }) => {
 
   return (
     <tr className="border-b border-gray-200 h-12 hover:bg-gray-50">
-      <td className={`${isBottomRow ? "rounded-bl-2xl" : ""}`}>
+      <td className={`text-center ${isBottomRow ? "rounded-bl-2xl" : ""}`}>
         <span>{index}</span>
       </td>
       <td>
