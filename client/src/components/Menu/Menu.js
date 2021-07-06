@@ -111,8 +111,7 @@ const Menu = ({
 
   return (
     <div
-      className={`h-screen transition-transform duration-250 ease-in-out transform
-      lg:translate-x-0 w-60 ${
+      className={`h-screen transition-transform duration-250 ease-in-out transform lg:translate-x-0 lg:static left-0 fixed w-60 ${
         leftSidebarOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >

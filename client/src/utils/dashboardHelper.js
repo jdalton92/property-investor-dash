@@ -95,7 +95,7 @@ export const formatDate = (dbDate) => {
 
 export const cashflowFormatter = (number, minimumFractionDigits = 0) => {
   let cashflow;
-  let className = "text-s";
+  let className = "text-gray-500";
   const integer = parseInt(number);
   switch (true) {
     case integer === 0:
@@ -110,7 +110,7 @@ export const cashflowFormatter = (number, minimumFractionDigits = 0) => {
       cashflow = `(${Math.abs(integer).toLocaleString("en-US", {
         minimumFractionDigits,
       })})`;
-      className = "text-r";
+      className = "text-red-500";
       break;
     default:
       cashflow = `${integer}`;

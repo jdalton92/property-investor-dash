@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import Loader from "../Shared/Loader";
-import Icon from "../Shared/Icon";
+import Button from "../Shared/Button";
 import { editDashboard } from "../../reducers/dashboardsReducer";
 import {
   getCashflow,
@@ -10,8 +10,6 @@ import {
 } from "../../reducers/cashflowsReducer";
 import { setModal } from "../../reducers/navigationReducer";
 import { setNotification } from "../../reducers/notificationReducer";
-import SaveIcon from "../../styles/svg/save.svg";
-import EditIcon from "../../styles/svg/edit.svg";
 import OwnerOccupierInvestorDashboard from "./OwnerOccupierInvestorDashboard";
 import DeveloperDashboard from "./DeveloperDashboard";
 import { CONSTANTS } from "../../static/constants";
@@ -45,8 +43,7 @@ const OccupierDashboard = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  const handleSave = (e) => {
-    e.preventDefault();
+  const handleSave = () => {
     setModal(CONSTANTS.MODALS.SAVEDASHBOARD, true);
   };
 
@@ -64,38 +61,32 @@ const OccupierDashboard = ({
   } else {
     const { type, baseUrl } = getDashboardTypeAndBaseUrl(currentDashboard);
     return (
-      <div className="fade-in">
-        <div className="dash-row relative">
-          <h2 className="f20 bold mt16 mb16">{type} Dashboard</h2>
-          <div className="dash-btns flex-row">
-            <button
-              type="button"
-              className="form-button-p bs-3 font-white pt4 pb4 flex-row align-c justify-c"
-              onClick={handleSave}
-            >
-              <Icon
-                size={"20px"}
-                url={SaveIcon}
-                color={"white"}
-                hover={false}
-                active={false}
-              />
-              <span className="ml8">Save</span>
-            </button>
-            <button
-              type="button"
-              className="form-button-s bs-3 font-white pt4 pb4 flex-row align-c justify-c"
-              onClick={() => handleEdit(baseUrl)}
-            >
-              <Icon
-                size={"20px"}
-                url={EditIcon}
-                color={"white"}
-                hover={false}
-                active={false}
-              />
-              <span className="ml8">Edit</span>
-            </button>
+      <div className="animate-fade-in">
+        <div className="flex justify-between">
+          <h2 className="my-2 text-xl font-semibold">{type} Dashboard</h2>
+          <div className="flex">
+            <Button
+              label={"Save"}
+              type={"button"}
+              options={{
+                styleType: "primary",
+                buttonClass: "h-10 px-2 mr-2",
+                icon: "save",
+                iconClass: "h-8 w-8 mr-2",
+                onClick: () => handleSave(),
+              }}
+            />
+            <Button
+              label={"Edit"}
+              type={"button"}
+              options={{
+                styleType: "secondary",
+                buttonClass: "h-10 px-2",
+                icon: "edit",
+                iconClass: "h-8 w-8 mr-2",
+                onClick: () => handleEdit(baseUrl),
+              }}
+            />
           </div>
         </div>
         {(currentDashboard.type === CONSTANTS.TYPES.OCCUPIER ||

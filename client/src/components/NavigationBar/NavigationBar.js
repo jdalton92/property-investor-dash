@@ -18,7 +18,8 @@ const NavigationBar = ({ setDropdown, showDropdown }) => {
 
   return (
     <div className="z-10 flex-nowrap sticky top-0 p-0 flex justify-center bg-indigo-900 h-14">
-      <div className="flex items-center justify-start h-full w-full max-w-screen-lg mx-auto p-2 relative">
+      <div className="w-60 lg:inline hidden"></div>
+      <div className="flex items-center justify-start h-full w-full max-w-screen-lg p-2 relative">
         <Burger customClass={"block lg:hidden"} />
         <h1 className="text-xl text-white font-semibold text-shadow-lg mx-auto hover:underline">
           <Link to="/">PropertyInvestorDash</Link>
