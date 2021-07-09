@@ -35,11 +35,7 @@ const Main = ({ isUserFetching }) => {
               <Switch>
                 <Route exact path="/" render={() => <About />} />
                 <PrivateRoute path="/settings" render={() => <Settings />} />
-                <Route
-                  exact
-                  path="/reset-password/new-password"
-                  render={() => <NewPassword />}
-                />
+                <Route path="/new-password" render={() => <NewPassword />} />
                 <Route
                   path="/reset-password"
                   render={() => <ResetPassword />}

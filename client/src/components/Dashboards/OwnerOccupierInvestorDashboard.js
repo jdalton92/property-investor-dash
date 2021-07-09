@@ -94,7 +94,7 @@ const OwnerOccupierInvestorDashboard = ({ monthlyCashflow }) => {
           <tbody className="text-sm">
             <tr className="border-b border-gray-200 h-12 hover:bg-gray-50">
               <td className="p-3">IRR</td>
-              <td className="p-3">
+              <td className="p-3 text-gray-500">
                 {percentageFormatter.format(
                   IRRCalculation(monthlyCashflow).postFinance
                 )}
@@ -102,7 +102,7 @@ const OwnerOccupierInvestorDashboard = ({ monthlyCashflow }) => {
             </tr>
             <tr className="border-b border-gray-200 h-12 hover:bg-gray-50">
               <td className="rounded-bl-2xl p-3">Margin On Cost</td>
-              <td className="rounded-br-2xl p-3">
+              <td className="rounded-br-2xl p-3 text-gray-500">
                 {percentageFormatter.format(
                   occupierInvestorMOCCalculation(monthlyCashflow)
                 )}

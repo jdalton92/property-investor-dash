@@ -82,7 +82,6 @@ const Login = ({
                 to={"/login"}
                 options={{
                   icon: "user",
-                  onClick: () => setTab("login", CONSTANTS.TABS.LOGIN.LOGIN),
                 }}
               />
               <Tab
@@ -90,8 +89,6 @@ const Login = ({
                 to={"/sign-up"}
                 options={{
                   icon: "create-user",
-                  onClick: () =>
-                    setTab("login", CONSTANTS.TABS.LOGIN.CREATEUSER),
                 }}
               />
             </div>
