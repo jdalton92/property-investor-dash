@@ -21,8 +21,9 @@ import Dashboard from "./Dashboards/Dashboard";
 import SavedDashboards from "./SavedDashboards/SavedDashboards";
 import NotFound from "./NotFound";
 import Loader from "./Shared/Loader";
+import Overlay from "./Shared/Overlay";
 
-const Main = ({ isUserFetching }) => {
+const Main = ({ isUserFetching, showOverlay }) => {
   return (
     <div className="animate-fade-in">
       {isUserFetching && <Loader />}
@@ -94,6 +95,7 @@ const Main = ({ isUserFetching }) => {
                 <Route path="/404" render={() => <NotFound />} />
                 <Redirect from="*" to="/404" />
               </Switch>
+              {showOverlay && <Overlay />}
             </div>
           </div>
         </>
@@ -105,6 +107,7 @@ const Main = ({ isUserFetching }) => {
 const mapStateToProps = (state) => {
   return {
     isUserFetching: state.users.isFetching,
+    showOverlay: state.navigation.overlay,
   };
 };
 

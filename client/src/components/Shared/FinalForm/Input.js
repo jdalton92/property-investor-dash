@@ -95,24 +95,26 @@ const Input = ({
         {({ input, meta }) => (
           <div className={`relative ${extraClass}`}>
             {textarea && (
-              <textarea
-                id={id}
-                className={`${className}
+              <div className="flex">
+                <textarea
+                  id={id}
+                  className={`${className}
                 ${
                   meta.error && meta.touched
                     ? "ring-2 border-red-600 ring-red-300"
                     : "border-gray-300"
                 }`}
-                placeholder={placeholder}
-                type={type}
-                autoComplete={autoComplete}
-                maxLength={maxLength}
-                min={min}
-                max={max}
-                step={step}
-                disabled={disabled}
-                {...input}
-              />
+                  placeholder={placeholder}
+                  type={type}
+                  autoComplete={autoComplete}
+                  maxLength={maxLength}
+                  min={min}
+                  max={max}
+                  step={step}
+                  disabled={disabled}
+                  {...input}
+                />
+              </div>
             )}
             {!textarea && (
               <div className="flex">
@@ -147,11 +149,7 @@ const Input = ({
               </div>
             )}
             {meta.error && meta.touched && (
-              <p
-                className={`absolute text-xs text-red-500 ${
-                  textarea ? "-mt-1" : "mt-0.5"
-                }`}
-              >
+              <p className="absolute text-xs text-red-500 mt-0.5">
                 {meta.error}
               </p>
             )}

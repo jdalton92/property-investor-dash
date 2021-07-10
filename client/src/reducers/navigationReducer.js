@@ -14,6 +14,7 @@ const initialState = {
     login: CONSTANTS.TABS.LOGIN.LOGIN,
     saveDashboard: CONSTANTS.TABS.SAVEDASHBOARD.SAVE,
   },
+  overlay: false,
 };
 
 const navigationReducer = (state = initialState, action) => {
@@ -22,14 +23,17 @@ const navigationReducer = (state = initialState, action) => {
     case "SET_LEFT_SIDEBAR":
       newState = { ...state };
       newState.sidebarOpen.left = action.payLoad.status;
+      newState.overlay = action.payLoad.status;
       return newState;
     case "SET_MODAL":
       newState = { ...state };
       newState.modal[action.payLoad.modalType] = action.payLoad.status;
+      newState.overlay = action.payLoad.status;
       return newState;
     case "SET_DROPDOWN":
       newState = { ...state };
       newState.dropdown[action.payLoad.dropdown] = action.payLoad.status;
+      newState.overlay = action.payLoad.status;
       return newState;
     case "SET_TAB":
       newState = { ...state };

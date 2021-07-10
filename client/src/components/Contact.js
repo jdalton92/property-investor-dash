@@ -58,7 +58,7 @@ const Contact = ({ sendMessage, isSending, email }) => {
                   validators: [required, maxLength(1000)],
                   placeholder: "Message...",
                   type: "text",
-                  extraClass: "mb-4",
+                  extraClass: "mb-6",
                 }}
               />
               <Button
