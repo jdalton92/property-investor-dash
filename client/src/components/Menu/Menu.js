@@ -122,7 +122,11 @@ const Menu = ({
       <div>
         {!isUserFetching && (
           <>
-            <MenuContainer title={"User"} menuItems={userMenuItems} />
+            <MenuContainer
+              title={"User"}
+              menuItems={userMenuItems}
+              extraClass={"mt-4"}
+            />
             <MenuContainer title={"About"} menuItems={aboutMenuItems} />
             <MenuContainer
               title={"Calculators"}
@@ -147,7 +151,6 @@ const Menu = ({
 const mapStateToProps = (state) => {
   return {
     isUserFetching: state.users.isFetching,
-    // isUserFetching: true,
     leftSidebarOpen: state.navigation.sidebarOpen.left,
     isAuthedUser: state.users.data?._id,
   };

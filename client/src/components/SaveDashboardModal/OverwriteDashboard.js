@@ -116,9 +116,6 @@ const OverwriteDashboard = ({
                             <span>Created</span>
                           </th>
                           <th className="font-normal">
-                            <span>Updated</span>
-                          </th>
-                          <th className="font-normal">
                             <span>Overwrite</span>
                           </th>
                         </tr>
@@ -170,18 +167,13 @@ const OverwriteDashboard = ({
                               <td>
                                 <span>{formatDate(d.created)}</span>
                               </td>
-                              <td>
-                                <span>
-                                  {d.updated ? formatDate(d.updated) : "-"}
-                                </span>
-                              </td>
                               <td
-                                className={`${
+                                className={` ${
                                   isBottomRow ? "rounded-br-2xl" : ""
                                 }`}
                               >
                                 <input
-                                  className="ml16"
+                                  className="ml-6"
                                   type="checkbox"
                                   checked={d._id === selectedDashboardId}
                                   value={d._id}

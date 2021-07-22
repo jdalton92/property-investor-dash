@@ -60,8 +60,7 @@ const Login = ({
   return (
     <div className="animate-fade-in flex flex-row h-screen bg-indigo-900">
       <div
-        className="h-full bg-cover bg-no-repeat bg-center object-cover hidden
-        md:block md:flex-1 z-10"
+        className="h-full bg-cover bg-no-repeat bg-center object-cover hidden md:block md:flex-1 z-10"
         style={{
           backgroundImage: `url(${hero})`,
         }}

@@ -6,11 +6,12 @@ const Tab = ({ title, to, options = {} }) => {
   const onClick = options?.onClick;
   const icon = options?.icon;
   const active = options?.active;
+  const extraClass = options.extraClass || "";
 
   if (to) {
     return (
       <NavLink
-        className="flex flex-row w-1/2 justify-center items-center text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none hover:bg-gray-50 rounded-t-xl"
+        className={`${extraClass} flex flex-row w-1/2 justify-center items-center text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none hover:bg-gray-50 rounded-t-xl`}
         activeClassName="text-blue-500 border-b-2 font-medium border-blue-500 bg-gray-100"
         to={to}
         onClick={onClick}
@@ -22,7 +23,7 @@ const Tab = ({ title, to, options = {} }) => {
   } else {
     return (
       <div
-        className={`flex flex-row w-1/2 justify-center items-center text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none hover:bg-gray-50 rounded-t-xl ${
+        className={`${extraClass} flex flex-row w-1/2 justify-center items-center text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none hover:bg-gray-50 rounded-t-xl ${
           active
             ? "text-blue-500 border-b-2 font-medium border-blue-500 bg-gray-100"
             : ""

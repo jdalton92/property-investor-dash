@@ -29,7 +29,7 @@ const SaveDashboardModal = ({ setModal, setTab, tab }) => {
   const isOverwriteTab = tab === CONSTANTS.TABS.SAVEDASHBOARD.OVERWRITE;
 
   return (
-    <div className="absolute top-1/2 right-1/2 transform translate-x-1/2 -translate-y-1/2 z-50 shadow-xl rounded-2xl bg-white p-3 max-h-screen max-w-screen-md w-screen">
+    <div className="absolute top-1/2 right-1/2 transform translate-x-1/2 -translate-y-1/2 z-50 shadow-xl rounded-2xl bg-white p-4 max-h-screen max-w-screen-lg w-screen">
       <Button
         ariaLabel={"Close"}
         dataBalloonPos={"left"}
@@ -41,7 +41,7 @@ const SaveDashboardModal = ({ setModal, setTab, tab }) => {
       <h2 className="text-center font-medium text-2xl text-shadow-xs mt-3 mb-7">
         Save Dashboard
       </h2>
-      <div className="flex">
+      <div className="flex mb-4">
         <Tab
           title={"Save New"}
           options={{
@@ -52,7 +52,7 @@ const SaveDashboardModal = ({ setModal, setTab, tab }) => {
           }}
         />
         <Tab
-          title={"Overwrite"}
+          title={"Overwrite Existing"}
           options={{
             icon: "overwrite",
             onClick: () =>

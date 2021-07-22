@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Button from "../Shared/Button";
 import { setLeftSidebar } from "../../reducers/navigationReducer";
 
-const MenuContainer = ({ title, menuItems, setLeftSidebar }) => {
+const MenuContainer = ({ title, menuItems, setLeftSidebar, extraClass }) => {
   const history = useHistory();
 
   const handleLink = (link) => {
@@ -23,7 +23,9 @@ const MenuContainer = ({ title, menuItems, setLeftSidebar }) => {
   };
 
   return (
-    <div className="shadow-xl rounded-2xl p-4 bg-white mb-4 flex flex-col">
+    <div
+      className={`${extraClass} shadow-xl rounded-2xl p-4 bg-white mb-4 flex flex-col`}
+    >
       <h3 className="font-semibold mb-2">{title}</h3>
       {menuItems.map((item, index) => {
         const navLink = item.link?.navLink;

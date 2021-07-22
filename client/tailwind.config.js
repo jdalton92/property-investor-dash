@@ -9,6 +9,7 @@ module.exports = {
         "700px": "700px",
       },
       height: {
+        "400px": "400px",
         "550px": "550px",
       },
       keyframes: {
