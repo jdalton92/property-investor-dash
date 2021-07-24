@@ -34,6 +34,8 @@ const navigationReducer = (state = initialState, action) => {
       newState = { ...state };
       newState.dropdown[action.payLoad.dropdown] = action.payLoad.status;
       newState.overlay = action.payLoad.status;
+      newState.sidebarOpen.left = false;
+      newState.modal[CONSTANTS.MODALS.SAVEDASHBOARD] = false;
       return newState;
     case "SET_TAB":
       newState = { ...state };

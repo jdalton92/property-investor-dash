@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 const TermsAndConditions = () => {
   return (
     <>
-      <h1 className="f24 bold mt16 mb16">Terms and Conditions</h1>
-      <div className="r bs-3 bg-1 p20 mb20">
-        <p className="mb16">
+      <h1 className="my-2 text-xl font-semibold">Terms and Conditions</h1>
+      <div className="shadow-xl rounded-2xl p-4 bg-white my-2">
+        <p className="mb-4">
           Neither the whole nor any part of this output nor any reference to it
           may be included in any other document without the prior written
           consent of PropertyInvestorDash. The outputs are based upon

@@ -17,7 +17,7 @@ const NavigationBar = ({ setDropdown, showDropdown }) => {
   };
 
   return (
-    <div className="z-10 flex-nowrap sticky top-0 p-0 flex justify-center bg-indigo-900 h-14">
+    <div className="flex-nowrap sticky top-0 p-0 flex justify-center bg-indigo-900 h-14">
       <div className="w-60 lg:inline hidden"></div>
       <div className="flex items-center justify-start h-full w-full max-w-screen-lg p-2 relative">
         <Burger customClass={"block lg:hidden"} />

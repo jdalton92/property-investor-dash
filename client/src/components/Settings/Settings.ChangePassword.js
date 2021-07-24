@@ -77,6 +77,7 @@ const ChangePassword = ({ user, updateUser }) => {
                 type={"submit"}
                 options={{
                   styleType: "primary",
+                  buttonClass: "w-full md:w-32",
                   isLoading: user.isFetching,
                   iconClass: "mr-20",
                 }}

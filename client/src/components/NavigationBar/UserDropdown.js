@@ -26,10 +26,8 @@ const UserDropdown = ({
   };
   if (isUserFetching) {
     return (
-      <div
-        className="z-20 animate-fade-in absolute top-14 right-0 flex flex-col shadow-xl rounded-2xl
-      p-4 w-full md:w-60 bg-white"
-      >
+      <div className="z-20 animate-fade-in absolute top-14 right-0 flex flex-col shadow-xl rounded-2xl p-4 w-full md:w-80 bg-white">
+        <div className="animate-pulse shadow-lg rounded-md bg-gray-300 h-8 w-full mb-2"></div>
         <div className="animate-pulse shadow-lg rounded-md bg-gray-300 h-8 w-full mb-2"></div>
         <div className="animate-pulse shadow-lg rounded-md bg-gray-300 h-8 w-full mb-2"></div>
         <div className="animate-pulse shadow-lg rounded-md bg-gray-300 h-8 w-full"></div>
@@ -37,10 +35,7 @@ const UserDropdown = ({
     );
   } else {
     return (
-      <div
-        className="z-20 animate-fade-in absolute top-14 right-0 flex flex-col shadow-xl rounded-2xl
-      p-4 w-full md:w-60 bg-white"
-      >
+      <div className="z-20 animate-fade-in absolute top-14 right-0 flex flex-col shadow-xl rounded-2xl p-4 w-full md:w-80 bg-white">
         {isAuthedUser && (
           <>
             <span className="truncate font-semibold mb-2">{email}</span>

@@ -47,7 +47,7 @@ const InvestorForm = ({
 
     return (
       <>
-        <h1 className="f24 bold mt16 mb16">Investor Inputs</h1>
+        <h1 className="my-2 text-xl font-semibold">Investor Inputs</h1>
         <HelperMessage
           type={CONSTANTS.HELPERMESSAGES.INVESTORFORM}
           body={helperMessage.investorForm}

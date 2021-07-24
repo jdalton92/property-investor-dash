@@ -52,7 +52,7 @@ const DeveloperForm = ({
 
     return (
       <>
-        <h1 className="f24 bold mt16 mb16">Developer Inputs</h1>
+        <h1 className="my-2 text-xl font-semibold">Developer Inputs</h1>
         <HelperMessage
           type={CONSTANTS.HELPERMESSAGES.DEVELOPERFORM}
           body={helperMessage.developerForm}

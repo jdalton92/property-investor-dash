@@ -1,12 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Form, Field } from "react-final-form";
+import { Form } from "react-final-form";
 import { requestPasswordReset } from "../reducers/usersReducer";
+import Input from "./Shared/FinalForm/Input";
+import Button from "./Shared/FinalForm/Button";
 import {
   required,
   minLength,
   isEmail,
-  composeValidators,
+  maxLength,
 } from "../utils/formValidatorHelper";
 import Loader from "./Shared/Loader";
 
@@ -20,45 +22,41 @@ const ResetPassword = ({ isFetching, requestPasswordReset }) => {
   } else {
     return (
       <>
-        <h1 className="f24 bold mt16 mb16">Reset Password</h1>
-        <Form
-          onSubmit={handleResetPassword}
-          render={({ handleSubmit }) => (
-            <form onSubmit={handleSubmit}>
-              <div className="r bs-3 bg-1 p20 mb20">
-                <label htmlFor="email" className="f16 mb8">
-                  Email
-                  <span className="font-red f12 bold ml4">*</span>
-                </label>
-                <Field
-                  name="email"
-                  validate={composeValidators(required, minLength(3), isEmail)}
-                >
-                  {({ input, meta }) => (
-                    <div className="relative mb20">
-                      <input
-                        id="email"
-                        className="form-input bs-1 w100"
-                        placeholder="your@email.com"
-                        type="email"
-                        {...input}
-                      />
-                      {meta.error && meta.touched && (
-                        <span className="form-error f10">{meta.error}</span>
-                      )}
-                    </div>
-                  )}
-                </Field>
-                <button
-                  className="form-button-p font-white bs-2 pt8 pb8 r mt12"
-                  type="submit"
-                >
-                  Confirm
-                </button>
-              </div>
-            </form>
-          )}
-        />
+        <h1 className="my-2 text-xl font-semibold">Reset Password</h1>
+        <div className="shadow-xl rounded-2xl p-4 bg-white">
+          <Form
+            onSubmit={handleResetPassword}
+            render={({ handleSubmit }) => (
+              <form onSubmit={handleSubmit}>
+                <Input
+                  label={"Email"}
+                  name={"email"}
+                  options={{
+                    validators: [
+                      required,
+                      isEmail,
+                      minLength(3),
+                      maxLength(200),
+                    ],
+                    placeholder: "your@email.com",
+                    type: "email",
+                    extraClass: "mb-6",
+                  }}
+                />
+                <Button
+                  label={"Confirm"}
+                  type={"submit"}
+                  options={{
+                    styleType: "primary",
+                    buttonClass: "w-full md:w-32",
+                    // isLoading: isSending,
+                    iconClass: "mr-20",
+                  }}
+                />
+              </form>
+            )}
+          />
+        </div>
       </>
     );
   }

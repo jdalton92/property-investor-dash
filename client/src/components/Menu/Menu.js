@@ -111,12 +111,14 @@ const Menu = ({
 
   return (
     <div
-      className={`h-screen transition-transform duration-250 ease-in-out transform lg:translate-x-0 lg:static left-0 fixed w-60 ${
+      className={`h-screen z-20 lg:z-0 bg-gray-200 transition-transform duration-250 ease-in-out transform lg:translate-x-0 lg:static left-0 fixed w-full md:w-80 top-0 ${
         leftSidebarOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
-      <div className="flex block lg:hidden">
-        <h1>PropertyInvestorDash</h1>
+      <div className="flex items-center justify-center block lg:hidden h-14 bg-indigo-900">
+        <h1 className="block text-xl text-white font-semibold text-shadow-lg mx-auto hover:underline">
+          PropertyInvestorDash
+        </h1>
         <Burger customClass={"s1080"} />
       </div>
       <div>

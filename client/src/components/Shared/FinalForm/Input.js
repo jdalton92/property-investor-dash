@@ -2,6 +2,7 @@ import React from "react";
 import {
   required,
   composeValidators,
+  slugify,
 } from "../../../utils/formValidatorHelper";
 import { Field } from "react-final-form";
 import Tooltip from "../Tooltip";
@@ -26,7 +27,7 @@ const Input = ({
   const type = options?.type || "text";
   const autoComplete = options?.autoComplete;
   const extraClass = options?.extraClass;
-  const id = options?.id || label;
+  const id = options?.id || slugify(label);
   const initialValue = options?.initialValue;
   const disabled = options?.disabled || false;
   const maxLength = options?.maxLength;
@@ -44,15 +45,10 @@ const Input = ({
     borderRadius = "rounded-md";
   }
 
-  let className = `flex-grow bg-white border focus:border-indigo-500 z-10
-  focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1
-  px-3 transition-colors duration-200 ease-in-out leading-6 ${borderRadius} `;
+  let className = `flex-grow bg-white border focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 transition-colors duration-200 ease-in-out leading-6 ${borderRadius} `;
 
   if (disabled) {
-    className = `opacity-50 rounded-lg border-transparent flex-1 appearance-none
-    border-gray-300 flex-grow py-1 px-3 bg-white text-gray-700 placeholder-gray-400
-    shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 z-10
-    focus:border-transparent border leading-6 ${borderRadius} `;
+    className = `opacity-50 rounded-lg border-transparent flex-1 appearance-none border-gray-300 flex-grow py-1 px-3 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent border leading-6 ${borderRadius} `;
   }
 
   let tooltipMessage;

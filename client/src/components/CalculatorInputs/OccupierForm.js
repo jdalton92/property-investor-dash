@@ -47,7 +47,7 @@ const OccupierForm = ({
 
     return (
       <>
-        <h1 className="f24 bold mt16 mb16">Owner Occupier Inputs</h1>
+        <h1 className="my-2 text-xl font-semibold">Owner Occupier Inputs</h1>
         <HelperMessage
           type={CONSTANTS.HELPERMESSAGES.OWNEROCCUPIERFORM}
           body={helperMessage.occupierForm}

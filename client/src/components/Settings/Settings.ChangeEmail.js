@@ -54,6 +54,7 @@ const ChangeEmail = ({ user, updateUser }) => {
                 label={"Update"}
                 type={"submit"}
                 options={{
+                  buttonClass: "w-full md:w-32",
                   styleType: "primary",
                   isLoading: user.isFetching,
                   iconClass: "mr-20",

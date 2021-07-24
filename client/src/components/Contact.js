@@ -4,9 +4,21 @@ import { Form } from "react-final-form";
 import Input from "./Shared/FinalForm/Input";
 import Button from "./Shared/FinalForm/Button";
 import { sendMessage } from "../reducers/contactReducer";
-import { required, maxLength, isEmail } from "../utils/formValidatorHelper";
+import {
+  required,
+  maxLength,
+  minLength,
+  isEmail,
+} from "../utils/formValidatorHelper";
 
-const Contact = ({ sendMessage, isSending, email }) => {
+const Contact = ({ sendMessage, isSending, userData }) => {
+  const getEmail = () => {
+    if (userData.roles.some((role) => role === "demo")) {
+      return "";
+    } else {
+      return userData?.email;
+    }
+  };
   return (
     <>
       <h1 className="my-2 text-xl font-semibold">Contact</h1>
@@ -14,12 +26,11 @@ const Contact = ({ sendMessage, isSending, email }) => {
         <Form
           onSubmit={(values) => sendMessage(values)}
           render={({ handleSubmit, rest }) => (
-            <form className="contact-form" onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
               <Input
                 label={"Full Name"}
                 name={"fullName"}
                 options={{
-                  id: "contact-full-name",
                   validators: [required, maxLength(50)],
                   placeholder: "Full Name",
                   type: "text",
@@ -30,7 +41,6 @@ const Contact = ({ sendMessage, isSending, email }) => {
                 label={"Company"}
                 name={"company"}
                 options={{
-                  id: "contact-company",
                   validators: [maxLength(200)],
                   placeholder: "Company Name",
                   type: "text",
@@ -41,12 +51,11 @@ const Contact = ({ sendMessage, isSending, email }) => {
                 label={"Email"}
                 name={"email"}
                 options={{
-                  id: "contact-email",
-                  validators: [required, isEmail, maxLength(200)],
+                  validators: [required, isEmail, minLength(3), maxLength(200)],
                   placeholder: "example@email.com",
                   type: "email",
                   extraClass: "mb-4",
-                  initialValue: email,
+                  initialValue: getEmail(),
                 }}
               />
               <Input
@@ -54,7 +63,6 @@ const Contact = ({ sendMessage, isSending, email }) => {
                 name={"message"}
                 options={{
                   textarea: true,
-                  id: "contact-message",
                   validators: [required, maxLength(1000)],
                   placeholder: "Message...",
                   type: "text",
@@ -66,7 +74,7 @@ const Contact = ({ sendMessage, isSending, email }) => {
                 type={"submit"}
                 options={{
                   styleType: "primary",
-                  buttonClass: "w-32",
+                  buttonClass: "w-full md:w-32",
                   isLoading: isSending,
                   iconClass: "mr-20",
                 }}
@@ -82,7 +90,7 @@ const Contact = ({ sendMessage, isSending, email }) => {
 const mapStateToProps = (state) => {
   return {
     isSending: state.contact.isFetching,
-    email: state.users.data?.email,
+    userData: state.users.data,
   };
 };
 

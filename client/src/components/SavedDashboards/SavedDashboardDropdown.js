@@ -20,10 +20,7 @@ const SavedDashboardDropdown = ({ deleteDashboard, dashboard }) => {
   const { baseUrl } = getDashboardTypeAndBaseUrl(dashboard);
 
   return (
-    <div
-      className="z-20 animate-fade-in absolute top-9 right-6 flex flex-col shadow-xl rounded-2xl
-    p-2 w-screen md:w-32 bg-white"
-    >
+    <div className="z-20 animate-fade-in absolute top-9 right-6 flex flex-col shadow-xl rounded-2xl p-2 w-40 bg-white">
       <Button
         label={"Open"}
         options={{
