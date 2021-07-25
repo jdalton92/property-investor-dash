@@ -5,7 +5,7 @@ import { useHistory, Link } from "react-router-dom";
 import { loginUser, createUser, demoUser } from "../reducers/usersReducer";
 import { setTab } from "../reducers/navigationReducer";
 import { required, minLength, isEmail } from "../utils/formValidatorHelper";
-import { CONSTANTS } from "../static/constants";
+import { CONSTANTS } from "../constants/constants";
 import Tab from "./Shared/Tab";
 import Input from "./Shared/FinalForm/Input";
 import Button from "./Shared/FinalForm/Button";
@@ -81,6 +81,7 @@ const Login = ({
                 to={"/login"}
                 options={{
                   icon: "user",
+                  onClick: () => setTab("login", CONSTANTS.TABS.LOGIN.LOGIN),
                 }}
               />
               <Tab
@@ -88,6 +89,8 @@ const Login = ({
                 to={"/sign-up"}
                 options={{
                   icon: "create-user",
+                  onClick: () =>
+                    setTab("login", CONSTANTS.TABS.LOGIN.CREATEUSER),
                 }}
               />
             </div>

@@ -1,8 +1,8 @@
 import React from "react";
 import { Field } from "react-final-form";
 import { required, composeValidators } from "../../utils/formValidatorHelper";
-import { developerTooltips, occupierTooltips } from "../../static/tooltips";
-import { CONSTANTS } from "../../static/constants";
+import { developerTooltips, occupierTooltips } from "../../constants/tooltips";
+import { CONSTANTS } from "../../constants/constants";
 import Tooltip from "./Tooltip";
 
 const FinalFormField = ({

@@ -9,7 +9,7 @@ const PrivacyPolicy = () => {
 
   return (
     <>
-      <h1 className="my-2 text-xl font-semibold">Privacy Policy</h1>
+      <h1 className="my-2 text-2xl font-semibold">Privacy Policy</h1>
       <div className="shadow-xl rounded-2xl p-4 bg-white my-2">
         <p className="mb16">
           PropertyInvestorDash is committed to providing quality services to you

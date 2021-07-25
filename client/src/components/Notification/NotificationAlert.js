@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { clearNotification } from "../../reducers/notificationReducer";
 import Icon from "../Shared/Icon";
 import Button from "../Shared/Button";
-import { CONSTANTS } from "../../static/constants";
+import { CONSTANTS } from "../../constants/constants";
 
 const NotificationAlert = ({ notification, clearNotification, key }) => {
   const handleCloseNotification = () => {

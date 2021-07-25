@@ -1,4 +1,4 @@
-import { CONSTANTS } from "../static/constants";
+import { CONSTANTS } from "../constants/constants";
 
 const initialState = {
   sidebarOpen: {

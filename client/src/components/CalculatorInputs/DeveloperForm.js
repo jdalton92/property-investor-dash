@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { Form } from "react-final-form";
 import { testDashboard, getDashboard } from "../../reducers/dashboardsReducer";
-import { CONSTANTS } from "../../static/constants";
-import { helperMessage } from "../../static/helperMessageText";
+import { CONSTANTS } from "../../constants/constants";
+import { helperMessage } from "../../constants/helperMessageText";
 import TimingAssumptions from "./Developer/TimingAssumptions";
 import CostAssumptions from "./Developer/CostAssumptions";
 import RevenueAssumptions from "./Developer/RevenueAssumptions";
@@ -52,7 +52,7 @@ const DeveloperForm = ({
 
     return (
       <>
-        <h1 className="my-2 text-xl font-semibold">Developer Inputs</h1>
+        <h1 className="my-2 text-2xl font-semibold">Developer Inputs</h1>
         <HelperMessage
           type={CONSTANTS.HELPERMESSAGES.DEVELOPERFORM}
           body={helperMessage.developerForm}

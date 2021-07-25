@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { CONSTANTS } from "../static/constants";
+import { CONSTANTS } from "../constants/constants";
 import store from "../store";
 
 const useDropdownOutsideAlerter = (ref) => {

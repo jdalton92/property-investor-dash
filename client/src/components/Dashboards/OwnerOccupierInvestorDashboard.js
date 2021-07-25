@@ -14,7 +14,7 @@ import {
   IRRCalculation,
 } from "../../utils/dashboardHelper";
 import { Line } from "react-chartjs-2";
-import { occupierTooltips } from "../../static/tooltips";
+import { occupierTooltips } from "../../constants/tooltips";
 
 const OwnerOccupierInvestorDashboard = ({ monthlyCashflow }) => {
   const [showCashflow, setShowCashflow] = useState(true);

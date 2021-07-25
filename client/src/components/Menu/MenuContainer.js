@@ -24,9 +24,9 @@ const MenuContainer = ({ title, menuItems, setLeftSidebar, extraClass }) => {
 
   return (
     <div
-      className={`${extraClass} shadow-xl rounded-2xl p-4 bg-white mb-4 flex flex-col`}
+      className={`${extraClass} shadow-xl rounded-2xl px-4 py-2 bg-white mb-4 flex flex-col`}
     >
-      <h3 className="font-semibold mb-2">{title}</h3>
+      <h3 className="text-lg font-semibold mb-2">{title}</h3>
       {menuItems.map((item, index) => {
         const navLink = item.link?.navLink;
         const isExternal = item.link?.external;
@@ -38,11 +38,12 @@ const MenuContainer = ({ title, menuItems, setLeftSidebar, extraClass }) => {
               styleType: "secondary-transparent",
               navLink: navLink,
               route: navLink && !isExternal ? item.link.url : undefined,
-              buttonClass: "w-full h-10 pl-2",
+              buttonClass: "w-full h-10 pl-2 ml-2",
               labelClass: "ml-2",
               icon: item.icon,
               iconClass: "h-5 w-5",
               onClick: () => handleLink(item.link),
+              hideShadow: true,
             }}
           />
         );

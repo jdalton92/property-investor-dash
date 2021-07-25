@@ -1,5 +1,5 @@
 import axios from "axios";
-import { V1_API } from "../config";
+import { V1_API } from "../constants/constants";
 const baseUrl = `${V1_API}/contact`;
 
 const sendEmail = async (emailDetail) => {

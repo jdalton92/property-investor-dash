@@ -8,7 +8,7 @@ import {
   maxLength,
   minLength,
 } from "../../utils/formValidatorHelper";
-import { CONSTANTS } from "../../static/constants";
+import { CONSTANTS } from "../../constants/constants";
 import { setNotification } from "../../reducers/notificationReducer";
 import Input from "../Shared/FinalForm/Input";
 import Button from "../Shared/FinalForm/Button";

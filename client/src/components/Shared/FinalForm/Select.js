@@ -5,12 +5,12 @@ import {
 } from "../../../utils/formValidatorHelper";
 import { Field } from "react-final-form";
 import Tooltip from "../Tooltip";
-import { CONSTANTS } from "../../../static/constants";
+import { CONSTANTS } from "../../../constants/constants";
 import {
   developerTooltips,
   occupierTooltips,
   investorTooltips,
-} from "../../../static/tooltips";
+} from "../../../constants/tooltips";
 
 const Select = ({ label, name, options }) => {
   const isRequired = !!options?.validators?.includes(required);

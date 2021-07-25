@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { setModal, setTab } from "../../reducers/navigationReducer";
-import { CONSTANTS } from "../../static/constants";
+import { CONSTANTS } from "../../constants/constants";
 import Button from "../Shared/Button";
 import Tab from "../Shared/Tab";
 import Overlay from "../Shared/Overlay";

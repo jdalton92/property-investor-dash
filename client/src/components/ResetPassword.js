@@ -22,7 +22,7 @@ const ResetPassword = ({ isFetching, requestPasswordReset }) => {
   } else {
     return (
       <>
-        <h1 className="my-2 text-xl font-semibold">Reset Password</h1>
+        <h1 className="my-2 text-2xl font-semibold">Reset Password</h1>
         <div className="shadow-xl rounded-2xl p-4 bg-white">
           <Form
             onSubmit={handleResetPassword}

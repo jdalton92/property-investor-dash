@@ -16,8 +16,11 @@ const Button = ({ label, type = "button", options = {} }) => {
   const labelClass = options?.labelClass;
   const styleType = options?.styleType;
   const isDisabled = options?.isDisabled;
+  const hideShadow = options?.hideShadow;
 
-  let className = `${buttonClass} text-sm transition ease-in duration-200 shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-md leading-7 flex items-center ${
+  let className = `${buttonClass} text-sm transition ease-in duration-200 ${
+    hideShadow ? "" : "shadow-lg"
+  } focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-md leading-7 flex items-center ${
     isDisabled ? "opacity-60 pointer-events-none" : ""
   } `;
   let activeClass;

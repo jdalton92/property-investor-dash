@@ -20,7 +20,7 @@ const About = ({ isAuthedUser, demoUser }) => {
   };
   return (
     <>
-      <h1 className="my-2 text-xl font-semibold">About</h1>
+      <h1 className="my-2 text-2xl font-semibold">About</h1>
       <h2 className="my-2 text-l font-semibold">
         What Is PropertyInvestorDash
       </h2>

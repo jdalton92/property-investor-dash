@@ -1,32 +1,43 @@
 import React from "react";
 import { connect } from "react-redux";
-import { StyledBurger } from "./StyledBurger";
 import { setLeftSidebar, setDropdown } from "../../reducers/navigationReducer";
-import { CONSTANTS } from "../../static/constants";
+import { CONSTANTS } from "../../constants/constants";
 
 const Burger = ({
   leftSidebarOpen,
   setLeftSidebar,
   setDropdown,
   customClass,
-  color = "#f7f8fb",
 }) => {
   const handleClick = () => {
     setDropdown(CONSTANTS.DROPDOWNS.USERNAME, false);
     setLeftSidebar(!leftSidebarOpen);
   };
   return (
-    <div className={customClass}>
-      <StyledBurger
+    <div className={`${customClass}`}>
+      <button
         type="button"
         onClick={handleClick}
-        open={leftSidebarOpen}
-        color={color}
+        className="flex flex-col justify-around w-8 h-8 bg-transparent border-none cursor-pointer p-0 z-10 focus:outline-none"
       >
-        <div />
-        <div />
-        <div />
-      </StyledBurger>
+        <div
+          className={`${
+            leftSidebarOpen ? "rotate-45" : "rotate-0"
+          } transform w-full h-1 bg-white relative transition ease-linear duration-300 origin-left rounded-lg`}
+        />
+        <div
+          className={`${
+            leftSidebarOpen
+              ? "opacity-0 translate-x-10"
+              : "opacity-1 translate-x-0"
+          } transform w-full h-1 bg-white relative transition ease-linear duration-300 origin-center rounded-lg`}
+        />
+        <div
+          className={`${
+            leftSidebarOpen ? "-rotate-45" : "rotate-0"
+          } transform w-full h-1 bg-white relative transition ease-linear duration-300 origin-left rounded-lg`}
+        />
+      </button>
     </div>
   );
 };

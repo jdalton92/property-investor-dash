@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getAuthConfig } from "../utils/authHelper";
-import { V1_API } from "../config";
+import { V1_API } from "../constants/constants";
 const baseUrl = `${V1_API}/auth`;
 
 const initUser = async () => {

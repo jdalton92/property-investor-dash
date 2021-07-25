@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import { CONSTANTS } from "../../static/constants";
+import { CONSTANTS } from "../../constants/constants";
 import { setDropdown } from "../../reducers/navigationReducer";
 import { logoutUser } from "../../reducers/usersReducer";
 import Button from "../Shared/Button";
@@ -26,7 +26,7 @@ const UserDropdown = ({
   };
   if (isUserFetching) {
     return (
-      <div className="z-20 animate-fade-in absolute top-14 right-0 flex flex-col shadow-xl rounded-2xl p-4 w-full md:w-80 bg-white">
+      <div className="animate-fade-in absolute top-14 right-0 flex flex-col shadow-xl rounded-2xl p-4 w-full md:w-80 bg-white">
         <div className="animate-pulse shadow-lg rounded-md bg-gray-300 h-8 w-full mb-2"></div>
         <div className="animate-pulse shadow-lg rounded-md bg-gray-300 h-8 w-full mb-2"></div>
         <div className="animate-pulse shadow-lg rounded-md bg-gray-300 h-8 w-full mb-2"></div>
@@ -35,7 +35,7 @@ const UserDropdown = ({
     );
   } else {
     return (
-      <div className="z-20 animate-fade-in absolute top-14 right-0 flex flex-col shadow-xl rounded-2xl p-4 w-full md:w-80 bg-white">
+      <div className="animate-fade-in absolute top-14 right-0 flex flex-col shadow-xl rounded-2xl p-4 w-full md:w-80 bg-white">
         {isAuthedUser && (
           <>
             <span className="truncate font-semibold mb-2">{email}</span>
@@ -47,6 +47,7 @@ const UserDropdown = ({
                 labelClass: "ml-1",
                 icon: "dashboard",
                 iconClass: "h-8 w-8",
+                hideShadow: true,
                 onClick: () => handleLink("/saved-dashboards"),
               }}
             />
@@ -58,6 +59,7 @@ const UserDropdown = ({
                 labelClass: "ml-1",
                 icon: "settings",
                 iconClass: "h-8 w-8",
+                hideShadow: true,
                 onClick: () => handleLink("/settings"),
               }}
             />
@@ -69,6 +71,7 @@ const UserDropdown = ({
                 labelClass: "ml-1",
                 icon: "logout",
                 iconClass: "h-8 w-8",
+                hideShadow: true,
                 onClick: () => handleLogout(),
               }}
             />
@@ -80,10 +83,11 @@ const UserDropdown = ({
               label={"Login"}
               options={{
                 styleType: "secondary-transparent",
-                buttonClass: "w-full h-10 pl-2",
+                buttonClass: "z-20 w-full h-10 pl-2",
                 labelClass: "ml-1",
                 icon: "logout",
                 iconClass: "h-8 w-8",
+                hideShadow: true,
                 onClick: () => handleLink("/login"),
               }}
             />
@@ -91,10 +95,11 @@ const UserDropdown = ({
               label={"Create Account"}
               options={{
                 styleType: "secondary-transparent",
-                buttonClass: "w-full h-10 pl-2",
+                buttonClass: "z-20 w-full h-10 pl-2",
                 labelClass: "ml-1",
                 icon: "create-user",
                 iconClass: "h-8 w-8",
+                hideShadow: true,
                 onClick: () => handleLink("/sign-up"),
               }}
             />

@@ -7,7 +7,7 @@ import Button from "./Shared/FinalForm/Button";
 import Loader from "./Shared/Loader";
 import { resetPassword } from "../reducers/usersReducer";
 import { setNotification } from "../reducers/notificationReducer";
-import { CONSTANTS } from "../static/constants";
+import { CONSTANTS } from "../constants/constants";
 import queryString from "query-string";
 import { required, minLength } from "../utils/formValidatorHelper";
 
@@ -29,7 +29,7 @@ const NewPassword = ({ isFetching, resetPassword, setNotification }) => {
   } else {
     return (
       <>
-        <h1 className="my-2 text-xl font-semibold">Set New Password</h1>
+        <h1 className="my-2 text-2xl font-semibold">Set New Password</h1>
         <div className="shadow-xl rounded-2xl p-4 bg-white">
           <Form
             onSubmit={handleSetNewPassword}

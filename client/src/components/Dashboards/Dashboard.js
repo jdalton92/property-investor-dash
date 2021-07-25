@@ -12,7 +12,7 @@ import { setModal } from "../../reducers/navigationReducer";
 import { setNotification } from "../../reducers/notificationReducer";
 import OwnerOccupierInvestorDashboard from "./OwnerOccupierInvestorDashboard";
 import DeveloperDashboard from "./DeveloperDashboard";
-import { CONSTANTS } from "../../static/constants";
+import { CONSTANTS } from "../../constants/constants";
 import {
   isEmpty,
   getDashboardTypeAndBaseUrl,

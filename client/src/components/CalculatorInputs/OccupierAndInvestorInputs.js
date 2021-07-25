@@ -2,7 +2,7 @@ import React from "react";
 import { Form } from "react-final-form";
 import OccupierBaseAssumptions from "./Occupier/BaseAssumptions";
 import InvestorBaseAssumptions from "./Investor/BaseAssumptions";
-import { CONSTANTS } from "../../static/constants";
+import { CONSTANTS } from "../../constants/constants";
 import OccupierAndInvestorCostAssumptions from "../Shared/OccupierAndInvestorCostAssumptions";
 import OccupierAndInvestorFundingAssumptions from "../Shared/OccupierAndInvestorFundingAssumptions";
 import Button from "../Shared/FinalForm/Button";

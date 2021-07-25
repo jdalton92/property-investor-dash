@@ -5,7 +5,7 @@ import NotificationAlert from "./NotificationAlert";
 const Notifications = ({ notifications }) => {
   if (notifications.length > 0) {
     return (
-      <div className="fixed bottom-0 right-0 z-50 w-full md:w-350px">
+      <div className="fixed bottom-0 right-0 z-50 w-full md:w-350px p-1 md:p-0">
         {notifications.map((n) => {
           return <NotificationAlert notification={n} key={n.id} />;
         })}

@@ -111,7 +111,7 @@ const Menu = ({
 
   return (
     <div
-      className={`h-screen z-20 lg:z-0 bg-gray-200 transition-transform duration-250 ease-in-out transform lg:translate-x-0 lg:static left-0 fixed w-full md:w-80 top-0 ${
+      className={`h-screen z-50 lg:z-0 bg-gray-200 transition-transform duration-250 ease-in-out transform lg:translate-x-0 lg:static left-0 fixed w-full md:w-80 top-0 ${
         leftSidebarOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
@@ -129,11 +129,11 @@ const Menu = ({
               menuItems={userMenuItems}
               extraClass={"mt-4"}
             />
-            <MenuContainer title={"About"} menuItems={aboutMenuItems} />
             <MenuContainer
               title={"Calculators"}
               menuItems={calculatorMenuItems}
             />
+            <MenuContainer title={"About"} menuItems={aboutMenuItems} />
             <MenuContainer title={"Other"} menuItems={otherMenuItems} />
           </>
         )}

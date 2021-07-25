@@ -22,7 +22,7 @@ const SavedDashboards = ({ getDashboards, isFetching, savedDashboards }) => {
   if (isInitLoad) {
     return (
       <>
-        <h1 className="my-2 text-xl font-semibold">Saved Dashboards</h1>
+        <h1 className="my-2 text-2xl font-semibold">Saved Dashboards</h1>
         <LoadingSavedDashboards />
         <div className="animate-pulse shadow-lg rounded-md bg-gray-100 h-6 w-60"></div>
       </>
@@ -34,33 +34,33 @@ const SavedDashboards = ({ getDashboards, isFetching, savedDashboards }) => {
     );
     return (
       <>
-        <h1 className="my-2 text-xl font-semibold">Saved Dashboards</h1>
+        <h1 className="my-2 text-2xl font-semibold">Saved Dashboards</h1>
         {noSavedDashboards && <div>No saved dashboards...</div>}
         {isLoading && <LoadingSavedDashboards />}
         {showSavedDashboards && (
-          <div className="w-full shadow-xl rounded-2xl bg-white mb-4">
+          <div className="w-full shadow-xl rounded-2xl bg-white mb-4 overflow-x-auto">
             <table id="save-overwrite" className="w-full text-left">
               <thead>
                 <tr className="border-b border-gray-200 h-8 text-sm">
-                  <th className="font-normal text-center">
+                  <th className="font-normal text-center px-2">
                     <span>Ref</span>
                   </th>
-                  <th className="font-normal">
+                  <th className="font-normal px-2">
                     <span>Description</span>
                   </th>
-                  <th className="font-normal">
+                  <th className="font-normal px-2">
                     <span>Address</span>
                   </th>
-                  <th className="font-normal">
+                  <th className="font-normal px-2">
                     <span>Type</span>
                   </th>
-                  <th className="font-normal">
+                  <th className="font-normal px-2">
                     <span>Created</span>
                   </th>
-                  <th className="font-normal">
+                  <th className="font-normal px-2">
                     <span>Updated</span>
                   </th>
-                  <th className="font-normal">
+                  <th className="font-normal px-2">
                     <span>Action</span>
                   </th>
                 </tr>

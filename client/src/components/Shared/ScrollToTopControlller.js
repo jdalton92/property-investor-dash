@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { connect } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { setLeftSidebar, setDropdown } from "../../reducers/navigationReducer";
-import { CONSTANTS } from "../../static/constants";
+import { CONSTANTS } from "../../constants/constants";
 
 const ScrollToTopControlller = ({ setLeftSidebar, setDropdown }) => {
   const { pathname } = useLocation();

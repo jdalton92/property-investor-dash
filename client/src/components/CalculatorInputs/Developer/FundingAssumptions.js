@@ -6,7 +6,7 @@ import {
   minValue,
   maxValue,
 } from "../../../utils/formValidatorHelper";
-import { CONSTANTS } from "../../../static/constants";
+import { CONSTANTS } from "../../../constants/constants";
 
 const DeveloperFundingAssumptions = () => {
   const tooltipType = CONSTANTS.TYPES.DEVELOPER;

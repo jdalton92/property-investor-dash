@@ -13,7 +13,7 @@ import {
 } from "../../utils/formValidatorHelper";
 import { formatDate } from "../../utils/dashboardHelper";
 import { getPaginateOptions } from "../../utils/dashboardHelper";
-import { CONSTANTS } from "../../static/constants";
+import { CONSTANTS } from "../../constants/constants";
 import LoadingSavedDashboards from "../SavedDashboards/LoadingSavedDashboards";
 import { setNotification } from "../../reducers/notificationReducer";
 import { getDashboardTypeAndBaseUrl } from "../../utils/dashboardHelper";
@@ -100,22 +100,22 @@ const OverwriteDashboard = ({
                     >
                       <thead>
                         <tr className="border-b border-gray-200 h-8 text-sm">
-                          <th className="font-normal text-center">
+                          <th className="font-normal text-center px-2">
                             <span>Ref</span>
                           </th>
-                          <th className="font-normal">
+                          <th className="font-normal px-2">
                             <span>Description</span>
                           </th>
-                          <th className="font-normal">
+                          <th className="font-normal px-2">
                             <span>Address</span>
                           </th>
-                          <th className="font-normal">
+                          <th className="font-normal px-2">
                             <span>Type</span>
                           </th>
-                          <th className="font-normal">
+                          <th className="font-normal px-2">
                             <span>Created</span>
                           </th>
-                          <th className="font-normal">
+                          <th className="font-normal px-2">
                             <span>Overwrite</span>
                           </th>
                         </tr>
@@ -138,37 +138,37 @@ const OverwriteDashboard = ({
                                   ? setSelectedDashboardId(null)
                                   : setSelectedDashboardId(d._id)
                               }
-                              className={`border-b border-gray-200 h-12 hover:bg-gray-50 ${
+                              className={`border-b border-gray-200 h-12 hover:bg-gray-50 px-2 ${
                                 d._id === selectedDashboardId
                                   ? "bg-gray-50"
                                   : ""
                               }`}
                             >
                               <td
-                                className={`text-center ${
+                                className={`text-center px-2 ${
                                   isBottomRow ? "rounded-bl-2xl" : ""
                                 }`}
                               >
                                 {index}
                               </td>
-                              <td>
+                              <td className="px-2">
                                 <span className="line-clamp-2">
                                   {d.description}
                                 </span>
                               </td>
-                              <td>
+                              <td className="px-2">
                                 <span className="line-clamp-2">
                                   {d.address}
                                 </span>
                               </td>
-                              <td>
+                              <td className="px-2">
                                 <span className="line-clamp-2">{type}</span>
                               </td>
-                              <td>
+                              <td className="px-2">
                                 <span>{formatDate(d.created)}</span>
                               </td>
                               <td
-                                className={` ${
+                                className={`px-2 ${
                                   isBottomRow ? "rounded-br-2xl" : ""
                                 }`}
                               >

@@ -1,4 +1,4 @@
-import { CONSTANTS } from "../static/constants";
+import { CONSTANTS } from "../constants/constants";
 
 export const paginatedResults = {
   nextPage: null,

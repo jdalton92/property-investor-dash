@@ -14,7 +14,7 @@ import {
   cashflowFormatter,
   IRRCalculation,
 } from "../../utils/dashboardHelper";
-import { developerTooltips } from "../../static/tooltips";
+import { developerTooltips } from "../../constants/tooltips";
 import { Line, Bar } from "react-chartjs-2";
 
 const DeveloperDashboard = ({ currentDashboard, monthlyCashflow }) => {

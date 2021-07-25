@@ -13,7 +13,7 @@ const CalculatorTypes = () => {
 
   return (
     <>
-      <h1 className="my-2 text-xl font-semibold">Calculator Types</h1>
+      <h1 className="my-2 text-2xl font-semibold">Calculator Types</h1>
       <h2 className="my-2 text-l font-semibold">
         <span
           className="hover:underline cursor-pointer"

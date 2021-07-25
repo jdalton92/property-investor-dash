@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { initUser } from "./reducers/usersReducer";
-import { CONSTANTS } from "./static/constants";
+import { CONSTANTS } from "./constants/constants";
 import AnalyticsController from "./components/Shared/AnalyticsController";
 import ScrollToTopControlller from "./components/Shared/ScrollToTopControlller";
 import PageTitleController from "./components/Shared/PageTitleController";
@@ -10,8 +10,6 @@ import Notifications from "./components/Notification/Notifications";
 import SaveDashboardModal from "./components/SaveDashboardModal/SaveDashboardModal";
 import Login from "./components/Login";
 import Main from "./components/Main";
-
-// import "./styles/main.scss";
 
 const App = ({ initUser, saveDashboardModal }) => {
   useEffect(() => {
