@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { readHelperMessage } from "../../reducers/usersReducer";
-import { Icon } from "./Icon";
-import MessageIcon from "../../styles/svg/message.svg";
+import Icon from "./Icon";
+import Button from "./Button";
 
 const HelperMessage = ({
   user,
@@ -11,8 +11,7 @@ const HelperMessage = ({
   body,
   messagesRead,
 }) => {
-  const handleClick = (e) => {
-    e.preventDefault();
+  const handleClick = () => {
     readHelperMessage(user, type);
   };
 
@@ -20,23 +19,24 @@ const HelperMessage = ({
     return null;
   } else {
     return (
-      <div className="helper-message r w100 p20 bg-1 bs-2">
-        <div className="flex-row align-c">
-          <Icon
-            url={MessageIcon}
-            color={"#51535c"}
-            hover={false}
-            active={false}
-          />
-          <div className="ml20">
-            <p className="f16">{body}</p>
-            <button
-              type="button"
-              className="form-button-p bs-3 font-white mt20 pt4 pb4 flex-row align-c justify-c"
-              onClick={handleClick}
-            >
-              <span>Okay</span>
-            </button>
+      <div className="shadow-xl rounded-2xl p-4 bg-indigo-200 border-2 border-indigo-400">
+        <div className="flex flex-row">
+          <div>
+            <Icon className={"text-gray-600 w-10 h-10"} icon={"message"} />
+          </div>
+          <div className="ml-8">
+            <p className="mb-4">{body}</p>
+            <Button
+              label={"Okay"}
+              type={"button"}
+              options={{
+                styleType: "primary",
+                buttonClass: "flex justify-center h-10 px-2 w-full md:w-24",
+                icon: "tick",
+                iconClass: "h-8 w-8 mr-2",
+                onClick: () => handleClick(),
+              }}
+            />
           </div>
         </div>
       </div>

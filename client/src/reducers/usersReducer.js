@@ -1,6 +1,6 @@
 import authService from "../services/auth";
 import usersService from "../services/users";
-import { CONSTANTS } from "../static/constants";
+import { CONSTANTS } from "../constants/constants";
 import {
   successNotification,
   errorNotification,

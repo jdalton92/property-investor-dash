@@ -25,5 +25,21 @@ export const isEmail = (value) => {
 export const equalTo = (match) => (value) =>
   value === match ? undefined : "Passwords must match";
 
-export const composeValidators = (...validators) => (value) =>
-  validators.reduce((error, validator) => error || validator(value), undefined);
+export const composeValidators =
+  (...validators) =>
+  (value) =>
+    validators.reduce(
+      (error, validator) => error || validator(value),
+      undefined
+    );
+
+export const slugify = (text) => {
+  return text
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w-]+/g, "")
+    .replace(/--+/g, "-")
+    .replace(/^-+/, "")
+    .replace(/-+$/, "");
+};

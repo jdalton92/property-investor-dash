@@ -9,7 +9,7 @@ const {
 
 const authRouter = require("express").Router();
 
-authRouter.get("/init-user", initUserController);
+authRouter.get("/init", initUserController);
 authRouter.post("/login", loginController);
 authRouter.post("/logout", logoutController);
 authRouter.post("/demo", demoUserController);

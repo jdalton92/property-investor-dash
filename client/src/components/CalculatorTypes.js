@@ -1,9 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { Icon } from "./Shared/Icon";
-import HomeOwnerIcon from "../styles/svg/home-owner.svg";
-import FinanceIcon from "../styles/svg/finance.svg";
-import UnitsIcon from "../styles/svg/units.svg";
+import Button from "./Shared/Button";
 import ownerOccupierImage from "../styles/images/owner-occupier.jfif";
 import investorImage from "../styles/images/investor.jfif";
 import developerImage from "../styles/images/developer.jfif";
@@ -16,108 +13,112 @@ const CalculatorTypes = () => {
 
   return (
     <>
-      <h1 className="f24 bold mt16 mb8">Calculator Types</h1>
-      <h2 className="f16 bold mt8 mb16">
+      <h1 className="my-2 text-2xl font-semibold">Calculator Types</h1>
+      <h2 className="my-2 text-l font-semibold">
         <span
-          className="link"
+          className="hover:underline cursor-pointer"
           onClick={() => handleLink("/owner-occupier/edit")}
         >
           Calculator 1: Owner-Occupier
         </span>
       </h2>
-      <div className="card r bs-3 bg-1 mb20 flex-row jump">
+      <div className="shadow-xl rounded-2xl overflow-hidden bg-white my-2 flex flex-col md:flex-row md:h-80 w-full">
         <div
-          className="card-img"
+          className="w-700px md:w-full h-400px md:h-auto bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${ownerOccupierImage})`,
           }}
         />
-        <div className="p20 flex-col justify-c">
-          Use the owner-occupier calculator if you are looking to purchase and
-          live in your own home. This profile suits users such as
-          first-home-buyers, upsizers/downsizes, as well as potential financiers
-          who are looking to test mortgage terms for owner-occupiers
-          <button
-            type="button"
-            className="form-button-p bs-3 font-white mt20 pt4 pb4 flex-row align-c justify-c"
-            onClick={() => handleLink("/owner-occupier/edit")}
-          >
-            <Icon
-              size={"20px"}
-              url={HomeOwnerIcon}
-              color={"white"}
-              hover={false}
-              active={false}
-            />
-            <span className="ml8">Try Now</span>
-          </button>
+        <div className="flex flex-col justify-center p-3 mb-8 md:mb-0">
+          <p className="px-6 mb-4">
+            Use the owner-occupier calculator if you are looking to purchase and
+            live in your own home. This profile suits users such as
+            first-home-buyers, upsizers/downsizes, as well as potential
+            financiers who are looking to test mortgage terms for
+            owner-occupiers
+          </p>
+          <Button
+            label={"Try Now"}
+            type={"button"}
+            options={{
+              styleType: "primary",
+              buttonClass: "h-10 px-2 w-28 ml-6",
+              icon: "home-owner",
+              iconClass: "h-8 w-8 mr-2",
+              onClick: () => handleLink("/owner-occupier/edit"),
+            }}
+          />
         </div>
       </div>
-      <h2 className="f16 bold mt16 mb16">
-        <span className="link" onClick={() => handleLink("/investor/edit")}>
+      <h2 className="my-2 text-l font-semibold">
+        <span
+          className="hover:underline cursor-pointer"
+          onClick={() => handleLink("/investor/edit")}
+        >
           Calculator 2: Investor
         </span>
       </h2>
-      <div className="card-rev r bs-3 bg-1 mb20 flex-row jump">
-        <div className="p20 flex-col justify-c">
-          The investor profile will suit you if you are looking to forecast
-          income and expenses for the purchase an investment property to rent,
-          or if you are looking to buy a home to live in and rent a room for
-          additonal income.
-          <button
-            type="button"
-            className="form-button-p bs-3 font-white mt20 pt4 pb4 flex-row align-c justify-c"
-            onClick={() => handleLink("/investor/edit")}
-          >
-            <Icon
-              size={"20px"}
-              url={FinanceIcon}
-              color={"white"}
-              hover={false}
-              active={false}
-            />
-            <span className="ml8">Try Now</span>
-          </button>
+      <div className="shadow-xl rounded-2xl overflow-hidden bg-white my-2 flex flex-col-reverse md:flex-row md:h-80 w-full">
+        <div className="flex flex-col justify-center p-3 mb-8 md:mb-0">
+          <p className="px-6 mb-4">
+            The investor profile will suit you if you are looking to forecast
+            income and expenses for the purchase an investment property to rent,
+            or if you are looking to buy a home to live in and rent a room for
+            additonal income.
+          </p>
+          <Button
+            label={"Try Now"}
+            type={"button"}
+            options={{
+              styleType: "primary",
+              buttonClass: "h-10 px-2 w-28 ml-6",
+              icon: "finance",
+              iconClass: "h-8 w-8 mr-2",
+              onClick: () => handleLink("/investor/edit"),
+            }}
+          />
         </div>
         <div
-          className="card-img"
+          className="w-700px md:w-full h-400px md:h-auto bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${investorImage})`,
           }}
         />
       </div>
-      <h2 className="f16 bold mt16 mb16">
-        <span className="link" onClick={() => handleLink("/developer/edit")}>
+      <h2 className="my-2 text-l font-semibold">
+        <span
+          className="hover:underline cursor-pointer"
+          onClick={() => handleLink("/developer/edit")}
+        >
           Calculator 3: Developer
         </span>
       </h2>
-      <div className="card r bs-3 bg-1 mb20 flex-row jump">
+      <div className="shadow-xl rounded-2xl overflow-hidden bg-white my-2 flex flex-col md:flex-row md:h-80 w-full">
         <div
-          className="card-img"
+          className="w-700px md:w-full h-400px md:h-auto bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${developerImage})`,
           }}
         />
-        <div className="p20 flex-col justify-c">
-          If you are looking to purchase and renovate or build, then the
-          developer profile is for you. Includes option to sell on completion of
-          construction, or hold for an investment period. Financiers can also
-          test estimated funding costs of a constructioon loan that is able to
-          be rolled into an investment facility
-          <button
-            type="button"
-            className="form-button-p bs-3 font-white mt20 pt4 pb4 flex-row align-c justify-c"
-            onClick={() => handleLink("/developer/edit")}
-          >
-            <Icon
-              size={"20px"}
-              url={UnitsIcon}
-              color={"white"}
-              hover={false}
-              active={false}
-            />
-            <span className="ml8">Try Now</span>
-          </button>
+        <div className="flex flex-col justify-center p-3 mb-8 md:mb-0">
+          <p className="px-6 mb-4">
+            If you are looking to purchase and renovate or build, then the
+            developer profile is for you. Includes option to sell on completion
+            of construction, or hold for an investment period. Financiers can
+            also test estimated funding costs of a constructioon loan that is
+            able to be rolled into an investment facility
+          </p>
+          <Button
+            label={"Try Now"}
+            type={"button"}
+            options={{
+              styleType: "primary",
+              buttonClass: "h-10 px-2 w-28 ml-6",
+              icon: "units",
+              iconClass: "h-8 w-8 mr-2",
+              onClick: () => handleLink("/developer/edit"),
+            }}
+          />
         </div>
       </div>
     </>

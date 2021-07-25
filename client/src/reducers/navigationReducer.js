@@ -1,4 +1,4 @@
-import { CONSTANTS } from "../static/constants";
+import { CONSTANTS } from "../constants/constants";
 
 const initialState = {
   sidebarOpen: {
@@ -22,8 +22,8 @@ const navigationReducer = (state = initialState, action) => {
   switch (action.type) {
     case "SET_LEFT_SIDEBAR":
       newState = { ...state };
-      newState.overlay = action.payLoad.status;
       newState.sidebarOpen.left = action.payLoad.status;
+      newState.overlay = action.payLoad.status;
       return newState;
     case "SET_MODAL":
       newState = { ...state };
@@ -33,6 +33,9 @@ const navigationReducer = (state = initialState, action) => {
     case "SET_DROPDOWN":
       newState = { ...state };
       newState.dropdown[action.payLoad.dropdown] = action.payLoad.status;
+      newState.overlay = action.payLoad.status;
+      newState.sidebarOpen.left = false;
+      newState.modal[CONSTANTS.MODALS.SAVEDASHBOARD] = false;
       return newState;
     case "SET_TAB":
       newState = { ...state };

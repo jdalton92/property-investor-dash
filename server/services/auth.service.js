@@ -56,7 +56,7 @@ const requestPasswordReset = async (email) => {
   }).save();
 
   const baseUrl = `${config.FRONTEND_URL}`;
-  const route = `/reset-password/new-password?token=${resetToken}&id=${user._id}`;
+  const route = `/new-password?token=${resetToken}&id=${user._id}`;
 
   await sendEmail(
     `"PropertyInvestorDash" <noreply@propertyinvestordash.com>`,

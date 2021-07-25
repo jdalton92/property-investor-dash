@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { testDashboard, getDashboard } from "../../reducers/dashboardsReducer";
-import { CONSTANTS } from "../../static/constants";
-import { helperMessage } from "../../static/helperMessageText";
+import { CONSTANTS } from "../../constants/constants";
+import { helperMessage } from "../../constants/helperMessageText";
 import HelperMessage from "../Shared/HelperMessage";
 import Loader from "../Shared/Loader";
-import OwnerOccupierInvestorInputs from "./OwnerOccupierInvestorInputs";
+import OccupierAndInvestorInputs from "./OccupierAndInvestorInputs";
 
 const InvestorForm = ({
   testDashboard,
@@ -47,13 +47,13 @@ const InvestorForm = ({
 
     return (
       <>
-        <h1 className="f24 bold mt16 mb16">Investor Inputs</h1>
+        <h1 className="my-2 text-2xl font-semibold">Investor Inputs</h1>
         <HelperMessage
           type={CONSTANTS.HELPERMESSAGES.INVESTORFORM}
           body={helperMessage.investorForm}
         />
-        <OwnerOccupierInvestorInputs
-          investor={true}
+        <OccupierAndInvestorInputs
+          type={CONSTANTS.TYPES.INVESTOR}
           initialValues={initialValues}
           onSubmit={onSubmit}
         />

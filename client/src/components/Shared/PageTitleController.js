@@ -15,6 +15,9 @@ const PageTitleController = () => {
       case "/login":
         setTitle("Login");
         break;
+      case "/sign-up":
+        setTitle("Sign Up");
+        break;
       case "/":
         setTitle("Home");
         break;

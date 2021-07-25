@@ -1,12 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Form, Field } from "react-final-form";
+import { Form } from "react-final-form";
+import Input from "../Shared/FinalForm/Input";
+import Button from "../Shared/FinalForm/Button";
 import { updateUser } from "../../reducers/usersReducer";
-import {
-  required,
-  minLength,
-  composeValidators,
-} from "../../utils/formValidatorHelper";
+import { required, minLength } from "../../utils/formValidatorHelper";
 
 const ChangePassword = ({ user, updateUser }) => {
   const handleSubmit = async (values) => {
@@ -21,110 +19,74 @@ const ChangePassword = ({ user, updateUser }) => {
   };
 
   return (
-    <Form
-      onSubmit={handleSubmit}
-      validate={(values) => {
-        const errors = {};
-        if (!values.checkPassword) {
-          errors.checkPassword = "Required";
-        }
-        if (values.newPassword !== values.checkPassword) {
-          errors.checkPassword = "Passwords must match";
-        }
-        return errors;
-      }}
-      render={({ handleSubmit, values }) => (
-        <form onSubmit={handleSubmit}>
-          <h2 className="f20 bold mt16 mb16">Change Password</h2>
-          <div className="r bs-3 bg-1 p20 mb20">
-            <label htmlFor="old-password" className="f16 mb8">
-              Old Password
-              <span className="font-red f12 bold ml4">*</span>
-            </label>
-            <Field
-              name="oldPassword"
-              validate={composeValidators(required, minLength(3))}
-            >
-              {({ input, meta }) => (
-                <div className="relative mb20">
-                  <input
-                    id="old-password"
-                    className={`form-input bs-1 w100 ${
-                      meta.error && meta.touched ? "input-error" : ""
-                    }`}
-                    placeholder="Password"
-                    type="password"
-                    autoComplete="off"
-                    {...input}
-                  />
-                  {meta.error && meta.touched && (
-                    <span className="form-error f10">{meta.error}</span>
-                  )}
-                </div>
-              )}
-            </Field>
-            <label htmlFor="new-password" className="f16 mb8">
-              New Password
-              <span className="font-red f12 bold ml4">*</span>
-            </label>
-            <Field
-              name="newPassword"
-              validate={composeValidators(required, minLength(3))}
-            >
-              {({ input, meta }) => (
-                <div className="relative mb20">
-                  <input
-                    id="new-password"
-                    className={`form-input bs-1 w100 ${
-                      meta.error && meta.touched ? "input-error" : ""
-                    }`}
-                    placeholder="Password"
-                    type="password"
-                    autoComplete="off"
-                    {...input}
-                  />
-                  {meta.error && meta.touched && (
-                    <span className="form-error f10">{meta.error}</span>
-                  )}
-                </div>
-              )}
-            </Field>
-            <label htmlFor="confirm-password" className="f16 mb8">
-              Confirm New Password
-              <span className="font-red f12 bold ml4">*</span>
-            </label>
-            <Field
-              name="checkPassword"
-              validate={composeValidators(required, minLength(3))}
-            >
-              {({ input, meta }) => (
-                <div className="relative mb20">
-                  <input
-                    id="confirm-password"
-                    className={`form-input bs-1 w100 ${
-                      meta.error && meta.touched ? "input-error" : ""
-                    }`}
-                    placeholder="Password"
-                    type="password"
-                    autoComplete="off"
-                    {...input}
-                  />
-                  {meta.error && meta.touched && (
-                    <span className="form-error f10">{meta.error}</span>
-                  )}
-                </div>
-              )}
-            </Field>
-            <button
-              className="form-button-p font-white bs-2 pt8 pb8 r mt12"
-              type="submit"
-            >
-              Update
-            </button>
-          </div>
-        </form>
-      )}
-    />
+    <>
+      <h2 className="font-semibold my-2">Change Password</h2>
+      <div className="shadow-xl rounded-2xl p-4 bg-white">
+        <Form
+          onSubmit={handleSubmit}
+          validate={(values) => {
+            const errors = {};
+            if (!values.checkPassword) {
+              errors.checkPassword = "Required";
+            }
+            if (values.newPassword !== values.checkPassword) {
+              errors.checkPassword = "Passwords must match";
+            }
+            return errors;
+          }}
+          render={({ handleSubmit, values }) => (
+            <form onSubmit={handleSubmit}>
+              <Input
+                label={"Old Password"}
+                name={"oldPassword"}
+                options={{
+                  id: "old-password",
+                  validators: [required, minLength(3)],
+                  placeholder: "Password",
+                  type: "password",
+                  extraClass: "mb-4",
+                  autoComplete: "off",
+                }}
+              />
+              <Input
+                label={"New Password"}
+                name={"newPassword"}
+                options={{
+                  id: "new-password",
+                  validators: [required, minLength(3)],
+                  placeholder: "Password",
+                  type: "password",
+                  extraClass: "mb-4",
+                  autoComplete: "off",
+                }}
+              />
+              <Input
+                label={"Confirm New Password"}
+                name={"checkPassword"}
+                options={{
+                  id: "confirm-password",
+                  validators: [required, minLength(3)],
+                  placeholder: "Password",
+                  type: "password",
+                  extraClass: "mb-7",
+                  autoComplete: "off",
+                }}
+              />
+              <Button
+                label={"Update"}
+                type={"submit"}
+                options={{
+                  styleType: "primary",
+                  buttonClass: "w-full md:w-32",
+                  isLoading: user.isFetching,
+                  iconClass: "mr-20",
+                }}
+              />
+            </form>
+          )}
+        />
+      </div>
+    </>
   );
 };
 

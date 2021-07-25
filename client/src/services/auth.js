@@ -1,10 +1,10 @@
 import axios from "axios";
 import { getAuthConfig } from "../utils/authHelper";
-import { V1_API } from "../config";
+import { V1_API } from "../constants/constants";
 const baseUrl = `${V1_API}/auth`;
 
 const initUser = async () => {
-  const response = await axios.get(`${baseUrl}/init-user`, getAuthConfig());
+  const response = await axios.get(`${baseUrl}/init`, getAuthConfig());
   return response.data;
 };
 

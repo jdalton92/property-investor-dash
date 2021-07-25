@@ -1,106 +1,118 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import { CONSTANTS } from "../../static/constants";
-import { setDropdown, setTab } from "../../reducers/navigationReducer";
+import { CONSTANTS } from "../../constants/constants";
+import { setDropdown } from "../../reducers/navigationReducer";
 import { logoutUser } from "../../reducers/usersReducer";
 import Button from "../Shared/Button";
-import SettingsIcon from "../../styles/svg/settings.svg";
-import LogoutIcon from "../../styles/svg/logout.svg";
-import DashboardIcon from "../../styles/svg/dashboard.svg";
-import UserIcon from "../../styles/svg/user.svg";
-import CreateUserIcon from "../../styles/svg/create-user.svg";
 
 const UserDropdown = ({
+  isUserFetching,
   setDropdown,
   logoutUser,
   isAuthedUser,
   email,
-  setTab,
 }) => {
   const history = useHistory();
 
-  const handleLink = (url) => {
+  const handleLink = (route) => {
     setDropdown(CONSTANTS.DROPDOWNS.USERNAME, false);
-    history.push(url);
+    history.push(route);
   };
 
-  const handleLogout = (e) => {
-    e.preventDefault();
-    setDropdown(CONSTANTS.DROPDOWNS.USERNAME, false);
+  const handleLogout = () => {
     logoutUser();
-    history.push("/");
+    handleLink("/");
   };
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    setTab("login", CONSTANTS.TABS.LOGIN.LOGIN);
-    history.push("/login");
-  };
-
-  const handleCreate = (e) => {
-    e.preventDefault();
-    setTab("login", CONSTANTS.TABS.LOGIN.CREATEUSER);
-    history.push("/login");
-  };
-
-  return (
-    <>
-      {isAuthedUser && (
-        <div className="user-dropdown flex-col p8 fade-in r bs-3">
-          <span className="bold ml8 f16 ellipse">{email}</span>
-          <Button
-            extraClass={"button-transp-p align-c"}
-            captionClass={"ml8"}
-            caption={"Saved Dashboards"}
-            onClick={() => handleLink("/saved-dashboards")}
-            iconUrl={DashboardIcon}
-            iconColor={"#51535c"}
-          />
-          <Button
-            extraClass={"button-transp-p align-c"}
-            captionClass={"ml8"}
-            caption={"Account Settings"}
-            onClick={() => handleLink("/settings")}
-            iconUrl={SettingsIcon}
-            iconColor={"#51535c"}
-          />
-          <Button
-            extraClass={"button-transp-p align-c"}
-            captionClass={"ml8"}
-            caption={"Logout"}
-            onClick={handleLogout}
-            iconUrl={LogoutIcon}
-            iconColor={"#51535c"}
-          />
-        </div>
-      )}
-      {!isAuthedUser && (
-        <div className="user-dropdown flex-col pt8 pb8 fade-in r bs-3">
-          <Button
-            extraClass={"button-transp-p align-c"}
-            captionClass={"ml8"}
-            caption={"Login"}
-            onClick={handleLogin}
-            iconUrl={UserIcon}
-            iconColor={"#51535c"}
-          />
-          <Button
-            extraClass={"button-transp-p align-c"}
-            captionClass={"ml8"}
-            caption={"Create Account"}
-            onClick={handleCreate}
-            iconUrl={CreateUserIcon}
-            iconColor={"#51535c"}
-          />
-        </div>
-      )}
-    </>
-  );
+  if (isUserFetching) {
+    return (
+      <div className="animate-fade-in absolute top-14 right-0 flex flex-col shadow-xl rounded-2xl p-4 w-full md:w-80 bg-white">
+        <div className="animate-pulse shadow-lg rounded-md bg-gray-300 h-8 w-full mb-2"></div>
+        <div className="animate-pulse shadow-lg rounded-md bg-gray-300 h-8 w-full mb-2"></div>
+        <div className="animate-pulse shadow-lg rounded-md bg-gray-300 h-8 w-full mb-2"></div>
+        <div className="animate-pulse shadow-lg rounded-md bg-gray-300 h-8 w-full"></div>
+      </div>
+    );
+  } else {
+    return (
+      <div className="animate-fade-in absolute top-14 right-0 flex flex-col shadow-xl rounded-2xl p-4 w-full md:w-80 bg-white">
+        {isAuthedUser && (
+          <>
+            <span className="truncate font-semibold mb-2">{email}</span>
+            <Button
+              label={"Saved Dashboards"}
+              options={{
+                styleType: "secondary-transparent",
+                buttonClass: "w-full h-10 pl-2",
+                labelClass: "ml-1",
+                icon: "dashboard",
+                iconClass: "h-8 w-8",
+                hideShadow: true,
+                onClick: () => handleLink("/saved-dashboards"),
+              }}
+            />
+            <Button
+              label={"Account Settings"}
+              options={{
+                styleType: "secondary-transparent",
+                buttonClass: "w-full h-10 pl-2",
+                labelClass: "ml-1",
+                icon: "settings",
+                iconClass: "h-8 w-8",
+                hideShadow: true,
+                onClick: () => handleLink("/settings"),
+              }}
+            />
+            <Button
+              label={"Logout"}
+              options={{
+                styleType: "secondary-transparent",
+                buttonClass: "w-full h-10 pl-2",
+                labelClass: "ml-1",
+                icon: "logout",
+                iconClass: "h-8 w-8",
+                hideShadow: true,
+                onClick: () => handleLogout(),
+              }}
+            />
+          </>
+        )}
+        {!isAuthedUser && (
+          <>
+            <Button
+              label={"Login"}
+              options={{
+                styleType: "secondary-transparent",
+                buttonClass: "z-20 w-full h-10 pl-2",
+                labelClass: "ml-1",
+                icon: "logout",
+                iconClass: "h-8 w-8",
+                hideShadow: true,
+                onClick: () => handleLink("/login"),
+              }}
+            />
+            <Button
+              label={"Create Account"}
+              options={{
+                styleType: "secondary-transparent",
+                buttonClass: "z-20 w-full h-10 pl-2",
+                labelClass: "ml-1",
+                icon: "create-user",
+                iconClass: "h-8 w-8",
+                hideShadow: true,
+                onClick: () => handleLink("/sign-up"),
+              }}
+            />
+          </>
+        )}
+      </div>
+    );
+  }
 };
 
 const mapStateToProps = (state) => {
   return {
+    isUserFetching: state.users.isFetching,
     isAuthedUser: !!state.users.data?._id,
     email: state.users.data?.email,
   };
@@ -109,7 +121,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   logoutUser,
   setDropdown,
-  setTab,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserDropdown);

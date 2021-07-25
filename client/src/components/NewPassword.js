@@ -1,17 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Form, Field } from "react-final-form";
+import { Form } from "react-final-form";
+import Input from "./Shared/FinalForm/Input";
+import Button from "./Shared/FinalForm/Button";
 import Loader from "./Shared/Loader";
 import { resetPassword } from "../reducers/usersReducer";
 import { setNotification } from "../reducers/notificationReducer";
-import { CONSTANTS } from "../static/constants";
+import { CONSTANTS } from "../constants/constants";
 import queryString from "query-string";
-import {
-  required,
-  minLength,
-  composeValidators,
-} from "../utils/formValidatorHelper";
+import { required, minLength } from "../utils/formValidatorHelper";
 
 const NewPassword = ({ isFetching, resetPassword, setNotification }) => {
   const history = useHistory();
@@ -31,77 +29,58 @@ const NewPassword = ({ isFetching, resetPassword, setNotification }) => {
   } else {
     return (
       <>
-        <h1 className="f24 bold mt16 mb16">Reset Password</h1>
-        <Form
-          onSubmit={handleSetNewPassword}
-          validate={(values) => {
-            const errors = {};
-            if (!values.checkPassword) {
-              errors.checkPassword = "Required";
-            }
-            if (values.password !== values.checkPassword) {
-              errors.checkPassword = "Passwords must match";
-            }
-            return errors;
-          }}
-          render={({ handleSubmit }) => (
-            <form onSubmit={handleSubmit}>
-              <div className="r bs-3 bg-1 p20 mb20">
-                <label htmlFor="create-password" className="f16 mb8">
-                  New Password
-                  <span className="font-red f12 bold ml4">*</span>
-                </label>
-                <Field
-                  name="password"
-                  validate={composeValidators(minLength(3), required)}
-                >
-                  {({ input, meta }) => (
-                    <div className="relative mb20">
-                      <input
-                        id="create-password"
-                        className="form-input bs-1 w100"
-                        placeholder="Password"
-                        type="password"
-                        autoComplete="off"
-                        {...input}
-                      />
-                      {meta.error && meta.touched && (
-                        <span className="form-error f10">{meta.error}</span>
-                      )}
-                    </div>
-                  )}
-                </Field>
-                <label htmlFor="create-confirm" className="f16 mb8">
-                  Confirm Password
-                  <span className="font-red f12 bold ml4">*</span>
-                </label>
-                <Field name="checkPassword">
-                  {({ input, meta }) => (
-                    <div className="relative mb20">
-                      <input
-                        id="create-confirm"
-                        className="form-input bs-1 w100"
-                        placeholder="Confirm Password"
-                        type="password"
-                        autoComplete="off"
-                        {...input}
-                      />
-                      {meta.error && meta.touched && (
-                        <span className="form-error f10">{meta.error}</span>
-                      )}
-                    </div>
-                  )}
-                </Field>
-                <button
-                  className="form-button-p font-white bs-2 pt8 pb8 r mt12"
-                  type="submit"
-                >
-                  Confirm
-                </button>
-              </div>
-            </form>
-          )}
-        />
+        <h1 className="my-2 text-2xl font-semibold">Set New Password</h1>
+        <div className="shadow-xl rounded-2xl p-4 bg-white">
+          <Form
+            onSubmit={handleSetNewPassword}
+            validate={(values) => {
+              const errors = {};
+              if (!values.checkPassword) {
+                errors.checkPassword = "Required";
+              }
+              if (values.password !== values.checkPassword) {
+                errors.checkPassword = "Passwords must match";
+              }
+              return errors;
+            }}
+            render={({ handleSubmit }) => (
+              <form onSubmit={handleSubmit}>
+                <Input
+                  label={"New Password"}
+                  name={"password"}
+                  options={{
+                    validators: [required, minLength(3)],
+                    placeholder: "Password",
+                    type: "password",
+                    autoComplete: "off",
+                    extraClass: "mb-4",
+                  }}
+                />
+                <Input
+                  label={"Confirm Password"}
+                  name={"checkPassword"}
+                  options={{
+                    validators: [required, minLength(3)],
+                    placeholder: "Password",
+                    type: "password",
+                    autoComplete: "off",
+                    extraClass: "mb-6",
+                  }}
+                />
+                <Button
+                  label={"Confirm"}
+                  type={"submit"}
+                  options={{
+                    styleType: "primary",
+                    buttonClass: "w-full md:w-32",
+                    // isLoading: isSending,
+                    iconClass: "mr-20",
+                  }}
+                />
+              </form>
+            )}
+          />
+        </div>
       </>
     );
   }

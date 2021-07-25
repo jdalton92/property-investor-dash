@@ -1,11 +1,57 @@
-import { CONSTANTS } from "../static/constants";
+import { CONSTANTS } from "../constants/constants";
 
 export const paginatedResults = {
   nextPage: null,
   pagesCount: null,
   previousPage: null,
   resultsCount: 0,
+  currentPage: 0,
   results: [],
+};
+
+export const getPaginateOptions = (currentPage, totalPages, viewPages = 3) => {
+  let startPage;
+  let endPage;
+
+  if (totalPages <= viewPages) {
+    startPage = 1;
+    endPage = totalPages;
+  } else {
+    let maxPagesBeforeCurrentPage = Math.floor(viewPages / 2);
+    let maxPagesAfterCurrentPage = Math.ceil(viewPages / 2) - 1;
+    if (currentPage <= maxPagesBeforeCurrentPage) {
+      startPage = 1;
+      endPage = viewPages;
+    } else if (currentPage + maxPagesAfterCurrentPage >= totalPages) {
+      startPage = totalPages - viewPages + 1;
+      endPage = totalPages;
+    } else {
+      startPage = currentPage - maxPagesBeforeCurrentPage;
+      endPage = currentPage + maxPagesAfterCurrentPage;
+    }
+  }
+
+  const pages = Array.from(Array(endPage + 1 - startPage).keys()).map((i) => ({
+    label: startPage + i,
+    active: currentPage === startPage + i,
+    link: true,
+  }));
+  if (pages.some((page) => page.label === totalPages)) {
+    return pages;
+  } else {
+    return pages.concat(
+      {
+        label: "...",
+        active: false,
+        link: false,
+      },
+      {
+        label: totalPages,
+        active: false,
+        link: true,
+      }
+    );
+  }
 };
 
 export const isEmpty = (obj) =>
@@ -49,7 +95,7 @@ export const formatDate = (dbDate) => {
 
 export const cashflowFormatter = (number, minimumFractionDigits = 0) => {
   let cashflow;
-  let className = "text-s";
+  let className = "text-gray-500";
   const integer = parseInt(number);
   switch (true) {
     case integer === 0:
@@ -64,7 +110,7 @@ export const cashflowFormatter = (number, minimumFractionDigits = 0) => {
       cashflow = `(${Math.abs(integer).toLocaleString("en-US", {
         minimumFractionDigits,
       })})`;
-      className = "text-r";
+      className = "text-red-500";
       break;
     default:
       cashflow = `${integer}`;
