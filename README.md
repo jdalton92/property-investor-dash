@@ -2,7 +2,7 @@
 
 Simple open source tool for calculating your return for property investments
 
-![screenshot](https://i.imgur.com/irL39wd.png)
+![screenshot](https://i.imgur.com/nGYI5wb.png)
 
 ## Prototype
 
