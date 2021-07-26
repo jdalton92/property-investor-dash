@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/static/css/main.f7aa57f0.chunk.css",
-    "main.js": "/static/js/main.c5f94377.chunk.js",
-    "main.js.map": "/static/js/main.c5f94377.chunk.js.map",
+    "main.css": "/static/css/main.ab106e92.chunk.css",
+    "main.js": "/static/js/main.c3f2350a.chunk.js",
+    "main.js.map": "/static/js/main.c3f2350a.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.32bac452.js",
     "runtime-main.js.map": "/static/js/runtime-main.32bac452.js.map",
     "static/js/2.7c3cc5a2.chunk.js": "/static/js/2.7c3cc5a2.chunk.js",
     "static/js/2.7c3cc5a2.chunk.js.map": "/static/js/2.7c3cc5a2.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.f7aa57f0.chunk.css.map": "/static/css/main.f7aa57f0.chunk.css.map",
+    "static/css/main.ab106e92.chunk.css.map": "/static/css/main.ab106e92.chunk.css.map",
     "static/js/2.7c3cc5a2.chunk.js.LICENSE.txt": "/static/js/2.7c3cc5a2.chunk.js.LICENSE.txt",
     "static/media/book.svg": "/static/media/book.b055aefb.svg",
     "static/media/card-developer.7342d2cd.png": "/static/media/card-developer.7342d2cd.png",
@@ -51,7 +51,7 @@
   "entrypoints": [
     "static/js/runtime-main.32bac452.js",
     "static/js/2.7c3cc5a2.chunk.js",
-    "static/css/main.f7aa57f0.chunk.css",
-    "static/js/main.c5f94377.chunk.js"
+    "static/css/main.ab106e92.chunk.css",
+    "static/js/main.c3f2350a.chunk.js"
   ]
 }

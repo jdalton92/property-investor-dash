@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import Button from "../Shared/Button";
 import { deleteDashboard } from "../../reducers/dashboardsReducer";
 import {
   formatDate,
@@ -13,6 +14,8 @@ const SavedDashboards = ({
   dashboard,
   deleteDashboard,
 }) => {
+  const history = useHistory();
+
   const handleDelete = (dashboard) => {
     const confirm = window.confirm(
       `Are you sure you want to delete dashboard: ${dashboard.description}?`
@@ -20,6 +23,10 @@ const SavedDashboards = ({
     if (confirm) {
       deleteDashboard(dashboard._id);
     }
+  };
+
+  const handleLink = (url) => {
+    history.push(url);
   };
 
   const { type, baseUrl } = getDashboardTypeAndBaseUrl(dashboard);
@@ -41,28 +48,43 @@ const SavedDashboards = ({
       <td className="px-2">
         <span>{formatDate(dashboard.created)}</span>
       </td>
-      <td className="px-2">
-        <span>{dashboard.updated ? formatDate(dashboard.updated) : "-"}</span>
-      </td>
-      <td className={`flex mt-3 pl-2 ${isBottomRow ? "rounded-br-2xl" : ""}`}>
-        <Link
-          className="cursor-pointer underline text-blue-600 hover:text-blue-900"
-          to={`/dashboard/${dashboard._id}`}
-        >
-          View
-        </Link>
-        <Link
-          className="cursor-pointer underline text-blue-600 hover:text-blue-900 ml-2"
-          to={`/${baseUrl}/edit/${dashboard._id}`}
-        >
-          Edit
-        </Link>
-        <span
-          className="cursor-pointer underline text-blue-600 hover:text-blue-900 ml-2"
-          onClick={() => handleDelete(dashboard)}
-        >
-          Delete
-        </span>
+      <td className={`flex pl-2 ${isBottomRow ? "rounded-br-2xl" : ""}`}>
+        <Button
+          type={"button"}
+          options={{
+            styleType: "secondary-transparent",
+            buttonClass: "w-10 h-10 justify-center",
+            icon: "tick",
+            iconClass: "h-8 w-8",
+            onClick: () => handleLink(`/dashboard/${dashboard._id}`),
+            ariaLabel: "View",
+            ariaPosition: "left",
+          }}
+        />
+        <Button
+          type={"button"}
+          options={{
+            styleType: "secondary-transparent",
+            buttonClass: "w-10 h-10 justify-center",
+            icon: "edit",
+            iconClass: "h-8 w-8",
+            onClick: () => handleLink(`/${baseUrl}/edit/${dashboard._id}`),
+            ariaLabel: "Edit",
+            ariaPosition: "left",
+          }}
+        />
+        <Button
+          type={"button"}
+          options={{
+            styleType: "secondary-transparent",
+            buttonClass: "w-10 h-10 justify-center",
+            icon: "close",
+            iconClass: "h-8 w-8",
+            onClick: () => handleDelete(dashboard),
+            ariaLabel: "Delete",
+            ariaPosition: "left",
+          }}
+        />
       </td>
     </tr>
   );

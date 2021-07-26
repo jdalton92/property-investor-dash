@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import Loader from "../Shared/Loader";
 import Button from "../Shared/Button";
 import { editDashboard } from "../../reducers/dashboardsReducer";
 import {
@@ -17,6 +16,7 @@ import {
   isEmpty,
   getDashboardTypeAndBaseUrl,
 } from "../../utils/dashboardHelper";
+import LoadingDashboard from "./LoadingDashboard";
 
 const OccupierDashboard = ({
   isFetchingDashboard,
@@ -57,7 +57,7 @@ const OccupierDashboard = ({
     isFetchingCashflow ||
     isEmpty(currentDashboard.assumptions)
   ) {
-    return <Loader />;
+    return <LoadingDashboard />;
   } else {
     const { type, baseUrl } = getDashboardTypeAndBaseUrl(currentDashboard);
     return (

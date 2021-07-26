@@ -24,7 +24,7 @@ const CalculatorTypes = () => {
       </h2>
       <div className="shadow-xl rounded-2xl overflow-hidden bg-white my-2 flex flex-col md:flex-row md:h-80 w-full">
         <div
-          className="w-700px md:w-full h-400px md:h-auto bg-cover bg-center bg-no-repeat"
+          className="w-full h-400px md:h-auto bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${ownerOccupierImage})`,
           }}
@@ -79,7 +79,7 @@ const CalculatorTypes = () => {
           />
         </div>
         <div
-          className="w-700px md:w-full h-400px md:h-auto bg-cover bg-center bg-no-repeat"
+          className="w-full h-400px md:h-auto bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${investorImage})`,
           }}
@@ -95,7 +95,7 @@ const CalculatorTypes = () => {
       </h2>
       <div className="shadow-xl rounded-2xl overflow-hidden bg-white my-2 flex flex-col md:flex-row md:h-80 w-full">
         <div
-          className="w-700px md:w-full h-400px md:h-auto bg-cover bg-center bg-no-repeat"
+          className="w-full h-400px md:h-auto bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${developerImage})`,
           }}

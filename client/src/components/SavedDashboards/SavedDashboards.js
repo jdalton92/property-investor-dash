@@ -58,9 +58,6 @@ const SavedDashboards = ({ getDashboards, isFetching, savedDashboards }) => {
                     <span>Created</span>
                   </th>
                   <th className="font-normal px-2">
-                    <span>Updated</span>
-                  </th>
-                  <th className="font-normal px-2">
                     <span>Action</span>
                   </th>
                 </tr>
