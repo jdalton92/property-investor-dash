@@ -3,6 +3,10 @@ import { getAuthConfig } from "../utils/authHelper";
 import { V1_API } from "../constants/constants";
 const baseUrl = `${V1_API}/users`;
 
+const isDemoUser = (roles) => {
+  return roles.some((role) => role === "demo");
+};
+
 const createUser = async (userData) => {
   const config = getAuthConfig();
   const response = await axios.post(baseUrl, userData, config);
@@ -23,4 +27,4 @@ const deleteUser = async (id, password) => {
 };
 
 // eslint-disable-next-line
-export default { createUser, updateUser, deleteUser };
+export default { isDemoUser, createUser, updateUser, deleteUser };

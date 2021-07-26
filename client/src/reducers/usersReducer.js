@@ -212,7 +212,7 @@ export const updateUser = (id, data) => {
 export const readHelperMessage = (user, message) => {
   return (dispatch) => {
     try {
-      if (user._id && !user.roles.includes("demo")) {
+      if (user._id && !usersService.isDemoUser(user.roles)) {
         // Dont await server response so UX seems instant
         usersService.updateUser(user._id, { messagesRead: [message] });
         const storedUser = JSON.parse(

@@ -4,6 +4,7 @@ import { Form } from "react-final-form";
 import Input from "./Shared/FinalForm/Input";
 import Button from "./Shared/FinalForm/Button";
 import { sendMessage } from "../reducers/contactReducer";
+import usersService from "../services/users";
 import {
   required,
   maxLength,
@@ -13,7 +14,7 @@ import {
 
 const Contact = ({ sendMessage, isSending, userData }) => {
   const getEmail = () => {
-    if (userData.roles.some((role) => role === "demo")) {
+    if (usersService.isDemoUser(userData.roles)) {
       return "";
     } else {
       return userData?.email;

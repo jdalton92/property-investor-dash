@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { demoUser } from "../reducers/usersReducer";
+import usersService from "../services/users";
 import Button from "./Shared/Button";
 import developer from "../styles/images/card-developer.png";
 import financiers from "../styles/images/card-financiers.png";
@@ -9,7 +10,7 @@ import firstHomeBuyer from "../styles/images/card-first-home-buyer.png";
 import investor from "../styles/images/card-investor.png";
 import owner from "../styles/images/card-owner.png";
 
-const About = ({ isAuthedUser, demoUser }) => {
+const About = ({ userData, isAuthedUser, demoUser }) => {
   const history = useHistory();
   const handleLink = (url) => {
     history.push(url);
@@ -18,6 +19,7 @@ const About = ({ isAuthedUser, demoUser }) => {
     demoUser();
     handleLink(`/saved-dashboards`);
   };
+
   return (
     <>
       <h1 className="my-2 text-2xl font-semibold">About</h1>
@@ -50,6 +52,19 @@ const About = ({ isAuthedUser, demoUser }) => {
             onClick: () => handleLink("/calculator-types"),
           }}
         />
+        {usersService.isDemoUser(userData.roles) && (
+          <Button
+            label={"View Demo Dashboards"}
+            type={"button"}
+            options={{
+              styleType: "secondary",
+              buttonClass: "h-10 px-2 ml-2",
+              icon: "finance",
+              iconClass: "h-8 w-8 mr-2",
+              onClick: () => handleLink("/saved-dashboards"),
+            }}
+          />
+        )}
         {!isAuthedUser && (
           <Button
             label={"Try Demo"}
@@ -185,6 +200,7 @@ const About = ({ isAuthedUser, demoUser }) => {
 const mapStateToProps = (state) => {
   return {
     isAuthedUser: !!state.users.data?._id,
+    userData: state.users.data,
   };
 };
 
