@@ -117,7 +117,7 @@ const About = ({ userData, isAuthedUser, demoUser }) => {
       <h2 className="my-2 text-l font-semibold">Who Is It For</h2>
       <div className="shadow-xl rounded-2xl overflow-hidden bg-white my-2 flex flex-col md:flex-row md:h-80 w-full">
         <div
-          className="w-700px md:w-full h-400px md:h-auto bg-cover bg-center bg-no-repeat"
+          className="w-full h-400px md:h-auto bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${owner})`,
           }}
@@ -140,7 +140,7 @@ const About = ({ userData, isAuthedUser, demoUser }) => {
           </p>
         </div>
         <div
-          className="w-700px md:w-full h-400px md:h-auto bg-cover bg-center bg-no-repeat"
+          className="w-full h-400px md:h-auto bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${investor})`,
           }}
@@ -148,7 +148,7 @@ const About = ({ userData, isAuthedUser, demoUser }) => {
       </div>
       <div className="shadow-xl rounded-2xl overflow-hidden bg-white my-2 flex flex-col md:flex-row md:h-80 w-full">
         <div
-          className="w-700px md:w-full h-400px md:h-auto bg-cover bg-center bg-no-repeat"
+          className="w-full h-400px md:h-auto bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${developer})`,
           }}
@@ -171,7 +171,7 @@ const About = ({ userData, isAuthedUser, demoUser }) => {
           </p>
         </div>
         <div
-          className="w-700px md:w-full h-400px md:h-auto bg-cover bg-center bg-no-repeat"
+          className="w-full h-400px md:h-auto bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${firstHomeBuyer})`,
           }}
@@ -179,7 +179,7 @@ const About = ({ userData, isAuthedUser, demoUser }) => {
       </div>
       <div className="shadow-xl rounded-2xl overflow-hidden bg-white my-2 flex flex-col md:flex-row md:h-80 w-full">
         <div
-          className="w-700px md:w-full h-400px md:h-auto bg-cover bg-center bg-no-repeat"
+          className="w-full h-400px md:h-auto bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${financiers})`,
           }}

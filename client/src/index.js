@@ -3,8 +3,8 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import App from "./App";
 import store from "./store";
-import "./styles/tailwind.css";
 import "./styles/index.css";
+import "./styles/balloon.css";
 
 ReactDOM.render(
   <Provider store={store}>

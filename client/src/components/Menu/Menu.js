@@ -116,7 +116,7 @@ const Menu = ({
       }`}
     >
       <div className="sticky top-0 flex items-center justify-center block lg:hidden h-14 bg-indigo-900">
-        <h1 className="block text-xl text-white font-semibold text-shadow-lg mx-auto hover:underline">
+        <h1 className="block text-xl text-white font-semibold text-shadow-lg mx-auto underline">
           PropertyInvestorDash
         </h1>
         <Burger customClass={"s1080"} />

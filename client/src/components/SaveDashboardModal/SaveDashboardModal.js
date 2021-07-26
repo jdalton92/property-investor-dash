@@ -30,7 +30,11 @@ const SaveDashboardModal = ({ setModal, setTab, tab }) => {
 
   return (
     <>
-      <div className="absolute top-1/2 right-1/2 transform translate-x-1/2 -translate-y-1/2 z-50 shadow-xl rounded-2xl bg-white p-4 max-h-screen max-w-screen-lg w-screen">
+      <div
+        className={`absolute top-1/2 right-1/2 transform translate-x-1/2 -translate-y-1/2 z-50 shadow-xl rounded-2xl bg-white p-4 max-w-screen-lg w-screen ${
+          isOverwriteTab ? "mt-16 md:mt-0" : ""
+        }`}
+      >
         <div className="relative">
           <h2 className="text-center font-medium text-2xl text-shadow-xs mt-3 mb-7">
             Save Dashboard
