@@ -111,7 +111,7 @@ const Menu = ({
 
   return (
     <div
-      className={`h-screen z-50 lg:z-0 bg-gray-200 transition-transform duration-250 ease-in-out transform lg:translate-x-0 overflow-y-auto lg:static left-0 fixed w-full md:w-80 top-0 ${
+      className={`h-full z-50 lg:z-0 bg-gray-200 transition-transform duration-250 ease-in-out transform lg:translate-x-0 overflow-y-auto lg:static left-0 fixed w-full md:w-80 top-0 ${
         leftSidebarOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >

@@ -5,7 +5,7 @@ function paginate(query, options) {
     if (options.limit && options.limit <= 0) {
       throw new Exception(400, "Limit must be greater than 0");
     }
-    if (options.page && options.page < 0) {
+    if (options.page && options.page <= 0) {
       throw new Exception(400, "Page must be greater than 0");
     }
 
@@ -15,7 +15,7 @@ function paginate(query, options) {
     const sort = options.sort || "";
     const exclude = options.exclude || "";
 
-    const skip = (page - 1) * (limit - 1);
+    const skip = (page - 1) * limit;
     let resultsCount;
     let pagesCount;
     this.countDocuments(query, (error, result) => {
