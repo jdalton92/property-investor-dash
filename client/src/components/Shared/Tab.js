@@ -1,10 +1,10 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { ReactSVG as Icon } from "react-svg";
+import Icon from "./Icon";
 
 const Tab = ({ title, to, options = {} }) => {
   const onClick = options?.onClick;
-  const icon = options?.icon;
+  const icon = options?.icon || "";
   const active = options?.active;
   const extraClass = options.extraClass || "";
 
@@ -16,7 +16,7 @@ const Tab = ({ title, to, options = {} }) => {
         to={to}
         onClick={onClick}
       >
-        <Icon className="h-6 w-6" src={`./svg/${icon}.svg`} />
+        <Icon className="h-6 w-6" icon={icon} />
         <span className={`${icon ? "ml-4" : ""}`}>{title}</span>
       </NavLink>
     );
@@ -30,7 +30,7 @@ const Tab = ({ title, to, options = {} }) => {
         }`}
         onClick={onClick}
       >
-        <Icon className="h-6 w-6" src={`./svg/${icon}.svg`} />
+        <Icon className="h-6 w-6" icon={icon} />
         <span className={`${icon ? "ml-4" : ""}`}>{title}</span>
       </div>
     );
